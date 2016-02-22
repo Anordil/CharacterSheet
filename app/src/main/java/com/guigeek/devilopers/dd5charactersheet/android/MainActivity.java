@@ -2,6 +2,7 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -41,11 +43,7 @@ public class MainActivity extends Activity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Character toto = new Character();
-                toto._class = new Paladin();
-                toto._level = 3;
-                toto._name = "Thorvil Grimhammer";
-                toto._race = new MountainDwarf();
+                Character toto = new Character("Thorvil", new Paladin(), new MountainDwarf());
 
                 try {
                     FileOutputStream fos = openFileOutput(toto._name.replaceAll(" ", "") + ".ddfcs", Context.MODE_PRIVATE);
@@ -63,10 +61,21 @@ public class MainActivity extends Activity {
         });
 
 
-        Character[] characters = getSavedCharacters();
+        final Character[] characters = getSavedCharacters();
         ArrayAdapter<Character> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, characters);
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.CHARACTER, characters[position]);
+                Intent newIntent = new Intent(getApplicationContext(), DisplayScreen.class);
+                newIntent.putExtras(bundle);
+                startActivityForResult(newIntent, 0);
+            }
+        });
     }
 
     private Character[] getSavedCharacters() {
@@ -99,6 +108,8 @@ public class MainActivity extends Activity {
 
         return result;
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

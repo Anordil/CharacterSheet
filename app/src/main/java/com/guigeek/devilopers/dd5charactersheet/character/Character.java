@@ -28,12 +28,15 @@ public class Character implements Serializable {
         _name = name;
         _class = iClass;
         _race = iRace;
+        _level = 1;
 
+        _fettles = new LinkedList<>();
         _attributes = new int[6];
         for (int i =0; i < 6; i++) {
             _attributes[i] = 10;
         }
 
+        initLevel();
         initSkills();
         initSavingThrows();
         refreshAC();
@@ -41,13 +44,19 @@ public class Character implements Serializable {
         doLongRest();
     }
 
+    private void initLevel() {
+        _hitDice = _level;
+        _spellSlotsMax = _class.getSpellSlots(_level);
+        _hpMax = _class.getHitDie() + (_level -1)*(int)Math.ceil(_class.getHitDie()/2);
+    }
+
     private void doLongRest() {
         _hpCurrent = _hpMax;
         _hpTemp = 0;
         _hitDice = _level;
 
-        _spellSlotsMax = _class.getSpellSlots(_level);
 
+        _spellSlotsCurrent = new int[_spellSlotsMax.length];
         for (int i =0; i < _spellSlotsMax.length; i++) {
             _spellSlotsCurrent[i] = _spellSlotsMax[i];
         }
@@ -79,30 +88,30 @@ public class Character implements Serializable {
         }
 
         for (Skill skill: _skills) {
-            skill.recompute();
+            skill.recompute(this);
         }
     }
 
     private void initSkills() {
         _skills = new LinkedList<>();
-        _skills.add(new Skills("Acrobatics", Enumerations.Attributes.DEX);
-        _skills.add(new Skills("Animal Handling", Enumerations.Attributes.WIS);
-        _skills.add(new Skills("Arcana", Enumerations.Attributes.INT);
-        _skills.add(new Skills("Athletics", Enumerations.Attributes.STR);
-        _skills.add(new Skills("Deception", Enumerations.Attributes.CHA);
-        _skills.add(new Skills("History", Enumerations.Attributes.INT);
-        _skills.add(new Skills("Insight", Enumerations.Attributes.WIS);
-        _skills.add(new Skills("Intimidation", Enumerations.Attributes.CHA);
-        _skills.add(new Skills("Investigation", Enumerations.Attributes.INT);
-        _skills.add(new Skills("Medicine", Enumerations.Attributes.WIS);
-        _skills.add(new Skills("Nature", Enumerations.Attributes.INT);
-        _skills.add(new Skills("Perception", Enumerations.Attributes.WIS);
-        _skills.add(new Skills("Performance", Enumerations.Attributes.CHA);
-        _skills.add(new Skills("Persuasion", Enumerations.Attributes.CHA);
-        _skills.add(new Skills("Religion", Enumerations.Attributes.INT);
-        _skills.add(new Skills("Sleight of hand", Enumerations.Attributes.DEX);
-        _skills.add(new Skills("Stealth", Enumerations.Attributes.DEX);
-        _skills.add(new Skills("Survival", Enumerations.Attributes.WIS);
+        _skills.add(new Skill("Acrobatics", Enumerations.Attributes.DEX));
+        _skills.add(new Skill("Animal Handling", Enumerations.Attributes.WIS));
+        _skills.add(new Skill("Arcana", Enumerations.Attributes.INT));
+        _skills.add(new Skill("Athletics", Enumerations.Attributes.STR));
+        _skills.add(new Skill("Deception", Enumerations.Attributes.CHA));
+        _skills.add(new Skill("History", Enumerations.Attributes.INT));
+        _skills.add(new Skill("Insight", Enumerations.Attributes.WIS));
+        _skills.add(new Skill("Intimidation", Enumerations.Attributes.CHA));
+        _skills.add(new Skill("Investigation", Enumerations.Attributes.INT));
+        _skills.add(new Skill("Medicine", Enumerations.Attributes.WIS));
+        _skills.add(new Skill("Nature", Enumerations.Attributes.INT));
+        _skills.add(new Skill("Perception", Enumerations.Attributes.WIS));
+        _skills.add(new Skill("Performance", Enumerations.Attributes.CHA));
+        _skills.add(new Skill("Persuasion", Enumerations.Attributes.CHA));
+        _skills.add(new Skill("Religion", Enumerations.Attributes.INT));
+        _skills.add(new Skill("Sleight of hand", Enumerations.Attributes.DEX));
+        _skills.add(new Skill("Stealth", Enumerations.Attributes.DEX));
+        _skills.add(new Skill("Survival", Enumerations.Attributes.WIS));
     }
 
 
@@ -112,18 +121,18 @@ public class Character implements Serializable {
         }
 
         for (Skill skill: _savingThrows) {
-            skill.recompute();
+            skill.recompute(this);
         }
     }
 
     private void initSavingThrows() {
         _savingThrows = new LinkedList<>();
-        _savingThrows.add(new Skills("Strength", Enumerations.Attributes.STR);
-        _savingThrows.add(new Skills("Dexterity", Enumerations.Attributes.DEX);
-        _savingThrows.add(new Skills("Constitution", Enumerations.Attributes.CON);
-        _savingThrows.add(new Skills("Intelligence", Enumerations.Attributes.INT);
-        _savingThrows.add(new Skills("Wisdom", Enumerations.Attributes.WIS);
-        _savingThrows.add(new Skills("Charisma", Enumerations.Attributes.CHA);
+        _savingThrows.add(new Skill("Strength", Enumerations.Attributes.STR));
+        _savingThrows.add(new Skill("Dexterity", Enumerations.Attributes.DEX));
+        _savingThrows.add(new Skill("Constitution", Enumerations.Attributes.CON));
+        _savingThrows.add(new Skill("Intelligence", Enumerations.Attributes.INT));
+        _savingThrows.add(new Skill("Wisdom", Enumerations.Attributes.WIS));
+        _savingThrows.add(new Skill("Charisma", Enumerations.Attributes.CHA));
     }
 
 }

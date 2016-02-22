@@ -1,9 +1,11 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
+import java.io.Serializable;
+
 /**
  * Created by ggallani on 22/02/2016.
  */
-public class Skill {
+public class Skill implements Serializable {
 
     public String _name;
     public Enumerations.Attributes _attribute;
