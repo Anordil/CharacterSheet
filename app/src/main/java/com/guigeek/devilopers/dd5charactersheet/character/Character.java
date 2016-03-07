@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -24,16 +26,16 @@ public class Character implements Serializable {
 
     public int[] _attributes;
 
-    public Character(String name, Class iClass, Race iRace) {
+    public Character(String name, Class iClass, Race iRace, int level, int[] attr) {
         _name = name;
         _class = iClass;
         _race = iRace;
-        _level = 1;
+        _level = level;
 
         _fettles = new LinkedList<>();
         _attributes = new int[6];
         for (int i =0; i < 6; i++) {
-            _attributes[i] = 10;
+            _attributes[i] = attr[i];
         }
 
         initLevel();
@@ -47,7 +49,7 @@ public class Character implements Serializable {
     private void initLevel() {
         _hitDice = _level;
         _spellSlotsMax = _class.getSpellSlots(_level);
-        _hpMax = _class.getHitDie() + (_level -1)*(int)Math.ceil(_class.getHitDie()/2);
+        _hpMax = _class.getHitDie() + (_level -1)*(int)Math.ceil(_class.getHitDie()/2 +1) + _level*getModifier(Enumerations.Attributes.CON);
     }
 
     private void doLongRest() {
@@ -70,6 +72,21 @@ public class Character implements Serializable {
     public String toString() {
         return _name + ", Level " + _level + " " + _race.getName() + " " + _class.getName();
 
+    }
+
+    public void changeHP(int iQuantity) {
+        _hpCurrent += iQuantity;
+        _hpCurrent = Math.min(_hpCurrent, _hpMax);
+    }
+
+    public void changeHD(int iQuantity) {
+        _hitDice += iQuantity;
+        _hitDice = Math.min(_hitDice, _level);
+    }
+
+    public void changeSpellSlot(int level, int diff) {
+        _spellSlotsCurrent[level] += diff;
+        _spellSlotsCurrent[level] = Math.min(_spellSlotsCurrent[level], _spellSlotsMax[level]);
     }
 
     public int getModifier(Enumerations.Attributes iAttr) {

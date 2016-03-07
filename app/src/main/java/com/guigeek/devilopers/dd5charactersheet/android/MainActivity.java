@@ -43,7 +43,9 @@ public class MainActivity extends Activity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Character toto = new Character("Thorvil", new Paladin(), new MountainDwarf());
+                int[] totoAttr = {10,10,10,10,10,10};
+                Character toto = new Character("Toto", new Paladin(), new MountainDwarf(), 1, totoAttr);
+
 
                 try {
                     FileOutputStream fos = openFileOutput(toto._name.replaceAll(" ", "") + ".ddfcs", Context.MODE_PRIVATE);
