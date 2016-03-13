@@ -247,7 +247,7 @@ public class CombatScreen extends Fragment {
         viewHitDiceCurrent.setText(Integer.toString(_character._hitDice));
 
         tvCharName.setText(_character.toString());
-        tvAC.setText("AC: " + _character._armorClass);
+        tvAC.setText(_character._armorClass + "");
 
         int modDex = _character.getModifier(Enumerations.Attributes.DEX);
         int modStr = _character.getModifier(Enumerations.Attributes.STR);
