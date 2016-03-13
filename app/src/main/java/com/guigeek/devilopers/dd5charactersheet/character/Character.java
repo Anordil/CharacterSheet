@@ -1,7 +1,5 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -22,6 +20,13 @@ public class Character implements Serializable {
     public int[] _spellSlotsCurrent, _spellSlotsMax;
     public LinkedList<Skill> _skills;
     public LinkedList<Skill> _savingThrows;
+    public LinkedList<Power> _powers;
+
+    public int _atkBonus, _dmgBonus;
+    public String _weaponDmgDice;
+    public boolean _isWeaponRanged;
+    public int _gold;
+    public String _allItems;
 
 
     public int[] _attributes;
@@ -38,10 +43,32 @@ public class Character implements Serializable {
             _attributes[i] = attr[i];
         }
 
+        _atkBonus = 0;
+        _dmgBonus = 0;
+        _weaponDmgDice = "1D4";
+        _isWeaponRanged = false;
+        _gold = 0;
+        _allItems = "10 torches";
+
+
         initLevel();
-        initSkills();
+        recomputeSkills();
         initSavingThrows();
-        refreshAC();
+
+        doLongRest();
+    }
+
+    public LinkedList<Power> getPowers() {
+        if (_powers == null) {
+            _powers = _class.getPowers(_level, this);
+        }
+        return _powers;
+    }
+
+    public void refresh() {
+        initLevel();
+        recomputeSkills();
+        initSavingThrows();
 
         doLongRest();
     }
@@ -50,9 +77,10 @@ public class Character implements Serializable {
         _hitDice = _level;
         _spellSlotsMax = _class.getSpellSlots(_level);
         _hpMax = _class.getHitDie() + (_level -1)*(int)Math.ceil(_class.getHitDie()/2 +1) + _level*getModifier(Enumerations.Attributes.CON);
+        _powers = _class.getPowers(_level, this);
     }
 
-    private void doLongRest() {
+    public void doLongRest() {
         _hpCurrent = _hpMax;
         _hpTemp = 0;
         _hitDice = _level;
@@ -62,11 +90,26 @@ public class Character implements Serializable {
         for (int i =0; i < _spellSlotsMax.length; i++) {
             _spellSlotsCurrent[i] = _spellSlotsMax[i];
         }
+
+        if (_powers == null) {
+            _powers = _class.getPowers(_level, this);
+        }
+        for (Power p: getPowers()) {
+            p._left = p._max;
+        }
     }
 
-    private void refreshAC() {
-        _armorClass = 10 + getModifier(Enumerations.Attributes.DEX); //+ _inventory.getEquippedArmor().getACBonus();
+    public void doShortRest() {
+        if (_powers == null) {
+            _powers = _class.getPowers(_level, this);
+        }
+        for (Power p: getPowers()) {
+            if (!p._isLongRest) {
+                p._left = p._max;
+            }
+        }
     }
+
 
     @Override
     public String toString() {
@@ -77,16 +120,19 @@ public class Character implements Serializable {
     public void changeHP(int iQuantity) {
         _hpCurrent += iQuantity;
         _hpCurrent = Math.min(_hpCurrent, _hpMax);
+        _hpCurrent = Math.max(_hpCurrent, 0);
     }
 
     public void changeHD(int iQuantity) {
         _hitDice += iQuantity;
         _hitDice = Math.min(_hitDice, _level);
+        _hitDice = Math.max(_hitDice, 0);
     }
 
     public void changeSpellSlot(int level, int diff) {
         _spellSlotsCurrent[level] += diff;
         _spellSlotsCurrent[level] = Math.min(_spellSlotsCurrent[level], _spellSlotsMax[level]);
+        _spellSlotsCurrent[level] = Math.max(_spellSlotsCurrent[level], 0);
     }
 
     public int getModifier(Enumerations.Attributes iAttr) {

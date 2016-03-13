@@ -11,4 +11,5 @@
     <dimen name="text_size_small">9sp</dimen>
 
     <dimen name="spacing_v_below_title">10dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>
