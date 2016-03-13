@@ -16,4 +16,6 @@ public interface Class  {
 
     public String[] getLevelUpBenefits(int iNewCharacterLevel);
     public LinkedList<Power> getPowers(int iLevel, Character iCharac);
+
+    public Enumerations.Attributes getMainSpellAttribute();
 }

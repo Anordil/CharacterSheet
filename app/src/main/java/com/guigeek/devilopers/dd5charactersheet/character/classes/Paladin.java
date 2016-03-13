@@ -120,4 +120,8 @@ public class Paladin implements Class, Serializable {
 
         return powers;
     }
+
+    public Enumerations.Attributes getMainSpellAttribute() {
+        return Enumerations.Attributes.CHA;
+    }
 }
