@@ -5,9 +5,11 @@
 
 
     <string name="class_paladin">Paladin</string>
+    <string name="class_warlock">Warlock</string>
 
 
     <string name="race_mtn_dwarf">Mountain Dwarf</string>
+    <string name="race_half_elf">Half Elf</string>
     <string name="title_activity_swipe">Character Sheet</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
