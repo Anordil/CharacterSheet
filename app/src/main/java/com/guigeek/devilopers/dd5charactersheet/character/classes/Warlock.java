@@ -14,29 +14,30 @@ import java.util.LinkedList;
  */
 public class Warlock implements Class, Serializable {
 
+    // Warlock have a single-level spell slot, used for all their spells. Treat it like a Power
     private int[][] _spellSlots = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 2, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
-            {0, 3, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 4, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 5, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 6, 0, 0, 0, 0, 0, 0},//lv 5
-            {0, 0, 0, 7, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 8, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 9, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 10, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 10, 0, 0, 0, 0},//lv 10
-            {0, 0, 0, 0, 0, 11, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 11, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 12, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 12, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 13, 1, 1, 1, 0},//lv 15
-            {0, 0, 0, 0, 0, 13, 1, 1, 1, 0},
-            {0, 0, 0, 0, 0, 14, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 14, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 15, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 15, 1, 1, 1, 1}//ln 20
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 5
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 10
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 15
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}//ln 20
     };
 
     @Override
@@ -74,16 +75,52 @@ public class Warlock implements Class, Serializable {
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 
+        // Spell slot
+        if (iLevel >= 1) {
+            int spellLevel = 1;
+            int spellSlots = 1;
+            int dd = 8 + iCharac.getProficiencyBonus() + iCharac.getModifier(getMainSpellAttribute());
+            if (iLevel >= 17) {
+                spellSlots = 4;
+                spellLevel = 5;
+            }
+            else if (iLevel >= 11) {
+                spellSlots = 3;
+                spellLevel = 5;
+            }
+            else if (iLevel >= 9) {
+                spellSlots = 2;
+                spellLevel = 5;
+            }
+            else if (iLevel >= 7) {
+                spellSlots = 2;
+                spellLevel = 4;
+            }
+            else if (iLevel >= 5) {
+                spellSlots = 2;
+                spellLevel = 3;
+            }
+            else if (iLevel >= 3) {
+                spellSlots = 2;
+                spellLevel = 2;
+            }
+            else if (iLevel >= 2) {
+                spellSlots = 2;
+                spellLevel = 1;
+            }
+            powers.add(new Power("Spell slot", "Consume a slot to cast a spell which level is no more than " + spellLevel + ".\nThe spell is cast as a " + spellLevel + (spellLevel == 1 ? "st" : (spellLevel == 2 ? "nd" : (spellLevel == 3 ? "rd": "th"))) + " level spell.", "Spell", spellSlots, dd, false));
+        }
+
         if (iLevel >= 1) {
             powers.add(new Power("Awakened Mind", "You can communicate telepathically with any creature you can see within 30 feet of you.", "30ft", -1, -1, true));
         }
 
         if (iLevel >= 6) {
-        	powers.add(new Power("Entropic Ward", "When a creature makes an attack roll against you, you can use your reaction to impose disadvantage on that roll. ]f the attack misses you, your next attack roll against the creature has advantage if you make it before the end of your next turno", "Unlimited", -1, -1, true));
+        	powers.add(new Power("Entropic Ward", "When a creature makes an attack roll against you, you can use your reaction to impose disadvantage on that roll. ]f the attack misses you, your next attack roll against the creature has advantage if you make it before the end of your next turno", "Melee", -1, -1, true));
         }
 
         if (iLevel >= 10) {
-    		powers.add(new Power("Thought Shield", "Your thoughts can't be read by telepathy or other means unless you allow it. You also have resistance to psychic damage, and whenever a creature deals psychic damage to you, that creature takes the same amount of damage that you do.", "Unlimited", -1, -1, true));
+    		powers.add(new Power("Thought Shield", "Your thoughts can't be read by telepathy or other means unless you allow it. You also have resistance to psychic damage, and whenever a creature deals psychic damage to you, that creature takes the same amount of damage that you do.", "Self", -1, -1, true));
     	}
 
         if (iLevel >= 14) {

@@ -237,7 +237,11 @@ public class CombatScreen extends Fragment {
                 plus.setLayoutParams(rowParam);
 
                 TableRow rowUsage= new TableRow(getContext());
-                rowUsage.addView(new TextView(getContext())); //placeholder
+
+                TextView aLongRestShortRestTV = new TextView(getContext());
+                aLongRestShortRestTV.setText(power._isLongRest ? "LR" : "SR");
+
+                rowUsage.addView(aLongRestShortRestTV);
                 rowUsage.addView(current);
                 rowUsage.addView(max);
                 rowUsage.addView(minus);

@@ -20,6 +20,8 @@ import android.widget.ListView;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
 
 import java.io.File;
@@ -45,7 +47,8 @@ public class MainActivity extends ListActivity {
             @Override
             public void onClick(View view) {
                 int[] totoAttr = {10,10,10,10,10,10};
-                Character toto = new Character("New Character", new Paladin(), new MountainDwarf(), 1, totoAttr);
+//                Character toto = new Character("New Character", new Paladin(), new MountainDwarf(), 1, totoAttr);
+                Character toto = new Character("New Character", new Warlock(), new HalfElf(), 1, totoAttr);
 
 
                 try {
