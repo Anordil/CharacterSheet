@@ -39,7 +39,7 @@ public class Character implements Serializable {
 
         _fettles = new LinkedList<>();
         _attributes = new int[6];
-        for (int i =0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             _attributes[i] = attr[i];
         }
 
@@ -57,6 +57,7 @@ public class Character implements Serializable {
 
         doLongRest();
     }
+
 
     public LinkedList<Power> getPowers() {
         if (_powers == null) {
@@ -76,7 +77,7 @@ public class Character implements Serializable {
     private void initLevel() {
         _hitDice = _level;
         _spellSlotsMax = _class.getSpellSlots(_level);
-        _hpMax = _class.getHitDie() + (_level -1)*(int)Math.ceil(_class.getHitDie()/2 +1) + _level*getModifier(Enumerations.Attributes.CON);
+        _hpMax = _class.getHitDie() + (_level - 1) * (int) Math.ceil(_class.getHitDie() / 2 + 1) + _level * getModifier(Enumerations.Attributes.CON);
         _powers = _class.getPowers(_level, this);
     }
 
@@ -87,14 +88,14 @@ public class Character implements Serializable {
 
 
         _spellSlotsCurrent = new int[_spellSlotsMax.length];
-        for (int i =0; i < _spellSlotsMax.length; i++) {
+        for (int i = 0; i < _spellSlotsMax.length; i++) {
             _spellSlotsCurrent[i] = _spellSlotsMax[i];
         }
 
         if (_powers == null) {
             _powers = _class.getPowers(_level, this);
         }
-        for (Power p: getPowers()) {
+        for (Power p : getPowers()) {
             p._left = p._max;
         }
     }
@@ -103,7 +104,7 @@ public class Character implements Serializable {
         if (_powers == null) {
             _powers = _class.getPowers(_level, this);
         }
-        for (Power p: getPowers()) {
+        for (Power p : getPowers()) {
             if (!p._isLongRest) {
                 p._left = p._max;
             }
@@ -137,11 +138,11 @@ public class Character implements Serializable {
 
     public int getModifier(Enumerations.Attributes iAttr) {
         int value = _attributes[iAttr.ordinal()];
-        return (int)Math.floor((value-10)/2);
+        return (int) Math.floor((value - 10) / 2);
     }
 
     public int getProficiencyBonus() {
-        return (int)(1 + Math.ceil(_level/4));
+        return (int) (1 + Math.ceil(_level / 4));
     }
 
 
@@ -150,7 +151,7 @@ public class Character implements Serializable {
             initSkills();
         }
 
-        for (Skill skill: _skills) {
+        for (Skill skill : _skills) {
             skill.recompute(this);
         }
     }
@@ -183,7 +184,7 @@ public class Character implements Serializable {
             initSavingThrows();
         }
 
-        for (Skill skill: _savingThrows) {
+        for (Skill skill : _savingThrows) {
             skill.recompute(this);
         }
     }

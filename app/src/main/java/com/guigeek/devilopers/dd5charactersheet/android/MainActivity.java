@@ -46,26 +46,9 @@ public class MainActivity extends ListActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int[] totoAttr = {10,10,10,10,10,10};
-//                Character toto = new Character("New Character", new Paladin(), new MountainDwarf(), 1, totoAttr);
-                Character toto = new Character("New Character", new Warlock(), new HalfElf(), 1, totoAttr);
 
-
-                try {
-                    FileOutputStream fos = openFileOutput(toto._name.replaceAll(" ", "") + ".ddfcs", Context.MODE_PRIVATE);
-                    ObjectOutputStream out = new ObjectOutputStream(fos);
-                    out.writeObject(toto);
-                    out.flush();
-                    out.close();
-                    fos.close();
-                    Log.d("TOTO", "Export OK");
-                    getSavedCharacters();
-                    ArrayAdapter<Character> adapter = new ArrayAdapter<Character>(MainActivity.this, android.R.layout.simple_list_item_1, _characters);
-                    setListAdapter(adapter);
-                } catch (Exception e) {
-                    Log.d("TOTO", "Export failed, ");
-                    e.printStackTrace();
-                }
+                Intent newIntent = new Intent(getApplicationContext(), CreateCharacter.class);
+                startActivityForResult(newIntent, 0);
             }
         });
 
@@ -82,11 +65,43 @@ public class MainActivity extends ListActivity {
                 bundle.putSerializable(Constants.CHARACTER, _characters[position]);
                 Intent newIntent = new Intent(getApplicationContext(), SwipeActivity.class);
                 newIntent.putExtras(bundle);
-                startActivityForResult(newIntent, 0);
+                startActivity(newIntent);
             }
         });
 
         registerForContextMenu(getListView());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data != null && data.getSerializableExtra(Constants.CHARACTER) != null) {
+            try {
+                Character toto = (Character) data.getSerializableExtra(Constants.CHARACTER);
+                FileOutputStream fos = openFileOutput(toto._name.replaceAll(" ", "") + ".ddfcs", Context.MODE_PRIVATE);
+                ObjectOutputStream out = new ObjectOutputStream(fos);
+                out.writeObject(toto);
+                out.flush();
+                out.close();
+                fos.close();
+                Log.d("TOTO", "Creation OK");
+                getSavedCharacters();
+                ArrayAdapter<Character> adapter = new ArrayAdapter<Character>(MainActivity.this, android.R.layout.simple_list_item_1, _characters);
+                setListAdapter(adapter);
+            } catch (Exception e) {
+                Log.d("TOTO", "Creation failed, ");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getSavedCharacters();
+        ArrayAdapter<Character> adapter = new ArrayAdapter<Character>(MainActivity.this, android.R.layout.simple_list_item_1, _characters);
+        setListAdapter(adapter);
     }
 
     private Character[] getSavedCharacters() {

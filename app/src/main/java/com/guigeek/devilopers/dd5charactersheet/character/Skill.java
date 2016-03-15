@@ -16,11 +16,11 @@ public class Skill implements Serializable {
         _name = iName;
         _attribute = iAttr;
         _isProficient = false;
-        _score = 10;
+        _score = 0;
     }
 
     public void recompute(Character iChar) {
-        _score = 10 + iChar.getModifier(_attribute);
+        _score = iChar.getModifier(_attribute);
         if (_isProficient) {
             _score += iChar.getProficiencyBonus();
         }
