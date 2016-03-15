@@ -1,5 +1,6 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -81,7 +82,9 @@ public class SkillsScreen extends Fragment {
             isProficient.setScaleX(1.5f);
             isProficient.setScaleY(1.5f);
             name.setText(skill._name);
-            value.setText(skill._score > 0 ? "+": "" + Integer.toString(skill._score));
+            value.setTextColor(skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light):
+            (skill._score > 0 ? getResources().getColor(android.R.color.holo_green_light) : getResources().getColor(android.R.color.darker_gray)));
+            value.setText((skill._score > 0 ? "+": "") + Integer.toString(skill._score));
 
             TableRow.LayoutParams paramNameTV = new TableRow.LayoutParams();
             paramNameTV.span = 2;
@@ -118,6 +121,8 @@ public class SkillsScreen extends Fragment {
             name.setTextSize(20.0f);
             attr.setTextSize(15.0f);
             value.setTextSize(20.0f);
+            value.setTextColor(skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light) :
+                    (skill._score > 0 ? getResources().getColor(android.R.color.holo_green_light) : getResources().getColor(android.R.color.darker_gray)));
             CheckBox isProficient = new CheckBox(getContext());
 
             isProficient.setChecked(skill._isProficient);
@@ -126,7 +131,7 @@ public class SkillsScreen extends Fragment {
             isProficient.setScaleY(1.5f);
             name.setText(skill._name);
             attr.setText(skill._attribute.toString());
-            value.setText(skill._score > 0 ? "+": "" + Integer.toString(skill._score));
+            value.setText((skill._score > 0 ? "+": "") + Integer.toString(skill._score));
 
             TableRow.LayoutParams rowParam = new TableRow.LayoutParams();
 
@@ -151,7 +156,10 @@ public class SkillsScreen extends Fragment {
         public void onClick(View v) {
             _skill._isProficient = !_skill._isProficient;
             _skill.recompute(_character);
-            _view.setText(Integer.toString(_skill._score));
+
+            _view.setText((_skill._score > 0 ? "+": "") + Integer.toString(_skill._score));
+            _view.setTextColor(_skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light) :
+                    (_skill._score > 0 ? getResources().getColor(android.R.color.holo_green_light) : getResources().getColor(android.R.color.darker_gray)));
         }
     }
 }
