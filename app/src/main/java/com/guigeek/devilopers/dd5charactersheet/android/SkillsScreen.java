@@ -81,7 +81,7 @@ public class SkillsScreen extends Fragment {
             isProficient.setScaleX(1.5f);
             isProficient.setScaleY(1.5f);
             name.setText(skill._name);
-            value.setText(Integer.toString(skill._score));
+            value.setText(skill._score > 0 ? "+": "" + Integer.toString(skill._score));
 
             TableRow.LayoutParams paramNameTV = new TableRow.LayoutParams();
             paramNameTV.span = 2;
@@ -126,7 +126,7 @@ public class SkillsScreen extends Fragment {
             isProficient.setScaleY(1.5f);
             name.setText(skill._name);
             attr.setText(skill._attribute.toString());
-            value.setText(Integer.toString(skill._score));
+            value.setText(skill._score > 0 ? "+": "" + Integer.toString(skill._score));
 
             TableRow.LayoutParams rowParam = new TableRow.LayoutParams();
 
