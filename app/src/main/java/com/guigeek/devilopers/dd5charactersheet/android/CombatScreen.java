@@ -28,7 +28,7 @@ import java.util.List;
 public class CombatScreen extends Fragment {
 
     protected Character _character;
-    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvCharName, tvAC, tvAtk, tvDmg;
+    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg;
     TextView viewSpeed, viewInit;
     ProgressBar pb;
 
@@ -66,7 +66,6 @@ public class CombatScreen extends Fragment {
         viewHPMax = (TextView)rootView.findViewById(R.id.tvHPMax);
         viewHitDiceCurrent = (TextView)rootView.findViewById(R.id.tvHitDiceCurrent);
         viewHitDiceMax = (TextView)rootView.findViewById(R.id.tvHitDiceMax);
-        tvCharName = (TextView)rootView.findViewById(R.id.tvName);
         tvAC = (TextView)rootView.findViewById(R.id.tvArmorClass);
         pb = (ProgressBar)rootView.findViewById(R.id.progressBar);
 
