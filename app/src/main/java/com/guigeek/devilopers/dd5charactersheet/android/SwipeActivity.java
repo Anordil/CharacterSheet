@@ -70,8 +70,9 @@ public class SwipeActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-    }
 
+        setTitle(_character._name);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -161,6 +162,7 @@ public class SwipeActivity extends AppCompatActivity {
 
     public void refreshTabs() {
         _character.refresh();
+        save();
     }
 
     public void save() {

@@ -85,7 +85,7 @@ public class InventoryScreen extends Fragment {
             _character._allItems = items.getText().toString();
             _character._isWeaponRanged = ranged.isChecked();
 
-            ((SwipeActivity)getActivity()).refreshTabs();
+            ((SwipeActivity)getActivity()).save();
         }
     }
 }

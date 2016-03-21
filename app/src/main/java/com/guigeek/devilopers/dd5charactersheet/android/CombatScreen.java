@@ -29,6 +29,7 @@ public class CombatScreen extends Fragment {
 
     protected Character _character;
     TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvCharName, tvAC, tvAtk, tvDmg;
+    TextView viewSpeed, viewInit;
     ProgressBar pb;
 
     List<TextView> spellSlotTextViews;
@@ -71,6 +72,9 @@ public class CombatScreen extends Fragment {
 
         tvAtk = (TextView)rootView.findViewById(R.id.tvAtkBonus);
         tvDmg = (TextView)rootView.findViewById(R.id.tvDamage);
+
+        viewSpeed = (TextView)rootView.findViewById(R.id.tvSpeed);
+        viewInit = (TextView)rootView.findViewById(R.id.tvInitiative);
 
         addButtonListener(rootView);
         createSpellBars(rootView);
@@ -269,7 +273,6 @@ public class CombatScreen extends Fragment {
         viewHitDiceMax.setText(Integer.toString(_character._level));
         viewHitDiceCurrent.setText(Integer.toString(_character._hitDice));
 
-        tvCharName.setText(_character.toString());
         tvAC.setText(_character._armorClass + "");
 
         int modDex = _character.getModifier(Enumerations.Attributes.DEX);
@@ -283,6 +286,10 @@ public class CombatScreen extends Fragment {
         String damage = _character._weaponDmgDice + (dmgBonus > 0 ? "+":"") + (dmgBonus != 0 ? dmgBonus : "");
         tvDmg.setText(damage);
         tvAtk.setText((attackBonus > 0 ? "+":"") + attackBonus);
+
+        viewSpeed.setText(_character._race.getSpeedInFeet() + " ft.");
+        int dexBonus = _character.getModifier(Enumerations.Attributes.DEX);
+        viewInit.setText((dexBonus > 0 ? "+": "") + dexBonus);
     }
 
     public void changeHP(View v) {
