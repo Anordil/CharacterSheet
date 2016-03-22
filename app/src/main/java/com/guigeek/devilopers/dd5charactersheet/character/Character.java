@@ -1,35 +1,131 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
-import java.io.Serializable;
+import android.util.Log;
+
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
+
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.LinkedList;
 
 /**
  * Created by ggallani on 19/02/2016.
  */
-public class Character implements Serializable {
+public class Character implements Externalizable {
+
+    public static final long serialVersionUID = 30L;
+    int _version = 1;
 
     public Class _class;
     public Race _race;
     public String _name;
+    public int[] _attributes;
 
     public int _level;
-    public LinkedList<Fettle> _fettles;
-
     public int _hpCurrent, _hpMax, _hpTemp, _hitDice;
     public int _armorClass;
     public int[] _spellSlotsCurrent, _spellSlotsMax;
+    public int _atkBonus, _dmgBonus;
+    public int _gold;
+
     public LinkedList<Skill> _skills;
     public LinkedList<Skill> _savingThrows;
     public LinkedList<Power> _powers;
 
-    public int _atkBonus, _dmgBonus;
+
     public String _weaponDmgDice;
     public boolean _isWeaponRanged;
-    public int _gold;
     public String _allItems;
 
 
-    public int[] _attributes;
+    @Override
+    public void writeExternal(ObjectOutput oo) throws IOException
+    {
+        oo.writeInt(_version);
+
+        oo.writeObject(_class);
+        oo.writeObject(_race);
+        oo.writeObject(_name);
+        oo.writeObject(_attributes);
+
+        oo.writeInt(_level);
+        oo.writeInt(_hpCurrent);
+        oo.writeInt(_hpMax);
+        oo.writeInt(_hpTemp);
+        oo.writeInt(_hitDice);
+        oo.writeInt(_armorClass);
+        oo.writeInt(_atkBonus);
+        oo.writeInt(_dmgBonus);
+        oo.writeInt(_gold);
+
+        oo.writeObject(_skills);
+        oo.writeObject(_savingThrows);
+        oo.writeObject(_powers);
+
+        oo.writeObject(_weaponDmgDice);
+        oo.writeBoolean(_isWeaponRanged);
+        oo.writeObject(_allItems);
+        Log.d("WRAP", "All good");
+    }
+
+    @Override
+    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
+    {
+        int version = oi.readInt();
+        _version = version;
+        if (version >= 1) {
+
+            Log.d("UNWRAP", "Before class");
+            Object aClass = oi.readObject();
+            if (aClass instanceof Paladin) {
+                _class = (Paladin) aClass;
+            }
+            else if (aClass instanceof Warlock) {
+                _class = (Warlock) aClass;
+            }
+            Log.d("UNWRAP", "After class");
+
+            Object aRace = oi.readObject();
+            if (aRace instanceof HalfElf) {
+                _race = (HalfElf) aRace;
+            }
+            else if (aRace instanceof MountainDwarf) {
+                _race = (MountainDwarf) aRace;
+            }
+            Log.d("UNWRAP", "After race");
+
+
+            _name = (String) oi.readObject();
+            _attributes = (int[]) oi.readObject();
+
+            _level = oi.readInt();
+            _hpCurrent = oi.readInt();
+            _hpMax = oi.readInt();
+            _hpTemp = oi.readInt();
+            _hitDice = oi.readInt();
+            _armorClass = oi.readInt();
+            _atkBonus = oi.readInt();
+            _dmgBonus = oi.readInt();
+            _gold = oi.readInt();
+
+            _skills = (LinkedList<Skill>) oi.readObject();
+            _savingThrows = (LinkedList<Skill>) oi.readObject();
+            _powers = (LinkedList<Power>) oi.readObject();
+
+            _weaponDmgDice = (String) oi.readObject();
+            _isWeaponRanged = oi.readBoolean();
+            _allItems = (String) oi.readObject();
+        }
+    }
+
+    public Character(){
+        this("New hero", new Paladin(), new HalfElf(), 1, new int[6]);
+    };
 
     public Character(String name, Class iClass, Race iRace, int level, int[] attr) {
         _name = name;
@@ -37,7 +133,6 @@ public class Character implements Serializable {
         _race = iRace;
         _level = level;
 
-        _fettles = new LinkedList<>();
         _attributes = new int[6];
         for (int i = 0; i < 6; i++) {
             _attributes[i] = attr[i];

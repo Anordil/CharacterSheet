@@ -6,38 +6,65 @@ import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  * Created by ggallani on 19/02/2016.
  */
-public class Paladin implements Class, Serializable {
+public class Paladin implements Class, Externalizable {
 
-    private int[][] _spellSlots = {
-            // spell level 0-9
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
-            {0, 2, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 3, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 3, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 4, 2, 0, 0, 0, 0, 0, 0, 0},//lv 5
-            {0, 4, 2, 0, 0, 0, 0, 0, 0, 0},
-            {0, 4, 3, 0, 0, 0, 0, 0, 0, 0},
-            {0, 4, 3, 0, 0, 0, 0, 0, 0, 0},
-            {0, 4, 3, 2, 0, 0, 0, 0, 0, 0},
-            {0, 4, 3, 2, 0, 0, 0, 0, 0, 0},//lv 10
-            {0, 4, 3, 3, 0, 0, 0, 0, 0, 0},
-            {0, 4, 3, 3, 0, 0, 0, 0, 0, 0},
-            {0, 4, 3, 3, 1, 0, 0, 0, 0, 0},
-            {0, 4, 3, 3, 1, 0, 0, 0, 0, 0},
-            {0, 4, 3, 3, 2, 0, 0, 0, 0, 0},//lv 15
-            {0, 4, 3, 3, 2, 0, 0, 0, 0, 0},
-            {0, 4, 3, 3, 3, 1, 0, 0, 0, 0},
-            {0, 4, 3, 3, 3, 1, 0, 0, 0, 0},
-            {0, 4, 3, 3, 3, 2, 0, 0, 0, 0},
-            {0, 4, 3, 3, 3, 2, 0, 0, 0, 0}//ln 20
-    };
+    int[][] _spellSlots = {
+                // spell level 0-9
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
+                {0, 2, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 3, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 3, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 4, 2, 0, 0, 0, 0, 0, 0, 0},//lv 5
+                {0, 4, 2, 0, 0, 0, 0, 0, 0, 0},
+                {0, 4, 3, 0, 0, 0, 0, 0, 0, 0},
+                {0, 4, 3, 0, 0, 0, 0, 0, 0, 0},
+                {0, 4, 3, 2, 0, 0, 0, 0, 0, 0},
+                {0, 4, 3, 2, 0, 0, 0, 0, 0, 0},//lv 10
+                {0, 4, 3, 3, 0, 0, 0, 0, 0, 0},
+                {0, 4, 3, 3, 0, 0, 0, 0, 0, 0},
+                {0, 4, 3, 3, 1, 0, 0, 0, 0, 0},
+                {0, 4, 3, 3, 1, 0, 0, 0, 0, 0},
+                {0, 4, 3, 3, 2, 0, 0, 0, 0, 0},//lv 15
+                {0, 4, 3, 3, 2, 0, 0, 0, 0, 0},
+                {0, 4, 3, 3, 3, 1, 0, 0, 0, 0},
+                {0, 4, 3, 3, 3, 1, 0, 0, 0, 0},
+                {0, 4, 3, 3, 3, 2, 0, 0, 0, 0},
+                {0, 4, 3, 3, 3, 2, 0, 0, 0, 0}//ln 20
+        };
+
+    public static final long serialVersionUID = 201L;
+    protected int _version = 1;
+
+    public Paladin(){}
+
+    @Override
+    public void writeExternal(ObjectOutput oo) throws IOException
+    {
+        oo.writeInt(_version);
+        oo.writeObject(_spellSlots);
+    }
+
+    @Override
+    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
+    {
+        int version = oi.readInt();
+        _version = version;
+        if (version >= 1) {
+            _spellSlots = (int[][])oi.readObject();
+        }
+    }
+
 
     @Override
     public String getName() {

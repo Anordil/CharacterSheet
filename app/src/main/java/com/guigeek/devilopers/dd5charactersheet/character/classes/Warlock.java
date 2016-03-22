@@ -6,16 +6,22 @@ import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  * Created by totou on 14/03/2016.
  */
-public class Warlock implements Class, Serializable {
+public class Warlock implements Class, Externalizable {
+
+    public Warlock(){}
 
     // Warlock have a single-level spell slot, used for all their spells. Treat it like a Power
-    private int[][] _spellSlots = {
+    int[][] _spellSlots = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
@@ -39,6 +45,26 @@ public class Warlock implements Class, Serializable {
             {0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
             {0, 0, 0, 0, 0, 0, 1, 1, 1, 1}//ln 20
     };
+
+    public static final long serialVersionUID = 202L;
+    protected int _version = 1;
+
+    @Override
+    public void writeExternal(ObjectOutput oo) throws IOException
+    {
+        oo.writeInt(_version);
+        oo.writeObject(_spellSlots);
+    }
+
+    @Override
+    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
+    {
+        int version = oi.readInt();
+        _version = version;
+        if (version >= 1) {
+            _spellSlots = (int[][])oi.readObject();
+        }
+    }
 
     @Override
     public String getName() {
