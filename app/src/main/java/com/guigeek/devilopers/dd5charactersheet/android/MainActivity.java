@@ -115,6 +115,8 @@ public class MainActivity extends ListActivity {
                 Log.d("TOTO", "Loop OK");
             } catch (Exception e) {
                 Log.d("TOTO", "Loop fail");
+                e.printStackTrace();
+                file.delete();
             }
         }
 

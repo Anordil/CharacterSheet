@@ -2,21 +2,22 @@ package com.guigeek.devilopers.dd5charactersheet.character.races;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.App;
-import com.guigeek.devilopers.dd5charactersheet.character.AttributeAlteration;
-import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
-import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
-import com.guigeek.devilopers.dd5charactersheet.character.Race;
+import com.guigeek.devilopers.dd5charactersheet.character.*;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.util.LinkedList;
 
 /**
  * Created by ggallani on 19/02/2016.
  */
 public class MountainDwarf implements Race, Externalizable {
+    public static final long serialVersionUID = 102L;
+    int _version = 1;
+
     @Override
     public String getName() {
         return App.getResString(R.string.race_mtn_dwarf);
@@ -36,8 +37,7 @@ public class MountainDwarf implements Race, Externalizable {
         return raceBonuses;
     }
 
-    public final long serialVersionUID = 102L;
-    int _version = 1;
+
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {
@@ -48,5 +48,17 @@ public class MountainDwarf implements Race, Externalizable {
     public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException {
         int version = oi.readInt();
         _version = version;
+    }
+
+    @Override
+    public LinkedList<Power> getRacialFeatures() {
+        LinkedList<Power> racialTraits = new LinkedList<>();
+
+        racialTraits.add(new Power("Darkvision", "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.", "60ft", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        racialTraits.add(new Power("Dwarven Resilience", "You have advantage on saving throws against poison, and you have resistance against poison damage.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        racialTraits.add(new Power("Stonecutting", "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+
+
+        return racialTraits;
     }
 }

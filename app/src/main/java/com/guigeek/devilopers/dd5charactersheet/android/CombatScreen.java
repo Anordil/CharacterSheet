@@ -77,7 +77,8 @@ public class CombatScreen extends Fragment {
 
         addButtonListener(rootView);
         createSpellBars(rootView);
-        createSpecialPowerBars(rootView);
+        createSpecialPowerBars(rootView, "Class Features", _character.getPowers());
+        createSpecialPowerBars(rootView, "Racial Features", _character._race.getRacialFeatures());
         refreshSheet();
 
         return rootView;
@@ -181,17 +182,17 @@ public class CombatScreen extends Fragment {
         }
     }
 
-    private void createSpecialPowerBars(View root) {
-        LinkedList<Power> powers = _character.getPowers();
+    private void createSpecialPowerBars(View root, String title, LinkedList<Power> powers) {
         TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
 
         if (powers.size() > 0) {
             TableRow rowPowerHeader = new TableRow(getContext());
             TextView powerHeader = new TextView(getContext());
-            powerHeader.setText("Class features");
+            powerHeader.setText(title);
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
             paramsSaves.span = 7;
+            paramsSaves.topMargin = 10;
             powerHeader.setLayoutParams(paramsSaves);
             rowPowerHeader.addView(powerHeader);
             ll.addView(rowPowerHeader);

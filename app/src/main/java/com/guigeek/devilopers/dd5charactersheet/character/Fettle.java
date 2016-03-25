@@ -10,6 +10,9 @@ import java.io.ObjectOutput;
  */
 public class Fettle  implements Externalizable {
 
+    public static final long serialVersionUID = 13L;
+    int _version = 1;
+
     public Enumerations.FettleType _type;
     public int _value;
 
@@ -21,8 +24,7 @@ public class Fettle  implements Externalizable {
         _value = iValue;
     }
 
-    public final long serialVersionUID = 13L;
-    int _version = 1;
+
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {

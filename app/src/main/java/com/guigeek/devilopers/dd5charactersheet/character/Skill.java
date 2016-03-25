@@ -11,6 +11,9 @@ import java.io.ObjectOutput;
  */
 public class Skill implements Externalizable {
 
+    public static final long serialVersionUID = 15L;
+    int _version = 1;
+
     public String _name;
     public Enumerations.Attributes _attribute;
     public boolean _isProficient;
@@ -33,8 +36,7 @@ public class Skill implements Externalizable {
         }
     }
 
-    public final long serialVersionUID = 15L;
-    int _version = 1;
+
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {
