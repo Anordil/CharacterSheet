@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100"
+    android:padding="10dp"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listCharClassIson"
+        android:src="@drawable/ic_warrior" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="60"
+        android:layout_height="wrap_content"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:text="Thorvil"
+        android:id="@+id/listCharName"
+        android:paddingLeft="10dp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="40"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="1dp"
+        android:text="Warrior"
+        android:id="@+id/listCharClass"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12"
+        android:id="@+id/listCharLevel"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
+</LinearLayout>

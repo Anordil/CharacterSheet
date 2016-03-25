@@ -188,7 +188,7 @@ public class CombatScreen extends Fragment {
         if (powers.size() > 0) {
             TableRow rowPowerHeader = new TableRow(getContext());
             TextView powerHeader = new TextView(getContext());
-            powerHeader.setText("Powers");
+            powerHeader.setText("Class features");
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
             paramsSaves.span = 7;
@@ -206,23 +206,26 @@ public class CombatScreen extends Fragment {
             rowDesc.setPadding(0, 0, 0, 20);
 
             TextView name = new TextView(getContext()), current = new TextView(getContext()), max = new TextView(getContext());
-            TextView dist = new TextView(getContext()), desc = new TextView(getContext()), dd = new TextView(getContext());
+            TextView description = new TextView(getContext()), desc = new TextView(getContext()), dd = new TextView(getContext());
 
             name.setText(power._name);
             name.setTextSize(16.0f);
             name.setTextColor(getResources().getColor(android.R.color.black));
             current.setText(power._left + "");
             max.setText(power._max + "");
-            dist.setText(power._range);
+            description.setText(power.getUsageString());
             desc.setText(power._description);
             dd.setText((power._dd > 0 ? "DD" + power._dd : "") + "");
 
             TableRow.LayoutParams rowParamName = new TableRow.LayoutParams();
-            rowParamName.span = 5;
+            rowParamName.span = 4;
             name.setLayoutParams(rowParamName);
+            TableRow.LayoutParams rowParamNameDesc = new TableRow.LayoutParams();
+            rowParamNameDesc.span = 4;
+            description.setLayoutParams(rowParamNameDesc);
 
             row.addView(name);
-            row.addView(dist);
+            row.addView(description);
             row.addView(dd);
             ll.addView(row);
 

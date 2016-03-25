@@ -102,47 +102,47 @@ public class Paladin implements Class, Externalizable {
         LinkedList<Power> powers = new LinkedList<>();
 
         if (iLevel >= 1) {
-            powers.add(new Power("Divine Sense", "Detect fiend/undead/celestial.", "60ft", 1 + iCharac.getModifier(Enumerations.Attributes.CHA), -1, true));
-            powers.add(new Power("Lay on hands", "Heal HP. 5hp to remove poison/disease.", "Melee", 5*iLevel, -1, true));
+            powers.add(new Power("Divine Sense", "Detect fiend/undead/celestial.", "60ft", 1 + iCharac.getModifier(Enumerations.Attributes.CHA), -1, true, Enumerations.ActionType.ACTION));
+            powers.add(new Power("Lay on hands", "Heal HP. 5hp to remove poison/disease.", "Melee", 5*iLevel, -1, true, Enumerations.ActionType.ACTION));
         }
         if (iLevel >= 2) {
-            powers.add(new Power("Divine Smite", "Expend spell slot to add (1 + spell level)D8 radiant damage to the next melee attack.", "60ft", -1, -1, true));
+            powers.add(new Power("Divine Smite", "Expend spell slot to add (1 + spell level)D8 radiant damage to the next melee attack.", "60ft", -1, -1, true, Enumerations.ActionType.BONUS_ACTION));
         }
         if (iLevel >= 3) {
-            powers.add(new Power("Divine Health", "Immune to diseases", "Self", -1, -1, true));
+            powers.add(new Power("Divine Health", "Immune to diseases", "Self", -1, -1, true,Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 6) {
             if (iLevel >= 18) {
-                powers.add(new Power("Aura of Protection", "Allies within 30ft gain +CHA to their saving throws", "30ft", -1, -1, true));
+                powers.add(new Power("Aura of Protection", "Allies within 30ft gain +CHA to their saving throws", "30ft", -1, -1, true,Enumerations.ActionType.PASSIVE));
             }
             else {
-                powers.add(new Power("Aura of Protection", "Allies within 10ft gain +CHA to their saving throws", "10ft", -1, -1, true));
+                powers.add(new Power("Aura of Protection", "Allies within 10ft gain +CHA to their saving throws", "10ft", -1, -1, true, Enumerations.ActionType.PASSIVE));
             }
         }
         if (iLevel >= 10) {
             if (iLevel >= 18) {
-                powers.add(new Power("Aura of Courage", "Allies within 30ft are immune to fear", "30ft", -1, -1, true));
+                powers.add(new Power("Aura of Courage", "Allies within 30ft are immune to fear", "30ft", -1, -1, true, Enumerations.ActionType.PASSIVE));
             }
             else {
-                powers.add(new Power("Aura of Courage", "Allies within 10ft are immune to fear", "10ft", -1, -1, true));
+                powers.add(new Power("Aura of Courage", "Allies within 10ft are immune to fear", "10ft", -1, -1, true, Enumerations.ActionType.PASSIVE));
             }
         }
         if (iLevel >= 11) {
-            powers.add(new Power("Improved Divine Smite", "+1D8 radiant damage on melee hits.", "Melee", -1, -1, true));
+            powers.add(new Power("Improved Divine Smite", "+1D8 radiant damage on melee hits.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 14) {
-            powers.add(new Power("Cleansing touch", "Remove spell on self/ally", "Melee", iCharac.getModifier(Enumerations.Attributes.CHA), -1, true));
+            powers.add(new Power("Cleansing touch", "Remove spell on self/ally", "Melee", iCharac.getModifier(Enumerations.Attributes.CHA), -1, true,Enumerations.ActionType.ACTION));
         }
 
         // Vengeance
         if (iLevel >= 3) {
-            powers.add(new Power("Chanel Divinity", "One creature within 60ft must make a wisdom saving throw. Undead/fiends have disadvantage. On a failed save, it is freightened and its speed is 0 for 1mn or until it takes damage.\nOr target a creature within 10ft: you have advantage on attack rolls against it for 1mn.", "60ft/10ft", 1, -1, false));
+            powers.add(new Power("Chanel Divinity", "One creature within 60ft must make a wisdom saving throw. Undead/fiends have disadvantage. On a failed save, it is freightened and its speed is 0 for 1mn or until it takes damage.\nOr target a creature within 10ft: you have advantage on attack rolls against it for 1mn.", "60ft/10ft", 1, -1, false, Enumerations.ActionType.ACTION));
         }
         if (iLevel >= 7) {
-            powers.add(new Power("Relentless avenger", "Opportunity attack enables to move at half speed during reaction. Doesn't trigger OA.", "Melee", -1, -1, false));
+            powers.add(new Power("Relentless avenger", "Opportunity attack enables to move at half speed during reaction. Doesn't trigger OA.", "Melee", -1, -1, false, Enumerations.ActionType.REACTION));
         }
         if (iLevel >= 15) {
-            powers.add(new Power("Soul of Vengeance", "Creature targeter by Vow on Enmity triggers OA for me when attacking", "Melee", -1, -1, false));
+            powers.add(new Power("Soul of Vengeance", "Creature targeted by Vow on Enmity triggers OA for me when attacking", "Melee", -1, -1, false, Enumerations.ActionType.PASSIVE));
         }
 
         return powers;
@@ -150,5 +150,10 @@ public class Paladin implements Class, Externalizable {
 
     public Enumerations.Attributes getMainSpellAttribute() {
         return Enumerations.Attributes.CHA;
+    }
+
+    @Override
+    public int getIconResource() {
+        return R.drawable.ic_paladin;
     }
 }

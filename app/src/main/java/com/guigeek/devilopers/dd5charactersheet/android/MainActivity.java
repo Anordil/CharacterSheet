@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,10 +18,6 @@ import android.widget.ListView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
-import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
-import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,9 +49,8 @@ public class MainActivity extends ListActivity {
 
 
         getSavedCharacters();
-        ArrayAdapter<Character> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, _characters);
         ListView listView = getListView();
-        listView.setAdapter(adapter);
+        setListAdapter(new CharacterAdapter(this, R.layout.list_character, _characters));
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,8 +81,7 @@ public class MainActivity extends ListActivity {
                 fos.close();
                 Log.d("TOTO", "Creation OK");
                 getSavedCharacters();
-                ArrayAdapter<Character> adapter = new ArrayAdapter<Character>(MainActivity.this, android.R.layout.simple_list_item_1, _characters);
-                setListAdapter(adapter);
+                setListAdapter(new CharacterAdapter(this, R.layout.list_character, _characters));
             } catch (Exception e) {
                 Log.d("TOTO", "Creation failed, ");
                 e.printStackTrace();
@@ -100,8 +93,7 @@ public class MainActivity extends ListActivity {
     public void onResume() {
         super.onResume();
         getSavedCharacters();
-        ArrayAdapter<Character> adapter = new ArrayAdapter<Character>(MainActivity.this, android.R.layout.simple_list_item_1, _characters);
-        setListAdapter(adapter);
+        setListAdapter(new CharacterAdapter(this, R.layout.list_character, _characters));
     }
 
     private Character[] getSavedCharacters() {
@@ -163,8 +155,7 @@ public class MainActivity extends ListActivity {
                             try {
                                 deleteFile(toDelete._name.replaceAll(" ", "") + ".ddfcs");
                                 getSavedCharacters();
-                                ArrayAdapter<Character> adapter = new ArrayAdapter<Character>(MainActivity.this, android.R.layout.simple_list_item_1, _characters);
-                                setListAdapter(adapter);
+                                setListAdapter(new CharacterAdapter(MainActivity.this, R.layout.list_character, _characters));
                             } catch (Exception x) {
                                 System.err.format("Delete failed");
                             }

@@ -134,23 +134,23 @@ public class Warlock implements Class, Externalizable {
                 spellSlots = 2;
                 spellLevel = 1;
             }
-            powers.add(new Power("Spell slot", "Consume a slot to cast a spell which level is no more than " + spellLevel + ".\nThe spell is cast as a " + spellLevel + (spellLevel == 1 ? "st" : (spellLevel == 2 ? "nd" : (spellLevel == 3 ? "rd": "th"))) + " level spell.", "Spell", spellSlots, dd, false));
+            powers.add(new Power("Spell slot", "Consume a slot to cast a spell which level is no more than " + spellLevel + ".\nThe spell is cast as a " + spellLevel + (spellLevel == 1 ? "st" : (spellLevel == 2 ? "nd" : (spellLevel == 3 ? "rd": "th"))) + " level spell.", "Spell", spellSlots, dd, false, Enumerations.ActionType.ACTION));
         }
 
         if (iLevel >= 1) {
-            powers.add(new Power("Awakened Mind", "You can communicate telepathically with any creature you can see within 30 feet of you.", "30ft", -1, -1, true));
+            powers.add(new Power("Awakened Mind", "You can communicate telepathically with any creature you can see within 30 feet of you.", "30ft", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
 
         if (iLevel >= 6) {
-        	powers.add(new Power("Entropic Ward", "When a creature makes an attack roll against you, you can use your reaction to impose disadvantage on that roll. ]f the attack misses you, your next attack roll against the creature has advantage if you make it before the end of your next turno", "Melee", -1, -1, true));
+        	powers.add(new Power("Entropic Ward", "When a creature makes an attack roll against you, you can use your reaction to impose disadvantage on that roll. ]f the attack misses you, your next attack roll against the creature has advantage if you make it before the end of your next turno", "Melee", -1, -1, true, Enumerations.ActionType.REACTION));
         }
 
         if (iLevel >= 10) {
-    		powers.add(new Power("Thought Shield", "Your thoughts can't be read by telepathy or other means unless you allow it. You also have resistance to psychic damage, and whenever a creature deals psychic damage to you, that creature takes the same amount of damage that you do.", "Self", -1, -1, true));
+    		powers.add(new Power("Thought Shield", "Your thoughts can't be read by telepathy or other means unless you allow it. You also have resistance to psychic damage, and whenever a creature deals psychic damage to you, that creature takes the same amount of damage that you do.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
     	}
 
         if (iLevel >= 14) {
-            powers.add(new Power("Create Thrall", "You gain the ability to infect a humanoid's mind with the alien magic of your patron. You can use your action to touch an incapacitated humanoid. That creature is then charmed by you until a remove curse spell is cast on it, the charmed condition is removed from it, or you use this feature again. You can communicate telepathically with the charmed creature as long as the two of you are on the same plane of existence.", "Touch", -1, -1, true));
+            powers.add(new Power("Create Thrall", "You gain the ability to infect a humanoid's mind with the alien magic of your patron. You can use your action to touch an incapacitated humanoid. That creature is then charmed by you until a remove curse spell is cast on it, the charmed condition is removed from it, or you use this feature again. You can communicate telepathically with the charmed creature as long as the two of you are on the same plane of existence.", "Touch", -1, -1, true, Enumerations.ActionType.ACTION));
         }
 
         return powers;
@@ -158,5 +158,11 @@ public class Warlock implements Class, Externalizable {
 
     public Enumerations.Attributes getMainSpellAttribute() {
         return Enumerations.Attributes.CHA;
+    }
+
+
+    @Override
+    public int getIconResource() {
+        return R.drawable.ic_warlock;
     }
 }

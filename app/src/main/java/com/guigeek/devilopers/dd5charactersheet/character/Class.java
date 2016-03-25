@@ -18,4 +18,6 @@ public interface Class  {
     public LinkedList<Power> getPowers(int iLevel, Character iCharac);
 
     public Enumerations.Attributes getMainSpellAttribute();
+
+    public int getIconResource();
 }

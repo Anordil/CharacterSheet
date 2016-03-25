@@ -17,6 +17,13 @@ public class Enumerations {
         SAVING_THROW
     }
 
+    public enum ActionType {
+        PASSIVE,
+        ACTION,
+        BONUS_ACTION,
+        REACTION
+    }
+
 
     public enum Attributes {
         STR, DEX, CON, INT, WIS, CHA
