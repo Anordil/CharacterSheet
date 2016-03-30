@@ -29,7 +29,7 @@ public class CombatScreen extends Fragment {
 
     protected Character _character;
     TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg;
-    TextView viewSpeed, viewInit;
+    TextView viewSpeed, viewInit, spellAtk, spellDD;
     ProgressBar pb;
 
     List<TextView> spellSlotTextViews;
@@ -75,6 +75,17 @@ public class CombatScreen extends Fragment {
         viewSpeed = (TextView)rootView.findViewById(R.id.tvSpeed);
         viewInit = (TextView)rootView.findViewById(R.id.tvInitiative);
 
+        spellAtk = (TextView)rootView.findViewById(R.id.tvSpellAtk);
+        spellDD = (TextView)rootView.findViewById(R.id.tvSpellDD);
+
+        spellDD.setText("+" + Integer.toString(8 + _character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
+        spellAtk.setText("+" + Integer.toString(_character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
+
+        TableRow rowSpells = (TableRow)rootView.findViewById(R.id.rowSpell);
+        if (!_character._class.isCaster()) {
+            rowSpells.setVisibility(View.GONE);
+        }
+
         addButtonListener(rootView);
         createSpellBars(rootView);
         createSpecialPowerBars(rootView, "Class Features", _character.getPowers());
@@ -117,17 +128,6 @@ public class CombatScreen extends Fragment {
             TableRow.LayoutParams paramsIconRow = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             rowIcons.setLayoutParams(paramsIconRow);
 
-            ImageView imgAtk = new ImageView(getContext()), imgDD = new ImageView(getContext());
-            TextView tvAtk = new TextView(getContext()), tvDD = new TextView(getContext());
-            tvDD.setText("+" + Integer.toString(8 + _character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
-            tvAtk.setText("+" + Integer.toString(_character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
-            imgAtk.setImageDrawable(getResources().getDrawable(R.drawable.ic_spellatk));
-            imgDD.setImageDrawable(getResources().getDrawable(R.drawable.ic_resist));
-            rowIcons.addView(imgAtk);
-            rowIcons.addView(tvAtk);
-            rowIcons.addView(imgDD);
-            rowIcons.addView(tvDD);
-            ll.addView(rowIcons);
 
             spellSlotTextViews = new ArrayList<TextView>();
             for (int i = 1; i <= 9; i++) {
