@@ -81,10 +81,6 @@ public class CombatScreen extends Fragment {
         spellDD.setText("+" + Integer.toString(8 + _character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
         spellAtk.setText("+" + Integer.toString(_character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
 
-        TableRow rowSpells = (TableRow)rootView.findViewById(R.id.rowSpell);
-        if (!_character._class.isCaster()) {
-            rowSpells.setVisibility(View.GONE);
-        }
 
         addButtonListener(rootView);
         createSpellBars(rootView);
@@ -123,11 +119,17 @@ public class CombatScreen extends Fragment {
         if (_character._class.isCaster()) {
             TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
 
-            // Add a row to display spell attack & spell DD
-            TableRow rowIcons = new TableRow(getContext());
-            TableRow.LayoutParams paramsIconRow = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-            rowIcons.setLayoutParams(paramsIconRow);
-
+            // Title
+            TableRow rowPowerHeader = new TableRow(getContext());
+            TextView powerHeader = new TextView(getContext());
+            powerHeader.setText("Spell slots by level");
+            powerHeader.setTextSize(20.0f);
+            TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
+            paramsSaves.span = 7;
+            paramsSaves.topMargin = 10;
+            powerHeader.setLayoutParams(paramsSaves);
+            rowPowerHeader.addView(powerHeader);
+            ll.addView(rowPowerHeader);
 
             spellSlotTextViews = new ArrayList<TextView>();
             for (int i = 1; i <= 9; i++) {
@@ -137,8 +139,6 @@ public class CombatScreen extends Fragment {
                     break;
                 }
 
-                root.findViewById(R.id.tvSpellHeader).setVisibility(View.VISIBLE);
-
                 TableRow row = new TableRow(getContext());
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
@@ -147,6 +147,7 @@ public class CombatScreen extends Fragment {
                 level.setText(Integer.toString(i));
                 current.setText(Integer.toString(_character._spellSlotsCurrent[i]));
                 max.setText(Integer.toString(_character._spellSlotsMax[i]));
+                current.setTextColor(getResources().getColor(android.R.color.black));
                 spellSlotTextViews.add(current);
 
                 Button minus = new Button(getContext()), plus = new Button(getContext());
@@ -213,6 +214,7 @@ public class CombatScreen extends Fragment {
             name.setTextSize(16.0f);
             name.setTextColor(getResources().getColor(android.R.color.black));
             current.setText(power._left + "");
+            current.setTextColor(getResources().getColor(android.R.color.black));
             max.setText(power._max + "");
             description.setText(power.getUsageString());
             desc.setText(power._description);

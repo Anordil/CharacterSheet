@@ -19,7 +19,7 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    int _version = 1;
+    int _version = 2;
 
     public Class _class;
     public Race _race;
@@ -70,6 +70,9 @@ public class Character implements Externalizable {
         oo.writeObject(_weaponDmgDice);
         oo.writeBoolean(_isWeaponRanged);
         oo.writeObject(_allItems);
+
+        oo.writeObject(_spellSlotsCurrent);
+        oo.writeObject(_spellSlotsMax);
         Log.d("WRAP", "All good");
     }
 
@@ -120,6 +123,18 @@ public class Character implements Externalizable {
             _weaponDmgDice = (String) oi.readObject();
             _isWeaponRanged = oi.readBoolean();
             _allItems = (String) oi.readObject();
+        }
+        if (version >= 2) {
+            _spellSlotsCurrent = (int[]) oi.readObject();
+            _spellSlotsMax = (int[]) oi.readObject();
+        }
+        else {
+            // Need to force-refresh spell slots as old version didn't serialize them.
+            _spellSlotsMax = _class.getSpellSlots(_level);
+            _spellSlotsCurrent = new int[_spellSlotsMax.length];
+            for (int i = 0; i < _spellSlotsMax.length; i++) {
+                _spellSlotsCurrent[i] = _spellSlotsMax[i];
+            }
         }
     }
 
