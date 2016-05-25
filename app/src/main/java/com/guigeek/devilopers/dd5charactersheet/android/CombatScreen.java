@@ -78,7 +78,7 @@ public class CombatScreen extends Fragment {
         spellAtk = (TextView)rootView.findViewById(R.id.tvSpellAtk);
         spellDD = (TextView)rootView.findViewById(R.id.tvSpellDD);
 
-        spellDD.setText("+" + Integer.toString(8 + _character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
+        spellDD.setText(Integer.toString(8 + _character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
         spellAtk.setText("+" + Integer.toString(_character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
 
 
