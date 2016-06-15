@@ -50,7 +50,7 @@ public class HalfOrc implements Race, Externalizable {
 
         racialTraits.add(new Power("Darkvision", "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.", "60ft", -1, -1, true, Enumerations.ActionType.PASSIVE));
         racialTraits.add(new Power("Menacing", "You gain proficiency in the Intimidation skill", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
-        racialTraits.add(new Power("Relentless Endurance", "When you are reduced to O hit points but not killed outright. You can drop to 1 hit point instead. You can't use this feature again unti! you finish a long rest", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        racialTraits.add(new Power("Relentless Endurance", "When you are reduced to O hit points but not killed outright. You can drop to 1 hit point instead. You can't use this feature again unti! you finish a long rest", "", 1, -1, true, Enumerations.ActionType.PASSIVE));
         racialTraits.add(new Power("Savage Attacks", "When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the criticaI hit", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
 
         return racialTraits;
