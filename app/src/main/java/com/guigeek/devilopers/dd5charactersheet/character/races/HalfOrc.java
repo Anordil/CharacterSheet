@@ -20,13 +20,13 @@ import java.util.LinkedList;
  */
 public class HalfOrc implements Race, Externalizable {
 
-    public static final long serialVersionUID = 101L;
+    public static final long serialVersionUID = 103L;
     int _version = 1;
 
 
     @Override
     public String getName() {
-        return App.getResString(R.string.race_half_elf);
+        return App.getResString(R.string.race_half_orc);
     }
 
     @Override

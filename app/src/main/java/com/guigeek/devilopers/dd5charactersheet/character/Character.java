@@ -252,7 +252,8 @@ public class Character implements Externalizable {
     }
 
     public int getProficiencyBonus() {
-        return (int) (1 + Math.ceil(_level / 4));
+        double levelDouble = _level;
+        return (int) (1 + Math.ceil(levelDouble / 4));
     }
 
 

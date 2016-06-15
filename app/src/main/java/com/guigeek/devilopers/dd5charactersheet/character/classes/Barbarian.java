@@ -43,7 +43,7 @@ public class Barbarian implements Class, Externalizable {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}//ln 20
         };
 
-    public static final long serialVersionUID = 201L;
+    public static final long serialVersionUID = 203L;
     protected int _version = 1;
 
     public Barbarian(){}
@@ -52,7 +52,6 @@ public class Barbarian implements Class, Externalizable {
     public void writeExternal(ObjectOutput oo) throws IOException
     {
         oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
     }
 
     @Override
@@ -60,9 +59,6 @@ public class Barbarian implements Class, Externalizable {
     {
         int version = oi.readInt();
         _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
     }
 
 
