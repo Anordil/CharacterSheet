@@ -82,6 +82,12 @@ public class CombatScreen extends Fragment {
         spellAtk.setText("+" + Integer.toString(_character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
 
 
+
+        if (!_character._class.isCaster()) {
+            TableRow spellRow = (TableRow)rootView.findViewById(R.id.rowSpell);
+            spellRow.setVisibility(View.GONE);
+        }
+
         addButtonListener(rootView);
         createSpellBars(rootView);
         createSpecialPowerBars(rootView, "Class Features", _character.getPowers());

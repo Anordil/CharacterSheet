@@ -3,9 +3,11 @@
     <string-array name="classes">
         <item>Paladin</item>
         <item>Warlock</item>
+        <item>Barbarian</item>
     </string-array>
     <string-array name="races">
         <item>Half-Elf</item>
         <item>Mountain Dwarf</item>
+        <item>Half-Orc</item>
     </string-array>
 </resources>

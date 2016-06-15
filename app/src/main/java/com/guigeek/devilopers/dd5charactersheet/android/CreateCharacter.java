@@ -13,9 +13,11 @@ import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
 import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
 
 public class CreateCharacter extends AppCompatActivity {
@@ -59,6 +61,9 @@ public class CreateCharacter extends AppCompatActivity {
                 case 1:
                     aClass = new Warlock();
                     break;
+                case 2:
+                    aClass = new Barbarian();
+                    break;
                 default:
                     aClass = new Paladin();
                     break;
@@ -70,6 +75,9 @@ public class CreateCharacter extends AppCompatActivity {
                     break;
                 case 1:
                     aRace = new MountainDwarf();
+                    break;
+                case 2:
+                    aRace = new HalfOrc();
                     break;
                 default:
                     aRace = new MountainDwarf();
