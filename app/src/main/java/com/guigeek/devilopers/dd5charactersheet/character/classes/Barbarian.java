@@ -52,6 +52,7 @@ public class Barbarian implements Class, Externalizable {
     public void writeExternal(ObjectOutput oo) throws IOException
     {
         oo.writeInt(_version);
+        oo.writeObject(_spellSlots);
     }
 
     @Override
@@ -59,6 +60,9 @@ public class Barbarian implements Class, Externalizable {
     {
         int version = oi.readInt();
         _version = version;
+        if (version >= 1) {
+            _spellSlots = (int[][])oi.readObject();
+        }
     }
 
 
