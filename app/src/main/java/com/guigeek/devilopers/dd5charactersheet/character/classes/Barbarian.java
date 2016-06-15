@@ -102,39 +102,39 @@ public class Barbarian implements Class, Externalizable {
         LinkedList<Power> powers = new LinkedList<>();
 
         if (iLevel >= 1) {
-        	int max = 2
+        	int max;
         	if (iLevel < 3) {
         		// Level 1 to 2
-        		max = 2
+        		max = 2;
         	} else if (iLevel < 6) {
         		// Level 3 to 5
-        		max = 3
+        		max = 3;
         	} else if (iLevel < 12) {
         		// Level 6 to 11
-        		max = 4
+        		max = 4;
         	} else if (iLevel < 17) {
         		// Level 12 to 16
-        		max = 5
+        		max = 5;
         	} else if (iLevel < 20) {
         		// Level 17 to 19
-        		max = 6
+        		max = 6;
         	} else {
         		// Level 20
-        		max = 9999
+        		max = 9999;
         	}
-        	int dmg = 2
+        	int dmg = 2;
         	if (iLevel < 9) {
         		// Level 1 to 8
-        		dmg = 2
+        		dmg = 2;
         	} else if (iLevel < 16) {
         		// Level 9 to 15
-        		dmg = 3
+        		dmg = 3;
         	} else {
         		// Level 16+
-        		dmg = 4
+        		dmg = 4;
         	}
-        	String desc = "You have advantage on Strength checks and Strength saving throws. Damage modifier to melee weapon using STR: " + dmg + ". You have resistance to bludgeoning, piercing, andslashing damage. Your rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven't attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action."
-            int potentialAC = 10 + iCharac.getModifier(Enumerations.Attributes.CON) + iCharac.getModifier(Enumerations.Attributes.DEX)
+        	String desc = "You have advantage on Strength checks and Strength saving throws. Damage modifier to melee weapon using STR: " + dmg + ". You have resistance to bludgeoning, piercing, and slashing damage. Your rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven't attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action.";
+            int potentialAC = 10 + iCharac.getModifier(Enumerations.Attributes.CON) + iCharac.getModifier(Enumerations.Attributes.DEX);
             powers.add(new Power("Rage", desc, "", max, -1, true, Enumerations.ActionType.PASSIVE));
             powers.add(new Power("Unarmored Defense", "While you are not wearing any armor, your Armor Class equals " + potentialAC + " (10 + your Dexterity modifier + your Constitution modifier). You can use a shield and still gain this benefit", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
