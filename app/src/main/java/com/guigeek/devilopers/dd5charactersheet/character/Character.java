@@ -2,9 +2,11 @@ package com.guigeek.devilopers.dd5charactersheet.character;
 
 import android.util.Log;
 
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
 import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
 
 import java.io.Externalizable;
@@ -91,6 +93,9 @@ public class Character implements Externalizable {
             else if (aClass instanceof Warlock) {
                 _class = (Warlock) aClass;
             }
+            else if (aClass instanceof Barbarian) {
+                _class = (Barbarian) aClass;
+            }
             Log.d("UNWRAP", "After class");
 
             Object aRace = oi.readObject();
@@ -99,6 +104,9 @@ public class Character implements Externalizable {
             }
             else if (aRace instanceof MountainDwarf) {
                 _race = (MountainDwarf) aRace;
+            }
+            else if (aRace instanceof HalfOrc) {
+                _race = (HalfOrc) aRace;
             }
             Log.d("UNWRAP", "After race");
 

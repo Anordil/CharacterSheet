@@ -105,6 +105,10 @@ public class MainActivity extends ListActivity {
 
         for (File file : allFiles) {
             Log.d("TOTO", "Loop");
+
+            if (file.isDirectory()) {
+                continue;
+            }
             try {
                 FileInputStream aFIS = new FileInputStream(file);
                 ObjectInputStream aOIS = new ObjectInputStream(aFIS);

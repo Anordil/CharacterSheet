@@ -3,6 +3,7 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,7 +35,7 @@ public class CreateCharacter extends AppCompatActivity {
         btnCreate = (Button) findViewById(R.id.btnCreate);
         spRace = (Spinner) findViewById(R.id.spinnerRace);
         spClass = (Spinner) findViewById(R.id.spinnerClass);
-        inName = (EditText)findViewById(R.id.inName);;
+        inName = (EditText)findViewById(R.id.inName);
 
 
         ArrayAdapter<CharSequence> adapterRace = ArrayAdapter.createFromResource(this, R.array.races, android.R.layout.simple_spinner_item);
@@ -54,6 +55,10 @@ public class CreateCharacter extends AppCompatActivity {
 
             Class aClass = null;
             Race aRace = null;
+
+            Log.d("Create", "Selected race: " + spRace.getSelectedItemPosition());
+            Log.d("Create", "Selected class: " + spClass.getSelectedItemPosition());
+
             switch(spClass.getSelectedItemPosition()) {
                 case 0:
                     aClass = new Paladin();
@@ -86,6 +91,8 @@ public class CreateCharacter extends AppCompatActivity {
 
             int[] attributes = {10,10,10,10,10,10};
             Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes);
+
+            Log.d("Create", aHero.toString());
 
             Intent intent = new Intent(CreateCharacter.this, MainActivity.class);
             intent.putExtra(Constants.CHARACTER, aHero);
