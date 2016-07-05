@@ -149,6 +149,9 @@ public class Barbarian implements Class, Externalizable {
             powers.add(new Power("Extra Attack", "You can attack twice, instead of once, whenever you take the Attack action on your turn", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
             powers.add(new Power("Fast Movement", "Your speed increases by 10 feet while you aren't wearing heavy armor", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
+        if (iLevel >= 6) {
+            powers.add(new Power("Primal Path", "Path of the Totem Warrior: Aspect of the Beast: Eagle (You gain the eyesight of an eagle. You cansee up to 1 mile away with no difficulty, able to discern even fine details as though looking at something no more than 100 feet away from you. Additionally, dim light doesn't impose disadvantage on your Wisdom (Perception) checks.)", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        }
         if (iLevel >= 7) {
         	powers.add(new Power("Feral Instinct", "Your instincts are so honed that you have advantage on initiative rolls. Additionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act normally on your first turn, but only if you enter your rage before doing anything else on that turn", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
