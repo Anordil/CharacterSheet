@@ -21,7 +21,8 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    int _version = 2;
+    public int _version = 2;
+    public static final int _latestVersion = 2;
 
     public Class _class;
     public Race _race;
@@ -48,7 +49,7 @@ public class Character implements Externalizable {
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {
-        oo.writeInt(_version);
+        oo.writeInt(_latestVersion);
 
         oo.writeObject(_class);
         oo.writeObject(_race);
@@ -88,13 +89,13 @@ public class Character implements Externalizable {
             Log.d("UNWRAP", "Before class");
             Object aClass = oi.readObject();
             if (aClass instanceof Paladin) {
-                _class = (Paladin) aClass;
+                _class = new Paladin((Paladin) aClass);
             }
             else if (aClass instanceof Warlock) {
-                _class = (Warlock) aClass;
+                _class = new Warlock((Warlock) aClass);
             }
             else if (aClass instanceof Barbarian) {
-                _class = (Barbarian) aClass;
+                _class = new Barbarian((Barbarian) aClass);
             }
             Log.d("UNWRAP", "After class");
 
@@ -187,7 +188,7 @@ public class Character implements Externalizable {
     public void refresh() {
         initLevel();
         recomputeSkills();
-        initSavingThrows();
+        recomputeSavingThrows();
 
         doLongRest();
     }
@@ -273,6 +274,10 @@ public class Character implements Externalizable {
         for (Skill skill : _skills) {
             skill.recompute(this);
         }
+    }
+
+    public int getAttacksPerRound() {
+        return _class.getAttacksPerRound(_level);
     }
 
     private void initSkills() {

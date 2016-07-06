@@ -48,6 +48,9 @@ public class Barbarian implements Class, Externalizable {
 
     public Barbarian(){}
 
+    public Barbarian(Barbarian other) {
+    }
+
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {

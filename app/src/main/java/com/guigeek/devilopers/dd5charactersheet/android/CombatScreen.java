@@ -296,7 +296,7 @@ public class CombatScreen extends Fragment {
 
         String damage = _character._weaponDmgDice + (dmgBonus > 0 ? "+":"") + (dmgBonus != 0 ? dmgBonus : "");
         tvDmg.setText(damage);
-        tvAtk.setText((attackBonus > 0 ? "+":"") + attackBonus);
+        tvAtk.setText((attackBonus > 0 ? "+":"") + attackBonus + " x" + _character.getAttacksPerRound());
 
         viewSpeed.setText(_character._race.getSpeedInFeet() + " ft.");
         int dexBonus = _character.getModifier(Enumerations.Attributes.DEX);

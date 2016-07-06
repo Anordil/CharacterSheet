@@ -63,6 +63,8 @@ public class StatsScreen extends Fragment {
             @Override
             public void onClick(View v) {
                 _character._name = name.getText().toString();
+
+                int oldLevel = _character._level;
                 _character._level = Integer.parseInt(level.getText().toString());
                 _character._armorClass = Integer.parseInt(armor.getText().toString());
                 _character._attributes[0]  = Integer.parseInt(str.getText().toString());
@@ -71,6 +73,10 @@ public class StatsScreen extends Fragment {
                 _character._attributes[3] = Integer.parseInt(intel.getText().toString());
                 _character._attributes[4] = Integer.parseInt(wis.getText().toString());
                 _character._attributes[5] = Integer.parseInt(cha.getText().toString());
+
+                if (oldLevel != _character._level) {
+                    _character.doLongRest();
+                }
 
                 ((SwipeActivity)getActivity()).refreshTabs();
             }

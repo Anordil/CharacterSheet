@@ -18,7 +18,7 @@ import java.util.LinkedList;
  */
 public class Warlock implements Class, Externalizable {
 
-    public Warlock(){}
+
 
     // Warlock have a single-level spell slot, used for all their spells. Treat it like a Power
     int[][] _spellSlots = {
@@ -48,6 +48,12 @@ public class Warlock implements Class, Externalizable {
 
     public static final long serialVersionUID = 202L;
     protected int _version = 1;
+
+
+    public Warlock(){}
+    public Warlock(Warlock other) {
+        _spellSlots = other._spellSlots;
+    }
 
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException

@@ -47,6 +47,9 @@ public class Paladin implements Class, Externalizable {
     protected int _version = 1;
 
     public Paladin(){}
+    public Paladin(Paladin other) {
+        _spellSlots = other._spellSlots;
+    }
 
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException
@@ -102,7 +105,7 @@ public class Paladin implements Class, Externalizable {
         LinkedList<Power> powers = new LinkedList<>();
 
         if (iLevel >= 1) {
-            powers.add(new Power("Divine Sense", "Detect fiend/undead/celestial.", "60ft", 1 + iCharac.getModifier(Enumerations.Attributes.CHA), -1, true, Enumerations.ActionType.ACTION));
+            powers.add(new Power("Divine Sense", "Until the end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is not behind total cover. You know the type (celestial, fiend, or undead) of any being whose presence you sense, but not its identity. Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the hallow spell.", "60ft", 1 + iCharac.getModifier(Enumerations.Attributes.CHA), -1, true, Enumerations.ActionType.ACTION));
             powers.add(new Power("Lay on hands", "Heal HP. 5hp to remove poison/disease.", "Melee", 5*iLevel, -1, true, Enumerations.ActionType.ACTION));
         }
         if (iLevel >= 2) {
