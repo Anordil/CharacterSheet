@@ -57,6 +57,7 @@ public class SwipeActivity extends AppCompatActivity {
         // Add tabs
         fragments.add(CombatScreen.newInstance(_character));
         fragments.add(SkillsScreen.newInstance(_character));
+        fragments.add(FeatsScreen.newInstance(_character));
         fragments.add(InventoryScreen.newInstance(_character));
         fragments.add(StatsScreen.newInstance(_character));
 
@@ -152,8 +153,10 @@ public class SwipeActivity extends AppCompatActivity {
                 case 1:
                     return "SKILLS";
                 case 2:
-                    return "INVENTORY";
+                    return "FEATS";
                 case 3:
+                    return "INVENTORY";
+                case 4:
                     return "STATS";
             }
             return null;

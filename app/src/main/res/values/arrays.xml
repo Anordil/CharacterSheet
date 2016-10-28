@@ -10,4 +10,14 @@
         <item>Mountain Dwarf</item>
         <item>Half-Orc</item>
     </string-array>
+
+
+    <string-array name="featsName">
+        <item>Sentinel</item>
+        <item>Great Weapon Fighter</item>
+    </string-array>
+    <string-array name="featsDescription">
+        <item>Kill splig !</item>
+        <item>Hit hard !</item>
+    </string-array>
 </resources>

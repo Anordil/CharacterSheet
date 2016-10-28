@@ -21,8 +21,8 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    public int _version = 2;
-    public static final int _latestVersion = 2;
+    public int _version = 3;
+    public static final int _latestVersion = 3;
 
     public Class _class;
     public Race _race;
@@ -39,6 +39,7 @@ public class Character implements Externalizable {
     public LinkedList<Skill> _skills;
     public LinkedList<Skill> _savingThrows;
     public LinkedList<Power> _powers;
+    public LinkedList<Power> _feats;
 
 
     public String _weaponDmgDice;
@@ -76,6 +77,8 @@ public class Character implements Externalizable {
 
         oo.writeObject(_spellSlotsCurrent);
         oo.writeObject(_spellSlotsMax);
+
+        oo.writeObject(_feats);
         Log.d("WRAP", "All good");
     }
 
@@ -145,6 +148,14 @@ public class Character implements Externalizable {
                 _spellSlotsCurrent[i] = _spellSlotsMax[i];
             }
         }
+
+        // Feats added in V3
+        if (version >= 3) {
+            _feats = (LinkedList<Power>) oi.readObject();
+        }
+        else {
+            _feats = new LinkedList<Power>();
+        }
     }
 
     public Character(){
@@ -183,6 +194,14 @@ public class Character implements Externalizable {
             _powers = _class.getPowers(_level, this);
         }
         return _powers;
+    }
+
+    public LinkedList<Power> getFeats() {
+        if (_feats == null) {
+            _feats = new LinkedList<Power>();
+        }
+
+        return _feats;
     }
 
     public void refresh() {
