@@ -21,8 +21,12 @@ import java.util.LinkedList;
 public class HalfOrc implements Race, Externalizable {
 
     public static final long serialVersionUID = 103L;
-    int _version = 1;
+    int _version = 2;
 
+    @Override
+    public LinkedList<Fettle> getFettles() {
+        return new LinkedList<Fettle>();
+    }
 
     @Override
     public String getName() {

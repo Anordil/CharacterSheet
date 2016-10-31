@@ -21,8 +21,8 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    public int _version = 3;
-    public static final int _latestVersion = 3;
+    public int _version = 4;
+    public static final int _latestVersion = 4;
 
     public Class _class;
     public Race _race;
@@ -40,6 +40,9 @@ public class Character implements Externalizable {
     public LinkedList<Skill> _savingThrows;
     public LinkedList<Power> _powers;
     public LinkedList<Power> _feats;
+
+
+    public LinkedList<Fettle> _effect;
 
 
     public String _weaponDmgDice;
@@ -79,6 +82,7 @@ public class Character implements Externalizable {
         oo.writeObject(_spellSlotsMax);
 
         oo.writeObject(_feats);
+        oo.writeObject(_effect);
         Log.d("WRAP", "All good");
     }
 
@@ -156,6 +160,14 @@ public class Character implements Externalizable {
         else {
             _feats = new LinkedList<Power>();
         }
+
+        // Fettles added in V4
+        if (version >= 4) {
+            _effect = (LinkedList<Fettle>) oi.readObject();
+        }
+        else {
+            _effect = new LinkedList<Fettle>();
+        }
     }
 
     public Character(){
@@ -203,11 +215,19 @@ public class Character implements Externalizable {
 
         return _feats;
     }
+    public LinkedList<Fettle> getEffects() {
+        if (_effect == null) {
+            _effect = new LinkedList<Fettle>();
+        }
+        return _effect;
+    }
 
     public void refresh() {
         initLevel();
         recomputeSkills();
         recomputeSavingThrows();
+
+        refreshFettles();
 
         doLongRest();
     }
@@ -329,6 +349,14 @@ public class Character implements Externalizable {
 
         for (Skill skill : _savingThrows) {
             skill.recompute(this);
+        }
+    }
+
+    public void refreshFettles() {
+        _effect.clear();
+
+        for (Fettle effect : _race.getFettles()) {
+            _effect.add(effect);
         }
     }
 

@@ -14,4 +14,6 @@ public interface Race {
     public LinkedList<Power> getRacialFeatures();
 
     public Fettle[] getAttributeBoost();
+
+    public LinkedList<Fettle> getFettles();
 }

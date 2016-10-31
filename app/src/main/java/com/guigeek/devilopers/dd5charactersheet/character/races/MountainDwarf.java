@@ -16,7 +16,16 @@ import java.util.LinkedList;
  */
 public class MountainDwarf implements Race, Externalizable {
     public static final long serialVersionUID = 102L;
-    int _version = 1;
+    int _version = 2;
+
+
+    @Override
+    public LinkedList<Fettle> getFettles() {
+        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
+        fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.POISON.ordinal()));
+        fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.POISON.ordinal()));
+        return fettles;
+    }
 
     @Override
     public String getName() {

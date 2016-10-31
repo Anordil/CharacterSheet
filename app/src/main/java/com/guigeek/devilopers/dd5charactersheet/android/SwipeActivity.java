@@ -49,6 +49,8 @@ public class SwipeActivity extends AppCompatActivity {
         Serializable data = bundle.getSerializable(Constants.CHARACTER);
         _character = (com.guigeek.devilopers.dd5charactersheet.character.Character) data;
 
+        _character.refreshFettles();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

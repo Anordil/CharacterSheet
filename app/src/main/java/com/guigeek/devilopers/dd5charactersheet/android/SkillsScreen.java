@@ -56,6 +56,15 @@ public class SkillsScreen extends Fragment {
         _character.recomputeSkills();
         _character.recomputeSavingThrows();
 
+        TableRow rowProficiency = new TableRow(getContext());
+        TextView proficiency = new TextView(getContext());
+        proficiency.setText("Proficiency bonus: +" + _character.getProficiencyBonus());
+        TableRow.LayoutParams paramProficiency = new TableRow.LayoutParams();
+        paramProficiency.span = 3;
+        proficiency.setLayoutParams(paramProficiency);
+        rowProficiency.addView(proficiency);
+        ll.addView(rowProficiency);
+
         TableRow rowSave = new TableRow(getContext());
         TextView saves = new TextView(getContext());
         saves.setText("Saving throws");

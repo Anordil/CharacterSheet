@@ -7,7 +7,7 @@ public class AttributeAlteration extends Fettle {
     public Enumerations.Attributes _subType;
 
     public AttributeAlteration(int iValue, Enumerations.Attributes iAttribute) {
-        super (Enumerations.FettleType.ABILITY, iValue);
+        super (Enumerations.FettleType.ABILITY_CHECK_MODIFIER, iAttribute.ordinal(), iValue);
         _subType = iAttribute;
     }
 }

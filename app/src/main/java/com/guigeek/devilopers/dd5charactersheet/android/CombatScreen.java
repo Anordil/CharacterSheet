@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
+import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
 import java.io.Serializable;
@@ -28,7 +29,7 @@ import java.util.List;
 public class CombatScreen extends Fragment {
 
     protected Character _character;
-    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg;
+    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc;
     TextView viewSpeed, viewInit, spellAtk, spellDD;
     ProgressBar pb;
 
@@ -82,6 +83,10 @@ public class CombatScreen extends Fragment {
         spellAtk.setText("+" + Integer.toString(_character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
 
 
+        tvHitDiceDesc = (TextView)rootView.findViewById(R.id.textViewHitDice);
+        tvHitDiceDesc.setText("Hit dice (D" + _character._class.getHitDie() + ")");
+
+
 
         if (!_character._class.isCaster()) {
             TableRow spellRow = (TableRow)rootView.findViewById(R.id.rowSpell);
@@ -89,6 +94,7 @@ public class CombatScreen extends Fragment {
         }
 
         addButtonListener(rootView);
+        createFettlesBar(rootView);
         createSpellBars(rootView);
         createSpecialPowerBars(rootView, "Class Features", _character.getPowers());
         createSpecialPowerBars(rootView, "Racial Features", _character._race.getRacialFeatures());
@@ -120,6 +126,45 @@ public class CombatScreen extends Fragment {
         rootView.findViewById(R.id.btnHDMin1).setOnClickListener(hdList);
         rootView.findViewById(R.id.btnHDPlus1).setOnClickListener(hdList);
     }
+
+
+
+
+    private void createFettlesBar(View root) {
+//        if (!_character.getEffects().isEmpty()) {
+            TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
+
+            // Title
+            TableRow rowPowerHeader = new TableRow(getContext());
+            TextView powerHeader = new TextView(getContext());
+            powerHeader.setText("Active effects");
+            powerHeader.setTextSize(20.0f);
+            TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
+            paramsSaves.span = 7;
+            paramsSaves.topMargin = 10;
+            powerHeader.setLayoutParams(paramsSaves);
+            rowPowerHeader.addView(powerHeader);
+            ll.addView(rowPowerHeader);
+
+            spellSlotTextViews = new ArrayList<TextView>();
+            for (Fettle fettle : _character.getEffects()) {
+                TableRow row = new TableRow(getContext());
+                TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                row.setLayoutParams(lp);
+
+                TextView description = new TextView(getContext());
+                description.setText(fettle.toString());
+                TableRow.LayoutParams paramRow = new TableRow.LayoutParams();
+                paramRow.span = 7;
+                description.setLayoutParams(paramRow);
+
+                row.addView(description);
+                ll.addView(row);
+            }
+//        }
+    }
+
+
 
     private void createSpellBars(View root) {
         if (_character._class.isCaster()) {
