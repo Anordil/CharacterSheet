@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textAppearance="@style/Name"
         android:text="Sentinel"
         android:id="@+id/listFeatName"
         android:paddingLeft="10dp" />
@@ -25,5 +25,5 @@
         android:id="@+id/listFeatDesc"
         android:paddingLeft="10dp"
         android:paddingTop="5dp"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+        android:textAppearance="@style/Description" />
 </RelativeLayout>

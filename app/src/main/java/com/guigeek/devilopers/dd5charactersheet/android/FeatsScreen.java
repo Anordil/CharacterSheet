@@ -29,6 +29,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Power;
 import com.guigeek.devilopers.dd5charactersheet.character.Skill;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 
 public class FeatsScreen extends android.support.v4.app.ListFragment {
 
@@ -81,18 +82,22 @@ public class FeatsScreen extends android.support.v4.app.ListFragment {
 
                 AlertDialog.Builder b = new AlertDialog.Builder(FeatsScreen.this.getActivity());
                 b.setTitle("Select a feat to add");
-                String[] feats = getResources().getStringArray(R.array.featsName);
-                b.setItems(feats, new DialogInterface.OnClickListener() {
 
+                LinkedList<Power> allFeats = new LinkedList<Power>();
+                final String[] featNames = getResources().getStringArray(R.array.featsName);
+                final String[] featDescriptions = getResources().getStringArray(R.array.featsDescription);
+                for (int i = 0; i < featNames.length; ++i) {
+                    allFeats.add(new Power(featNames[i], featDescriptions[i], "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
+                }
+
+                b.setAdapter(new FeatAdapter(getContext(), R.layout.list_feat, allFeats), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();
-                        _character._feats.add(new Power(getResources().getStringArray(R.array.featsName)[which],
-                                getResources().getStringArray(R.array.featsDescription)[which], "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
+                        _character._feats.add(new Power(featNames[which], featDescriptions[which], "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
                         setListAdapter(new FeatAdapter(getContext(), R.layout.list_feat, _character.getFeats()));
                     }
-
                 });
 
                 b.show();
