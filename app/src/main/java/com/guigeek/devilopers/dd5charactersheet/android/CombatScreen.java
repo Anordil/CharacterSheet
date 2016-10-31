@@ -84,7 +84,7 @@ public class CombatScreen extends Fragment {
 
 
         tvHitDiceDesc = (TextView)rootView.findViewById(R.id.textViewHitDice);
-        tvHitDiceDesc.setText("Hit dice (D" + _character._class.getHitDie() + ")");
+        tvHitDiceDesc.setText("HD (D" + _character._class.getHitDie() + ")");
 
 
 

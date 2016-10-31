@@ -36,12 +36,14 @@ public class CharacterAdapter extends ArrayAdapter<Character> {
             TextView nameTv = (TextView) convertView.findViewById(R.id.listCharName);
             TextView levelTv = (TextView) convertView.findViewById(R.id.listCharLevel);
             TextView classTv = (TextView) convertView.findViewById(R.id.listCharClass);
+            TextView raceTv = (TextView) convertView.findViewById(R.id.listCharRace);
             ImageView icon = (ImageView) convertView.findViewById(R.id.listCharClassIson);
 
 
             nameTv.setText(character._name);
             levelTv.setText(Integer.toString(character._level));
             classTv.setText(character._class.getName());
+            raceTv.setText(character._race.getName());
 
             if (icon != null) {
                 icon.setImageDrawable(this.getContext().getResources().getDrawable(character._class.getIconResource()));
