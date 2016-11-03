@@ -61,8 +61,12 @@ public class Enumerations {
         PSYCHIC("Psychic damage"), RADIANT("Radiant damage"), THUNDER("Thunder damage"),
         CHARM_MAGIC("Charm magic"),
         ALL("All"),
+<<<<<<< HEAD
         STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), CHA("Charisma"), WIS("Wisdom"),
         DEX_BARBARIAN("Dexterity (from effects you can see)");
+=======
+        STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), CHA("Charisma"), WIS("Wisdom");
+>>>>>>> 04e9ce0815cde83249b8edf9f0c406c31dc190fd
 
         private String _name;
 
