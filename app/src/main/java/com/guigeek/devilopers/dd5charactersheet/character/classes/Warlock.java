@@ -18,7 +18,11 @@ import java.util.LinkedList;
  */
 public class Warlock implements Class, Externalizable {
 
-
+    @Override
+    public LinkedList<Fettle> getFettles(Character character) {
+        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
+        return fettles;
+    }
 
     // Warlock have a single-level spell slot, used for all their spells. Treat it like a Power
     int[][] _spellSlots = {

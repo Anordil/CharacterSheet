@@ -19,6 +19,7 @@ public class Enumerations {
         SAVING_THROW_ADVANTAGE,
         SAVING_THROW_DISADVANTAGE,
         SAVING_THROW_MODIFIER,
+        IMMUNITY
     }
 
     public enum ActionType {
@@ -58,7 +59,8 @@ public class Enumerations {
         PIERCING("Piercing damage"), SLASHING("Slashing damage"), BLUDGEONING("Bludgeoning damage"),
         ACID("Acid damage"), COLD("Cold damage"), FIRE("Fire damage"), FORCE("Force damage"), LIGHTNING("Lightning damage"), NECROTIC("Necrotic damage"), POISON("Poison damage"),
         PSYCHIC("Psychic damage"), RADIANT("Radiant damage"), THUNDER("Thunder damage"),
-        CHARM_MAGIC("Charm magic");
+        CHARM_MAGIC("Charm magic"),
+        ALL("All");
 
         private String _name;
 
@@ -66,6 +68,22 @@ public class Enumerations {
             _name = n;
         }
 
+        public String toString() {
+            return _name;
+        }
+    }
+
+
+    public enum Immunities {
+        PIERCING("Piercing damage"), SLASHING("Slashing damage"), BLUDGEONING("Bludgeoning damage"),
+        ACID("Acid damage"), COLD("Cold damage"), FIRE("Fire damage"), FORCE("Force damage"), LIGHTNING("Lightning damage"), NECROTIC("Necrotic damage"), POISON("Poison damage"),
+        PSYCHIC("Psychic damage"), RADIANT("Radiant damage"), THUNDER("Thunder damage"),
+        CHARM_MAGIC("Charm magic"), DISEASES("Diseases");
+
+        private String _name;
+        Immunities(String n) {
+            _name = n;
+        }
         public String toString() {
             return _name;
         }

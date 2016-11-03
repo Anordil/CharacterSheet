@@ -104,7 +104,7 @@ public class MainActivity extends ListActivity {
         LinkedList<Character> aList = new LinkedList<Character>();
 
         for (File file : allFiles) {
-            Log.d("TOTO", "Loop");
+            Log.d("TOTO", "Loop on a file: " + file.getName());
 
             if (file.isDirectory()) {
                 continue;
@@ -120,7 +120,6 @@ public class MainActivity extends ListActivity {
             } catch (Exception e) {
                 Log.d("TOTO", "Loop fail");
                 e.printStackTrace();
-                file.delete();
             }
         }
 

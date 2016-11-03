@@ -224,11 +224,6 @@ public class Character implements Externalizable {
 
     public void refresh() {
         initLevel();
-        recomputeSkills();
-        recomputeSavingThrows();
-
-        refreshFettles();
-
         doLongRest();
     }
 
@@ -237,6 +232,10 @@ public class Character implements Externalizable {
         _spellSlotsMax = _class.getSpellSlots(_level);
         _hpMax = _class.getHitDie() + (_level - 1) * (int) Math.ceil(_class.getHitDie() / 2 + 1) + _level * getModifier(Enumerations.Attributes.CON);
         _powers = _class.getPowers(_level, this);
+
+        recomputeSkills();
+        recomputeSavingThrows();
+        refreshFettles();
     }
 
     public void doLongRest() {
@@ -353,9 +352,15 @@ public class Character implements Externalizable {
     }
 
     public void refreshFettles() {
+        if (_effect == null) {
+            _effect = new LinkedList<Fettle>();
+        }
         _effect.clear();
 
         for (Fettle effect : _race.getFettles()) {
+            _effect.add(effect);
+        }
+        for (Fettle effect : _class.getFettles(this)) {
             _effect.add(effect);
         }
     }

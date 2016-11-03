@@ -20,4 +20,6 @@ public interface Class  {
     public Enumerations.Attributes getMainSpellAttribute();
 
     public int getIconResource();
+
+    public LinkedList<Fettle> getFettles(Character character);
 }

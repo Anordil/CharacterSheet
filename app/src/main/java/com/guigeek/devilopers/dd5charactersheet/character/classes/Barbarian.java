@@ -18,6 +18,12 @@ import java.util.LinkedList;
  */
 public class Barbarian implements Class, Externalizable {
 
+    @Override
+    public LinkedList<Fettle> getFettles(Character character) {
+        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
+        return fettles;
+    }
+
     int[][] _spellSlots = {
                 // spell level 0-9
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

@@ -18,6 +18,21 @@ import java.util.LinkedList;
  */
 public class Paladin implements Class, Externalizable {
 
+    @Override
+    public LinkedList<Fettle> getFettles(Character character) {
+        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
+
+        int level = character._level;
+        if (level >= 3) {
+            fettles.add(new Fettle(Enumerations.FettleType.IMMUNITY, 0, Enumerations.Immunities.DISEASES.ordinal()));
+        }
+        if (level >= 6) {
+            fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_MODIFIER, character.getModifier(Enumerations.Attributes.CHA), Enumerations.SavingThrows.ALL.ordinal()));
+        }
+
+        return fettles;
+    }
+
     int[][] _spellSlots = {
                 // spell level 0-9
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
