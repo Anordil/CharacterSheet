@@ -21,8 +21,8 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    public int _version = 4;
-    public static final int _latestVersion = 4;
+    public int _version = 5;
+    public static final int _latestVersion = 5;
 
     public Class _class;
     public Race _race;
@@ -37,7 +37,7 @@ public class Character implements Externalizable {
     public int _gold;
 
     public LinkedList<Skill> _skills;
-    public LinkedList<Skill> _savingThrows;
+    public LinkedList<SavingThrow> _savingThrows;
     public LinkedList<Power> _powers;
     public LinkedList<Power> _feats;
 
@@ -90,6 +90,7 @@ public class Character implements Externalizable {
     public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
     {
         int version = oi.readInt();
+        Log.d("TOTO", "Decoding a version " + version + " character");
         _version = version;
         if (version >= 1) {
 
@@ -133,7 +134,18 @@ public class Character implements Externalizable {
             _gold = oi.readInt();
 
             _skills = (LinkedList<Skill>) oi.readObject();
-            _savingThrows = (LinkedList<Skill>) oi.readObject();
+            if (version >= 5) {
+                _savingThrows = (LinkedList<SavingThrow>) oi.readObject();
+            }
+            else {
+                LinkedList<Skill> oldSavingThrows = (LinkedList<Skill>) oi.readObject();
+                _savingThrows = new LinkedList<>();
+                for (Skill s : oldSavingThrows) {
+                    Log.d("TOTO", "Creating new save from old " + s._name);
+                    _savingThrows.add(new SavingThrow(s));
+                }
+            }
+
             _powers = (LinkedList<Power>) oi.readObject();
 
             _weaponDmgDice = (String) oi.readObject();
@@ -194,8 +206,6 @@ public class Character implements Externalizable {
 
 
         initLevel();
-        recomputeSkills();
-        initSavingThrows();
 
         doLongRest();
     }
@@ -233,9 +243,10 @@ public class Character implements Externalizable {
         _hpMax = _class.getHitDie() + (_level - 1) * (int) Math.ceil(_class.getHitDie() / 2 + 1) + _level * getModifier(Enumerations.Attributes.CON);
         _powers = _class.getPowers(_level, this);
 
+        refreshFettles();
         recomputeSkills();
         recomputeSavingThrows();
-        refreshFettles();
+
     }
 
     public void doLongRest() {
@@ -346,7 +357,7 @@ public class Character implements Externalizable {
             initSavingThrows();
         }
 
-        for (Skill skill : _savingThrows) {
+        for (SavingThrow skill : _savingThrows) {
             skill.recompute(this);
         }
     }
@@ -367,12 +378,12 @@ public class Character implements Externalizable {
 
     private void initSavingThrows() {
         _savingThrows = new LinkedList<>();
-        _savingThrows.add(new Skill("Strength", Enumerations.Attributes.STR));
-        _savingThrows.add(new Skill("Dexterity", Enumerations.Attributes.DEX));
-        _savingThrows.add(new Skill("Constitution", Enumerations.Attributes.CON));
-        _savingThrows.add(new Skill("Intelligence", Enumerations.Attributes.INT));
-        _savingThrows.add(new Skill("Wisdom", Enumerations.Attributes.WIS));
-        _savingThrows.add(new Skill("Charisma", Enumerations.Attributes.CHA));
+        _savingThrows.add(new SavingThrow("Strength", Enumerations.Attributes.STR));
+        _savingThrows.add(new SavingThrow("Dexterity", Enumerations.Attributes.DEX));
+        _savingThrows.add(new SavingThrow("Constitution", Enumerations.Attributes.CON));
+        _savingThrows.add(new SavingThrow("Intelligence", Enumerations.Attributes.INT));
+        _savingThrows.add(new SavingThrow("Wisdom", Enumerations.Attributes.WIS));
+        _savingThrows.add(new SavingThrow("Charisma", Enumerations.Attributes.CHA));
     }
 
 }

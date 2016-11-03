@@ -29,6 +29,9 @@ public class Paladin implements Class, Externalizable {
         if (level >= 6) {
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_MODIFIER, character.getModifier(Enumerations.Attributes.CHA), Enumerations.SavingThrows.ALL.ordinal()));
         }
+        if (level >= 10) {
+            fettles.add(new Fettle(Enumerations.FettleType.IMMUNITY, 0, Enumerations.Immunities.FEAR.ordinal()));
+        }
 
         return fettles;
     }

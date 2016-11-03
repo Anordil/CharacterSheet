@@ -131,13 +131,13 @@ public class CombatScreen extends Fragment {
 
 
     private void createFettlesBar(View root) {
-//        if (!_character.getEffects().isEmpty()) {
+        if (!_character.getEffects().isEmpty()) {
             TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
 
             // Title
             TableRow rowPowerHeader = new TableRow(getContext());
             TextView powerHeader = new TextView(getContext());
-            powerHeader.setText("Active effects");
+            powerHeader.setText("Passive effects");
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
             paramsSaves.span = 7;
@@ -161,7 +161,7 @@ public class CombatScreen extends Fragment {
                 row.addView(description);
                 ll.addView(row);
             }
-//        }
+        }
     }
 
 
