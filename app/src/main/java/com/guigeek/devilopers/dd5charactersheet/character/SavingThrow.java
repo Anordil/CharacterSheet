@@ -9,9 +9,9 @@ import java.io.ObjectOutput;
 /**
  * Created by ggallani on 22/02/2016.
  */
-public class Skill implements Externalizable {
+public class SavingThrow extends Skill implements Externalizable {
 
-    public static final long serialVersionUID = 15L;
+    public static final long serialVersionUID = 16L;
     int _version = 2;
 
     public String _name;
@@ -21,16 +21,25 @@ public class Skill implements Externalizable {
 
     public boolean hasAdvantage = false, hasDisadvantage = false;
 
-    public Skill() {
+    public SavingThrow() {}
+
+    public SavingThrow (Skill iSkill) {
+        _name = iSkill._name;
+        _attribute = iSkill._attribute;
+        _isProficient = iSkill._isProficient;
+        _score = iSkill._score;
+        hasAdvantage = iSkill.hasAdvantage;
+        hasDisadvantage = iSkill.hasDisadvantage;
     }
 
-    public Skill (String iName, Enumerations.Attributes iAttr) {
+    public SavingThrow (String iName, Enumerations.Attributes iAttr) {
         _name = iName;
         _attribute = iAttr;
         _isProficient = false;
         _score = 0;
     }
 
+    @Override
     public void recompute(Character iChar) {
         _score = iChar.getModifier(_attribute);
         if (_isProficient) {
@@ -39,8 +48,8 @@ public class Skill implements Externalizable {
 
         int bonus = 0;
         for (Fettle fettle : iChar.getEffects()) {
-            if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER &&
-                    (fettle._describer == Enumerations.Skills.ALL.ordinal() ||  Enumerations.Skills.values()[fettle._describer].toString().equals(_name)))
+            if (fettle._type == Enumerations.FettleType.SAVING_THROW_MODIFIER &&
+                    (fettle._describer == Enumerations.SavingThrows.ALL.ordinal() ||  Enumerations.SavingThrows.values()[fettle._describer].toString().equals(_name)))
             {
                 bonus = Math.max(bonus, fettle._value);
             }
@@ -57,7 +66,6 @@ public class Skill implements Externalizable {
         oo.writeObject(_attribute);
         oo.writeBoolean(_isProficient);
         oo.writeInt(_score);
-
         oo.writeBoolean(hasAdvantage);
         oo.writeBoolean(hasDisadvantage);
     }

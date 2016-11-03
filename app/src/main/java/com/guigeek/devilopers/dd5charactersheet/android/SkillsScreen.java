@@ -3,6 +3,7 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,13 @@ import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
+import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
+import com.guigeek.devilopers.dd5charactersheet.character.SavingThrow;
 import com.guigeek.devilopers.dd5charactersheet.character.Skill;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class SkillsScreen extends Fragment {
 
@@ -56,26 +61,30 @@ public class SkillsScreen extends Fragment {
         _character.recomputeSkills();
         _character.recomputeSavingThrows();
 
+        createFettlesBar(ll);
+
         TableRow rowProficiency = new TableRow(getContext());
         TextView proficiency = new TextView(getContext());
         proficiency.setText("Proficiency bonus: +" + _character.getProficiencyBonus());
         TableRow.LayoutParams paramProficiency = new TableRow.LayoutParams();
-        paramProficiency.span = 3;
+        paramProficiency.span = 4;
+        paramProficiency.setMargins(0,0,0, 20);
         proficiency.setLayoutParams(paramProficiency);
         rowProficiency.addView(proficiency);
         ll.addView(rowProficiency);
+
 
         TableRow rowSave = new TableRow(getContext());
         TextView saves = new TextView(getContext());
         saves.setText("Saving throws");
         TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-        paramsSaves.span = 3;
+        paramsSaves.span = 4;
         saves.setLayoutParams(paramsSaves);
         rowSave.addView(saves);
         ll.addView(rowSave);
 
 
-        for (Skill skill: _character._savingThrows) {
+        for (SavingThrow skill: _character._savingThrows) {
             TableRow row = new TableRow(getContext());
             TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
             row.setLayoutParams(lp);
@@ -87,7 +96,7 @@ public class SkillsScreen extends Fragment {
             CheckBox isProficient = new CheckBox(getContext());
 
             isProficient.setChecked(skill._isProficient);
-            isProficient.setOnClickListener(new SkillListener(skill, value));
+            isProficient.setOnClickListener(new SavingThrowListener(skill, value));
             isProficient.setScaleX(1.5f);
             isProficient.setScaleY(1.5f);
             name.setText(skill._name);
@@ -99,7 +108,9 @@ public class SkillsScreen extends Fragment {
             paramNameTV.span = 2;
             name.setLayoutParams(paramNameTV);
 
-            TableRow.LayoutParams rowParam = new TableRow.LayoutParams();
+            TableRow.LayoutParams valueParam = new TableRow.LayoutParams();
+            valueParam.gravity = Gravity.RIGHT;
+            value.setLayoutParams(valueParam);
 
             row.addView(isProficient);
             row.addView(name);
@@ -112,7 +123,7 @@ public class SkillsScreen extends Fragment {
         TextView skills = new TextView(getContext());
         skills.setText("Skills");
         TableRow.LayoutParams paramsSk = new TableRow.LayoutParams();
-        paramsSk.span = 3;
+        paramsSk.span = 4;
         paramsSk.topMargin = 10;
         skills.setLayoutParams(paramsSk);
         rowSk.addView(skills);
@@ -142,7 +153,9 @@ public class SkillsScreen extends Fragment {
             attr.setText(skill._attribute.toString());
             value.setText((skill._score > 0 ? "+": "") + Integer.toString(skill._score));
 
-            TableRow.LayoutParams rowParam = new TableRow.LayoutParams();
+            TableRow.LayoutParams valueParam = new TableRow.LayoutParams();
+            valueParam.gravity = Gravity.RIGHT;
+            value.setLayoutParams(valueParam);
 
             row.addView(isProficient);
             row.addView(name);
@@ -152,11 +165,79 @@ public class SkillsScreen extends Fragment {
         }
     }
 
+
+    private void createFettlesBar(TableLayout ll) {
+        // Title
+        TableRow rowPowerHeader = new TableRow(getContext());
+        TextView powerHeader = new TextView(getContext());
+        powerHeader.setText("Passive effects");
+        powerHeader.setTextSize(20.0f);
+        TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
+        paramsSaves.span = 4;
+        paramsSaves.topMargin = 10;
+        powerHeader.setLayoutParams(paramsSaves);
+        rowPowerHeader.addView(powerHeader);
+        ll.addView(rowPowerHeader);
+
+        // Display only relevant effects for this screen
+        for (Fettle fettle : _character.getEffects()) {
+            if (fettle._type == Enumerations.FettleType.IMMUNITY ||
+                fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER ||
+                fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE ||
+                fettle._type == Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE ||
+                fettle._type == Enumerations.FettleType.SAVING_THROW_MODIFIER ||
+                fettle._type == Enumerations.FettleType.SAVING_THROW_ADVANTAGE ||
+                fettle._type == Enumerations.FettleType.SAVING_THROW_DISADVANTAGE)
+            {
+                TableRow row = new TableRow(getContext());
+                TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                row.setLayoutParams(lp);
+
+                TextView description = new TextView(getContext());
+                boolean isModifierIncluded = (fettle._type == Enumerations.FettleType.SAVING_THROW_MODIFIER && Enumerations.SavingThrows.values()[fettle._describer].isBasicSavingThrow())
+                        || fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER;
+
+                description.setText(fettle.toString() + (isModifierIncluded ? " (included)" : ""));
+
+
+
+                TableRow.LayoutParams paramRow = new TableRow.LayoutParams();
+                paramRow.span = 4;
+                description.setLayoutParams(paramRow);
+
+
+                row.addView(description);
+                ll.addView(row);
+            }
+        }
+    }
+
     class SkillListener implements View.OnClickListener {
         Skill _skill;
         TextView _view;
 
         public SkillListener(Skill sk, TextView v) {
+            _skill = sk;
+            _view = v;
+        }
+
+        @Override
+        public void onClick(View v) {
+            _skill._isProficient = !_skill._isProficient;
+            _skill.recompute(_character);
+
+            _view.setText((_skill._score > 0 ? "+": "") + Integer.toString(_skill._score));
+            _view.setTextColor(_skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light) :
+                    (_skill._score > 0 ? getResources().getColor(android.R.color.holo_green_light) : getResources().getColor(android.R.color.darker_gray)));
+        }
+    }
+
+
+    class SavingThrowListener implements View.OnClickListener {
+        SavingThrow _skill;
+        TextView _view;
+
+        public SavingThrowListener(SavingThrow sk, TextView v) {
             _skill = sk;
             _view = v;
         }

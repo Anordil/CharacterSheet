@@ -21,6 +21,15 @@ public class Barbarian implements Class, Externalizable {
     @Override
     public LinkedList<Fettle> getFettles(Character character) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
+
+        int level = character._level;
+        if (level >= 2) {
+            fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.DEX_BARBARIAN.ordinal()));
+        }
+        if (level >= 7) {
+            fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.Skills.INITIATIVE.ordinal()));
+        }
+
         return fettles;
     }
 

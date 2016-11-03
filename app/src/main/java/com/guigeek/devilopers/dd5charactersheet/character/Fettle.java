@@ -65,6 +65,12 @@ public class Fettle  implements Externalizable {
                 return (_value >= 0 ? "+" : "") + _value + " to " + Enumerations.SavingThrows.values()[_describer].toString() + " saving throws";
             case IMMUNITY:
                 return "Immune to " + Enumerations.Immunities.values()[_describer].toString();
+            case ABILITY_CHECK_ADVANTAGE:
+                return "Advantage on " + Enumerations.Skills.values()[_describer].toString() + " checks";
+            case ABILITY_CHECK_DISADVANTAGE:
+                return "Disadvantage on " + Enumerations.Skills.values()[_describer].toString() + " checks";
+            case ABILITY_CHECK_MODIFIER:
+                return (_value >= 0 ? "+" : "") + _value + " to " + Enumerations.Skills.values()[_describer].toString() + " checks";
             default:
                 return super.toString();
         }

@@ -60,12 +60,18 @@ public class Enumerations {
         ACID("Acid damage"), COLD("Cold damage"), FIRE("Fire damage"), FORCE("Force damage"), LIGHTNING("Lightning damage"), NECROTIC("Necrotic damage"), POISON("Poison damage"),
         PSYCHIC("Psychic damage"), RADIANT("Radiant damage"), THUNDER("Thunder damage"),
         CHARM_MAGIC("Charm magic"),
-        ALL("All");
+        ALL("All"),
+        STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), CHA("Charisma"), WIS("Wisdom"),
+        DEX_BARBARIAN("Dexterity (from effects you can see)");
 
         private String _name;
 
         SavingThrows(String n) {
             _name = n;
+        }
+
+        public boolean isBasicSavingThrow() {
+            return (this == STR || this == DEX || this == CON || this == WIS || this == INT || this == CHA || this == ALL);
         }
 
         public String toString() {
@@ -78,12 +84,46 @@ public class Enumerations {
         PIERCING("Piercing damage"), SLASHING("Slashing damage"), BLUDGEONING("Bludgeoning damage"),
         ACID("Acid damage"), COLD("Cold damage"), FIRE("Fire damage"), FORCE("Force damage"), LIGHTNING("Lightning damage"), NECROTIC("Necrotic damage"), POISON("Poison damage"),
         PSYCHIC("Psychic damage"), RADIANT("Radiant damage"), THUNDER("Thunder damage"),
-        CHARM_MAGIC("Charm magic"), DISEASES("Diseases");
+        CHARM_MAGIC("Charm magic"), DISEASES("Diseases"), FEAR("Fear");
 
         private String _name;
         Immunities(String n) {
             _name = n;
         }
+        public String toString() {
+            return _name;
+        }
+    }
+
+
+    public enum Skills {
+        ACROBATICS("Acrobatics"),
+        ANIMAL_HANDLING("Animal Handling"),
+        ARCANA("Arcana"),
+        ATHLETICS("Athletics"),
+        DECEPTION("Deception"),
+        HISTORY("History"),
+        INSIGHT("Insight"),
+        INTIMIDATION("Intimidation"),
+        INVESTIHATION("Investigation"),
+        MEDICINE("Medicine"),
+        NATURE("Nature"),
+        PERCEPTION("Perception"),
+        PERFORMANCE("Performance"),
+        PERSUASION("Persuasion"),
+        RELIGION("Religion"),
+        SLEIGHT_OF_HAND("Sleight of hand"),
+        STEALTH("Stealth"),
+        SURVIVAL("Survival"),
+        ALL("All skills"),
+
+        INITIATIVE("Initiative");
+
+        private String _name;
+        Skills(String n) {
+            _name = n;
+        }
+
         public String toString() {
             return _name;
         }
