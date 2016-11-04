@@ -132,4 +132,36 @@ public class Enumerations {
             return _name;
         }
     }
+
+
+    public enum ArmorCategories {
+        NONE, LIGHT, MEDIUM, HEAVY, SHIELD;
+    }
+
+    public enum ArmorTypes {
+        NONE("No armor", ArmorCategories.NONE),
+        PADDED("Padded armor", ArmorCategories.LIGHT),
+        LEATHER("Leather armor", ArmorCategories.LIGHT),
+        STUDDED_LEATHER("Studded leather armor", ArmorCategories.LIGHT),
+        HIDE("Hide armor", ArmorCategories.MEDIUM),
+        CHAIN_SHIRT("Chain shirt", ArmorCategories.MEDIUM),
+        SCALE_MAIL("Scale mail", ArmorCategories.MEDIUM),
+        BREASTPLATE("Breatplate", ArmorCategories.MEDIUM),
+        HALF_PLATE("Half plate", ArmorCategories.MEDIUM),
+        RING_MAIL("Ring mail", ArmorCategories.HEAVY),
+        CHAIN_MAIL("Chain mail", ArmorCategories.HEAVY),
+        SPLINT("Splint armor", ArmorCategories.HEAVY),
+        PLATE("Plate armor", ArmorCategories.HEAVY);
+
+        private String _name;
+        private ArmorCategories _category;
+        ArmorTypes(String n, ArmorCategories c) {
+            _name = n;
+            _category = c;
+        }
+
+        public String toString() {
+            return _name;
+        }
+    }
 }
