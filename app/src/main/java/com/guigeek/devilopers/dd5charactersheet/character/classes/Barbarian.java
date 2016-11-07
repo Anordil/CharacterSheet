@@ -19,6 +19,21 @@ import java.util.LinkedList;
 public class Barbarian implements Class, Externalizable {
 
     @Override
+    public int getAC(Character character) {
+        int ac = character._equippedArmor.getAC(character);
+
+        if (character._equippedArmor._type == Enumerations.ArmorTypes.NONE) {
+            ac = 10 + character.getModifier(Enumerations.Attributes.DEX) + character.getModifier(Enumerations.Attributes.CON);
+        }
+
+        if (character._equippedShield != null && character._equippedShield._type == Enumerations.ArmorTypes.SHIELD) {
+            ac+= character._equippedShield.getAC(character);
+        }
+
+        return ac;
+    }
+
+    @Override
     public LinkedList<Fettle> getFettles(Character character) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
 

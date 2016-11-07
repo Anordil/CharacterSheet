@@ -22,4 +22,6 @@ public interface Class  {
     public int getIconResource();
 
     public LinkedList<Fettle> getFettles(Character character);
+
+    public int getAC(Character character);
 }

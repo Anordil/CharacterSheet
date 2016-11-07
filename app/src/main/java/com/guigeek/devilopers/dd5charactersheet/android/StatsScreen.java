@@ -18,7 +18,7 @@ public class StatsScreen extends Fragment {
     protected Character _character;
 
     Button updateButton;
-    EditText name, level, armor, str, dex, con, intel, wis, cha;
+    EditText name, level, str, dex, con, intel, wis, cha;
 
     public StatsScreen() {
     }
@@ -50,7 +50,6 @@ public class StatsScreen extends Fragment {
         // Get the EditText refs
         name = (EditText)root.findViewById(R.id.inName);
         level = (EditText)root.findViewById(R.id.inLevel);
-        armor = (EditText)root.findViewById(R.id.inAC);
         str = (EditText)root.findViewById(R.id.inSTR);
         dex = (EditText)root.findViewById(R.id.inDEX);
         con = (EditText)root.findViewById(R.id.inCON);
@@ -66,7 +65,6 @@ public class StatsScreen extends Fragment {
 
                 int oldLevel = _character._level;
                 _character._level = Integer.parseInt(level.getText().toString());
-                _character._armorClass = Integer.parseInt(armor.getText().toString());
                 _character._attributes[0]  = Integer.parseInt(str.getText().toString());
                 _character._attributes[1] = Integer.parseInt(dex.getText().toString());
                 _character._attributes[2] = Integer.parseInt(con.getText().toString());
@@ -90,7 +88,6 @@ public class StatsScreen extends Fragment {
     private void initInputValue() {
         name.setText(_character._name);
         level.setText(_character._level + "");
-        armor.setText(_character._armorClass + "");
         str.setText(_character._attributes[0] + "");
         dex.setText(_character._attributes[1] + "");
         con.setText(_character._attributes[2] + "");

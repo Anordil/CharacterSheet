@@ -8,6 +8,9 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
 import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
+import com.guigeek.devilopers.dd5charactersheet.item.Armor;
+import com.guigeek.devilopers.dd5charactersheet.item.Item;
+import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -21,8 +24,8 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    public int _version = 5;
-    public static final int _latestVersion = 5;
+    public int _version = 6;
+    public static final int _latestVersion = 6;
 
     public Class _class;
     public Race _race;
@@ -45,9 +48,16 @@ public class Character implements Externalizable {
     public LinkedList<Fettle> _effect;
 
 
+    // DEPRECATED
     public String _weaponDmgDice;
     public boolean _isWeaponRanged;
     public String _allItems;
+    // end DEPRECATED
+
+    public Armor _equippedArmor;
+    public Armor _equippedShield;
+    public Weapon _equippedWeapon;
+    public LinkedList<Item> _equippedItems;
 
 
     @Override
@@ -83,6 +93,11 @@ public class Character implements Externalizable {
 
         oo.writeObject(_feats);
         oo.writeObject(_effect);
+
+        oo.writeObject(_equippedArmor);
+        oo.writeObject(_equippedWeapon);
+        oo.writeObject(_equippedItems);
+        oo.writeObject(_equippedShield);
         Log.d("WRAP", "All good");
     }
 
@@ -179,6 +194,20 @@ public class Character implements Externalizable {
         }
         else {
             _effect = new LinkedList<Fettle>();
+        }
+
+        // V6: armor and other equipment
+        if (version >= 6) {
+            _equippedArmor = (Armor)oi.readObject();
+            _equippedWeapon = (Weapon) oi.readObject();
+            _equippedItems = (LinkedList<Item>) oi.readObject();
+            _equippedShield = (Armor)oi.readObject();
+        }
+        else {
+            _equippedArmor = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+            _equippedWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+            _equippedItems = new LinkedList<>();
+            _equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
         }
     }
 
@@ -327,6 +356,10 @@ public class Character implements Externalizable {
 
     public int getAttacksPerRound() {
         return _class.getAttacksPerRound(_level);
+    }
+
+    public void equipWeapon(Weapon newWeapon) {
+        _equippedWeapon = newWeapon;
     }
 
     private void initSkills() {

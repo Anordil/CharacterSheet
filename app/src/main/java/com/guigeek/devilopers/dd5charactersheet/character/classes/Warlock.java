@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.util.Log;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.*;
@@ -17,6 +19,17 @@ import java.util.LinkedList;
  * Created by totou on 14/03/2016.
  */
 public class Warlock implements Class, Externalizable {
+
+    @Override
+    public int getAC(Character character) {
+        int ac = character._equippedArmor.getAC(character);
+
+        if (character._equippedShield != null && character._equippedShield._type == Enumerations.ArmorTypes.SHIELD) {
+            ac+= character._equippedShield.getAC(character);
+        }
+
+        return ac;
+    }
 
     @Override
     public LinkedList<Fettle> getFettles(Character character) {

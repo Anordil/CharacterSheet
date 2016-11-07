@@ -17,6 +17,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
+import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,8 +30,10 @@ import java.util.List;
 public class CombatScreen extends Fragment {
 
     protected Character _character;
-    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc;
-    TextView viewSpeed, viewInit, spellAtk, spellDD;
+    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc, tvAtkThrown, tvDmgThrown;
+    TextView viewSpeed, viewInit, spellAtk, spellDD, weaponName;
+    ImageView imageWeaponHit;
+    TableRow rowThrown;
     ProgressBar pb;
 
     List<TextView> spellSlotTextViews;
@@ -73,6 +76,9 @@ public class CombatScreen extends Fragment {
         tvAtk = (TextView)rootView.findViewById(R.id.tvAtkBonus);
         tvDmg = (TextView)rootView.findViewById(R.id.tvDamage);
 
+        tvAtkThrown = (TextView)rootView.findViewById(R.id.tvAtkBonusThrown);
+        tvDmgThrown = (TextView)rootView.findViewById(R.id.tvDamageThrown);
+
         viewSpeed = (TextView)rootView.findViewById(R.id.tvSpeed);
         viewInit = (TextView)rootView.findViewById(R.id.tvInitiative);
 
@@ -86,6 +92,11 @@ public class CombatScreen extends Fragment {
         tvHitDiceDesc = (TextView)rootView.findViewById(R.id.textViewHitDice);
         tvHitDiceDesc.setText("HD (D" + _character._class.getHitDie() + ")");
 
+        weaponName = (TextView)rootView.findViewById(R.id.tvWeaponName);
+        weaponName.setText(_character._equippedWeapon.toString());
+
+        imageWeaponHit = (ImageView)rootView.findViewById(R.id.imgCombatHitBonus);
+        rowThrown = (TableRow)rootView.findViewById(R.id.combatRowThrown);
 
 
         if (!_character._class.isCaster()) {
@@ -320,6 +331,7 @@ public class CombatScreen extends Fragment {
     }
 
     public void refreshSheet() {
+        Weapon weapon = _character._equippedWeapon;
         pb.setMax(_character._hpMax);
         pb.setProgress(_character._hpCurrent);
 
@@ -329,19 +341,41 @@ public class CombatScreen extends Fragment {
         viewHitDiceMax.setText(Integer.toString(_character._level));
         viewHitDiceCurrent.setText(Integer.toString(_character._hitDice));
 
-        tvAC.setText(_character._armorClass + "");
+        tvAC.setText(_character._class.getAC(_character) + "");
 
         int modDex = _character.getModifier(Enumerations.Attributes.DEX);
         int modStr = _character.getModifier(Enumerations.Attributes.STR);
 
-        int dmgBonus = (_character._isWeaponRanged ? modDex : modStr) +  _character._dmgBonus;
-        int attackBonus =
-                _character.getProficiencyBonus() + _character._atkBonus
-                + (_character._isWeaponRanged ? modDex : modStr);
+        boolean distanceWeapon = weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE;
 
-        String damage = _character._weaponDmgDice + (dmgBonus > 0 ? "+":"") + (dmgBonus != 0 ? dmgBonus : "");
+        if (distanceWeapon) {
+            imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_bowman));
+        }
+
+        int dmgBonus = (distanceWeapon ? modDex : modStr) +  _character._dmgBonus + weapon._magicModifier;
+        int attackBonus = _character.getProficiencyBonus() + (distanceWeapon ? modDex : modStr) + weapon._magicModifier;
+
+        int diceDamage = weapon._diceValue;
+        if (weapon._hands == Enumerations.WeaponHandCount.VERSATILE && _character._equippedShield._type == Enumerations.ArmorTypes.NONE) {
+            diceDamage =  weapon._diceValueVersatile;
+        }
+
+        String damage = weapon._diceCount + "D" + diceDamage + (dmgBonus > 0 ? "+":"") + (dmgBonus != 0 ? dmgBonus : "");
         tvDmg.setText(damage);
-        tvAtk.setText((attackBonus > 0 ? "+":"") + attackBonus + " x" + _character.getAttacksPerRound());
+        tvAtk.setText((attackBonus > 0 ? "+":"") + attackBonus + (distanceWeapon ? " " + weapon._distMin+"-"+weapon._distMax:"") + " x" + _character.getAttacksPerRound() );
+
+        // Thrown?
+        if (weapon._distance != Enumerations.WeaponDistanceTypes.THROWN) {
+            rowThrown.setVisibility(View.GONE);
+        }
+        else {
+            int attackBonusThrown = _character.getProficiencyBonus() + Math.max(modDex, modStr) + weapon._magicModifier;
+            int dmgBonusThrown = Math.max(modDex, modStr) + _character._dmgBonus + weapon._magicModifier;
+            String damageThrown = weapon._diceCount + "D" + diceDamage + (dmgBonusThrown > 0 ? "+":"") + (dmgBonusThrown != 0 ? dmgBonusThrown : "");
+
+            tvAtkThrown.setText((attackBonusThrown > 0 ? "+":"") + attackBonusThrown + " " + weapon._distMin+"-"+weapon._distMax);
+            tvDmgThrown.setText(damageThrown);
+        }
 
         viewSpeed.setText(_character._race.getSpeedInFeet() + " ft.");
         int dexBonus = _character.getModifier(Enumerations.Attributes.DEX);

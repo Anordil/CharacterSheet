@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView2"
-                        android:src="@drawable/ic_arrows_shield" />
+                        android:src="@drawable/ic_armor_vest" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -109,8 +109,9 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                         android:text="Weapon"
-                        android:id="@+id/textView20" />
+                        android:id="@+id/tvWeaponName" />
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -121,8 +122,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/imageView3"
-                        android:src="@drawable/ic_target" />
+                        android:id="@+id/imgCombatHitBonus"
+                        android:src="@drawable/ic_sword_clash" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -151,6 +152,75 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="1D8+5"
                         android:id="@+id/tvDamage" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/combatRowThrown"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                        android:paddingLeft="10dp"
+                        android:text="Thrown"
+                     />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView3"
+                        android:src="@drawable/ic_thrown_daggers" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="+8"
+                        android:id="@+id/tvAtkBonusThrown"  />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_broken_heart"
+                     />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="1D8+5"
+                        android:id="@+id/tvDamageThrown" />
 
                 </LinearLayout>
 

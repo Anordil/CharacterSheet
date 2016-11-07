@@ -56,13 +56,14 @@ public class Enumerations {
 
 
     public enum SavingThrows {
-        PIERCING("Piercing damage"), SLASHING("Slashing damage"), BLUDGEONING("Bludgeoning damage"),
-        ACID("Acid damage"), COLD("Cold damage"), FIRE("Fire damage"), FORCE("Force damage"), LIGHTNING("Lightning damage"), NECROTIC("Necrotic damage"), POISON("Poison damage"),
-        PSYCHIC("Psychic damage"), RADIANT("Radiant damage"), THUNDER("Thunder damage"),
+        PIERCING_DMG("Piercing damage"), SLASHING_DMG("Slashing damage"), BLUDGEONING_DMG("Bludgeoning damage"),
+        ACID_DMG("Acid damage"), COLD_DMG("Cold damage"), FIRE_DMG("Fire damage"), FORCE_DMG("Force damage"), LIGHTNING_DMG("Lightning damage"),
+        NECROTIC_DMG("Necrotic damage"), POISON_DMG("Poison damage"),
+        PSYCHIC_DMG("Psychic damage"), RADIANT_DMG("Radiant damage"), THUNDER_DMG("Thunder damage"),
         CHARM_MAGIC("Charm magic"),
         ALL("All"),
         STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), CHA("Charisma"), WIS("Wisdom"),
-        DEX_BARBARIAN("Dexterity (from effects you can see)");
+        DEX_BARBARIAN("Dexterity (from effects you can see)"), POISON("Poison");
 
         private String _name;
 
@@ -147,13 +148,47 @@ public class Enumerations {
         RING_MAIL("Ring mail", ArmorCategories.HEAVY),
         CHAIN_MAIL("Chain mail", ArmorCategories.HEAVY),
         SPLINT("Splint armor", ArmorCategories.HEAVY),
-        PLATE("Plate armor", ArmorCategories.HEAVY);
+        PLATE("Plate armor", ArmorCategories.HEAVY),
+        SHIELD("Shield", ArmorCategories.NONE);
 
         private String _name;
         private ArmorCategories _category;
         ArmorTypes(String n, ArmorCategories c) {
             _name = n;
             _category = c;
+        }
+
+        public String toString() {
+            return _name;
+        }
+    }
+
+    public enum WeaponDistanceTypes {
+        MELEE, DISTANCE, THROWN;
+    }
+
+    public enum WeaponWeightCategory {
+        LIGHT, NORMAL, HEAVY;
+    }
+
+    public enum WeaponHandCount {
+        ONE_HANDED, VERSATILE, TWO_HANDED;
+    }
+
+    public enum WeaponTypes {
+        CLUB("Club"), DAGGER("Dagger"), GREAT_CLUB("Great club"), HANDAXE("Hand axe"), JAVELIN("Javelin"), LIGHT_HAMMER("Light hammer"),
+        MACE("Mace"), QUARTERSTAFF("Quarterstaff"), SICKLE("Sickle"), SPEAR("Spear"), LIGHT_CROSSBOW("Light crossbow"), DART("Dart"),
+        SHORTBOW("Shortbow"), SLING("Sling"), BATTLEAXE("Battle axe"), FLAIL("Flail"), GLAIVE("Glaive"), GREATAXE("Great axe"),
+        GREATSWORD("Great sword"), HALBERD("Halberd"), LANCE("Lance"), LONGSWORD("Longsword"), MAUL("Maul"), MORNINGSTAR("Morningstar"),
+        PIKE("Pike"), RAPIER("Rapier"), SCIMITAR("Scimitar"), SHORTSWORD("Shortsword"), TRIDENT("Trident"), WAR_PICK("War pick"),
+        WARHAMMER("Warhammer"), WHIP("Whip"), BLOWGUN("Blowgun"), HAND_CROSSBOW("Hand crossbow"), HEAVY_CROSSBOW("Heavy crossbow"),
+        LONGBOW("Longbow"), NET("Net"),
+        UNARMED("Unarmed");
+
+        public String _name;
+
+        WeaponTypes(String n) {
+            _name = n;
         }
 
         public String toString() {
