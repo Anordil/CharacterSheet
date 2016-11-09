@@ -39,6 +39,7 @@
                 android:value="com.guigeek.devilopers.dd5charactersheet.android.MainActivity" />
         </activity>
         <activity android:name=".android.CreateCharacter"></activity>
+        <activity android:name=".android.CreateItemActivity"></activity>
     </application>
 
 </manifest>

@@ -6,4 +6,5 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 public class Constants {
 
     public static final String CHARACTER = "CHARACTER";
+    public static final String ITEM = "ITEM";
 }

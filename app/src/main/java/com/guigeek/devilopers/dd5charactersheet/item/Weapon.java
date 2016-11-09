@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class Weapon implements Externalizable {
 
     public static final long serialVersionUID = 21L;
-    int _version = 1;
+    int _version = 2;
 
 
     public Enumerations.WeaponTypes _type;
@@ -35,12 +35,15 @@ public class Weapon implements Externalizable {
     public int _magicModifier;
     public LinkedList<Fettle> _magicProperties;
 
+    public String _name;
+
 
     public Weapon(){}
 
     public Weapon(Enumerations.WeaponTypes iType, int magicModifier, LinkedList<Fettle> magicProperties) {
 
         _type = iType;
+        _name = _type.toString();
 
         // Force-init
         _distMin = 0;
@@ -188,7 +191,7 @@ public class Weapon implements Externalizable {
 
     @Override
     public String toString() {
-        return _type.toString() + (_magicModifier > 0 ? " +" + _magicModifier : "");
+        return _name + (_magicModifier > 0 ? " +" + _magicModifier : "");
     }
 
     @Override
@@ -212,6 +215,8 @@ public class Weapon implements Externalizable {
 
         oo.writeInt(_magicModifier);
         oo.writeObject(_magicProperties);
+
+        oo.writeObject(_name);
     }
 
     @Override
@@ -237,6 +242,12 @@ public class Weapon implements Externalizable {
 
             _magicModifier = oi.readInt();
             _magicProperties = (LinkedList<Fettle>)oi.readObject();
+        }
+        if (version >= 2) {
+            _name = (String)oi.readObject();
+        }
+        else {
+            _name = _type.toString();
         }
     }
 }

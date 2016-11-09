@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text=""
+            android:ems="10"
+            android:id="@+id/itemName"
+            android:hint="Name"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/itemModifier"
+            android:text=""
+            android:hint="Mod."
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerItemCategory"
+            android:spinnerMode="dialog"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerItemType"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <TextView
+        android:text="Magic properties"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:id="@+id/textView7" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@android:id/list"
+        android:layout_weight="70" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:gravity="bottom"
+        android:weightSum="100">
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerPropertyType"
+            android:layout_weight="40" />
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerPropertyDescriber"
+            android:layout_weight="40" />
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="Bonus"
+            android:ems="10"
+            android:id="@+id/etPropertyModifier"
+            android:layout_weight="20" />
+
+        <Button
+            android:text="+"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonAddProperty"
+            android:layout_weight="1"
+            android:layout_width="40dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:gravity="bottom"
+        android:weightSum="100">
+
+
+        <Button
+            android:text="Create new item"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonCreateItemSave"
+            android:layout_weight="1"
+            android:layout_width="match_parent" />
+    </LinearLayout>
+</LinearLayout>

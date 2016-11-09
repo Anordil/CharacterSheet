@@ -42,7 +42,7 @@ public class Barbarian implements Class, Externalizable {
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.DEX_BARBARIAN.ordinal()));
         }
         if (level >= 7) {
-            fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.Skills.INITIATIVE.ordinal()));
+            fettles.add(new Fettle(Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE, 0, Enumerations.Skills.INITIATIVE.ordinal()));
         }
 
         return fettles;

@@ -37,6 +37,11 @@ public class Item implements Externalizable {
 
 
     @Override
+    public String toString() {
+        return _name;
+    }
+
+    @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {
         oo.writeInt(_version);

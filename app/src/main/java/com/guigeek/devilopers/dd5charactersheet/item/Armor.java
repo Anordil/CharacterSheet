@@ -25,7 +25,7 @@ public class Armor implements Externalizable {
     public boolean _hasStealthDisadvantage;
     public int _magicModifier;
 
-    LinkedList<Fettle> _magicProperties;
+    public LinkedList<Fettle> _magicProperties;
 
     public Armor(){}
 
@@ -88,7 +88,7 @@ public class Armor implements Externalizable {
 
     @Override
     public String toString() {
-        return _type.toString() + (_magicModifier > 0 ? " +" + _magicModifier : "");
+        return _name + (_magicModifier > 0 ? " +" + _magicModifier : "");
     }
 
     @Override

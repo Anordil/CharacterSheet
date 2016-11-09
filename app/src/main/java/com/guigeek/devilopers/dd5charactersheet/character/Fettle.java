@@ -65,12 +65,22 @@ public class Fettle  implements Externalizable {
                 return (_value >= 0 ? "+" : "") + _value + " to " + Enumerations.SavingThrows.values()[_describer].toString() + " saving throws";
             case IMMUNITY:
                 return "Immune to " + Enumerations.Immunities.values()[_describer].toString();
+            case ATTRIBUTE_MODIFIER:
+                return (_value >= 0 ? "+" : "") + _value + " to " + Enumerations.Attributes.values()[_describer].toString();
             case ABILITY_CHECK_ADVANTAGE:
                 return "Advantage on " + Enumerations.Skills.values()[_describer].toString() + " checks";
             case ABILITY_CHECK_DISADVANTAGE:
                 return "Disadvantage on " + Enumerations.Skills.values()[_describer].toString() + " checks";
             case ABILITY_CHECK_MODIFIER:
                 return (_value >= 0 ? "+" : "") + _value + " to " + Enumerations.Skills.values()[_describer].toString() + " checks";
+            case ARMOR_CLASS_MODIFIER:
+                return (_value >= 0 ? "+" : "") + _value + " to AC";
+            case MOVEMENT_SPEED_MODIFIER:
+                return (_value >= 0 ? "+" : "") + _value + " to movement speed";
+            case ATTACK_BONUS_MODIFIER:
+                return (_value >= 0 ? "+" : "") + _value + " to attack rolls";
+            case ATTACK_DAMAGE_MODIFIER:
+                return (_value >= 0 ? "+" : "") + _value + "(" + Enumerations.DamageTypes.values()[_describer].toString() + ")" + " to attack damage";
             default:
                 return super.toString();
         }

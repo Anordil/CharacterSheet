@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        android:gravity="center_vertical">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="90"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Name"
+        android:text="Plate mail +1"
+        android:id="@+id/listItemName"
+        android:paddingLeft="10dp" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content"
+            android:id="@+id/listItemIcon"
+            android:src="@drawable/ic_armor_vest" />
+
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listItemFettleTable">
+    </TableLayout>
+
+</LinearLayout>

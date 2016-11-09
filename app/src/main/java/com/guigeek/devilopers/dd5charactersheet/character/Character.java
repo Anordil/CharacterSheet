@@ -24,8 +24,8 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    public int _version = 6;
-    public static final int _latestVersion = 6;
+    public int _version = 8;
+    public static final int _latestVersion = 8;
 
     public Class _class;
     public Race _race;
@@ -56,8 +56,10 @@ public class Character implements Externalizable {
 
     public Armor _equippedArmor;
     public Armor _equippedShield;
-    public Weapon _equippedWeapon;
+    public Weapon _equippedWeapon, _offHandWeapon;
     public LinkedList<Item> _equippedItems;
+
+    public LinkedList<Externalizable> _inventory;
 
 
     @Override
@@ -98,6 +100,9 @@ public class Character implements Externalizable {
         oo.writeObject(_equippedWeapon);
         oo.writeObject(_equippedItems);
         oo.writeObject(_equippedShield);
+        oo.writeObject(_offHandWeapon);
+
+        oo.writeObject(_inventory);
         Log.d("WRAP", "All good");
     }
 
@@ -208,6 +213,22 @@ public class Character implements Externalizable {
             _equippedWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
             _equippedItems = new LinkedList<>();
             _equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+        }
+        // V7: off hand weapons
+        if (version >= 7) {
+            _offHandWeapon = (Weapon) oi.readObject();
+        }
+        else {
+            _offHandWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+        }
+
+
+        // V8: added inventory list
+        if (version >= 8) {
+            _inventory = (LinkedList<Externalizable>)oi.readObject();
+        }
+        else {
+            _inventory = new LinkedList<>();
         }
     }
 
@@ -419,4 +440,13 @@ public class Character implements Externalizable {
         _savingThrows.add(new SavingThrow("Charisma", Enumerations.Attributes.CHA));
     }
 
+    public boolean hasFeat(String s) {
+        for (Power p : _feats) {
+            if (p._name.toLowerCase().equals(s.toLowerCase())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

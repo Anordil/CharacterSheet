@@ -6,20 +6,30 @@ package com.guigeek.devilopers.dd5charactersheet.character;
 public class Enumerations {
 
     public enum FettleType {
-        ATTRIBUTE_MODIFIER,
-        ABILITY_CHECK_ADVANTAGE,
-        ABILITY_CHECK_DISADVANTAGE,
-        ABILITY_CHECK_MODIFIER,
-        ARMOR_CLASS_MODIFIER,
-        MOVEMENT_SPEED_MODIFIER,
-        ATTACK_BONUS_MODIFIER,
-        ATTACK_DAMAGE_MODIFIER,
-        DAMAGE_RESISTANCE,
-        DAMAGE_VULNERABILITY,
-        SAVING_THROW_ADVANTAGE,
-        SAVING_THROW_DISADVANTAGE,
-        SAVING_THROW_MODIFIER,
-        IMMUNITY
+        ATTRIBUTE_MODIFIER("Attribute mod"),
+        ABILITY_CHECK_ADVANTAGE("Skill check adv"),
+        ABILITY_CHECK_DISADVANTAGE("Skill check disadv"),
+        ABILITY_CHECK_MODIFIER("Skill check mod"),
+        ARMOR_CLASS_MODIFIER("AC modifier"),
+        MOVEMENT_SPEED_MODIFIER("Speed modifier"),
+        ATTACK_BONUS_MODIFIER("Attack bonus mod"),
+        ATTACK_DAMAGE_MODIFIER("Attack damage mod"),
+        DAMAGE_RESISTANCE("Damage ressitance"),
+        DAMAGE_VULNERABILITY("Dama vulnerability"),
+        SAVING_THROW_ADVANTAGE("Saving throw adj"),
+        SAVING_THROW_DISADVANTAGE("Saving throw disadv"),
+        SAVING_THROW_MODIFIER("Saving throw mod"),
+        IMMUNITY("Immunity");
+
+        private String _name;
+
+        FettleType(String n) {
+            _name = n;
+        }
+
+        public String toString() {
+            return _name;
+        }
     }
 
     public enum ActionType {
@@ -31,12 +41,19 @@ public class Enumerations {
 
 
     public enum Attributes {
-        STR, DEX, CON, INT, WIS, CHA
+        STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), WIS("Wisdom"), CHA("Charisma");
+
+        private String _name;
+
+        Attributes(String n) {
+            _name = n;
+        }
+
+        public String toString() {
+            return _name;
+        }
     }
 
-    public enum AttackRanges {
-        MELEE, DISTANCE
-    }
 
     public enum DamageTypes {
         PIERCING("Piercing"), SLASHING("Slashing"), BLUDGEONING("Bludgeoning"),
