@@ -40,7 +40,16 @@ public class Weapon implements Externalizable {
     public String _name;
 
 
-    public Weapon(){}
+    public Weapon(){
+        _distance = Enumerations.WeaponDistanceTypes.THROWN;
+        _distMin = 20;
+        _distMax = 60;
+        _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+        _weight = Enumerations.WeaponWeightCategory.LIGHT;
+        _diceCount = 1;
+        _diceValue = 6;
+        _damageType = Enumerations.DamageTypes.SLASHING;
+    }
 
     public Weapon(Enumerations.WeaponTypes iType, int magicModifier, LinkedList<Fettle> magicProperties) {
 

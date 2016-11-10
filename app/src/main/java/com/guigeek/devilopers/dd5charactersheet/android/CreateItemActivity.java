@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -117,6 +119,11 @@ public class CreateItemActivity extends ListActivity {
                 spinnerPropertyDescriber.setVisibility(View.VISIBLE);
                 propertyModifier.setVisibility(View.VISIBLE);
 
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                        0,
+                        LinearLayout.LayoutParams.MATCH_PARENT, 20);
+                propertyModifier.setLayoutParams(param);
+
                 switch (type) {
                     case ATTRIBUTE_MODIFIER:
                         spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.Attributes.values()));
@@ -167,6 +174,16 @@ public class CreateItemActivity extends ListActivity {
                         spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.Immunities.values()));
                         propertyModifier.setVisibility(View.INVISIBLE);
                         break;
+                    case ATTACK_DAMAGE_DICE:
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.DamageTypes.values()));
+                        break;
+                    case TEXT_FETTLE:
+                        spinnerPropertyDescriber.setVisibility(View.GONE);
+                        LinearLayout.LayoutParams param2 = new LinearLayout.LayoutParams(
+                                0,
+                                LinearLayout.LayoutParams.MATCH_PARENT, 60);
+                        propertyModifier.setLayoutParams(param2);
+                        break;
                     default: break;
                 }
             }
@@ -215,11 +232,34 @@ public class CreateItemActivity extends ListActivity {
 
         @Override
         public void onClick(View v) {
-            Fettle aAddedProperty = new Fettle(
-                    (Enumerations.FettleType)spinnerPropertyType.getSelectedItem(),
-                    propertyModifier.getText().toString().length() > 0 ? Integer.parseInt(propertyModifier.getText().toString()) : 0,
-                    ((Enum)spinnerPropertyDescriber.getSelectedItem()).ordinal()
-            );
+
+            boolean isInt;
+            int valueInt = 0;
+            String valueStr = propertyModifier.getText().toString();
+            try {
+                valueInt = Integer.parseInt(propertyModifier.getText().toString());
+                isInt = true;
+            }
+            catch (Exception up) {
+                isInt = false;
+            }
+
+            Fettle aAddedProperty;
+            if (isInt) {
+                aAddedProperty = new Fettle(
+                        (Enumerations.FettleType)spinnerPropertyType.getSelectedItem(),
+                        valueInt,
+                        ((Enum)spinnerPropertyDescriber.getSelectedItem()).ordinal()
+                );
+            }
+            else {
+                aAddedProperty = new Fettle(
+                        (Enumerations.FettleType)spinnerPropertyType.getSelectedItem(),
+                        valueStr,
+                        ((Enum)spinnerPropertyDescriber.getSelectedItem()).ordinal()
+                );
+            }
+
             magicProperties.add(aAddedProperty);
             setListAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
         }

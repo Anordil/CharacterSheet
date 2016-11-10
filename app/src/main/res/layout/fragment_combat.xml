@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tablelayout"
-            android:stretchColumns="0"
+            android:stretchColumns="1"
             android:layout_gravity="center_horizontal">
 
             <TableRow
@@ -30,6 +30,7 @@
                 android:layout_height="match_parent"
                 android:weightSum="3"
                 android:gravity="center_vertical">
+
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -95,140 +96,6 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center_vertical">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                        android:text="Weapon"
-                        android:id="@+id/tvWeaponName" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imgCombatHitBonus"
-                        android:src="@drawable/ic_sword_clash" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="+8"
-                        android:id="@+id/tvAtkBonus"  />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_broken_heart"
-                        android:id="@+id/imageView" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="1D8+5"
-                        android:id="@+id/tvDamage" />
-
-                </LinearLayout>
-
-            </TableRow>
-
-
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:id="@+id/combatRowThrown"
-                android:gravity="center_vertical">
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                        android:paddingLeft="10dp"
-                        android:text="Thrown"
-                     />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageView3"
-                        android:src="@drawable/ic_thrown_daggers" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="+8"
-                        android:id="@+id/tvAtkBonusThrown"  />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_broken_heart"
-                     />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="1D8+5"
-                        android:id="@+id/tvDamageThrown" />
-
-                </LinearLayout>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
                 android:weightSum="3"
                 android:id="@+id/rowSpell">
 
@@ -256,7 +123,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView6"
-                        android:layout_column="0"
                         android:src="@drawable/ic_lightning_tear" />
 
                     <TextView
@@ -292,13 +158,294 @@
 
             <TableRow
                 android:layout_width="match_parent"
+                android:paddingTop="15dp"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:text="Ice (+3 Longsword)"
+                    android:layout_span="8"
+                    android:id="@+id/tvWeaponName" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center_vertical">
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imgCombatHitBonus"
+                        android:src="@drawable/ic_sword_clash" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="+8"
+                        android:paddingRight="20dp"
+                        android:id="@+id/tvAtkBonus"  />
+
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_broken_heart"
+                        android:id="@+id/imageView" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/Name"
+                        android:text="1D8+5S + 1D6(Cold)"
+                        android:id="@+id/tvDamage" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/combatRowThrown"
+                android:gravity="center_vertical">
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imageView3"
+                        android:src="@drawable/ic_thrown_daggers" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="+8"
+                        android:id="@+id/tvAtkBonusThrown"  />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:src="@drawable/ic_broken_heart"
+                     />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/Name"
+                        android:text="1D8+5"
+                        android:id="@+id/tvDamageThrown" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/combatRowProperties"
+                android:gravity="center_vertical">
+
+                <TableLayout
+                    android:id="@+id/combatWeaponProperties"
+                    android:layout_width="match_parent"
+                    android:layout_span="8"
+                    android:shrinkColumns="*"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+
+
+
+
+            <!--OFF HAND-->
+            <TableRow
+                android:layout_width="match_parent"
+                android:paddingTop="15dp"
+                android:layout_height="match_parent"
+                android:id="@+id/rowNameOffHand">
+
+                <LinearLayout android:layout_span="8">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:text="Off-hand:"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:text="String (+2 Dagger)"
+                    android:id="@+id/tvWeaponNameOffHand" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/rowMeleeOffHand"
+                android:gravity="center_vertical">
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/imgCombatHitBonusOffHand"
+                        android:src="@drawable/ic_sword_clash" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="+8"
+                        android:paddingRight="20dp"
+                        android:id="@+id/tvAtkBonusOffHand"  />
+
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_broken_heart"
+                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/Name"
+                        android:text="1D8+5S + 1D6(Cold)"
+                        android:id="@+id/tvDamageOffHand" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/combatRowThrownOffHand"
+                android:gravity="center_vertical">
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_thrown_daggers" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="+8"
+                        android:id="@+id/tvAtkBonusThrownOffHand"  />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:src="@drawable/ic_broken_heart"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/Name"
+                        android:text="1D8+5"
+                        android:id="@+id/tvDamageThrownOffHand" />
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/combatRowPropertiesOffHand"
+                android:gravity="center_vertical">
+
+                <TableLayout
+                    android:id="@+id/combatWeaponPropertiesOffHand"
+                    android:layout_width="match_parent"
+                    android:layout_span="8"
+                    android:shrinkColumns="*"
+                    android:layout_height="wrap_content" />
+            </TableRow>
+
+
+
+
+
+
+
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_span="2"
                     android:layout_gravity="center_vertical">
 
                     <ImageView
@@ -325,7 +472,6 @@
                     android:text="31"
                     android:minWidth="25dp"
                     android:id="@+id/tvHPCurrent"
-                    android:layout_column="1"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -333,69 +479,80 @@
                     android:layout_height="wrap_content"
                     android:text="31"
                     android:minWidth="25dp"
-                    android:id="@+id/tvHPMax"
-                    android:layout_column="2" />
+                    android:id="@+id/tvHPMax" />
 
                 <Button
                     android:minHeight="50dp"
-                    android:minWidth="50dp"
+                    android:minWidth="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-5"
                     android:onClick="changeHP"
                     android:tag="-5"
                     android:id="@+id/btnHPMin5"
-                    android:layout_column="3"
                     android:layout_marginLeft="5dp" />
 
                 <Button
                     android:minHeight="50dp"
-                    android:minWidth="50dp"
+                    android:minWidth="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="-1"
                     android:onClick="changeHP"
                     android:tag="-1"
-                    android:id="@+id/btnHPMin1"
-                    android:layout_column="4" />
+                    android:id="@+id/btnHPMin1"  />
 
                 <Button
                     android:minHeight="50dp"
-                    android:minWidth="50dp"
+                    android:minWidth="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+1"
                     android:onClick="changeHP"
                     android:tag="1"
-                    android:id="@+id/btnHPPlus1"
-                    android:layout_column="5" />
+                    android:id="@+id/btnHPPlus1"  />
 
                 <Button
                     android:minHeight="50dp"
-                    android:minWidth="50dp"
+                    android:minWidth="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+5"
                     android:onClick="changeHP"
                     android:tag="5"
-                    android:id="@+id/btnHPPlus5"
-                    android:layout_column="6" />
+                    android:id="@+id/btnHPPlus5"  />
 
             </TableRow>
 
+
             <TableRow
                 android:layout_width="match_parent"
+                android:id="@+id/rowDamageModsTitle"
                 android:layout_height="match_parent">
+                <TextView android:text="DAMAGE MODIFIERS"
+                    android:layout_width="wrap_content"
+                    android:layout_span="4"
+                />
 
                 <ProgressBar
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/progressBar"
-                    android:layout_column="3"
                     android:indeterminate="false"
                     android:layout_span="4"
+                    android:layout_column="4"
                     android:paddingLeft="10dp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="8"
+                    android:id="@+id/combatTableDamageMods"
+                    ></TableLayout>
             </TableRow>
 
             <TableRow
@@ -407,6 +564,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_span="2"
                     android:layout_gravity="center_vertical" >
 
                     <ImageView
@@ -434,7 +592,6 @@
                     android:layout_height="wrap_content"
                     android:text="2"
                     android:id="@+id/tvHitDiceCurrent"
-                    android:layout_column="1"
                     android:textColor="@android:color/black" />
 
                 <TextView
@@ -442,7 +599,7 @@
                     android:layout_height="wrap_content"
                     android:text="3"
                     android:id="@+id/tvHitDiceMax"
-                    android:layout_column="2" />
+                 />
 
                 <Button
                     android:minHeight="50dp"
@@ -453,7 +610,6 @@
                     android:onClick="changeHD"
                     android:tag="-1"
                     android:id="@+id/btnHDMin1"
-                    android:layout_column="3"
                     android:layout_span="2"
                     android:layout_marginLeft="5dp" />
 
@@ -466,7 +622,6 @@
                     android:onClick="changeHD"
                     android:tag="1"
                     android:id="@+id/btnHDPlus1"
-                    android:layout_column="5"
                     android:layout_span="2" />
 
             </TableRow>

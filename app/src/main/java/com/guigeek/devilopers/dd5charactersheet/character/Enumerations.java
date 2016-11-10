@@ -14,12 +14,14 @@ public class Enumerations {
         MOVEMENT_SPEED_MODIFIER("Speed modifier"),
         ATTACK_BONUS_MODIFIER("Attack bonus mod"),
         ATTACK_DAMAGE_MODIFIER("Attack damage mod"),
-        DAMAGE_RESISTANCE("Damage ressitance"),
-        DAMAGE_VULNERABILITY("Dama vulnerability"),
+        DAMAGE_RESISTANCE("Damage resistance"),
+        DAMAGE_VULNERABILITY("Damage vulnerability"),
         SAVING_THROW_ADVANTAGE("Saving throw adj"),
         SAVING_THROW_DISADVANTAGE("Saving throw disadv"),
         SAVING_THROW_MODIFIER("Saving throw mod"),
-        IMMUNITY("Immunity");
+        IMMUNITY("Immunity"),
+        ATTACK_DAMAGE_DICE("Atk damage (dice)"),
+        TEXT_FETTLE("Free text");
 
         private String _name;
 

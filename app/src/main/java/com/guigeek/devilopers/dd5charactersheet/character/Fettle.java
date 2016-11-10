@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
+import android.util.Log;
+
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -11,11 +13,13 @@ import java.io.ObjectOutput;
 public class Fettle  implements Externalizable {
 
     public static final long serialVersionUID = 13L;
-    int _version = 3;
+    int _version = 4;
 
     public Enumerations.FettleType _type;
     public int _describer;
     public int _value;
+    public String _valueStr;
+    boolean isValueString = false;
 
     public Fettle(){}
 
@@ -23,6 +27,14 @@ public class Fettle  implements Externalizable {
     public Fettle(Enumerations.FettleType iType, int iValue, int iDescriber) {
         _type = iType;
         _value = iValue;
+        isValueString = false;
+        _describer = iDescriber;
+    }
+
+    public Fettle(Enumerations.FettleType iType, String iValue, int iDescriber) {
+        _type = iType;
+        _valueStr = iValue;
+        isValueString = true;
         _describer = iDescriber;
     }
 
@@ -34,6 +46,9 @@ public class Fettle  implements Externalizable {
         oo.writeObject(_type);
         oo.writeInt(_describer);
         oo.writeInt(_value);
+
+        oo.writeObject(_valueStr);
+        oo.writeBoolean(isValueString);
     }
 
     @Override
@@ -48,11 +63,39 @@ public class Fettle  implements Externalizable {
         if (_version >= 3) {
             _value = oi.readInt();
         }
+        if (_version >= 4) {
+            _valueStr = (String)oi.readObject();
+            isValueString = oi.readBoolean();
+        }
+        else {
+            isValueString = false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return 649 * _type.hashCode() + _describer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Fettle) {
+            Fettle other = (Fettle)o;
+
+            return other._type == _type && other._describer == _describer;
+        }
+        return super.equals(o);
     }
 
     @Override
     public String toString() {
+
+
         switch(_type) {
+            case TEXT_FETTLE:
+                return _valueStr;
+            case ATTACK_DAMAGE_DICE:
+                return "+" + _valueStr + "(" + Enumerations.DamageTypes.values()[_describer].toString() + ")" + " to attack damage";
             case DAMAGE_RESISTANCE:
                 return "Damage resistance: " + Enumerations.DamageTypes.values()[_describer].toString();
             case DAMAGE_VULNERABILITY:

@@ -1,13 +1,14 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -20,11 +21,14 @@ import com.guigeek.devilopers.dd5charactersheet.character.SavingThrow;
 import com.guigeek.devilopers.dd5charactersheet.character.Skill;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class SkillsScreen extends Fragment {
 
     protected Character _character;
+
+    HashSet<String> skillAdv = new HashSet<>(), skillDisadv = new HashSet<>();
+    HashSet<String> throwAdv = new HashSet<>(), throwDisadv = new HashSet<>();
 
     public SkillsScreen() {
     }
@@ -44,6 +48,21 @@ public class SkillsScreen extends Fragment {
             Bundle bundle = getArguments();
             Serializable data = bundle.getSerializable(Constants.CHARACTER);
             _character = (Character) data;
+
+            for (Fettle fettle : _character.getFettles()) {
+                if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE) {
+                    skillAdv.add(Enumerations.Skills.values()[fettle._describer].toString());
+                }
+                else if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE) {
+                    skillDisadv.add(Enumerations.Skills.values()[fettle._describer].toString());
+                }
+                else if (fettle._type == Enumerations.FettleType.SAVING_THROW_ADVANTAGE) {
+                    throwAdv.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
+                }
+                else if (fettle._type == Enumerations.FettleType.SAVING_THROW_DISADVANTAGE) {
+                    throwDisadv.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
+                }
+            }
         }
     }
 
@@ -112,8 +131,27 @@ public class SkillsScreen extends Fragment {
             valueParam.gravity = Gravity.RIGHT;
             value.setLayoutParams(valueParam);
 
+            ImageView advantageIcon = new ImageView(getContext());
+            advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_dice_advantage));
+            boolean hasAdvantage = throwAdv.contains(skill._name);
+            boolean hasDisadvantage = throwDisadv.contains(skill._name);
+
+            if (hasAdvantage && hasDisadvantage) {
+                advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_perspective_dice_six_faces_one));
+            }
+            else if (hasAdvantage) {
+                advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_dice_advantage));
+            }
+            else if (hasDisadvantage) {
+                advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_dice_disadvantage));
+            }
+            else {
+                advantageIcon.setVisibility(View.INVISIBLE);
+            }
+
             row.addView(isProficient);
             row.addView(name);
+            row.addView(advantageIcon);
             row.addView(value);
             ll.addView(row);
         }
@@ -157,9 +195,33 @@ public class SkillsScreen extends Fragment {
             valueParam.gravity = Gravity.RIGHT;
             value.setLayoutParams(valueParam);
 
+
+            ImageView advantageIcon = new ImageView(getContext());
+            advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_dice_advantage));
+            boolean hasAdvantage = skillAdv.contains(skill._name);
+            boolean hasDisadvantage = skillDisadv.contains(skill._name);
+
+            Log.d("SKILL", skill._name + " adv " + hasAdvantage + " disadv " + hasDisadvantage);
+            Log.d("ADV", skillAdv.toString());
+            Log.d("DISADV", skillDisadv.toString());
+
+            if (hasAdvantage && hasDisadvantage) {
+                advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_perspective_dice_six_faces_one));
+            }
+            else if (hasAdvantage) {
+                advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_dice_advantage));
+            }
+            else if (hasDisadvantage) {
+                advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_dice_disadvantage));
+            }
+            else {
+                advantageIcon.setVisibility(View.INVISIBLE);
+            }
+
             row.addView(isProficient);
             row.addView(name);
             row.addView(attr);
+            row.addView(advantageIcon);
             row.addView(value);
             ll.addView(row);
         }
@@ -180,7 +242,7 @@ public class SkillsScreen extends Fragment {
         ll.addView(rowPowerHeader);
 
         // Display only relevant effects for this screen
-        for (Fettle fettle : _character.getEffects()) {
+        for (Fettle fettle : _character.getEffectsFromRaceAndClass()) {
             if (fettle._type == Enumerations.FettleType.IMMUNITY ||
                 fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER ||
                 fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE ||

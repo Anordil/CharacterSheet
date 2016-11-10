@@ -47,7 +47,7 @@ public class SavingThrow extends Skill implements Externalizable {
         }
 
         int bonus = 0;
-        for (Fettle fettle : iChar.getEffects()) {
+        for (Fettle fettle : iChar.getEffectsFromRaceAndClass()) {
             if (fettle._type == Enumerations.FettleType.SAVING_THROW_MODIFIER &&
                     (fettle._describer == Enumerations.SavingThrows.ALL.ordinal() ||  Enumerations.SavingThrows.values()[fettle._describer].toString().equals(_name)))
             {

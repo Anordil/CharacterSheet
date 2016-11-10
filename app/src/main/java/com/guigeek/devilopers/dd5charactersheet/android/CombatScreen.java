@@ -21,6 +21,7 @@ import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,11 +34,13 @@ public class CombatScreen extends Fragment {
     TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc, tvAtkThrown, tvDmgThrown;
     TextView viewSpeed, viewInit, spellAtk, spellDD, weaponName;
     ImageView imageWeaponHit;
-    TableRow rowThrown;
+    TableRow rowThrown, rowThrownOffHand, rowNameOffHand, rowMeleeOffHand, rowDamageModsTitle;
     ProgressBar pb;
 
+    TextView tvAtkOffHand, tvDmgOffHand, tvAtkThrownOffHand, tvDmgThrownOffHand;
+
     List<TextView> spellSlotTextViews;
-    List<TextView> powersTextViews;
+    TableLayout fettleTable, damageModsTable;
 
     public CombatScreen() {}
 
@@ -79,6 +82,11 @@ public class CombatScreen extends Fragment {
         tvAtkThrown = (TextView)rootView.findViewById(R.id.tvAtkBonusThrown);
         tvDmgThrown = (TextView)rootView.findViewById(R.id.tvDamageThrown);
 
+        tvAtkOffHand = (TextView)rootView.findViewById(R.id.tvAtkBonusOffHand);
+        tvDmgOffHand = (TextView)rootView.findViewById(R.id.tvDamageOffHand);
+        tvAtkThrownOffHand = (TextView)rootView.findViewById(R.id.tvAtkBonusThrownOffHand);
+        tvDmgThrownOffHand = (TextView)rootView.findViewById(R.id.tvDamageThrownOffHand);
+
         viewSpeed = (TextView)rootView.findViewById(R.id.tvSpeed);
         viewInit = (TextView)rootView.findViewById(R.id.tvInitiative);
 
@@ -98,11 +106,19 @@ public class CombatScreen extends Fragment {
         imageWeaponHit = (ImageView)rootView.findViewById(R.id.imgCombatHitBonus);
         rowThrown = (TableRow)rootView.findViewById(R.id.combatRowThrown);
 
+        rowThrownOffHand = (TableRow)rootView.findViewById(R.id.combatRowThrownOffHand);
+        rowNameOffHand = (TableRow)rootView.findViewById(R.id.rowNameOffHand);
+        rowMeleeOffHand = (TableRow)rootView.findViewById(R.id.rowMeleeOffHand);
+        rowDamageModsTitle = (TableRow)rootView.findViewById(R.id.rowDamageModsTitle);
+
 
         if (!_character._class.isCaster()) {
             TableRow spellRow = (TableRow)rootView.findViewById(R.id.rowSpell);
             spellRow.setVisibility(View.GONE);
         }
+
+        fettleTable = (TableLayout)rootView.findViewById(R.id.combatWeaponProperties);
+        damageModsTable = (TableLayout)rootView.findViewById(R.id.combatTableDamageMods);
 
         addButtonListener(rootView);
         createFettlesBar(rootView);
@@ -142,7 +158,7 @@ public class CombatScreen extends Fragment {
 
 
     private void createFettlesBar(View root) {
-        if (!_character.getEffects().isEmpty()) {
+        if (!_character.getEffectsFromRaceAndClass().isEmpty()) {
             TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
 
             // Title
@@ -151,14 +167,14 @@ public class CombatScreen extends Fragment {
             powerHeader.setText("Passive effects");
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-            paramsSaves.span = 7;
+            paramsSaves.span = 8;
             paramsSaves.topMargin = 10;
             powerHeader.setLayoutParams(paramsSaves);
             rowPowerHeader.addView(powerHeader);
             ll.addView(rowPowerHeader);
 
             spellSlotTextViews = new ArrayList<TextView>();
-            for (Fettle fettle : _character.getEffects()) {
+            for (Fettle fettle : _character.getEffectsFromRaceAndClass()) {
                 TableRow row = new TableRow(getContext());
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
@@ -166,7 +182,7 @@ public class CombatScreen extends Fragment {
                 TextView description = new TextView(getContext());
                 description.setText(fettle.toString());
                 TableRow.LayoutParams paramRow = new TableRow.LayoutParams();
-                paramRow.span = 7;
+                paramRow.span = 8;
                 description.setLayoutParams(paramRow);
 
                 row.addView(description);
@@ -187,7 +203,7 @@ public class CombatScreen extends Fragment {
             powerHeader.setText("Spell slots by level");
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-            paramsSaves.span = 7;
+            paramsSaves.span = 8;
             paramsSaves.topMargin = 10;
             powerHeader.setLayoutParams(paramsSaves);
             rowPowerHeader.addView(powerHeader);
@@ -254,7 +270,7 @@ public class CombatScreen extends Fragment {
             powerHeader.setText(title);
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-            paramsSaves.span = 7;
+            paramsSaves.span = 8;
             paramsSaves.topMargin = 10;
             powerHeader.setLayoutParams(paramsSaves);
             rowPowerHeader.addView(powerHeader);
@@ -286,7 +302,7 @@ public class CombatScreen extends Fragment {
             rowParamName.span = 4;
             name.setLayoutParams(rowParamName);
             TableRow.LayoutParams rowParamNameDesc = new TableRow.LayoutParams();
-            rowParamNameDesc.span = 4;
+            rowParamNameDesc.span = 3;
             description.setLayoutParams(rowParamNameDesc);
 
             row.addView(name);
@@ -311,6 +327,7 @@ public class CombatScreen extends Fragment {
 
                 TextView aLongRestShortRestTV = new TextView(getContext());
                 aLongRestShortRestTV.setText(power._isLongRest ? "LR" : "SR");
+                aLongRestShortRestTV.setLayoutParams(rowParam);
 
                 rowUsage.addView(aLongRestShortRestTV);
                 rowUsage.addView(current);
@@ -323,7 +340,7 @@ public class CombatScreen extends Fragment {
             }
 
             TableRow.LayoutParams rowParamDesc = new TableRow.LayoutParams();
-            rowParamDesc.span = 7;
+            rowParamDesc.span = 8;
             desc.setLayoutParams(rowParamDesc);
             rowDesc.addView(desc);
             ll.addView(rowDesc);
@@ -352,15 +369,28 @@ public class CombatScreen extends Fragment {
             imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_bowman));
         }
 
+        int propertyAttackBonus = 0;
+        String propertyDamageBonus = "";
+        for (Fettle property : weapon._magicProperties) {
+            if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
+                propertyAttackBonus = property._value;
+            }
+            else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER) {
+                propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._value + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
+            }
+        }
+
         int dmgBonus = (distanceWeapon ? modDex : modStr) +  _character._dmgBonus + weapon._magicModifier;
-        int attackBonus = _character.getProficiencyBonus() + (distanceWeapon ? modDex : modStr) + weapon._magicModifier;
+        int attackBonus = _character.getProficiencyBonus() + (distanceWeapon ? modDex : modStr) + weapon._magicModifier + propertyAttackBonus;
 
         int diceDamage = weapon._diceValue;
         if (weapon._hands == Enumerations.WeaponHandCount.VERSATILE && _character._equippedShield._type == Enumerations.ArmorTypes.NONE) {
             diceDamage =  weapon._diceValueVersatile;
         }
 
-        String damage = weapon._diceCount + "D" + diceDamage + (dmgBonus > 0 ? "+":"") + (dmgBonus != 0 ? dmgBonus : "");
+        String damage = weapon._diceCount + "D" + diceDamage + (dmgBonus > 0 ? "+":"") + (dmgBonus != 0 ? dmgBonus : "")
+                + (weapon._damageType != null ? weapon._damageType.toString().substring(0,2) : "")
+                + propertyDamageBonus;
         tvDmg.setText(damage);
         tvAtk.setText((attackBonus > 0 ? "+":"") + attackBonus + (distanceWeapon ? " " + weapon._distMin+"-"+weapon._distMax:"") + " x" + _character.getAttacksPerRound() );
 
@@ -369,9 +399,11 @@ public class CombatScreen extends Fragment {
             rowThrown.setVisibility(View.GONE);
         }
         else {
-            int attackBonusThrown = _character.getProficiencyBonus() + Math.max(modDex, modStr) + weapon._magicModifier;
+            int attackBonusThrown = _character.getProficiencyBonus() + Math.max(modDex, modStr) + weapon._magicModifier + propertyAttackBonus;
             int dmgBonusThrown = Math.max(modDex, modStr) + _character._dmgBonus + weapon._magicModifier;
-            String damageThrown = weapon._diceCount + "D" + diceDamage + (dmgBonusThrown > 0 ? "+":"") + (dmgBonusThrown != 0 ? dmgBonusThrown : "");
+            String damageThrown = weapon._diceCount + "D" + diceDamage + (dmgBonusThrown > 0 ? "+":"") + (dmgBonusThrown != 0 ? dmgBonusThrown : "")
+                    + (weapon._damageType != null ? weapon._damageType.toString().substring(0,2) : "")
+                    + propertyDamageBonus;
 
             tvAtkThrown.setText((attackBonusThrown > 0 ? "+":"") + attackBonusThrown + " " + weapon._distMin+"-"+weapon._distMax);
             tvDmgThrown.setText(damageThrown);
@@ -380,6 +412,127 @@ public class CombatScreen extends Fragment {
         viewSpeed.setText(_character._race.getSpeedInFeet() + " ft.");
         int dexBonus = _character.getModifier(Enumerations.Attributes.DEX);
         viewInit.setText((dexBonus > 0 ? "+": "") + dexBonus);
+
+
+        // Magic properties
+        LinkedList<Fettle> magicProperties = weapon._magicProperties;
+        if (magicProperties != null) {
+            for (Fettle effect : magicProperties) {
+                TableRow aRow = new TableRow(getContext());
+                TextView effectDescription = new TextView(getContext());
+                effectDescription.setText(effect.toString());
+                aRow.addView(effectDescription);
+                fettleTable.addView(aRow);
+            }
+        }
+
+        refreshOffHand();
+        refreshDamageMods();
+    }
+
+    public void refreshOffHand() {
+        {
+            Weapon weapon = _character._offHandWeapon;
+            int modDex = _character.getModifier(Enumerations.Attributes.DEX);
+            int modStr = _character.getModifier(Enumerations.Attributes.STR);
+
+
+            if (weapon._type == Enumerations.WeaponTypes.UNARMED) {
+                rowMeleeOffHand.setVisibility(View.GONE);
+                rowNameOffHand.setVisibility(View.GONE);
+                rowThrownOffHand.setVisibility(View.GONE);
+            }
+            else {
+                rowMeleeOffHand.setVisibility(View.VISIBLE);
+                rowNameOffHand.setVisibility(View.VISIBLE);
+                rowThrownOffHand.setVisibility(View.VISIBLE);
+            }
+
+            boolean distanceWeapon = weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE;
+
+            if (distanceWeapon) {
+                imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_bowman));
+            }
+
+            int propertyAttackBonus = 0;
+            String propertyDamageBonus = "";
+            for (Fettle property : weapon._magicProperties) {
+                if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
+                    propertyAttackBonus = property._value;
+                }
+                else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER) {
+                    propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._value + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
+                }
+            }
+
+            int dmgBonus = (distanceWeapon ? modDex : modStr) +  _character._dmgBonus + weapon._magicModifier;
+            int attackBonus = _character.getProficiencyBonus() + (distanceWeapon ? modDex : modStr) + weapon._magicModifier + propertyAttackBonus;
+
+            int diceDamage = weapon._diceValue;
+            if (weapon._hands == Enumerations.WeaponHandCount.VERSATILE && _character._equippedShield._type == Enumerations.ArmorTypes.NONE) {
+                diceDamage =  weapon._diceValueVersatile;
+            }
+
+            String damage = weapon._diceCount + "D" + diceDamage + (dmgBonus > 0 ? "+":"") + (dmgBonus != 0 ? dmgBonus : "")
+                    + (weapon._damageType != null ? weapon._damageType.toString().substring(0,2) : "")
+                    + propertyDamageBonus;
+            tvDmgOffHand.setText(damage);
+            tvAtkOffHand.setText((attackBonus > 0 ? "+":"") + attackBonus + (distanceWeapon ? " " + weapon._distMin+"-"+weapon._distMax:"") + " x" + _character.getAttacksPerRound() );
+
+            // Thrown?
+            if (weapon._distance != Enumerations.WeaponDistanceTypes.THROWN) {
+                rowThrown.setVisibility(View.GONE);
+            }
+            else {
+                int attackBonusThrown = _character.getProficiencyBonus() + Math.max(modDex, modStr) + weapon._magicModifier + propertyAttackBonus;
+                int dmgBonusThrown = Math.max(modDex, modStr) + _character._dmgBonus + weapon._magicModifier;
+                String damageThrown = weapon._diceCount + "D" + diceDamage + (dmgBonusThrown > 0 ? "+":"") + (dmgBonusThrown != 0 ? dmgBonusThrown : "")
+                        + (weapon._damageType != null ? weapon._damageType.toString().substring(0,2) : "")
+                        + propertyDamageBonus;
+
+                tvAtkThrownOffHand.setText((attackBonusThrown > 0 ? "+":"") + attackBonusThrown + " " + weapon._distMin+"-"+weapon._distMax);
+                tvDmgThrownOffHand.setText(damageThrown);
+            }
+
+            // Magic properties
+            LinkedList<Fettle> magicProperties = weapon._magicProperties;
+            if (magicProperties != null) {
+                for (Fettle effect : magicProperties) {
+                    TableRow aRow = new TableRow(getContext());
+                    TextView effectDescription = new TextView(getContext());
+                    effectDescription.setText(effect.toString());
+                    effectDescription.setSingleLine(false);
+                    effectDescription.setMaxLines(10);
+                    effectDescription.setHorizontalScrollBarEnabled(false);
+
+                    TableRow.LayoutParams params = new TableRow.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    effectDescription.setLayoutParams(params);
+
+                    aRow.addView(effectDescription);
+                    fettleTable.addView(aRow);
+                }
+            }
+        }
+    }
+
+
+    public void refreshDamageMods() {
+        // Magic properties
+        HashSet<Fettle> properties = _character.getFettles();
+        damageModsTable.removeAllViews();
+
+        boolean hide = true;
+        for (Fettle effect : properties) {
+            if (effect._type == Enumerations.FettleType.DAMAGE_RESISTANCE || effect._type == Enumerations.FettleType.DAMAGE_VULNERABILITY) {
+                TableRow aRow = new TableRow(getContext());
+                TextView effectDescription = new TextView(getContext());
+                effectDescription.setText(effect.toString());
+                aRow.addView(effectDescription);
+                damageModsTable.addView(aRow);
+                hide = false;
+            }
+        }
+        rowDamageModsTitle.setVisibility(hide ? View.GONE : View.VISIBLE);
     }
 
     public void changeHP(View v) {

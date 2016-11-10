@@ -57,18 +57,11 @@
         android:paddingTop="20dp"
         android:id="@+id/textView7" />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@android:id/list"
-        android:layout_weight="70" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="15"
-        android:gravity="bottom"
         android:weightSum="100">
 
         <Spinner
@@ -87,8 +80,7 @@
 
         <EditText
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
+            android:layout_height="match_parent"
             android:hint="Bonus"
             android:ems="10"
             android:id="@+id/etPropertyModifier"
@@ -96,11 +88,18 @@
 
         <Button
             android:text="+"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/buttonAddProperty"
             android:layout_weight="1"
             android:layout_width="40dp" />
     </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@android:id/list"
+        android:layout_weight="70" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

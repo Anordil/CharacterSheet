@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
+import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 
 import java.io.Serializable;
 
@@ -19,6 +22,7 @@ public class StatsScreen extends Fragment {
 
     Button updateButton;
     EditText name, level, str, dex, con, intel, wis, cha;
+    TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA;
 
     public StatsScreen() {
     }
@@ -57,6 +61,13 @@ public class StatsScreen extends Fragment {
         wis = (EditText)root.findViewById(R.id.intWIS);
         cha = (EditText)root.findViewById(R.id.inCHA);
 
+        bonusSTR = (TextView)root.findViewById(R.id.bonusSTR);
+        bonusDEX = (TextView)root.findViewById(R.id.bonusDEX);
+        bonusCON = (TextView)root.findViewById(R.id.bonusCON);
+        bonusINT = (TextView)root.findViewById(R.id.bonusINT);
+        bonusWIS = (TextView)root.findViewById(R.id.bonusWIS);
+        bonusCHA = (TextView)root.findViewById(R.id.bonusCHA);
+
         updateButton = (Button)root.findViewById(R.id.btnUpdateStats);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,5 +105,20 @@ public class StatsScreen extends Fragment {
         intel.setText(_character._attributes[3] + "");
         wis.setText(_character._attributes[4] + "");
         cha.setText(_character._attributes[5] + "");
+
+
+        for (Fettle property : _character.getFettles()) {
+            if (property._type == Enumerations.FettleType.ATTRIBUTE_MODIFIER) {
+                Enumerations.Attributes attr = Enumerations.Attributes.values()[property._describer];
+                switch (attr) {
+                    case STR : bonusSTR.setText(property._value + ""); break;
+                    case DEX : bonusDEX.setText(property._value + ""); break;
+                    case CON : bonusCON.setText(property._value + ""); break;
+                    case INT : bonusINT.setText(property._value + ""); break;
+                    case WIS : bonusWIS.setText(property._value + ""); break;
+                    case CHA : bonusSTR.setText(property._value + ""); break;
+                }
+            }
+        }
     }
 }

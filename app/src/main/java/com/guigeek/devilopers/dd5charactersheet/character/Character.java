@@ -16,6 +16,7 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
@@ -275,7 +276,7 @@ public class Character implements Externalizable {
 
         return _feats;
     }
-    public LinkedList<Fettle> getEffects() {
+    public LinkedList<Fettle> getEffectsFromRaceAndClass() {
         if (_effect == null) {
             _effect = new LinkedList<Fettle>();
         }
@@ -288,15 +289,14 @@ public class Character implements Externalizable {
     }
 
     private void initLevel() {
-        _hitDice = _level;
-        _spellSlotsMax = _class.getSpellSlots(_level);
-        _hpMax = _class.getHitDie() + (_level - 1) * (int) Math.ceil(_class.getHitDie() / 2 + 1) + _level * getModifier(Enumerations.Attributes.CON);
-        _powers = _class.getPowers(_level, this);
-
         refreshFettles();
         recomputeSkills();
         recomputeSavingThrows();
 
+        _hitDice = _level;
+        _spellSlotsMax = _class.getSpellSlots(_level);
+        _hpMax = _class.getHitDie() + (_level - 1) * (int) Math.ceil(_class.getHitDie() / 2 + 1) + _level * getModifier(Enumerations.Attributes.CON);
+        _powers = _class.getPowers(_level, this);
     }
 
     public void doLongRest() {
@@ -356,6 +356,15 @@ public class Character implements Externalizable {
 
     public int getModifier(Enumerations.Attributes iAttr) {
         int value = _attributes[iAttr.ordinal()];
+
+        // Bonus from equipment ?
+        for (Fettle property : getFettles()) {
+            if (property._type == Enumerations.FettleType.ATTRIBUTE_MODIFIER && property._describer == iAttr.ordinal()) {
+                value += property._value;
+                break;
+            }
+        }
+
         return (int) Math.floor((value - 10) / 2);
     }
 
@@ -385,24 +394,24 @@ public class Character implements Externalizable {
 
     private void initSkills() {
         _skills = new LinkedList<>();
-        _skills.add(new Skill("Acrobatics", Enumerations.Attributes.DEX));
-        _skills.add(new Skill("Animal Handling", Enumerations.Attributes.WIS));
-        _skills.add(new Skill("Arcana", Enumerations.Attributes.INT));
-        _skills.add(new Skill("Athletics", Enumerations.Attributes.STR));
-        _skills.add(new Skill("Deception", Enumerations.Attributes.CHA));
-        _skills.add(new Skill("History", Enumerations.Attributes.INT));
-        _skills.add(new Skill("Insight", Enumerations.Attributes.WIS));
-        _skills.add(new Skill("Intimidation", Enumerations.Attributes.CHA));
-        _skills.add(new Skill("Investigation", Enumerations.Attributes.INT));
-        _skills.add(new Skill("Medicine", Enumerations.Attributes.WIS));
-        _skills.add(new Skill("Nature", Enumerations.Attributes.INT));
-        _skills.add(new Skill("Perception", Enumerations.Attributes.WIS));
-        _skills.add(new Skill("Performance", Enumerations.Attributes.CHA));
-        _skills.add(new Skill("Persuasion", Enumerations.Attributes.CHA));
-        _skills.add(new Skill("Religion", Enumerations.Attributes.INT));
-        _skills.add(new Skill("Sleight of hand", Enumerations.Attributes.DEX));
-        _skills.add(new Skill("Stealth", Enumerations.Attributes.DEX));
-        _skills.add(new Skill("Survival", Enumerations.Attributes.WIS));
+        _skills.add(new Skill(Enumerations.Skills.ACROBATICS.toString(), Enumerations.Attributes.DEX));
+        _skills.add(new Skill(Enumerations.Skills.ANIMAL_HANDLING.toString(), Enumerations.Attributes.WIS));
+        _skills.add(new Skill(Enumerations.Skills.ARCANA.toString(), Enumerations.Attributes.INT));
+        _skills.add(new Skill(Enumerations.Skills.ATHLETICS.toString(), Enumerations.Attributes.STR));
+        _skills.add(new Skill(Enumerations.Skills.DECEPTION.toString(), Enumerations.Attributes.CHA));
+        _skills.add(new Skill(Enumerations.Skills.HISTORY.toString(), Enumerations.Attributes.INT));
+        _skills.add(new Skill(Enumerations.Skills.INSIGHT.toString(), Enumerations.Attributes.WIS));
+        _skills.add(new Skill(Enumerations.Skills.INTIMIDATION.toString(), Enumerations.Attributes.CHA));
+        _skills.add(new Skill(Enumerations.Skills.INVESTIHATION.toString(), Enumerations.Attributes.INT));
+        _skills.add(new Skill(Enumerations.Skills.MEDICINE.toString(), Enumerations.Attributes.WIS));
+        _skills.add(new Skill(Enumerations.Skills.NATURE.toString(), Enumerations.Attributes.INT));
+        _skills.add(new Skill(Enumerations.Skills.PERCEPTION.toString(), Enumerations.Attributes.WIS));
+        _skills.add(new Skill(Enumerations.Skills.PERFORMANCE.toString(), Enumerations.Attributes.CHA));
+        _skills.add(new Skill(Enumerations.Skills.PERSUASION.toString(), Enumerations.Attributes.CHA));
+        _skills.add(new Skill(Enumerations.Skills.RELIGION.toString(), Enumerations.Attributes.INT));
+        _skills.add(new Skill(Enumerations.Skills.SLEIGHT_OF_HAND.toString(), Enumerations.Attributes.DEX));
+        _skills.add(new Skill(Enumerations.Skills.STEALTH.toString(), Enumerations.Attributes.DEX));
+        _skills.add(new Skill(Enumerations.Skills.SURVIVAL.toString(), Enumerations.Attributes.WIS));
     }
 
 
@@ -432,12 +441,12 @@ public class Character implements Externalizable {
 
     private void initSavingThrows() {
         _savingThrows = new LinkedList<>();
-        _savingThrows.add(new SavingThrow("Strength", Enumerations.Attributes.STR));
-        _savingThrows.add(new SavingThrow("Dexterity", Enumerations.Attributes.DEX));
-        _savingThrows.add(new SavingThrow("Constitution", Enumerations.Attributes.CON));
-        _savingThrows.add(new SavingThrow("Intelligence", Enumerations.Attributes.INT));
-        _savingThrows.add(new SavingThrow("Wisdom", Enumerations.Attributes.WIS));
-        _savingThrows.add(new SavingThrow("Charisma", Enumerations.Attributes.CHA));
+        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.STR.toString(), Enumerations.Attributes.STR));
+        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.DEX.toString(), Enumerations.Attributes.DEX));
+        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.CON.toString(), Enumerations.Attributes.CON));
+        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.INT.toString(), Enumerations.Attributes.INT));
+        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.WIS.toString(), Enumerations.Attributes.WIS));
+        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.CHA.toString(), Enumerations.Attributes.CHA));
     }
 
     public boolean hasFeat(String s) {
@@ -448,5 +457,35 @@ public class Character implements Externalizable {
         }
 
         return false;
+    }
+
+    public HashSet<Fettle> getFettles() {
+        HashSet<Fettle> properties = new HashSet<>();
+
+        if (_equippedShield != null) for (Fettle property : _equippedShield._magicProperties) {
+                properties.add(property);
+        }
+        if (_equippedWeapon != null) for (Fettle property : _equippedWeapon._magicProperties) {
+                properties.add(property);
+        }
+        if (_offHandWeapon != null) for (Fettle property : _offHandWeapon._magicProperties) {
+                properties.add(property);
+        }
+        if (_equippedArmor != null) for (Fettle property : _equippedArmor._magicProperties) {
+                properties.add(property);
+        }
+        if (_inventory != null) for (Externalizable item : _inventory) {
+            if (item instanceof Item) {
+                for (Fettle property : ((Item)item)._magicProperties) {
+                        properties.add(property);
+                }
+            }
+        }
+
+        for (Fettle property : getEffectsFromRaceAndClass()) {
+            properties.add(property);
+        }
+
+        return properties;
     }
 }
