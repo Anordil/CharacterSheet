@@ -88,7 +88,7 @@ public class Armor implements Externalizable {
 
     @Override
     public String toString() {
-        return _name + (_magicModifier > 0 ? " +" + _magicModifier : "");
+        return _name + " (" + (_magicModifier > 0 ? "+" + _magicModifier + " " : "") + _type.toString() + ")";
     }
 
     @Override

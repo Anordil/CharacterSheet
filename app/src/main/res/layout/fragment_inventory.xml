@@ -27,7 +27,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <Spinner
-                        android:layout_height="match_parent"
+                        android:layout_height="fill_parent"
                         android:layout_width="match_parent"
                         android:layout_column="1"
                         android:id="@+id/inSpinnerWeapon"
@@ -61,7 +61,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
                     <Spinner
                         android:layout_height="match_parent"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_column="1"
                         android:id="@+id/inSpinnerArmor"
                         android:spinnerMode="dialog"
@@ -84,7 +84,7 @@
 
                     <Spinner
                         android:layout_height="match_parent"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_column="1"
                         android:id="@+id/inSpinnerOffHand"
                         android:spinnerMode="dialog"
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Extra damage bonus"
+                        android:text="Dmg bonus "
                         android:id="@+id/textView15" />
 
                     <EditText

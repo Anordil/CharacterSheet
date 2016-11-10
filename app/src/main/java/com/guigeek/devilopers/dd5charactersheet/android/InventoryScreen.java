@@ -1,12 +1,12 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,22 +15,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
-import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.item.Armor;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Externalizable;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -40,9 +33,11 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     EditText etDamageBonus, etGold, etItemsText;
     Spinner spinnerArmor, spinnerWeapon, spinnerWeaponOffHand;
 
-    ArrayAdapter<Enumerations.ArmorTypes> adapterArmor;
-    ArrayAdapter<Enumerations.WeaponTypes> adapterWeapon;
-    ArrayAdapter<Object> adapterOffHand;
+    ArrayAdapter<Armor> adapterArmor;
+    ArrayAdapter<Weapon> adapterWeapon;
+    ArrayAdapter<Externalizable> adapterOffHand;
+
+    Weapon emptyWeaponOffHand = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
 
 
     Button updateBtn, addItemBtn;
@@ -75,21 +70,144 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         return root;
     }
 
+
+    public void initEquipmentSpinners() {
+        LinkedList<Armor> listOfArmors = new LinkedList<>();
+        LinkedList<Weapon> mainHandItems = new LinkedList<>();
+
+        final LinkedList<Externalizable> offHandItems = new LinkedList<>();
+        final LinkedList<Externalizable> offHandItemsForDualWielder = new LinkedList<>();
+        final LinkedList<Externalizable> shields = new LinkedList<>();
+
+        // Put inventory equipable items in the relevant spinners
+        for (Externalizable item : _character._inventory) {
+            if (item instanceof Armor) {
+                if (((Armor)item)._type == Enumerations.ArmorTypes.SHIELD) {
+                    offHandItems.add(item);
+                    offHandItemsForDualWielder.add(item);
+                    shields.add(item);
+                }
+                else {
+                    listOfArmors.add((Armor)item);
+                }
+            }
+            else if (item instanceof Weapon) {
+                Weapon weapon = (Weapon)item;
+                mainHandItems.add(weapon);
+
+                if (weapon._hands != Enumerations.WeaponHandCount.TWO_HANDED) {
+                    if (weapon._weight == Enumerations.WeaponWeightCategory.LIGHT) {
+                        offHandItems.add(item);
+                    }
+                    offHandItemsForDualWielder.add(item);
+                }
+            }
+        }
+        // Add the no armor/weapon choice to all spinners
+        mainHandItems.add(new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null));
+        offHandItems.add(emptyWeaponOffHand);
+        offHandItemsForDualWielder.add(emptyWeaponOffHand);
+        shields.add(emptyWeaponOffHand);
+        listOfArmors.add(new Armor(Enumerations.ArmorTypes.NONE, 0, null));
+
+
+        adapterArmor = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, listOfArmors);
+        spinnerArmor.setAdapter(adapterArmor);
+
+        adapterWeapon = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mainHandItems);
+        spinnerWeapon.setAdapter(adapterWeapon);
+
+        adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, offHandItems);
+        spinnerWeaponOffHand.setAdapter(adapterOffHand);
+
+
+        // Add selection listeners
+        final boolean hasDualWielding = _character.hasFeat("Dual Wielder");
+        spinnerWeapon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Weapon weapon = adapterWeapon.getItem(position);
+                _character._equippedWeapon = weapon;
+
+                // This might affect the off-hand spinner
+                if (weapon._hands == Enumerations.WeaponHandCount.TWO_HANDED) {
+                    Log.d("Switch", "Equipped a 2H weapon");
+                    // No off hand
+                    _character._offHandWeapon = emptyWeaponOffHand;
+                    _character._equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+
+                    spinnerWeaponOffHand.setEnabled(false);
+                    spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(emptyWeaponOffHand));
+                }
+                else {
+                    spinnerWeaponOffHand.setEnabled(true);
+                    Log.d("Switch", "Equipped a single hand weapon");
+                    LinkedList<Externalizable> availableOffHand = new LinkedList<>(), referenceList = null;
+                    Externalizable previousSelection = (Externalizable) spinnerWeaponOffHand.getSelectedItem();
+                    if (hasDualWielding) {
+                        Log.d("Switch", "Light or dual");
+                        referenceList = offHandItemsForDualWielder;
+                    }
+                    else if (weapon._weight == Enumerations.WeaponWeightCategory.LIGHT) {
+                        referenceList = offHandItems;
+                    }
+                    else {
+                        referenceList = shields;
+                    }
+
+                    for (Externalizable item : referenceList) {
+                        if (item != _character._equippedWeapon) {
+                            availableOffHand.add(item);
+                        }
+                    }
+
+                    if (previousSelection == _character._equippedWeapon) {
+                        previousSelection = emptyWeaponOffHand;
+                    }
+
+                    adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, availableOffHand);
+                    spinnerWeaponOffHand.setAdapter(adapterOffHand);
+                    spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(previousSelection));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        spinnerWeaponOffHand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Externalizable offHandItem = adapterOffHand.getItem(position);
+                if (offHandItem instanceof Armor) {
+                    _character._equippedShield = (Armor)offHandItem;
+                    _character._offHandWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+                } else {
+                    _character._equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+                    _character._offHandWeapon = (Weapon)offHandItem;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        spinnerArmor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                _character._equippedArmor = adapterArmor.getItem(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
     @Override
     public void onViewCreated(View root, Bundle savedInstanceState) {
         super.onViewCreated(root, savedInstanceState);
 
         setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
-
-//        getListView().setOnTouchListener(new View.OnTouchListener() {
-//            // Setting on Touch Listener for handling the touch inside ScrollView
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                // Disallow the touch request for parent scroll on touch of child view
-//                v.getParent().requestDisallowInterceptTouchEvent(true);
-//                return false;
-//            }
-//        });
+        registerForContextMenu(getListView());
         setListViewHeightBasedOnChildren(getListView());
 
         etDamageBonus = (EditText)root.findViewById(R.id.inWeapDmgBonus);
@@ -98,52 +216,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         spinnerArmor = (Spinner)root.findViewById(R.id.inSpinnerArmor);
         spinnerWeapon = (Spinner)root.findViewById(R.id.inSpinnerWeapon);
         spinnerWeaponOffHand = (Spinner)root.findViewById(R.id.inSpinnerOffHand);
-
-
-        // Filter out the shield from the list of armors
-        LinkedList<Enumerations.ArmorTypes> listOfArmors = new LinkedList<>();
-        for (Enumerations.ArmorTypes t : Enumerations.ArmorTypes.values()) {
-            if (t != Enumerations.ArmorTypes.SHIELD) {
-                listOfArmors.add(t);
-            }
-        }
-
-        adapterArmor = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, listOfArmors);
-        adapterArmor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerArmor.setAdapter(adapterArmor);
-        adapterWeapon = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, Enumerations.WeaponTypes.values());
-        adapterWeapon.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerWeapon.setAdapter(adapterWeapon);
-
-
-        final boolean hasDualWielding = _character.hasFeat("Dual Wielder");
-        spinnerWeapon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: update off hand list
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        // Build the list of eligible off-hand weapons
-        LinkedList<Object> listOfOneHandedWeapons = new LinkedList<>();
-        for (Enumerations.WeaponTypes t : Enumerations.WeaponTypes.values()) {
-            Weapon totoWeapons = new Weapon(t, 0, null);
-            if (totoWeapons._hands == Enumerations.WeaponHandCount.ONE_HANDED || totoWeapons._hands == Enumerations.WeaponHandCount.VERSATILE) {
-                if (totoWeapons._weight == Enumerations.WeaponWeightCategory.LIGHT || hasDualWielding) {
-                    listOfOneHandedWeapons.add(t);
-                }
-            }
-        }
-
-
-        // Off hands: only one handed weapons
-        adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, listOfOneHandedWeapons);
-        adapterOffHand.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerWeaponOffHand.setAdapter(adapterOffHand);
+        initEquipmentSpinners();
 
 
         etGold = (EditText)root.findViewById(R.id.inGold);
@@ -164,19 +237,23 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         etDamageBonus.setText(Integer.toString(_character._dmgBonus));
         etGold.setText(Integer.toString(_character._gold));
 
-        spinnerArmor.setSelection(adapterArmor.getPosition(_character._equippedArmor._type));
-
-        spinnerWeapon.setSelection(adapterWeapon.getPosition(_character._equippedWeapon._type));
+        initEquipmentSpinners();
+        spinnerArmor.setSelection(adapterArmor.getPosition(_character._equippedArmor));
+        spinnerWeapon.setSelection(adapterWeapon.getPosition(_character._equippedWeapon));
 
 
         if (_character._equippedShield._type == Enumerations.ArmorTypes.SHIELD) {
-            //TODO: init spinner
+            spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(_character._equippedShield));
         }
         else if (_character._offHandWeapon._type != Enumerations.WeaponTypes.UNARMED) {
-            //TODO: init spinner
+            spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(_character._offHandWeapon));
         }
         else {
-            //TODO: init spinner
+            spinnerWeaponOffHand.setSelection(adapterOffHand.getCount() -1);
+        }
+
+        if (_character._equippedWeapon._hands == Enumerations.WeaponHandCount.TWO_HANDED) {
+            spinnerWeaponOffHand.setEnabled(false);
         }
 
         etItemsText.setText(_character._allItems);
@@ -238,10 +315,33 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                 Externalizable createdItem = (Externalizable) data.getSerializableExtra(Constants.ITEM);
                 _character._inventory.add(createdItem);
                 setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
+                updateContent();
             } catch (Exception e) {
                 Log.d("TOTO", "Item creation failed, ");
                 e.printStackTrace();
             }
         }
     }
+
+
+    // Contextual menu
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = this.getActivity().getMenuInflater();
+        inflater.inflate(R.menu.list_context_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        if (item.getItemId() == R.id.menu_delete) {
+            _character._inventory.remove(info.position);
+            updateContent();
+            setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
+        }
+        return true;
+    }
+    // Contextual menu ends
 }

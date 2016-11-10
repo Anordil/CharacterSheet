@@ -18,6 +18,7 @@ import com.guigeek.devilopers.dd5charactersheet.item.Item;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Externalizable;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 

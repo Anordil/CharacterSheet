@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.item;
 
+import android.util.Log;
+
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 
@@ -17,7 +19,7 @@ import java.util.LinkedList;
 public class Weapon implements Externalizable {
 
     public static final long serialVersionUID = 21L;
-    int _version = 2;
+    int _version = 3;
 
 
     public Enumerations.WeaponTypes _type;
@@ -154,8 +156,6 @@ public class Weapon implements Externalizable {
                 _distance = Enumerations.WeaponDistanceTypes.MELEE;
                 _hands = Enumerations.WeaponHandCount.VERSATILE;
                 _weight = Enumerations.WeaponWeightCategory.NORMAL;
-                _hasReach = false;
-                _isFinesse = false;
                 _diceCount = 1;
                 _diceValue = 8;
                 _diceCountVersatile = 1;
@@ -178,8 +178,6 @@ public class Weapon implements Externalizable {
                 _distance = Enumerations.WeaponDistanceTypes.MELEE;
                 _hands = Enumerations.WeaponHandCount.ONE_HANDED;
                 _weight = Enumerations.WeaponWeightCategory.LIGHT;
-                _hasReach = false;
-                _isFinesse = false;
                 _diceCount = 1;
                 _diceValue = 1;
                 _damageType = Enumerations.DamageTypes.BLUDGEONING;
@@ -191,7 +189,7 @@ public class Weapon implements Externalizable {
 
     @Override
     public String toString() {
-        return _name + (_magicModifier > 0 ? " +" + _magicModifier : "");
+        return _name + " (" + (_magicModifier > 0 ? "+" + _magicModifier + " " : "") + _type.toString() + ")";
     }
 
     @Override
@@ -217,6 +215,7 @@ public class Weapon implements Externalizable {
         oo.writeObject(_magicProperties);
 
         oo.writeObject(_name);
+        oo.writeObject(_hands);
     }
 
     @Override
@@ -248,6 +247,9 @@ public class Weapon implements Externalizable {
         }
         else {
             _name = _type.toString();
+        }
+        if (version >= 3) {
+            _hands = (Enumerations.WeaponHandCount)oi.readObject();
         }
     }
 }

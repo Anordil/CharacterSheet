@@ -108,7 +108,7 @@
 
 
         <Button
-            android:text="Create new item"
+            android:text=" Save to inventory"
             android:layout_height="wrap_content"
             android:id="@+id/buttonCreateItemSave"
             android:layout_weight="1"
