@@ -111,13 +111,13 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         listOfArmors.add(new Armor(Enumerations.ArmorTypes.NONE, 0, null));
 
 
-        adapterArmor = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, listOfArmors);
+        adapterArmor = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, listOfArmors);
         spinnerArmor.setAdapter(adapterArmor);
 
-        adapterWeapon = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mainHandItems);
+        adapterWeapon = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mainHandItems);
         spinnerWeapon.setAdapter(adapterWeapon);
 
-        adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, offHandItems);
+        adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, offHandItems);
         spinnerWeaponOffHand.setAdapter(adapterOffHand);
 
 
@@ -165,7 +165,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                         previousSelection = emptyWeaponOffHand;
                     }
 
-                    adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, availableOffHand);
+                    adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, availableOffHand);
                     spinnerWeaponOffHand.setAdapter(adapterOffHand);
                     spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(previousSelection));
                 }

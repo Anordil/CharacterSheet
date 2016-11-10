@@ -54,7 +54,7 @@ public class CreateItemActivity extends ListActivity {
         // Magic properties list
         magicProperties = new LinkedList<>();
         ListView listView = getListView();
-        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, magicProperties));
+        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
         registerForContextMenu(getListView());
 
         // Edit text
@@ -79,8 +79,7 @@ public class CreateItemActivity extends ListActivity {
 
         // Init category spinner
         String[] itemCategories = {"Weapon", "Armor", "Worn item"};
-        ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, itemCategories);
-        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemCategories);
         spinnerItemCategory.setAdapter(adapterCategory);
         spinnerItemCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -89,12 +88,12 @@ public class CreateItemActivity extends ListActivity {
                     case 0:
                         spinnerItemType.setVisibility(View.VISIBLE);
                         modifier.setVisibility(View.VISIBLE);
-                        spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.WeaponTypes.values()));
+                        spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.WeaponTypes.values()));
                         break;
                     case 1:
                         spinnerItemType.setVisibility(View.VISIBLE);
                         modifier.setVisibility(View.VISIBLE);
-                        spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.ArmorTypes.values()));
+                        spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.ArmorTypes.values()));
                         break;
                     default:
                         spinnerItemType.setVisibility(View.GONE);
@@ -109,7 +108,7 @@ public class CreateItemActivity extends ListActivity {
 
 
         // Magic properties - category
-        spinnerPropertyType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Enumerations.FettleType.values()));
+        spinnerPropertyType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, Enumerations.FettleType.values()));
         spinnerPropertyType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -120,18 +119,18 @@ public class CreateItemActivity extends ListActivity {
 
                 switch (type) {
                     case ATTRIBUTE_MODIFIER:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.Attributes.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.Attributes.values()));
                         break;
                     case ABILITY_CHECK_ADVANTAGE:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.Skills.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.Skills.values()));
                         propertyModifier.setVisibility(View.INVISIBLE);
                         break;
                     case ABILITY_CHECK_DISADVANTAGE:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.Skills.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.Skills.values()));
                         propertyModifier.setVisibility(View.INVISIBLE);
                         break;
                     case ABILITY_CHECK_MODIFIER:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.Skills.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.Skills.values()));
                         break;
                     case ARMOR_CLASS_MODIFIER:
                         spinnerPropertyDescriber.setVisibility(View.INVISIBLE);
@@ -143,29 +142,29 @@ public class CreateItemActivity extends ListActivity {
                         spinnerPropertyDescriber.setVisibility(View.INVISIBLE);
                         break;
                     case ATTACK_DAMAGE_MODIFIER:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.DamageTypes.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.DamageTypes.values()));
                         break;
                     case DAMAGE_RESISTANCE:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.DamageTypes.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.DamageTypes.values()));
                         propertyModifier.setVisibility(View.INVISIBLE);
                         break;
                     case DAMAGE_VULNERABILITY:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.DamageTypes.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.DamageTypes.values()));
                         propertyModifier.setVisibility(View.INVISIBLE);
                         break;
                     case SAVING_THROW_ADVANTAGE:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.SavingThrows.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.SavingThrows.values()));
                         propertyModifier.setVisibility(View.INVISIBLE);
                         break;
                     case SAVING_THROW_DISADVANTAGE:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.SavingThrows.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.SavingThrows.values()));
                         propertyModifier.setVisibility(View.INVISIBLE);
                         break;
                     case SAVING_THROW_MODIFIER:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.SavingThrows.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.SavingThrows.values()));
                         break;
                     case IMMUNITY:
-                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, Enumerations.Immunities.values()));
+                        spinnerPropertyDescriber.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.Immunities.values()));
                         propertyModifier.setVisibility(View.INVISIBLE);
                         break;
                     default: break;
@@ -183,7 +182,7 @@ public class CreateItemActivity extends ListActivity {
     @Override
     public void onResume() {
         super.onResume();
-        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, magicProperties));
+        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
     }
 
 
@@ -204,7 +203,7 @@ public class CreateItemActivity extends ListActivity {
 
         if (item.getItemId() == R.id.menu_delete) {
             magicProperties.remove(info.position);
-            setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, magicProperties));
+            setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
         }
         return true;
     }
@@ -222,7 +221,7 @@ public class CreateItemActivity extends ListActivity {
                     ((Enum)spinnerPropertyDescriber.getSelectedItem()).ordinal()
             );
             magicProperties.add(aAddedProperty);
-            setListAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_item, magicProperties));
+            setListAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
         }
     }
 

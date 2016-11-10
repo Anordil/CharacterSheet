@@ -46,7 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spinnerItemType"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:spinnerMode="dialog" />
     </LinearLayout>
 
     <TextView
@@ -74,13 +75,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/spinnerPropertyType"
-            android:layout_weight="40" />
+            android:layout_weight="40"
+            android:spinnerMode="dialog" />
 
         <Spinner
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/spinnerPropertyDescriber"
-            android:layout_weight="40" />
+            android:layout_weight="40"
+            android:spinnerMode="dialog" />
 
         <EditText
             android:layout_width="0dp"
