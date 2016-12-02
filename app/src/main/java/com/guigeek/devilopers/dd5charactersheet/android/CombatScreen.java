@@ -447,10 +447,17 @@ public class CombatScreen extends Fragment {
             int modStr = _character.getModifier(Enumerations.Attributes.STR);
 
 
-            if (weapon._type == Enumerations.WeaponTypes.UNARMED) {
+            if (weapon == null) {
                 rowMeleeOffHand.setVisibility(View.GONE);
                 rowNameOffHand.setVisibility(View.GONE);
                 rowThrownOffHand.setVisibility(View.GONE);
+                return;
+            }
+            else if (weapon._type == Enumerations.WeaponTypes.UNARMED) {
+                rowMeleeOffHand.setVisibility(View.GONE);
+                rowNameOffHand.setVisibility(View.GONE);
+                rowThrownOffHand.setVisibility(View.GONE);
+                return;
             }
             else {
                 rowMeleeOffHand.setVisibility(View.VISIBLE);
@@ -521,7 +528,7 @@ public class CombatScreen extends Fragment {
                     TableRow aRow = new TableRow(getContext());
                     TextView effectDescription = new TextView(getContext());
                     aRow.addView(effectDescription);
-                    fettleTable.addView(aRow);
+                    fettleTableOffHand.addView(aRow);
                 }
             }
         }
