@@ -256,6 +256,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
             spinnerWeaponOffHand.setEnabled(false);
         }
 
+        _character.refreshFettles();
         etItemsText.setText(_character._allItems);
     }
 
@@ -334,6 +335,11 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        if( getUserVisibleHint() == false )
+        {
+            return false;
+        }
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         if (item.getItemId() == R.id.menu_delete) {

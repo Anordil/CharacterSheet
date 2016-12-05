@@ -242,7 +242,7 @@ public class SkillsScreen extends Fragment {
         ll.addView(rowPowerHeader);
 
         // Display only relevant effects for this screen
-        for (Fettle fettle : _character.getEffectsFromRaceAndClass()) {
+        for (Fettle fettle : _character.getFettles()) {
             if (fettle._type == Enumerations.FettleType.IMMUNITY ||
                 fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER ||
                 fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE ||

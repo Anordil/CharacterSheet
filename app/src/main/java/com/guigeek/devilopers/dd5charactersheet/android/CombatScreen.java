@@ -160,7 +160,7 @@ public class CombatScreen extends Fragment {
 
 
     private void createFettlesBar(View root) {
-        if (!_character.getEffectsFromRaceAndClass().isEmpty()) {
+        if (!_character.getFettles().isEmpty()) {
             TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
 
             // Title
@@ -176,7 +176,7 @@ public class CombatScreen extends Fragment {
             ll.addView(rowPowerHeader);
 
             spellSlotTextViews = new ArrayList<TextView>();
-            for (Fettle fettle : _character.getEffectsFromRaceAndClass()) {
+            for (Fettle fettle : _character.getFettles()) {
                 TableRow row = new TableRow(getContext());
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
@@ -252,6 +252,7 @@ public class CombatScreen extends Fragment {
                 rowParam.span = 2;
                 minus.setLayoutParams(rowParam);
                 plus.setLayoutParams(rowParam);
+                level.setLayoutParams(rowParam);
 
                 row.addView(level);
                 row.addView(current);
@@ -527,6 +528,7 @@ public class CombatScreen extends Fragment {
 
                     TableRow aRow = new TableRow(getContext());
                     TextView effectDescription = new TextView(getContext());
+                    effectDescription.setText(effect.toString());
                     aRow.addView(effectDescription);
                     fettleTableOffHand.addView(aRow);
                 }

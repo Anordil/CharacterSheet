@@ -118,6 +118,11 @@ public class FeatsScreen extends android.support.v4.app.ListFragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        if( getUserVisibleHint() == false )
+        {
+            return false;
+        }
+
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         final int toDelete = (info.position);
 

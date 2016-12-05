@@ -38,7 +38,7 @@ public class Skill implements Externalizable {
         }
 
         int bonus = 0;
-        for (Fettle fettle : iChar.getEffectsFromRaceAndClass()) {
+        for (Fettle fettle : iChar.getFettles()) {
             if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER &&
                     (fettle._describer == Enumerations.Skills.ALL.ordinal() ||  Enumerations.Skills.values()[fettle._describer].toString().equals(_name)))
             {

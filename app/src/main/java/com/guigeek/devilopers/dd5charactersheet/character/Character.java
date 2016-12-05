@@ -58,7 +58,6 @@ public class Character implements Externalizable {
     public Armor _equippedArmor;
     public Armor _equippedShield;
     public Weapon _equippedWeapon, _offHandWeapon;
-    public LinkedList<Item> _equippedItems;
 
     public LinkedList<Externalizable> _inventory;
 
@@ -99,7 +98,7 @@ public class Character implements Externalizable {
 
         oo.writeObject(_equippedArmor);
         oo.writeObject(_equippedWeapon);
-        oo.writeObject(_equippedItems);
+        oo.writeObject(null);
         oo.writeObject(_equippedShield);
         oo.writeObject(_offHandWeapon);
 
@@ -204,20 +203,33 @@ public class Character implements Externalizable {
 
         // V6: armor and other equipment
         if (version >= 6) {
-            _equippedArmor = (Armor)oi.readObject();
-            _equippedWeapon = (Weapon) oi.readObject();
-            _equippedItems = (LinkedList<Item>) oi.readObject();
-            _equippedShield = (Armor)oi.readObject();
+            try {
+                _equippedArmor = (Armor) oi.readObject();
+                _equippedWeapon = (Weapon) oi.readObject();
+                oi.readObject(); //removed quipped items
+                _equippedShield = (Armor) oi.readObject();
+            }
+            catch (Exception e) {
+                _equippedArmor = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+                _equippedWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+                oi.readObject(); //removed quipped items
+                _equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+            }
         }
         else {
             _equippedArmor = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
             _equippedWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
-            _equippedItems = new LinkedList<>();
+            oi.readObject(); //removed quipped items
             _equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
         }
         // V7: off hand weapons
         if (version >= 7) {
-            _offHandWeapon = (Weapon) oi.readObject();
+            try {
+                _offHandWeapon = (Weapon) oi.readObject();
+            }
+            catch (Exception e) {
+                _offHandWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+            }
         }
         else {
             _offHandWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
@@ -226,7 +238,12 @@ public class Character implements Externalizable {
 
         // V8: added inventory list
         if (version >= 8) {
-            _inventory = (LinkedList<Externalizable>)oi.readObject();
+            try {
+                _inventory = (LinkedList<Externalizable>)oi.readObject();
+            }
+            catch (Exception e) {
+                _inventory = new LinkedList<>();
+            }
         }
         else {
             _inventory = new LinkedList<>();
@@ -276,16 +293,23 @@ public class Character implements Externalizable {
 
         return _feats;
     }
-    public LinkedList<Fettle> getEffectsFromRaceAndClass() {
-        if (_effect == null) {
-            _effect = new LinkedList<Fettle>();
+    private LinkedList<Fettle> getEffectsFromRaceAndClass() {
+        LinkedList<Fettle> res = new LinkedList<>();
+        for (Fettle effect : _race.getFettles()) {
+            res.add(effect);
         }
-        return _effect;
+        for (Fettle effect : _class.getFettles(this)) {
+            res.add(effect);
+        }
+
+        return res;
     }
+
 
     public void refresh() {
         initLevel();
         doLongRest();
+        refreshFettles();
     }
 
     private void initLevel() {
@@ -431,11 +455,28 @@ public class Character implements Externalizable {
         }
         _effect.clear();
 
-        for (Fettle effect : _race.getFettles()) {
+        for (Fettle effect : getEffectsFromRaceAndClass()) {
             _effect.add(effect);
         }
-        for (Fettle effect : _class.getFettles(this)) {
-            _effect.add(effect);
+
+        if (_equippedShield != null) for (Fettle property : _equippedShield._magicProperties) {
+            _effect.add(property);
+        }
+        if (_equippedWeapon != null) for (Fettle property : _equippedWeapon._magicProperties) {
+            _effect.add(property);
+        }
+        if (_offHandWeapon != null) for (Fettle property : _offHandWeapon._magicProperties) {
+            _effect.add(property);
+        }
+        if (_equippedArmor != null) for (Fettle property : _equippedArmor._magicProperties) {
+            _effect.add(property);
+        }
+        if (_inventory != null) for (Externalizable item : _inventory) {
+            if (item instanceof Item) {
+                for (Fettle property : ((Item)item)._magicProperties) {
+                    _effect.add(property);
+                }
+            }
         }
     }
 
@@ -460,30 +501,11 @@ public class Character implements Externalizable {
     }
 
     public HashSet<Fettle> getFettles() {
+        refreshFettles();
+
         HashSet<Fettle> properties = new HashSet<>();
-
-        if (_equippedShield != null) for (Fettle property : _equippedShield._magicProperties) {
-                properties.add(property);
-        }
-        if (_equippedWeapon != null) for (Fettle property : _equippedWeapon._magicProperties) {
-                properties.add(property);
-        }
-        if (_offHandWeapon != null) for (Fettle property : _offHandWeapon._magicProperties) {
-                properties.add(property);
-        }
-        if (_equippedArmor != null) for (Fettle property : _equippedArmor._magicProperties) {
-                properties.add(property);
-        }
-        if (_inventory != null) for (Externalizable item : _inventory) {
-            if (item instanceof Item) {
-                for (Fettle property : ((Item)item)._magicProperties) {
-                        properties.add(property);
-                }
-            }
-        }
-
-        for (Fettle property : getEffectsFromRaceAndClass()) {
-            properties.add(property);
+        for (Fettle effect : _effect) {
+            properties.add(effect);
         }
 
         return properties;

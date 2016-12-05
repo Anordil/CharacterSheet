@@ -109,12 +109,10 @@
                     <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_span="2"
                         android:inputType="number"
-                        android:hint="Bonus"
-                        android:gravity="right"
                         android:ems="10"
                         android:id="@+id/inWeapDmgBonus"
-                        android:layout_span="2"
                         android:paddingLeft="10dp" />
                 </TableRow>
 
