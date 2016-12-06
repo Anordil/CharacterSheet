@@ -382,7 +382,7 @@ public class Character implements Externalizable {
         int value = _attributes[iAttr.ordinal()];
 
         // Bonus from equipment ?
-        for (Fettle property : getFettles()) {
+        for (Fettle property : _effect) {
             if (property._type == Enumerations.FettleType.ATTRIBUTE_MODIFIER && property._describer == iAttr.ordinal()) {
                 value += property._value;
                 break;
@@ -501,8 +501,6 @@ public class Character implements Externalizable {
     }
 
     public HashSet<Fettle> getFettles() {
-        refreshFettles();
-
         HashSet<Fettle> properties = new HashSet<>();
         for (Fettle effect : _effect) {
             properties.add(effect);
