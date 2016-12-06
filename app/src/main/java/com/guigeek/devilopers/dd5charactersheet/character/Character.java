@@ -248,6 +248,23 @@ public class Character implements Externalizable {
         else {
             _inventory = new LinkedList<>();
         }
+
+
+        if (_equippedArmor == null) {
+            _equippedArmor = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+        }
+        if (_equippedWeapon == null) {
+            _equippedWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+        }
+        if (_offHandWeapon == null) {
+            _offHandWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+        }
+        if (_equippedShield == null) {
+            _equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+        }
+        if (_inventory == null) {
+            _inventory = new LinkedList<>();
+        }
     }
 
     public Character(){
@@ -492,7 +509,7 @@ public class Character implements Externalizable {
 
     public boolean hasFeat(String s) {
         for (Power p : _feats) {
-            if (p._name.toLowerCase().equals(s.toLowerCase())) {
+            if (p != null && p._name != null &&  p._name.toLowerCase().equals(s.toLowerCase())) {
                 return true;
             }
         }
