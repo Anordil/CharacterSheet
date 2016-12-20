@@ -7,4 +7,7 @@ public class Constants {
 
     public static final String CHARACTER = "CHARACTER";
     public static final String ITEM = "ITEM";
+    public static final String ITEM_POSITION = "ITEM_POS";
+
+    public static final int EDIT_ITEM = 12;
 }

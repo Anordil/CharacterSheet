@@ -97,22 +97,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@android:id/list"
-        android:layout_weight="70" />
+        android:layout_weight="100"
+        android:layout_marginBottom="0dp"
+        />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="15"
-        android:gravity="bottom"
-        android:weightSum="100">
-
-
-        <Button
-            android:text=" Save to inventory"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonCreateItemSave"
-            android:layout_weight="1"
-            android:layout_width="match_parent" />
-    </LinearLayout>
+    <Button
+        android:text=" Save to inventory"
+        android:layout_height="50dp"
+        android:id="@+id/buttonCreateItemSave"
+        android:layout_width="match_parent" />
 </LinearLayout>

@@ -43,7 +43,16 @@ public class Armor implements Externalizable {
         }
 
         if (_hasStealthDisadvantage) {
-            _magicProperties.add(new Fettle(Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE, 0, Enumerations.Skills.STEALTH.ordinal()));
+            boolean alreadyThere = false;
+            for (Fettle property : _magicProperties) {
+                if (property._type == Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE && property._describer == Enumerations.Skills.STEALTH.ordinal()) {
+                    alreadyThere = true;
+                    break;
+                }
+            }
+            if (!alreadyThere) {
+                _magicProperties.add(new Fettle(Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE, 0, Enumerations.Skills.STEALTH.ordinal()));
+            }
         }
     }
 

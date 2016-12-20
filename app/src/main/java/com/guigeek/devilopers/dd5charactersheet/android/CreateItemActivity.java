@@ -36,6 +36,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.LinkedList;
 
 public class CreateItemActivity extends ListActivity {
@@ -46,6 +47,7 @@ public class CreateItemActivity extends ListActivity {
 
     EditText name, modifier, propertyModifier;
     Spinner spinnerItemCategory, spinnerItemType, spinnerPropertyType, spinnerPropertyDescriber;
+    int _itemPosition = 0;
 
 
     @Override
@@ -193,6 +195,78 @@ public class CreateItemActivity extends ListActivity {
         });
 
 
+        // Is this an edit ?
+        Bundle bundle = this.getIntent().getExtras();
+        if (bundle != null) {
+            Serializable data = bundle.getSerializable(Constants.ITEM);
+            if (data != null) {
+                _itemPosition = bundle.getInt(Constants.ITEM_POSITION);
+                Externalizable item = null;
+                if (data instanceof Weapon) {
+                    initForWeapon((Weapon)data);
+                }
+                else if (data instanceof Armor) {
+                    initForArmor((Armor)data);
+                }
+                else if (data instanceof Item) {
+                    initForItem((Item)data);
+                }
+            }
+
+        }
+    }
+
+    private void initForWeapon(Weapon item) {
+        magicProperties = item._magicProperties;
+
+        spinnerItemType.setVisibility(View.VISIBLE);
+        modifier.setVisibility(View.VISIBLE);
+
+
+        name.setText(item._name);
+        modifier.setText(Integer.toString(item._magicModifier));
+
+        spinnerItemCategory.setSelection(0);
+        final int itemType = item._type.ordinal();
+        spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.WeaponTypes.values()));
+        spinnerItemType.setSelection(item._type.ordinal(), true);
+        spinnerItemType.postDelayed(new Runnable() {
+            public void run() {
+                spinnerItemType.setSelection(itemType, true);
+            }
+        }, 100);
+        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
+    }
+    private void initForArmor(Armor item) {
+        magicProperties = item._magicProperties;
+        spinnerItemType.setVisibility(View.VISIBLE);
+        modifier.setVisibility(View.VISIBLE);
+
+
+        name.setText(item._name);
+        modifier.setText(Integer.toString(item._magicModifier));
+
+        spinnerItemCategory.setSelection(1);
+        final int itemType = item._type.ordinal();
+        spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.ArmorTypes.values()));
+        spinnerItemType.postDelayed(new Runnable() {
+            public void run() {
+                spinnerItemType.setSelection(itemType, true);
+            }
+        }, 100);
+        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
+    }
+    private void initForItem(Item item) {
+        magicProperties = item._magicProperties;
+
+        spinnerItemType.setVisibility(View.GONE);
+        modifier.setVisibility(View.GONE);
+
+        name.setText(item._name);
+        modifier.setText("");
+
+        spinnerItemCategory.setSelection(2);
+        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
     }
 
 
@@ -287,6 +361,7 @@ public class CreateItemActivity extends ListActivity {
 
             Intent intent = new Intent(CreateItemActivity.this, MainActivity.class);
             intent.putExtra(Constants.ITEM, newItem);
+            intent.putExtra(Constants.ITEM_POSITION, _itemPosition);
             setResult(RESULT_OK, intent);
             finish();
         }

@@ -1,7 +1,10 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -16,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
@@ -31,8 +36,9 @@ import java.util.LinkedList;
 public class InventoryScreen extends android.support.v4.app.ListFragment {
 
     protected Character _character;
-    EditText etDamageBonus, etGold, etItemsText;
+    EditText etDamageBonus, etItemsText;
     Spinner spinnerArmor, spinnerWeapon, spinnerWeaponOffHand;
+    TextView etGold;
 
     ArrayAdapter<Armor> adapterArmor;
     ArrayAdapter<Weapon> adapterWeapon;
@@ -41,7 +47,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     Weapon emptyWeaponOffHand = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
 
 
-    Button updateBtn, addItemBtn;
+    Button addItemBtn, addGoldBtn, removeGoldBtn;
 
     public InventoryScreen() {
     }
@@ -211,6 +217,17 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         registerForContextMenu(getListView());
         setListViewHeightBasedOnChildren(getListView());
 
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.ITEM, (Externalizable)getListAdapter().getItem(position));
+                bundle.putInt(Constants.ITEM_POSITION, position);
+                Intent newIntent = new Intent(getActivity().getApplicationContext(), CreateItemActivity.class);
+                newIntent.putExtras(bundle);
+                startActivityForResult(newIntent, Constants.EDIT_ITEM);
+            }
+        });
+
         etDamageBonus = (EditText)root.findViewById(R.id.inWeapDmgBonus);
 
 
@@ -220,16 +237,19 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         initEquipmentSpinners();
 
 
-        etGold = (EditText)root.findViewById(R.id.inGold);
+        etGold = (TextView)root.findViewById(R.id.inGold);
         etItemsText = (EditText)root.findViewById(R.id.inInventory);
-        updateBtn = (Button)root.findViewById(R.id.btnUpdate);
         addItemBtn = (Button)root.findViewById(R.id.btnAddItem);
+        addGoldBtn = (Button)root.findViewById(R.id.btnAddGold);
+        removeGoldBtn = (Button)root.findViewById(R.id.btnRemoveGold);
 
         InventoryListener aListener = new InventoryListener();
-        updateBtn.setOnClickListener(aListener);
 
         InventoryInsertListener aInventoryInsertListener = new InventoryInsertListener();
         addItemBtn.setOnClickListener(aInventoryInsertListener);
+
+        addGoldBtn.setOnClickListener(new InventoryGoldListener(true));
+        removeGoldBtn.setOnClickListener(new InventoryGoldListener(false));
 
         updateContent();
     }
@@ -274,13 +294,13 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
             int itemHeight = 190;
 
             if (item instanceof Weapon) {
-                itemHeight += 50 * ((Weapon)item)._magicProperties.size();
+                itemHeight += 70 * ((Weapon)item)._magicProperties.size();
             }
             else if (item instanceof Armor) {
-                itemHeight += 50 * ((Armor)item)._magicProperties.size();
+                itemHeight += 70 * ((Armor)item)._magicProperties.size();
             }
             else if (item instanceof Item) {
-                itemHeight += 50 * ((Item)item)._magicProperties.size();
+                itemHeight += 70 * ((Item)item)._magicProperties.size();
             }
             totalHeight += itemHeight;
         }
@@ -314,11 +334,69 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     }
 
 
+    class InventoryGoldListener implements View.OnClickListener {
+
+        private boolean isGoldAdded = true;
+
+        public InventoryGoldListener(boolean add) {
+            isGoldAdded = add;
+        }
+
+        @Override
+        public void onClick(View v) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            final EditText text = new EditText(getActivity());
+
+            builder.setTitle(isGoldAdded ? "Add gold":"Remove gold").setMessage("Amount to be " + (isGoldAdded ? "added":"removed")).setView(text);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface di, int i) {
+                    final String value = text.getText().toString();
+                    try {
+                        int amount = Integer.parseInt(value);
+                        if (isGoldAdded || amount <= _character._gold) {
+                            _character._gold += (amount * (isGoldAdded ? 1:-1));
+                            etGold.setText(Integer.toString(_character._gold));
+                        }
+                        else {
+                            Toast.makeText(getContext(), "Invalid amount", Toast.LENGTH_SHORT).show();
+                            text.setText("");
+                        }
+                    }
+                    catch (Exception e) {
+                        Toast.makeText(getContext(), "Invalid amount", Toast.LENGTH_SHORT).show();
+                        text.setText("");
+                    }
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface di, int i) {
+                }
+            });
+            builder.create().show();
+        }
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data != null && data.getSerializableExtra(Constants.ITEM) != null) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == Constants.EDIT_ITEM) {
+            int position = data.getIntExtra(Constants.ITEM_POSITION, 0);
+            Externalizable createdItem = (Externalizable) data.getSerializableExtra(Constants.ITEM);
+            _character._inventory.set(position, createdItem);
+
+            setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
+            updateContent();
+            setListViewHeightBasedOnChildren(getListView());
+        }
+        else if (data != null && data.getSerializableExtra(Constants.ITEM) != null) {
             try {
                 Externalizable createdItem = (Externalizable) data.getSerializableExtra(Constants.ITEM);
                 _character._inventory.add(createdItem);
