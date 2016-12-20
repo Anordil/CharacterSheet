@@ -21,6 +21,7 @@ import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.item.Armor;
+import com.guigeek.devilopers.dd5charactersheet.item.Item;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Externalizable;
@@ -233,6 +234,12 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         updateContent();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setListViewHeightBasedOnChildren(getListView());
+    }
+
     public void updateContent() {
         etDamageBonus.setText(Integer.toString(_character._dmgBonus));
         etGold.setText(Integer.toString(_character._gold));
@@ -260,25 +267,25 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         etItemsText.setText(_character._allItems);
     }
 
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
+    public void setListViewHeightBasedOnChildren(ListView listView) {
 
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
         int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0) {
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ListView.LayoutParams.WRAP_CONTENT));
+        for (Externalizable item : _character._inventory) {
+            int itemHeight = 190;
+
+            if (item instanceof Weapon) {
+                itemHeight += 50 * ((Weapon)item)._magicProperties.size();
             }
-            view.measure(View.MeasureSpec.makeMeasureSpec(desiredWidth, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-            totalHeight += view.getMeasuredHeight();
+            else if (item instanceof Armor) {
+                itemHeight += 50 * ((Armor)item)._magicProperties.size();
+            }
+            else if (item instanceof Item) {
+                itemHeight += 50 * ((Item)item)._magicProperties.size();
+            }
+            totalHeight += itemHeight;
         }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight;// + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight;
         listView.setLayoutParams(params);
     }
 
@@ -317,6 +324,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                 _character._inventory.add(createdItem);
                 setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
                 updateContent();
+                setListViewHeightBasedOnChildren(getListView());
             } catch (Exception e) {
                 Log.d("TOTO", "Item creation failed, ");
                 e.printStackTrace();
@@ -346,6 +354,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
             _character._inventory.remove(info.position);
             updateContent();
             setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
+            setListViewHeightBasedOnChildren(getListView());
         }
         return true;
     }

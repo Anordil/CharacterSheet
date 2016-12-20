@@ -508,6 +508,9 @@ public class Character implements Externalizable {
     }
 
     public boolean hasFeat(String s) {
+        if (_feats == null) {
+            _feats = new LinkedList<>();
+        }
         for (Power p : _feats) {
             if (p != null && p._name != null &&  p._name.toLowerCase().equals(s.toLowerCase())) {
                 return true;

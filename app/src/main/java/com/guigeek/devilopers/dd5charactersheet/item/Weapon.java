@@ -74,10 +74,31 @@ public class Weapon implements Externalizable {
         // Init generic weapon details
         switch (_type) {
             case CLUB:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _diceCount = 1;
+                _diceValue = 4;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.LIGHT;
                 break;
             case DAGGER:
+                _distance = Enumerations.WeaponDistanceTypes.THROWN;
+                _distMin = 20;
+                _distMax = 60;
+                _diceCount = 1;
+                _diceValue = 4;
+                _isFinesse = true;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.LIGHT;
                 break;
             case GREAT_CLUB:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _diceCount = 1;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
                 break;
             case HANDAXE:
                 _distance = Enumerations.WeaponDistanceTypes.THROWN;
@@ -90,24 +111,102 @@ public class Weapon implements Externalizable {
                 _damageType = Enumerations.DamageTypes.SLASHING;
                 break;
             case JAVELIN:
+                _distance = Enumerations.WeaponDistanceTypes.THROWN;
+                _distMin = 30;
+                _distMax = 120;
+                _diceCount = 1;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
                 break;
             case LIGHT_HAMMER:
+                _distance = Enumerations.WeaponDistanceTypes.THROWN;
+                _distMin = 20;
+                _distMax = 60;
+                _diceCount = 1;
+                _diceValue = 4;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.LIGHT;
                 break;
             case MACE:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _diceCount = 1;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
                 break;
             case QUARTERSTAFF:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _diceCount = 1;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
+                _hands = Enumerations.WeaponHandCount.VERSATILE;
+                _diceCountVersatile = 1;
+                _diceValueVersatile = 8;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
                 break;
             case SICKLE:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _diceCount = 1;
+                _diceValue = 4;
+                _damageType = Enumerations.DamageTypes.SLASHING;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.LIGHT;
                 break;
             case SPEAR:
+                _distance = Enumerations.WeaponDistanceTypes.THROWN;
+                _distMin = 20;
+                _distMax = 60;
+                _diceCount = 1;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _hands = Enumerations.WeaponHandCount.VERSATILE;
+                _diceCountVersatile = 1;
+                _diceValueVersatile = 8;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
                 break;
             case LIGHT_CROSSBOW:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 80;
+                _distMax = 320;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case DART:
+                _distance = Enumerations.WeaponDistanceTypes.THROWN;
+                _isFinesse = true;
+                _distMin = 20;
+                _distMax = 60;
+                _diceCount = 1;
+                _diceValue = 4;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
                 break;
             case SHORTBOW:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 80;
+                _distMax = 320;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case SLING:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 30;
+                _distMax = 120;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 4;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
                 break;
             case BATTLEAXE:
                 _distance = Enumerations.WeaponDistanceTypes.MELEE;
@@ -120,8 +219,21 @@ public class Weapon implements Externalizable {
                 _damageType = Enumerations.DamageTypes.SLASHING;
                 break;
             case FLAIL:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
                 break;
             case GLAIVE:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.HEAVY;
+                _hasReach = true;
+                _diceCount = 1;
+                _diceValue = 10;
+                _damageType = Enumerations.DamageTypes.SLASHING;
                 break;
             case GREATAXE:
                 _distance = Enumerations.WeaponDistanceTypes.MELEE;
@@ -140,26 +252,104 @@ public class Weapon implements Externalizable {
                 _damageType = Enumerations.DamageTypes.SLASHING;
                 break;
             case HALBERD:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.HEAVY;
+                _hasReach = true;
+                _diceCount = 1;
+                _diceValue = 10;
+                _damageType = Enumerations.DamageTypes.SLASHING;
                 break;
             case LANCE:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _hasReach = true;
+                _diceCount = 1;
+                _diceValue = 12;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case LONGSWORD:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.VERSATILE;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 8;
+                _diceCountVersatile = 1;
+                _diceValueVersatile = 10;
+                _damageType = Enumerations.DamageTypes.SLASHING;
                 break;
             case MAUL:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.HEAVY;
+                _diceCount = 2;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
                 break;
             case MORNINGSTAR:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case PIKE:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.HEAVY;
+                _diceCount = 1;
+                _diceValue = 10;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _hasReach = true;
                 break;
             case RAPIER:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _isFinesse = true;
                 break;
             case SCIMITAR:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.LIGHT;
+                _diceCount = 1;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.SLASHING;
+                _isFinesse = true;
                 break;
             case SHORTSWORD:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.LIGHT;
+                _diceCount = 1;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _isFinesse = true;
                 break;
             case TRIDENT:
+                _distance = Enumerations.WeaponDistanceTypes.THROWN;
+                _distMin = 20;
+                _distMax = 60;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 6;
+                _diceValueVersatile = 1;
+                _diceValueVersatile = 8;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case WAR_PICK:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case WARHAMMER:
                 _distance = Enumerations.WeaponDistanceTypes.MELEE;
@@ -172,16 +362,64 @@ public class Weapon implements Externalizable {
                 _damageType = Enumerations.DamageTypes.BLUDGEONING;
                 break;
             case WHIP:
+                _distance = Enumerations.WeaponDistanceTypes.MELEE;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 4;
+                _isFinesse = true;
+                _hasReach = true;
+                _damageType = Enumerations.DamageTypes.SLASHING;
                 break;
             case BLOWGUN:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 25;
+                _distMax = 10;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 1;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case HAND_CROSSBOW:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 30;
+                _distMax = 120;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.LIGHT;
+                _diceCount = 1;
+                _diceValue = 6;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case HEAVY_CROSSBOW:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 100;
+                _distMax = 400;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.HEAVY;
+                _diceCount = 1;
+                _diceValue = 10;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case LONGBOW:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 150;
+                _distMax = 600;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.HEAVY;
+                _diceCount = 1;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.PIERCING;
                 break;
             case NET:
+                _distance = Enumerations.WeaponDistanceTypes.THROWN;
+                _distMin = 5;
+                _distMax = 15;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 0;
+                _diceValue = 0;
+                _damageType = Enumerations.DamageTypes.BLUDGEONING;
                 break;
             case UNARMED:
                 _distance = Enumerations.WeaponDistanceTypes.MELEE;
