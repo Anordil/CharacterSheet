@@ -343,7 +343,7 @@ public class Character implements Externalizable {
     public void doLongRest() {
         _hpCurrent = _hpMax;
         _hpTemp = 0;
-        _hitDice = _level;
+        _hitDice = Math.min(_level, _hitDice + (int)Math.ceil(((double)_level)/2));
 
 
         _spellSlotsCurrent = new int[_spellSlotsMax.length];
