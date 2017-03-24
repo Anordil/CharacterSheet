@@ -186,6 +186,14 @@
                     android:layout_width="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_height="wrap_content"
+                    android:text="Update inventory"
+                    android:id="@+id/btnUpdateInventory"
+                    />
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content"
                     android:text="Add item"
                     android:id="@+id/btnAddItem"
                     />

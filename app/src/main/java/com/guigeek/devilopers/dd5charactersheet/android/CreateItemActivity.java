@@ -27,6 +27,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.item.Armor;
+import com.guigeek.devilopers.dd5charactersheet.item.Consumable;
 import com.guigeek.devilopers.dd5charactersheet.item.Item;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
@@ -45,8 +46,9 @@ public class CreateItemActivity extends ListActivity {
     Button addProperty, createItem;
     LinkedList<Fettle> magicProperties;
 
-    EditText name, modifier, propertyModifier;
+    EditText name, modifier, propertyModifier, consEffect, consCount;
     Spinner spinnerItemCategory, spinnerItemType, spinnerPropertyType, spinnerPropertyDescriber;
+    LinearLayout layoutConsumabl, layoutMagicProps;
     int _itemPosition = 0;
 
 
@@ -65,6 +67,8 @@ public class CreateItemActivity extends ListActivity {
         name = (EditText)findViewById(R.id.itemName);
         modifier = (EditText)findViewById(R.id.itemModifier);
         propertyModifier = (EditText)findViewById(R.id.etPropertyModifier);
+        consEffect = (EditText)findViewById(R.id.consumableEffect);
+        consCount = (EditText)findViewById(R.id.consumableCharges);
 
         // Buttons
         addProperty = (Button)findViewById(R.id.buttonAddProperty);
@@ -72,6 +76,9 @@ public class CreateItemActivity extends ListActivity {
 
         addProperty.setOnClickListener(new AddPropertyListener());
         createItem.setOnClickListener(new CreateItemListener());
+
+        layoutConsumabl = (LinearLayout)findViewById(R.id.layoutConsumable);
+        layoutMagicProps = (LinearLayout)findViewById(R.id.layoutMagicProperties);
 
 
         // Spinners
@@ -82,7 +89,7 @@ public class CreateItemActivity extends ListActivity {
 
 
         // Init category spinner
-        String[] itemCategories = {"Weapon", "Armor", "Worn item"};
+        String[] itemCategories = {"Weapon", "Armor", "Worn item", "Consumable"};
         ArrayAdapter<String> adapterCategory = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemCategories);
         spinnerItemCategory.setAdapter(adapterCategory);
         spinnerItemCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -92,16 +99,28 @@ public class CreateItemActivity extends ListActivity {
                     case 0:
                         spinnerItemType.setVisibility(View.VISIBLE);
                         modifier.setVisibility(View.VISIBLE);
+                        layoutConsumabl.setVisibility(View.GONE);
+                        layoutMagicProps.setVisibility(View.VISIBLE);
                         spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.WeaponTypes.values()));
                         break;
                     case 1:
                         spinnerItemType.setVisibility(View.VISIBLE);
                         modifier.setVisibility(View.VISIBLE);
+                        layoutConsumabl.setVisibility(View.GONE);
+                        layoutMagicProps.setVisibility(View.VISIBLE);
                         spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.ArmorTypes.values()));
+                        break;
+                    case 3:
+                        spinnerItemType.setVisibility(View.GONE);
+                        modifier.setVisibility(View.GONE);
+                        layoutConsumabl.setVisibility(View.VISIBLE);
+                        layoutMagicProps.setVisibility(View.GONE);
                         break;
                     default:
                         spinnerItemType.setVisibility(View.GONE);
                         modifier.setVisibility(View.GONE);
+                        layoutConsumabl.setVisibility(View.GONE);
+                        layoutMagicProps.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -211,6 +230,9 @@ public class CreateItemActivity extends ListActivity {
                 else if (data instanceof Item) {
                     initForItem((Item)data);
                 }
+                else if (data instanceof Consumable) {
+                    initForConsumable((Consumable) data);
+                }
             }
 
         }
@@ -221,6 +243,8 @@ public class CreateItemActivity extends ListActivity {
 
         spinnerItemType.setVisibility(View.VISIBLE);
         modifier.setVisibility(View.VISIBLE);
+        layoutConsumabl.setVisibility(View.GONE);
+        layoutMagicProps.setVisibility(View.VISIBLE);
 
 
         name.setText(item._name);
@@ -241,6 +265,8 @@ public class CreateItemActivity extends ListActivity {
         magicProperties = item._magicProperties;
         spinnerItemType.setVisibility(View.VISIBLE);
         modifier.setVisibility(View.VISIBLE);
+        layoutConsumabl.setVisibility(View.GONE);
+        layoutMagicProps.setVisibility(View.VISIBLE);
 
 
         name.setText(item._name);
@@ -261,11 +287,30 @@ public class CreateItemActivity extends ListActivity {
 
         spinnerItemType.setVisibility(View.GONE);
         modifier.setVisibility(View.GONE);
+        layoutConsumabl.setVisibility(View.GONE);
+        layoutMagicProps.setVisibility(View.VISIBLE);
 
         name.setText(item._name);
         modifier.setText("");
 
         spinnerItemCategory.setSelection(2);
+        setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
+    }
+
+    private void initForConsumable(Consumable item) {
+        magicProperties = new LinkedList<>();
+
+        spinnerItemType.setVisibility(View.GONE);
+        modifier.setVisibility(View.GONE);
+        layoutConsumabl.setVisibility(View.VISIBLE);
+        layoutMagicProps.setVisibility(View.GONE);
+
+        name.setText(item._name);
+        consEffect.setText(item._effect);
+        consCount.setText(Integer.toString(item._charges));
+        modifier.setText("");
+
+        spinnerItemCategory.setSelection(3);
         setListAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, magicProperties));
     }
 
@@ -354,8 +399,11 @@ public class CreateItemActivity extends ListActivity {
                     newItem = new Armor((Enumerations.ArmorTypes) spinnerItemType.getSelectedItem(), modifierValue, magicProperties);
                     ((Armor)newItem)._name = name.getText().toString();
                     break;
-                default:
+                case 2:
                     newItem = new Item(name.getText().toString(), 0, 0, magicProperties);
+                    break;
+                case 3:
+                    newItem = new Consumable(name.getText().toString(), consEffect.getText().toString(), 0, 0, Integer.parseInt(consCount.getText().toString()));
                     break;
             }
 

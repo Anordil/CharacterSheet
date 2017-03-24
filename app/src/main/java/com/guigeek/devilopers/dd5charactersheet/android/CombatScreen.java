@@ -376,7 +376,18 @@ public class CombatScreen extends Fragment {
         String propertyDamageBonus = "";
         for (Fettle property : weapon._magicProperties) {
             if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
-                propertyAttackBonus = property._value;
+                propertyAttackBonus = Math.max(property._value, propertyAttackBonus);
+            }
+            else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER) {
+                propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._value + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
+            }
+            else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_DICE) {
+                propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._valueStr + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
+            }
+        }
+        for (Fettle property : _character.getFettles()) {
+            if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
+                propertyAttackBonus = Math.max(property._value, propertyAttackBonus);
             }
             else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER) {
                 propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._value + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
@@ -477,7 +488,18 @@ public class CombatScreen extends Fragment {
             String propertyDamageBonus = "";
             for (Fettle property : weapon._magicProperties) {
                 if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
-                    propertyAttackBonus = property._value;
+                    propertyAttackBonus = Math.max(property._value, propertyAttackBonus);
+                }
+                else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER) {
+                    propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._value + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
+                }
+                else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_DICE) {
+                    propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._valueStr + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
+                }
+            }
+            for (Fettle property : _character.getFettles()) {
+                if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
+                    propertyAttackBonus = Math.max(property._value, propertyAttackBonus);
                 }
                 else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER) {
                     propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._value + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";

@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.item.Armor;
+import com.guigeek.devilopers.dd5charactersheet.item.Consumable;
 import com.guigeek.devilopers.dd5charactersheet.item.Item;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
@@ -63,6 +65,12 @@ public class ItemAdapter extends ArrayAdapter<Externalizable> {
             Item theItem = (Item)item;
             icon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_ring));
             magicProperties = theItem._magicProperties;
+        }
+        else if (item instanceof Consumable) {
+            Consumable theItem = (Consumable)item;
+            icon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_potion_ball));
+            magicProperties = new LinkedList<>();
+            magicProperties.add(new Fettle(Enumerations.FettleType.TEXT_FETTLE, theItem._effect, 0));
         }
 
 

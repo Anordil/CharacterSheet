@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:ems="10"
+            android:ems="6"
             android:id="@+id/itemModifier"
             android:text=""
             android:hint="Mod."
@@ -61,6 +61,33 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layoutConsumable" >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:ems="10"
+            android:id="@+id/consumableEffect"
+            android:text=""
+            android:layout_weight="1"
+            android:hint="Effects" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="6"
+            android:id="@+id/consumableCharges"
+            android:text=""
+            android:layout_weight="1"
+            android:hint="Count"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutMagicProperties"
         android:weightSum="100">
 
         <Spinner

@@ -244,6 +244,8 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         removeGoldBtn = (Button)root.findViewById(R.id.btnRemoveGold);
 
         InventoryListener aListener = new InventoryListener();
+        Button aBtnUpdateInventory = (Button)root.findViewById(R.id.btnUpdateInventory);
+        aBtnUpdateInventory.setOnClickListener(aListener);
 
         InventoryInsertListener aInventoryInsertListener = new InventoryInsertListener();
         addItemBtn.setOnClickListener(aInventoryInsertListener);
@@ -314,13 +316,8 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
 
         @Override
         public void onClick(View v) {
-            _character._gold = Integer.parseInt(etGold.getText().toString());
             _character._dmgBonus = Integer.parseInt(etDamageBonus.getText().toString());
             _character._allItems = etItemsText.getText().toString();
-
-
-            // TODO: update hands and armor
-
 
             ((SwipeActivity)getActivity()).save();
         }
