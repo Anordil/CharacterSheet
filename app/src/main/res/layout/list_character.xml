@@ -35,9 +35,7 @@
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
         </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal" android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
 
         android:gravity="center_vertical">
     <TextView
@@ -54,10 +52,10 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="1dp"
         android:text="Warrior"
-        android:paddingLeft="10dp"
+        android:paddingLeft="35dp"
         android:id="@+id/listCharClass"
         android:textAppearance="@android:style/TextAppearance.Medium" />
 
 
-        </LinearLayout>
+
 </LinearLayout>
