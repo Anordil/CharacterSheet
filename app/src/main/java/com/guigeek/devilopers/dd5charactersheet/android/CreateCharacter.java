@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -105,7 +107,27 @@ public class CreateCharacter extends AppCompatActivity {
             Intent intent = new Intent(CreateCharacter.this, MainActivity.class);
             intent.putExtra(Constants.CHARACTER, aHero);
             setResult(RESULT_OK, intent);
-            finish();
+
+            String[] levelUpBoons = aHero._class.getLevelUpBenefits(aHero._level);
+
+            String boons = "";
+            for (String s : levelUpBoons) {
+                if (s != null && s.length() > 0) {
+                    boons += s + "\n";
+                }
+            }
+
+            AlertDialog alertDialog = new AlertDialog.Builder(CreateCharacter.this).create();
+            alertDialog.setTitle("Level up");
+            alertDialog.setMessage(boons);
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+            alertDialog.show();
         }
     }
 }

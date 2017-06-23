@@ -368,6 +368,7 @@ public class CombatScreen extends Fragment {
         int modStr = _character.getModifier(Enumerations.Attributes.STR);
 
         boolean distanceWeapon = weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE;
+        boolean finesseWeapon = weapon._isFinesse;
 
         if (distanceWeapon) {
             imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_pocket_bow));
@@ -387,8 +388,10 @@ public class CombatScreen extends Fragment {
             }
         }
 
-        int dmgBonus = (distanceWeapon ? modDex : modStr) +  _character._dmgBonus + weapon._magicModifier;
-        int attackBonus = _character.getProficiencyBonus() + (distanceWeapon ? modDex : modStr) + weapon._magicModifier + propertyAttackBonus;
+        int abilityModifier = (distanceWeapon ? modDex : (finesseWeapon ? (Math.max(modDex, modStr)) : modStr));
+
+        int dmgBonus = abilityModifier +  _character._dmgBonus + weapon._magicModifier;
+        int attackBonus = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
 
         int diceDamage = weapon._diceValue;
         if (weapon._hands == Enumerations.WeaponHandCount.VERSATILE && _character._equippedShield._type == Enumerations.ArmorTypes.NONE) {
@@ -406,8 +409,8 @@ public class CombatScreen extends Fragment {
             rowThrown.setVisibility(View.GONE);
         }
         else {
-            int attackBonusThrown = _character.getProficiencyBonus() + Math.max(modDex, modStr) + weapon._magicModifier + propertyAttackBonus;
-            int dmgBonusThrown = Math.max(modDex, modStr) + _character._dmgBonus + weapon._magicModifier;
+            int attackBonusThrown = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
+            int dmgBonusThrown = abilityModifier + _character._dmgBonus + weapon._magicModifier;
             String damageThrown = weapon._diceCount + "D" + diceDamage + (dmgBonusThrown > 0 ? "+":"") + (dmgBonusThrown != 0 ? dmgBonusThrown : "")
                     + (weapon._damageType != null ? " (" + weapon._damageType.toString().substring(0,2) + ")" : "")
                     + propertyDamageBonus;
@@ -470,6 +473,8 @@ public class CombatScreen extends Fragment {
 
             boolean distanceWeapon = weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE;
 
+            int abilityModifier = (distanceWeapon ? modDex : (weapon._isFinesse ? (Math.max(modDex, modStr)) : modStr));
+
             if (distanceWeapon) {
                 imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_pocket_bow));
             }
@@ -488,8 +493,8 @@ public class CombatScreen extends Fragment {
                 }
             }
 
-            int dmgBonus = (distanceWeapon ? modDex : modStr) +  _character._dmgBonus + weapon._magicModifier;
-            int attackBonus = _character.getProficiencyBonus() + (distanceWeapon ? modDex : modStr) + weapon._magicModifier + propertyAttackBonus;
+            int dmgBonus = _character._dmgBonus + weapon._magicModifier; // No bonus damage in the off hand
+            int attackBonus = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
 
             int diceDamage = weapon._diceValue;
             if (weapon._hands == Enumerations.WeaponHandCount.VERSATILE && _character._equippedShield._type == Enumerations.ArmorTypes.NONE) {
@@ -507,8 +512,8 @@ public class CombatScreen extends Fragment {
                 rowThrown.setVisibility(View.GONE);
             }
             else {
-                int attackBonusThrown = _character.getProficiencyBonus() + Math.max(modDex, modStr) + weapon._magicModifier + propertyAttackBonus;
-                int dmgBonusThrown = Math.max(modDex, modStr) + _character._dmgBonus + weapon._magicModifier;
+                int attackBonusThrown = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
+                int dmgBonusThrown = _character._dmgBonus + weapon._magicModifier;
                 String damageThrown = weapon._diceCount + "D" + diceDamage + (dmgBonusThrown > 0 ? "+":"") + (dmgBonusThrown != 0 ? dmgBonusThrown : "")
                         + (weapon._damageType != null ? " (" + weapon._damageType.toString().substring(0,2) + ")" : "")
                         + propertyDamageBonus;
