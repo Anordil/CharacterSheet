@@ -17,8 +17,10 @@ import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
 import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
 
 public class CreateCharacter extends AppCompatActivity {
@@ -61,13 +63,16 @@ public class CreateCharacter extends AppCompatActivity {
 
             switch(spClass.getSelectedItemPosition()) {
                 case 0:
-                    aClass = new Paladin();
+                    aClass = new Barbarian();
                     break;
                 case 1:
-                    aClass = new Warlock();
+                    aClass = new Paladin();
                     break;
                 case 2:
-                    aClass = new Barbarian();
+                    aClass = new Warlock();
+                    break;
+                case 3:
+                    aClass = new Warlock_blade_fiend();
                     break;
                 default:
                     aClass = new Paladin();
@@ -79,10 +84,13 @@ public class CreateCharacter extends AppCompatActivity {
                     aRace = new HalfElf();
                     break;
                 case 1:
-                    aRace = new MountainDwarf();
+                    aRace = new HalfOrc();
                     break;
                 case 2:
-                    aRace = new HalfOrc();
+                    aRace = new Human();
+                    break;
+                case 3:
+                    aRace = new MountainDwarf();
                     break;
                 default:
                     aRace = new MountainDwarf();

@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -85,6 +87,27 @@ public class StatsScreen extends Fragment {
 
                 if (oldLevel != _character._level) {
                     _character.doLongRest();
+
+                    // Show level up window
+                    String[] levelUpBoons = _character._class.getLevelUpBenefits(_character._level);
+
+                    String boons = "";
+                    for (String s : levelUpBoons) {
+                        if (s != null && s.length() > 0) {
+                            boons += s + "\n";
+                        }
+                    }
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                    alertDialog.setTitle("Level up");
+                    alertDialog.setMessage(boons);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                 }
 
                 ((SwipeActivity)getActivity()).refreshTabs();

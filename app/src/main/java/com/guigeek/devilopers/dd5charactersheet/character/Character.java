@@ -5,8 +5,10 @@ import android.util.Log;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
 import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
 import com.guigeek.devilopers.dd5charactersheet.item.Armor;
 import com.guigeek.devilopers.dd5charactersheet.item.Item;
@@ -125,6 +127,9 @@ public class Character implements Externalizable {
             else if (aClass instanceof Barbarian) {
                 _class = new Barbarian((Barbarian) aClass);
             }
+            else if (aClass instanceof Warlock_blade_fiend) {
+                _class = new Warlock_blade_fiend((Warlock_blade_fiend) aClass);
+            }
             Log.d("UNWRAP", "After class");
 
             Object aRace = oi.readObject();
@@ -136,6 +141,9 @@ public class Character implements Externalizable {
             }
             else if (aRace instanceof HalfOrc) {
                 _race = (HalfOrc) aRace;
+            }
+            else if (aRace instanceof Human) {
+                _race = (Human) aRace;
             }
             Log.d("UNWRAP", "After race");
 

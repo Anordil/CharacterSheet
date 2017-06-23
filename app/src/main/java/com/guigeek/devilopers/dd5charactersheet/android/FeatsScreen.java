@@ -86,6 +86,8 @@ public class FeatsScreen extends android.support.v4.app.ListFragment {
                 LinkedList<Power> allFeats = new LinkedList<Power>();
                 final String[] featNames = getResources().getStringArray(R.array.featsName);
                 final String[] featDescriptions = getResources().getStringArray(R.array.featsDescription);
+
+
                 for (int i = 0; i < featNames.length; ++i) {
                     allFeats.add(new Power(featNames[i], featDescriptions[i], "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
                 }

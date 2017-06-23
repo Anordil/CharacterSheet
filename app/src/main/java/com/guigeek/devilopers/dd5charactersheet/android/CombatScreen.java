@@ -215,9 +215,6 @@ public class CombatScreen extends Fragment {
             for (int i = 1; i <= 9; i++) {
 
                 int maxSpellForSlot = _character._spellSlotsMax[i];
-                if (maxSpellForSlot == 0) {
-                    break;
-                }
 
                 TableRow row = new TableRow(getContext());
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
@@ -260,6 +257,10 @@ public class CombatScreen extends Fragment {
                 row.addView(minus);
                 row.addView(plus);
                 ll.addView(row);
+
+                if (maxSpellForSlot == 0) {
+                    row.setVisibility(View.GONE);
+                }
             }
         }
     }

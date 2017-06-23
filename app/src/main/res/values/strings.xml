@@ -4,14 +4,19 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="class_paladin">Paladin</string>
-    <string name="class_warlock">Warlock</string>
+    <string name="class_paladin">Paladin (Vengeance)</string>
+    <string name="class_warlock">Warlock (Tome, Ancient)</string>
+    <string name="class_warlock_blade">Warlock (Blade, Fiend)</string>
     <string name="class_barbarian">Barbarian</string>
+    <string name="class_rogue">Rogue</string>
 
 
     <string name="race_mtn_dwarf">Mountain Dwarf</string>
     <string name="race_half_elf">Half Elf</string>
     <string name="race_half_orc">Half Orc</string>
+    <string name="race_human">Human</string>
+    <string name="race_gnome">Gnome</string>
+    <string name="race_halfling">Halfling</string>
 
     <string name="title_activity_swipe">Character Sheet</string>
 

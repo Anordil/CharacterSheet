@@ -1,24 +1,21 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
-import android.util.Log;
-
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
-import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
+import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
+import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.Serializable;
 import java.util.LinkedList;
 
-/**
- * Created by totou on 14/03/2016.
- */
-public class Warlock implements Class, Externalizable {
+
+public class Warlock_blade_fiend implements Class, Externalizable {
 
     @Override
     public int getAC(Character character) {
@@ -63,12 +60,12 @@ public class Warlock implements Class, Externalizable {
             {0, 0, 0, 0, 0, 0, 1, 1, 1, 1}//ln 20
     };
 
-    public static final long serialVersionUID = 202L;
+    public static final long serialVersionUID = 204L;
     protected int _version = 1;
 
 
-    public Warlock(){}
-    public Warlock(Warlock other) {
+    public Warlock_blade_fiend(){}
+    public Warlock_blade_fiend(Warlock_blade_fiend other) {
         _spellSlots = other._spellSlots;
     }
 
@@ -91,7 +88,7 @@ public class Warlock implements Class, Externalizable {
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_warlock);
+        return App.getResString(R.string.class_warlock_blade);
     }
 
     @Override
@@ -111,7 +108,7 @@ public class Warlock implements Class, Externalizable {
 
     @Override
     public int getAttacksPerRound(int iCharacterLevel) {
-        return 1;
+        return iCharacterLevel >= 5 ? 2:1;
     }
 
     @Override
@@ -209,19 +206,24 @@ public class Warlock implements Class, Externalizable {
         }
 
         if (iLevel >= 1) {
-            powers.add(new Power("Awakened Mind", "You can communicate telepathically with any creature you can see within 30 feet of you.", "30ft", -1, -1, true, Enumerations.ActionType.PASSIVE));
+            int thp = iLevel + iCharac.getModifier(Enumerations.Attributes.CHA);
+            powers.add(new Power("Dark One's Blessing", "Reducing a hostile creature to 0 HP grants " + thp + " temporary HP", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
 
         if (iLevel >= 6) {
-        	powers.add(new Power("Entropic Ward", "When a creature makes an attack roll against you, you can use your reaction to impose disadvantage on that roll. ]f the attack misses you, your next attack roll against the creature has advantage if you make it before the end of your next turno", "Melee", -1, -1, true, Enumerations.ActionType.REACTION));
+        	powers.add(new Power("Dark One's own luck", "Add 1D10 to an ability check or saving throw, possibly after rolling.", "Melee", 1, -1, true, Enumerations.ActionType.PASSIVE));
         }
 
         if (iLevel >= 10) {
-    		powers.add(new Power("Thought Shield", "Your thoughts can't be read by telepathy or other means unless you allow it. You also have resistance to psychic damage, and whenever a creature deals psychic damage to you, that creature takes the same amount of damage that you do.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+    		powers.add(new Power("Fiendish Resilience", "After a short or long rest, choose one damage type to gain resistance to.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
     	}
 
         if (iLevel >= 14) {
-            powers.add(new Power("Create Thrall", "You gain the ability to infect a humanoid's mind with the alien magic of your patron. You can use your action to touch an incapacitated humanoid. That creature is then charmed by you until a remove curse spell is cast on it, the charmed condition is removed from it, or you use this feature again. You can communicate telepathically with the charmed creature as long as the two of you are on the same plane of existence.", "Touch", -1, -1, true, Enumerations.ActionType.ACTION));
+            powers.add(new Power("Hurl through Hell", "When hitting a creature with a melee attack, teleports it to Hell. It reappears at the end of your next turn and is dealt 10D10 psychic damage if it's not a fiend.", "Melee", 1, -1, true, Enumerations.ActionType.ACTION));
+        }
+
+        if (iLevel >= 20) {
+            powers.add(new Power("Eldritch Master", "Recover all Warlock spell slots.", "", 1, -1, true, Enumerations.ActionType.ACTION));
         }
 
         return powers;

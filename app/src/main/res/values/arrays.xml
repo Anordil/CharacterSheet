@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="classes">
-        <item>Paladin</item>
-        <item>Warlock</item>
         <item>Barbarian</item>
+        <item>Paladin (Vengeance)</item>
+        <item>Warlock (Tome, Old one)</item>
+        <item>Warlock (Blade, Fiend)</item>
+
+
     </string-array>
     <string-array name="races">
         <item>Half-Elf</item>
-        <item>Mountain Dwarf</item>
         <item>Half-Orc</item>
+        <item>Human</item>
+        <item>Mountain Dwarf</item>
     </string-array>
 
 
@@ -62,6 +66,37 @@
         <item>Tough</item>
         <item>War Caster</item>
         <item>Weapon Master</item>
+        <item>[Warlock Invocation] Agonizing blast</item>
+        <item>[Warlock Invocation] Armor of shadows</item>
+        <item>[Warlock Invocation] Ascendant step (9th level)</item>
+        <item>[Warlock Invocation] Best speech</item>
+        <item>[Warlock Invocation] Beguiling influence</item>
+        <item>[Warlock Invocation] Bewitching whispers (7th level)</item>
+        <item>[Warlock Invocation] Book of ancient secrets (Tome)</item>
+        <item>[Warlock Invocation] Chains of Carceri (15th level, Chain)</item>
+        <item>[Warlock Invocation] Devil\'s sight</item>
+        <item>[Warlock Invocation] Dreadful word (7th level)</item>
+        <item>[Warlock Invocation] Eldritch sight</item>
+        <item>[Warlock Invocation] Eldritch spear</item>
+        <item>[Warlock Invocation] Eyes of the rune keeper</item>
+        <item>[Warlock Invocation] Gaze of two minds</item>
+        <item>[Warlock Invocation] Lifedrinker (12th level, Blade)</item>
+        <item>[Warlock Invocation] Mask of many faces</item>
+        <item>[Warlock Invocation] Master of Myriad forms (15th level)</item>
+        <item>[Warlock Invocation] Minions of chaos (9th level)</item>
+        <item>[Warlock Invocation] Mire the mind</item>
+        <item>[Warlock Invocation] Misty visions</item>
+        <item>[Warlock Invocation] One with shadows</item>
+        <item>[Warlock Invocation] Otherwordly leap (9th level)</item>
+        <item>[Warlock Invocation] Repelling blast</item>
+        <item>[Warlock Invocation] Sculptor of flesh (7th level)</item>
+        <item>[Warlock Invocation] Sign of Ill Omen (5th level)</item>
+        <item>[Warlock Invocation] Thief of Five Fates</item>
+        <item>[Warlock Invocation] Thirsting Blade (5th level, Blade)</item>
+        <item>[Warlock Invocation] Visions of distant realms (15th level)</item>
+        <item>[Warlock Invocation] Voice of the chain master</item>
+        <item>[Warlock Invocation] Whispers of the grave</item>
+        <item>[Warlock Invocation] Witch sight (15th level)</item>
     </string-array>
     <string-array name="featsDescription">
         <item>You have studied the secrets of alchemy and are an expert in its practice, gaining the following benefits:\nIncrease your Intelligence score by 1, to a maximum of 20.\nYou gain proficiency with alchemist’s supplies. If you are already proficient with them, you add double your proficiency bonus to checks you make with them. \nAs an action, you can identify one potion within 5 feet of you, as if you had tasted it. You must see the liquid for this benefit to work. \nOver the course of any short rest, you can temporarily improve the potency of one potion of healing of any rarity. To use this benefit, you must have alchemist’s supplies with you, and the potion must be within reach. If the potion is drunk no more than 1 hour after the short rest ends, the creature drinking the potion can forgo the potion’s die roll and regains the maximum number of hit points that the potion can restore.</item>
@@ -113,5 +148,36 @@
         <item>Your hit point maximum increases by an amount equal to twice your level when you gain this feat. Whenever you gain a level thereafter, your hit point maximum increases by an additional 2 hit points.</item>
         <item>Prerequisite: The ability to cast at least one spell\nYou have practiced casting spells in the midst of combat, learning techniques that grant you the following benefits\nYou have advantage on Constitution saving throws that you make to maintain your concentration on a spell when you take damage.\nYou can perform the somatic components of spells even when you have weapons or a shield in one or both hands.\nWhen a hostile creature’s movement provokes an opportunity attack from you, you can use your reaction to cast a spell at the creature, rather than making an opportunity attack. The spell must have a casting time of 1 action and must target only that creature.</item>
         <item>You have practiced extensively with a variety of weapons, gaining the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with four simple or martial weapons of your choice. </item>
+        <item>Add CHA to eldritch blast damages</item>
+        <item>Cast Mage Armor at will on yourself</item>
+        <item>Cast levitate on yourself at will</item>
+        <item>Cast speak with anumals at will</item>
+        <item>Gain proficiency in Deception and Persuasion</item>
+        <item>Cast compulsion once per long rest, using a spell slot</item>
+        <item>See book</item>
+        <item>Cast Hold monster once per long rest on a fiend, celestial or elemental, using a spell slot</item>
+        <item>You can see in darkness, both magical and otherwise, to a distance of 120ft</item>
+        <item>Cast confusion once per long rest, using a spell slot</item>
+        <item>Cast detect magic at will</item>
+        <item>Eldritch blast\'s range becomes 300ft</item>
+        <item>You can read all writings</item>
+        <item>See book</item>
+        <item>Creatures hit with your pact weapon take extyra necrotic damage equal to your CHA modifier</item>
+        <item>Cast Disguise self at will</item>
+        <item>Cast alter self at will</item>
+        <item>Cast Conjure elemental once per long rest, using a spell slot</item>
+        <item>Cast Slow once per long rest, using a spell slot</item>
+        <item>Cast Silent Image at will</item>
+        <item>When you are in an area of dim  light or darkness, you can use your action to become invisible until you move or take an action or reaction</item>
+        <item>Cast Jump at will</item>
+        <item>Eldritch blast can push enemies 10ft away in a straight line</item>
+        <item>Cast Polymorph once per long rest, using a spell slot</item>
+        <item>Cast Bestow curse once per long rest, using a spell slot</item>
+        <item>Cast Bane once per long rest, using a spell slot</item>
+        <item>You can attack with your pact weapon twice when taking the Attack action</item>
+        <item>Cast arcane eye at will</item>
+        <item>See book</item>
+        <item>Cast Speak with dead at will</item>
+        <item>You can see the true form of any shapechanger or creature concealed by illusion/transmutation within 30ft and line of sight</item>
     </string-array>
 </resources>

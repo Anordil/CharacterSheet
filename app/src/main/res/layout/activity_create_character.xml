@@ -10,28 +10,30 @@
     tools:context="com.guigeek.devilopers.dd5charactersheet.android.CreateCharacter">
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerRace"
         android:layout_below="@+id/inName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
         android:spinnerMode="dialog" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerClass"
         android:layout_below="@+id/spinnerRace"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
         android:spinnerMode="dialog" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="HeroName"
+        android:hint="Hero name"
         android:ems="10"
         android:id="@+id/inName"
         android:layout_alignParentTop="true"
