@@ -541,7 +541,7 @@ public class CombatScreen extends Fragment {
 
             // Thrown?
             if (weapon._distance != Enumerations.WeaponDistanceTypes.THROWN) {
-                rowThrown.setVisibility(View.GONE);
+                rowThrownOffHand.setVisibility(View.GONE);
             }
             else {
                 int attackBonusThrown = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;

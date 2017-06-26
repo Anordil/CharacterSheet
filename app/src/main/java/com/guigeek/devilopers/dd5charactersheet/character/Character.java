@@ -399,6 +399,9 @@ public class Character implements Externalizable {
             _spellSlotsMax = _secondaryClass.getSpellSlots(_levelSecondaryClass);
         }
         _hpMax = _class.getHitDie() + (_level - 1) * (int) Math.ceil(_class.getHitDie() / 2 + 1) + _level * getModifier(Enumerations.Attributes.CON);
+        if (_secondaryClass != null) {
+            _hpMax += (_levelSecondaryClass - 1) * (int) Math.ceil(_secondaryClass.getHitDie() / 2 + 1) + _levelSecondaryClass * getModifier(Enumerations.Attributes.CON);
+        }
         _powers = getClassPowers();
     }
 
