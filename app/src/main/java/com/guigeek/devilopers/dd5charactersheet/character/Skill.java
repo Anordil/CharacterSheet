@@ -12,11 +12,11 @@ import java.io.ObjectOutput;
 public class Skill implements Externalizable {
 
     public static final long serialVersionUID = 15L;
-    int _version = 2;
+    int _version = 3;
 
     public String _name;
     public Enumerations.Attributes _attribute;
-    public boolean _isProficient;
+    public boolean _isProficient, _isDoublyProficient;
     public int _score;
 
     public boolean hasAdvantage = false, hasDisadvantage = false;
@@ -29,12 +29,17 @@ public class Skill implements Externalizable {
         _attribute = iAttr;
         _isProficient = false;
         _score = 0;
+        _isDoublyProficient = false;
     }
 
     public void recompute(Character iChar) {
         _score = iChar.getModifier(_attribute);
         if (_isProficient) {
             _score += iChar.getProficiencyBonus();
+
+            if (_isDoublyProficient) {
+                _score += iChar.getProficiencyBonus();
+            }
         }
 
         int bonus = 0;
@@ -60,6 +65,7 @@ public class Skill implements Externalizable {
 
         oo.writeBoolean(hasAdvantage);
         oo.writeBoolean(hasDisadvantage);
+        oo.writeBoolean(_isDoublyProficient);
     }
 
     @Override
@@ -76,6 +82,9 @@ public class Skill implements Externalizable {
         if (_version >= 2) {
             hasAdvantage = oi.readBoolean();
             hasDisadvantage = oi.readBoolean();
+        }
+        if (_version >= 3) {
+            _isDoublyProficient = oi.readBoolean();
         }
     }
 }

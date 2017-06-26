@@ -112,12 +112,13 @@ public class SkillsScreen extends Fragment {
             name.setPadding(0, 0, 10, 0);
             name.setTextSize(20.0f);
             value.setTextSize(20.0f);
-            CheckBox isProficient = new CheckBox(getContext());
 
+            CheckBox isProficient = new CheckBox(getContext());
             isProficient.setChecked(skill._isProficient);
             isProficient.setOnClickListener(new SavingThrowListener(skill, value));
             isProficient.setScaleX(1.5f);
             isProficient.setScaleY(1.5f);
+
             name.setText(skill._name);
             value.setTextColor(skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light):
             (skill._score > 0 ? getResources().getColor(android.R.color.holo_green_light) : getResources().getColor(android.R.color.darker_gray)));
@@ -182,11 +183,23 @@ public class SkillsScreen extends Fragment {
             value.setTextColor(skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light) :
                     (skill._score > 0 ? getResources().getColor(android.R.color.holo_green_light) : getResources().getColor(android.R.color.darker_gray)));
             CheckBox isProficient = new CheckBox(getContext());
-
             isProficient.setChecked(skill._isProficient);
-            isProficient.setOnClickListener(new SkillListener(skill, value));
             isProficient.setScaleX(1.5f);
             isProficient.setScaleY(1.5f);
+
+            CheckBox isDoublyProficient = new CheckBox(getContext());
+            isDoublyProficient.setEnabled(skill._isProficient);
+            isDoublyProficient.setChecked(skill._isDoublyProficient);
+            isDoublyProficient.setScaleX(1.5f);
+            isDoublyProficient.setScaleY(1.5f);
+
+            isDoublyProficient.setOnClickListener(new SavingThrowDoubleProficiencyListener(skill, value));
+            isProficient.setOnClickListener(new SkillListener(skill, value, isDoublyProficient));
+
+            if (!_character._class.getName().startsWith("Rogue") && !(_character._secondaryClass != null && _character._secondaryClass.getName().startsWith("Rogue"))) {
+                isDoublyProficient.setVisibility(View.GONE);
+            }
+
             name.setText(skill._name);
             attr.setText(skill._attribute.toString());
             value.setText((skill._score > 0 ? "+": "") + Integer.toString(skill._score));
@@ -219,6 +232,7 @@ public class SkillsScreen extends Fragment {
             }
 
             row.addView(isProficient);
+            row.addView(isDoublyProficient);
             row.addView(name);
             row.addView(attr);
             row.addView(advantageIcon);
@@ -277,20 +291,32 @@ public class SkillsScreen extends Fragment {
     class SkillListener implements View.OnClickListener {
         Skill _skill;
         TextView _view;
+        CheckBox _doubleProficiency;
 
-        public SkillListener(Skill sk, TextView v) {
+        public SkillListener(Skill sk, TextView v, CheckBox cbDoubleProficiency) {
             _skill = sk;
             _view = v;
+            _doubleProficiency = cbDoubleProficiency;
         }
 
         @Override
         public void onClick(View v) {
             _skill._isProficient = !_skill._isProficient;
-            _skill.recompute(_character);
 
+            if (_skill._isProficient) {
+                _doubleProficiency.setEnabled(true);
+            }
+            else {
+                _doubleProficiency.setEnabled(false);
+                _doubleProficiency.setChecked(false);
+            }
+
+            _skill.recompute(_character);
             _view.setText((_skill._score > 0 ? "+": "") + Integer.toString(_skill._score));
             _view.setTextColor(_skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light) :
                     (_skill._score > 0 ? getResources().getColor(android.R.color.holo_green_light) : getResources().getColor(android.R.color.darker_gray)));
+
+
         }
     }
 
@@ -307,6 +333,32 @@ public class SkillsScreen extends Fragment {
         @Override
         public void onClick(View v) {
             _skill._isProficient = !_skill._isProficient;
+
+            if (!_skill._isProficient) {
+                _skill._isDoublyProficient = false;
+            }
+
+            _skill.recompute(_character);
+
+            _view.setText((_skill._score > 0 ? "+": "") + Integer.toString(_skill._score));
+            _view.setTextColor(_skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light) :
+                    (_skill._score > 0 ? getResources().getColor(android.R.color.holo_green_light) : getResources().getColor(android.R.color.darker_gray)));
+        }
+    }
+
+    class SavingThrowDoubleProficiencyListener implements View.OnClickListener {
+
+        Skill _skill;
+        TextView _view;
+
+        public SavingThrowDoubleProficiencyListener(Skill sk, TextView v) {
+            _skill = sk;
+            _view = v;
+        }
+
+        @Override
+        public void onClick(View v) {
+            _skill._isDoublyProficient = !_skill._isDoublyProficient;
             _skill.recompute(_character);
 
             _view.setText((_skill._score > 0 ? "+": "") + Integer.toString(_skill._score));
