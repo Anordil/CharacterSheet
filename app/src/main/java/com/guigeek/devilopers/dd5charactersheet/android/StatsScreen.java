@@ -2,19 +2,29 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.BaseBundle;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 
 import java.io.Serializable;
 
@@ -22,9 +32,10 @@ public class StatsScreen extends Fragment {
 
     protected Character _character;
 
-    Button updateButton;
-    EditText name, level, str, dex, con, intel, wis, cha;
-    TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA;
+    Button updateButton, multiclassButton;
+    EditText name, level, str, dex, con, intel, wis, cha, levelSecondary;
+    TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA, tvSecondaryClass;
+    Spinner spSecondaryClass;
 
     public StatsScreen() {
     }
@@ -56,12 +67,14 @@ public class StatsScreen extends Fragment {
         // Get the EditText refs
         name = (EditText)root.findViewById(R.id.inName);
         level = (EditText)root.findViewById(R.id.inLevel);
+        levelSecondary = (EditText)root.findViewById(R.id.inLevelSecondary);
         str = (EditText)root.findViewById(R.id.inSTR);
         dex = (EditText)root.findViewById(R.id.inDEX);
         con = (EditText)root.findViewById(R.id.inCON);
         intel = (EditText)root.findViewById(R.id.inINT);
         wis = (EditText)root.findViewById(R.id.intWIS);
         cha = (EditText)root.findViewById(R.id.inCHA);
+        tvSecondaryClass = (TextView)root.findViewById(R.id.tvSecondaryClass);
 
         bonusSTR = (TextView)root.findViewById(R.id.bonusSTR);
         bonusDEX = (TextView)root.findViewById(R.id.bonusDEX);
@@ -70,6 +83,74 @@ public class StatsScreen extends Fragment {
         bonusWIS = (TextView)root.findViewById(R.id.bonusWIS);
         bonusCHA = (TextView)root.findViewById(R.id.bonusCHA);
 
+        multiclassButton = (Button)root.findViewById(R.id.buttonMulticlass);
+        spSecondaryClass = (Spinner)root.findViewById(R.id.spinnerClass);
+
+        if (_character._levelSecondaryClass == 0) {
+            multiclassButton.setVisibility(View.VISIBLE);
+            levelSecondary.setVisibility(View.GONE);
+            spSecondaryClass.setVisibility(View.GONE);
+            tvSecondaryClass.setVisibility(View.VISIBLE);
+        }
+        else {
+            multiclassButton.setVisibility(View.GONE);
+            levelSecondary.setVisibility(View.VISIBLE);
+            tvSecondaryClass.setVisibility(View.GONE);
+            spSecondaryClass.setVisibility(View.VISIBLE);
+            spSecondaryClass.setEnabled(false);
+        }
+
+
+        spSecondaryClass = (Spinner) root.findViewById(R.id.spinnerClass);
+        ArrayAdapter<CharSequence> adapterClass = ArrayAdapter.createFromResource(getContext(), R.array.classes, android.R.layout.simple_spinner_item);
+        adapterClass.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSecondaryClass.setAdapter(adapterClass);
+
+        multiclassButton = (Button)root.findViewById(R.id.buttonMulticlass);
+        multiclassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                multiclassButton.setVisibility(View.GONE);
+                levelSecondary.setVisibility(View.VISIBLE);
+                tvSecondaryClass.setVisibility(View.GONE);
+                spSecondaryClass.setVisibility(View.VISIBLE);
+            }
+        });
+
+        spSecondaryClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                multiclassButton.setVisibility(View.GONE);
+                levelSecondary.setVisibility(View.VISIBLE);
+                switch(spSecondaryClass.getSelectedItemPosition()) {
+                    case 0:
+                        _character._secondaryClass = new Barbarian();
+                        break;
+                    case 1:
+                        _character._secondaryClass = new Paladin();
+                        break;
+                    case 2:
+                        _character._secondaryClass = new Warlock();
+                        break;
+                    case 3:
+                        _character._secondaryClass = new Warlock_blade_fiend();
+                        break;
+                    case 4:
+                        _character._secondaryClass = new Rogue_assassin();
+                        break;
+                    default:
+                        _character._secondaryClass = new Paladin();
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d("TOTO", "Nothing selected");
+            }
+        });
+
+
         updateButton = (Button)root.findViewById(R.id.btnUpdateStats);
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +158,9 @@ public class StatsScreen extends Fragment {
                 _character._name = name.getText().toString();
 
                 int oldLevel = _character._level;
+                int oldLevelSecondary = _character._levelSecondaryClass;
                 _character._level = Integer.parseInt(level.getText().toString());
+                _character._levelSecondaryClass = Integer.parseInt(levelSecondary.getText().toString());
                 _character._attributes[0]  = Integer.parseInt(str.getText().toString());
                 _character._attributes[1] = Integer.parseInt(dex.getText().toString());
                 _character._attributes[2] = Integer.parseInt(con.getText().toString());
@@ -108,6 +191,33 @@ public class StatsScreen extends Fragment {
                                 }
                             });
                     alertDialog.show();
+                    _character.refresh();
+                }
+                if (oldLevelSecondary != _character._levelSecondaryClass) {
+                    Log.d("Level compare", oldLevelSecondary + " VS " + _character._levelSecondaryClass);
+                    _character.doLongRest();
+
+                    // Show level up window
+                    String[] levelUpBoons = _character._secondaryClass.getLevelUpBenefits(_character._levelSecondaryClass);
+
+                    String boons = "";
+                    for (String s : levelUpBoons) {
+                        if (s != null && s.length() > 0) {
+                            boons += s + "\n";
+                        }
+                    }
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                    alertDialog.setTitle("Level up");
+                    alertDialog.setMessage(boons);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                    _character.refresh();
                 }
 
                 ((SwipeActivity)getActivity()).refreshTabs();
@@ -122,12 +232,22 @@ public class StatsScreen extends Fragment {
     private void initInputValue() {
         name.setText(_character._name);
         level.setText(_character._level + "");
+        levelSecondary.setText(_character._levelSecondaryClass + "");
         str.setText(_character._attributes[0] + "");
         dex.setText(_character._attributes[1] + "");
         con.setText(_character._attributes[2] + "");
         intel.setText(_character._attributes[3] + "");
         wis.setText(_character._attributes[4] + "");
         cha.setText(_character._attributes[5] + "");
+
+
+        if (_character._secondaryClass != null) {
+            if (_character._secondaryClass instanceof Barbarian) spSecondaryClass.setSelection(0);
+            if (_character._secondaryClass instanceof Paladin) spSecondaryClass.setSelection(1);
+            if (_character._secondaryClass instanceof Warlock) spSecondaryClass.setSelection(2);
+            if (_character._secondaryClass instanceof Warlock_blade_fiend) spSecondaryClass.setSelection(3);
+            if (_character._secondaryClass instanceof Rogue_assassin) spSecondaryClass.setSelection(4);
+        }
 
 
         for (Fettle property : _character.getFettles()) {

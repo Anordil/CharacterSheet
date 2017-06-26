@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
@@ -27,16 +28,18 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    public int _version = 8;
-    public static final int _latestVersion = 8;
+    public int _version = 9;
+    public static final int _latestVersion = 9;
 
     public Class _class;
+    public Class _secondaryClass;
     public Race _race;
     public String _name;
     public int[] _attributes;
 
     public int _level;
-    public int _hpCurrent, _hpMax, _hpTemp, _hitDice;
+    public int _levelSecondaryClass;
+    public int _hpCurrent, _hpMax, _hpTemp, _hitDice, _hitDiceSecondary;
     public int _armorClass;
     public int[] _spellSlotsCurrent, _spellSlotsMax;
     public int _atkBonus, _dmgBonus;
@@ -105,6 +108,10 @@ public class Character implements Externalizable {
         oo.writeObject(_offHandWeapon);
 
         oo.writeObject(_inventory);
+
+        oo.writeObject(_secondaryClass);
+        oo.writeInt(_levelSecondaryClass);
+        oo.writeInt(_hitDiceSecondary);
         Log.d("WRAP", "All good");
     }
 
@@ -129,6 +136,9 @@ public class Character implements Externalizable {
             }
             else if (aClass instanceof Warlock_blade_fiend) {
                 _class = new Warlock_blade_fiend((Warlock_blade_fiend) aClass);
+            }
+            else if (aClass instanceof Rogue_assassin) {
+                _class = new Rogue_assassin((Rogue_assassin) aClass);
             }
             Log.d("UNWRAP", "After class");
 
@@ -257,6 +267,33 @@ public class Character implements Externalizable {
             _inventory = new LinkedList<>();
         }
 
+        if (version >= 9) {
+            Object aClass = oi.readObject();
+            if (aClass instanceof Paladin) {
+                _secondaryClass = new Paladin((Paladin) aClass);
+            }
+            else if (aClass instanceof Warlock) {
+                _secondaryClass = new Warlock((Warlock) aClass);
+            }
+            else if (aClass instanceof Barbarian) {
+                _secondaryClass = new Barbarian((Barbarian) aClass);
+            }
+            else if (aClass instanceof Warlock_blade_fiend) {
+                _secondaryClass = new Warlock_blade_fiend((Warlock_blade_fiend) aClass);
+            }
+            else if (aClass instanceof Rogue_assassin) {
+                _secondaryClass = new Rogue_assassin((Rogue_assassin) aClass);
+            }
+            _levelSecondaryClass = oi.readInt();
+            _hitDiceSecondary = oi.readInt();
+            Log.d("HD", "Read HT sec: " + _hitDiceSecondary);
+        }
+        else {
+            _secondaryClass = null;
+            _levelSecondaryClass = 0;
+            _hitDiceSecondary = 0;
+        }
+
 
         if (_equippedArmor == null) {
             _equippedArmor = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
@@ -276,14 +313,17 @@ public class Character implements Externalizable {
     }
 
     public Character(){
-        this("New hero", new Paladin(), new HalfElf(), 1, new int[6]);
+        this("New hero", new Paladin(), new HalfElf(), 1, new int[6], null, 0);
     };
 
-    public Character(String name, Class iClass, Race iRace, int level, int[] attr) {
+    public Character(String name, Class iClass, Race iRace, int level, int[] attr, Class iSecClass, int secondLevel) {
         _name = name;
         _class = iClass;
         _race = iRace;
         _level = level;
+
+        _secondaryClass = iSecClass;
+        _levelSecondaryClass = secondLevel;
 
         _attributes = new int[6];
         for (int i = 0; i < 6; i++) {
@@ -292,10 +332,8 @@ public class Character implements Externalizable {
 
         _atkBonus = 0;
         _dmgBonus = 0;
-        _weaponDmgDice = "1D4";
-        _isWeaponRanged = false;
         _gold = 0;
-        _allItems = "10 torches";
+        _allItems = "";
 
 
         initLevel();
@@ -304,10 +342,17 @@ public class Character implements Externalizable {
     }
 
 
-    public LinkedList<Power> getPowers() {
-        if (_powers == null) {
-            _powers = _class.getPowers(_level, this);
+    public LinkedList<Power> getClassPowers() {
+        if (_powers == null) { _powers = new LinkedList<>(); }
+        _powers = _class.getPowers(_level, this);
+
+        if (_secondaryClass != null) {
+           for (Power p : _secondaryClass.getPowers(_levelSecondaryClass, this)) {
+               _powers.add(p);
+           }
         }
+
+
         return _powers;
     }
 
@@ -326,6 +371,11 @@ public class Character implements Externalizable {
         for (Fettle effect : _class.getFettles(this)) {
             res.add(effect);
         }
+        if (_secondaryClass != null) {
+            for (Fettle effect : _secondaryClass.getFettles(this)) {
+                res.add(effect);
+            }
+        }
 
         return res;
     }
@@ -343,16 +393,22 @@ public class Character implements Externalizable {
         recomputeSavingThrows();
 
         _hitDice = _level;
+        _hitDiceSecondary = _levelSecondaryClass;
         _spellSlotsMax = _class.getSpellSlots(_level);
+        if (!_class.isCaster() && _secondaryClass != null &&_secondaryClass.isCaster()) {
+            _spellSlotsMax = _secondaryClass.getSpellSlots(_levelSecondaryClass);
+        }
         _hpMax = _class.getHitDie() + (_level - 1) * (int) Math.ceil(_class.getHitDie() / 2 + 1) + _level * getModifier(Enumerations.Attributes.CON);
-        _powers = _class.getPowers(_level, this);
+        _powers = getClassPowers();
     }
 
     public void doLongRest() {
         _hpCurrent = _hpMax;
         _hpTemp = 0;
         _hitDice = Math.min(_level, _hitDice + (int)Math.ceil(((double)_level)/2));
+        _hitDiceSecondary = Math.min(_levelSecondaryClass, _hitDiceSecondary + (int)Math.ceil(((double)_levelSecondaryClass)/2));
 
+        Log.d("HD", "HD after long rest " + _hitDice + ", " +  _hitDiceSecondary);
 
         _spellSlotsCurrent = new int[_spellSlotsMax.length];
         for (int i = 0; i < _spellSlotsMax.length; i++) {
@@ -360,18 +416,18 @@ public class Character implements Externalizable {
         }
 
         if (_powers == null) {
-            _powers = _class.getPowers(_level, this);
+            _powers = getClassPowers();
         }
-        for (Power p : getPowers()) {
+        for (Power p : getClassPowers()) {
             p._left = p._max;
         }
     }
 
     public void doShortRest() {
         if (_powers == null) {
-            _powers = _class.getPowers(_level, this);
+            _powers = getClassPowers();
         }
-        for (Power p : getPowers()) {
+        for (Power p : getClassPowers()) {
             if (!p._isLongRest) {
                 p._left = p._max;
             }
@@ -397,6 +453,12 @@ public class Character implements Externalizable {
         _hitDice = Math.max(_hitDice, 0);
     }
 
+    public void changeHDSecondary(int iQuantity) {
+        _hitDiceSecondary += iQuantity;
+        _hitDiceSecondary = Math.min(_hitDiceSecondary, _levelSecondaryClass);
+        _hitDiceSecondary = Math.max(_hitDiceSecondary, 0);
+    }
+
     public void changeSpellSlot(int level, int diff) {
         _spellSlotsCurrent[level] += diff;
         _spellSlotsCurrent[level] = Math.min(_spellSlotsCurrent[level], _spellSlotsMax[level]);
@@ -418,7 +480,7 @@ public class Character implements Externalizable {
     }
 
     public int getProficiencyBonus() {
-        double levelDouble = _level;
+        double levelDouble = _level + _levelSecondaryClass;
         return (int) (1 + Math.ceil(levelDouble / 4));
     }
 
@@ -434,7 +496,7 @@ public class Character implements Externalizable {
     }
 
     public int getAttacksPerRound() {
-        return _class.getAttacksPerRound(_level);
+        return Math.max(_class.getAttacksPerRound(_level), _secondaryClass != null ? _secondaryClass.getAttacksPerRound(_levelSecondaryClass) : 0);
     }
 
     public void equipWeapon(Weapon newWeapon) {
@@ -526,6 +588,15 @@ public class Character implements Externalizable {
         }
 
         return false;
+    }
+
+    public int getAC() {
+        int armorClass = _class.getAC(this);
+        if (_secondaryClass != null) {
+            armorClass = Math.max(armorClass, _secondaryClass.getAC(this));
+        }
+
+        return armorClass;
     }
 
     public HashSet<Fettle> getFettles() {

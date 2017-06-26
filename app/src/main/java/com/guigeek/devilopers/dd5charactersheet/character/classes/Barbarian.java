@@ -127,7 +127,7 @@ public class Barbarian implements Class, Externalizable {
     @Override
     public String[] getLevelUpBenefits(int iNewCharacterLevel) {
         String[] levelUp = new String[1];
-        levelUp[0] = "Welcome to level " + iNewCharacterLevel + "!";
+        levelUp[0] = "Welcome to Barbarian level " + iNewCharacterLevel + "!";
         return levelUp;
     }
 

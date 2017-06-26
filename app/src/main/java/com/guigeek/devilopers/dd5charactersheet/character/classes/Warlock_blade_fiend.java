@@ -114,7 +114,7 @@ public class Warlock_blade_fiend implements Class, Externalizable {
     @Override
     public String[] getLevelUpBenefits(int iNewCharacterLevel) {
         String[] levelUp = new String[100];
-        levelUp[0] = "Welcome to level " + iNewCharacterLevel + "!";
+        levelUp[0] = "Welcome to Warlock level " + iNewCharacterLevel + "!";
 
         // Cantrips
         int index = 1;

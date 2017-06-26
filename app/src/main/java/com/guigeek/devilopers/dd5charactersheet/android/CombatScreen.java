@@ -31,11 +31,13 @@ import java.util.List;
 public class CombatScreen extends Fragment {
 
     protected Character _character;
-    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc, tvAtkThrown, tvDmgThrown;
+    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc, tvHitDiceDescSec, tvAtkThrown, tvDmgThrown;
+    TextView viewHitDiceCurrentSecondary, viewHitDiceMaxSecondary;
     TextView viewSpeed, viewInit, spellAtk, spellDD, weaponName, weaponNameOffHand;
     ImageView imageWeaponHit;
     TableRow rowThrown, rowThrownOffHand, rowNameOffHand, rowMeleeOffHand, rowDamageModsTitle;
     ProgressBar pb;
+    TableRow rowSecondaryHD;
 
     TextView tvAtkOffHand, tvDmgOffHand, tvAtkThrownOffHand, tvDmgThrownOffHand;
 
@@ -72,7 +74,9 @@ public class CombatScreen extends Fragment {
         viewHPCurrent = (TextView)rootView.findViewById(R.id.tvHPCurrent);
         viewHPMax = (TextView)rootView.findViewById(R.id.tvHPMax);
         viewHitDiceCurrent = (TextView)rootView.findViewById(R.id.tvHitDiceCurrent);
+        viewHitDiceCurrentSecondary = (TextView)rootView.findViewById(R.id.tvHitDiceCurrentSecondary);
         viewHitDiceMax = (TextView)rootView.findViewById(R.id.tvHitDiceMax);
+        viewHitDiceMaxSecondary = (TextView)rootView.findViewById(R.id.tvHitDiceMaxSecondary);
         tvAC = (TextView)rootView.findViewById(R.id.tvArmorClass);
         pb = (ProgressBar)rootView.findViewById(R.id.progressBar);
 
@@ -100,6 +104,13 @@ public class CombatScreen extends Fragment {
         tvHitDiceDesc = (TextView)rootView.findViewById(R.id.textViewHitDice);
         tvHitDiceDesc.setText("HD (D" + _character._class.getHitDie() + ")");
 
+        tvHitDiceDescSec = (TextView)rootView.findViewById(R.id.textViewHitDiceSecondary);
+        if (_character._secondaryClass != null) {
+            tvHitDiceDescSec.setText("HD (D" + _character._secondaryClass.getHitDie() + ")");
+        }
+
+        rowSecondaryHD = (TableRow)rootView.findViewById(R.id.rowHitDiceSec);
+
         weaponName = (TextView)rootView.findViewById(R.id.tvWeaponName);
         weaponNameOffHand = (TextView)rootView.findViewById(R.id.tvWeaponNameOffHand);
         weaponName.setText(_character._equippedWeapon.toString());
@@ -125,7 +136,7 @@ public class CombatScreen extends Fragment {
         addButtonListener(rootView);
         createFettlesBar(rootView);
         createSpellBars(rootView);
-        createSpecialPowerBars(rootView, "Class Features", _character.getPowers());
+        createSpecialPowerBars(rootView, "Class Features", _character.getClassPowers());
         createSpecialPowerBars(rootView, "Racial Features", _character._race.getRacialFeatures());
         refreshSheet();
 
@@ -146,6 +157,12 @@ public class CombatScreen extends Fragment {
                 changeHD(v);
             }
         };
+        View.OnClickListener hdListSecondary = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeHDSecondary(v);
+            }
+        };
 
         rootView.findViewById(R.id.btnHPMin1).setOnClickListener(hpList);
         rootView.findViewById(R.id.btnHPMin5).setOnClickListener(hpList);
@@ -154,6 +171,9 @@ public class CombatScreen extends Fragment {
 
         rootView.findViewById(R.id.btnHDMin1).setOnClickListener(hdList);
         rootView.findViewById(R.id.btnHDPlus1).setOnClickListener(hdList);
+
+        rootView.findViewById(R.id.btnHDMin1Secondary).setOnClickListener(hdListSecondary);
+        rootView.findViewById(R.id.btnHDPlus1Secondary).setOnClickListener(hdListSecondary);
     }
 
 
@@ -360,9 +380,21 @@ public class CombatScreen extends Fragment {
         viewHPMax.setText(Integer.toString(_character._hpMax));
 
         viewHitDiceMax.setText(Integer.toString(_character._level));
-        viewHitDiceCurrent.setText(Integer.toString(_character._hitDice));
+        viewHitDiceMaxSecondary.setText(Integer.toString(_character._levelSecondaryClass));
 
-        tvAC.setText(_character._class.getAC(_character) + "");
+        viewHitDiceCurrent.setText(Integer.toString(_character._hitDice));
+        viewHitDiceCurrentSecondary.setText(Integer.toString(_character._hitDiceSecondary));
+
+        // Show secondary HD?
+
+        if (_character._levelSecondaryClass == 0) {
+            rowSecondaryHD.setVisibility(View.GONE);
+        }
+        else {
+            rowSecondaryHD.setVisibility(View.VISIBLE);
+        }
+
+        tvAC.setText(_character.getAC() + "");
 
         int modDex = _character.getModifier(Enumerations.Attributes.DEX);
         int modStr = _character.getModifier(Enumerations.Attributes.STR);
@@ -573,6 +605,12 @@ public class CombatScreen extends Fragment {
         int value = Integer.parseInt(v.getTag().toString());
         _character.changeHD(value);
         viewHitDiceCurrent.setText(Integer.toString(_character._hitDice));
+    }
+
+    public void changeHDSecondary(View v) {
+        int value = Integer.parseInt(v.getTag().toString());
+        _character.changeHDSecondary(value);
+        viewHitDiceCurrentSecondary.setText(Integer.toString(_character._hitDiceSecondary));
     }
 
     public void changeSpellSlot(View v) {

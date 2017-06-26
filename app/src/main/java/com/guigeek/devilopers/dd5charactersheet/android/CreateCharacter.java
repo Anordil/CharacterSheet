@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.*;
@@ -18,6 +19,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
@@ -76,6 +78,9 @@ public class CreateCharacter extends AppCompatActivity {
                 case 3:
                     aClass = new Warlock_blade_fiend();
                     break;
+                case 4:
+                    aClass = new Rogue_assassin();
+                    break;
                 default:
                     aClass = new Paladin();
                     break;
@@ -100,7 +105,7 @@ public class CreateCharacter extends AppCompatActivity {
             }
 
             int[] attributes = {10,10,10,10,10,10};
-            Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes);
+            Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes, null, 0);
 
             Log.d("Create", aHero.toString());
 

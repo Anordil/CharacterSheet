@@ -129,7 +129,7 @@ public class Paladin implements Class, Externalizable {
     @Override
     public String[] getLevelUpBenefits(int iNewCharacterLevel) {
         String[] levelUp = new String[1];
-        levelUp[0] = "Welcome to level " + iNewCharacterLevel + "!";
+        levelUp[0] = "Welcome to Paladin level " + iNewCharacterLevel + "!";
         return levelUp;
     }
 

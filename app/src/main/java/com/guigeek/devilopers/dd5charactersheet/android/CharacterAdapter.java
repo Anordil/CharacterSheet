@@ -41,8 +41,8 @@ public class CharacterAdapter extends ArrayAdapter<Character> {
 
 
             nameTv.setText(character._name);
-            levelTv.setText(Integer.toString(character._level));
-            classTv.setText(character._class.getName());
+            levelTv.setText(Integer.toString(character._level) + (character._secondaryClass != null ? ("/" + Integer.toString(character._levelSecondaryClass)) : ""));
+            classTv.setText(character._class.getName() + (character._secondaryClass != null ? ("/" + character._secondaryClass.getName()) : ""));
             raceTv.setText(character._race.getName());
 
             if (icon != null) {

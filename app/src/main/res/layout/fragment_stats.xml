@@ -57,6 +57,48 @@
                 android:layout_marginLeft="10dp" />
         </TableRow>
 
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout android:layout_column="0" android:layout_width="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvSecondaryClass"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Secondary class" />
+
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/spinnerClass"
+                        android:visibility="gone"
+                        android:spinnerMode="dialog" />
+                </LinearLayout>
+                <EditText
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/inLevelSecondary"
+                    android:layout_column="1"
+                    android:maxLength="2"
+                    android:layout_marginLeft="10dp" />
+                <Button
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_column="1"
+                    android:id="@+id/buttonMulticlass"
+                    android:text="Multiclass"
+                />
+
+
+
+            </TableRow>
+
+
             <TableRow
                 android:layout_width="match_parent"
                 android:paddingTop="20dp"
