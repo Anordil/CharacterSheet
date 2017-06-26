@@ -2,15 +2,16 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
-import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
+import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
+import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -122,8 +123,9 @@ public class Paladin implements Class, Externalizable {
     }
 
     @Override
-    public int getAttacksPerRound(int iCharacterLevel) {
-        return (iCharacterLevel >= 5 ? 2 : 1);
+    public int getAttacksPerRound(Character iCharacter) {
+        int level = iCharacter._class.getName().startsWith("Paladin") ? iCharacter._level : iCharacter._levelSecondaryClass;
+        return (level >= 5 ? 2 : 1);
     }
 
     @Override

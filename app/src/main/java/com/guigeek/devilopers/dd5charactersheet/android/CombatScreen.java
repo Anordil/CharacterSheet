@@ -537,7 +537,7 @@ public class CombatScreen extends Fragment {
                     + (weapon._damageType != null ? " (" + weapon._damageType.toString().substring(0,2) + ")" : "")
                     + propertyDamageBonus;
             tvDmgOffHand.setText(damage);
-            tvAtkOffHand.setText((attackBonus > 0 ? "+":"") + attackBonus + (distanceWeapon ? " " + weapon._distMin+"-"+weapon._distMax:"") + " x" + _character.getAttacksPerRound() );
+            tvAtkOffHand.setText((attackBonus > 0 ? "+":"") + attackBonus + (distanceWeapon ? " " + weapon._distMin+"-"+weapon._distMax:"") );
 
             // Thrown?
             if (weapon._distance != Enumerations.WeaponDistanceTypes.THROWN) {

@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.util.Log;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
@@ -107,8 +109,16 @@ public class Warlock_blade_fiend implements Class, Externalizable {
     }
 
     @Override
-    public int getAttacksPerRound(int iCharacterLevel) {
-        return iCharacterLevel >= 5 ? 2:1;
+    public int getAttacksPerRound(Character iCharacter) {
+        boolean hasThirstingBlade = false;
+        for (Power feat : iCharacter.getFeats()) {
+            if (feat._name.contains("Thirsting Blade")) {
+                hasThirstingBlade = true;
+                break;
+            }
+        }
+        Log.d("DDD", "Bladelock attacks: " + (hasThirstingBlade ? 2:1));
+        return hasThirstingBlade ? 2:1;
     }
 
     @Override

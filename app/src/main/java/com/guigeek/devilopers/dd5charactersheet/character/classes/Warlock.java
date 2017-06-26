@@ -110,7 +110,7 @@ public class Warlock implements Class, Externalizable {
     }
 
     @Override
-    public int getAttacksPerRound(int iCharacterLevel) {
+    public int getAttacksPerRound(Character iCharacter) {
         return 1;
     }
 

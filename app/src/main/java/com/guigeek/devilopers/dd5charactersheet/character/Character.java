@@ -400,7 +400,7 @@ public class Character implements Externalizable {
         }
         _hpMax = _class.getHitDie() + (_level - 1) * (int) Math.ceil(_class.getHitDie() / 2 + 1) + _level * getModifier(Enumerations.Attributes.CON);
         if (_secondaryClass != null) {
-            _hpMax += (_levelSecondaryClass - 1) * (int) Math.ceil(_secondaryClass.getHitDie() / 2 + 1) + _levelSecondaryClass * getModifier(Enumerations.Attributes.CON);
+            _hpMax += (_levelSecondaryClass) * (int) Math.ceil(_secondaryClass.getHitDie() / 2 + 1) + _levelSecondaryClass * getModifier(Enumerations.Attributes.CON);
         }
         _powers = getClassPowers();
     }
@@ -499,7 +499,7 @@ public class Character implements Externalizable {
     }
 
     public int getAttacksPerRound() {
-        return Math.max(_class.getAttacksPerRound(_level), _secondaryClass != null ? _secondaryClass.getAttacksPerRound(_levelSecondaryClass) : 0);
+        return Math.max(_class.getAttacksPerRound(this), _secondaryClass != null ? _secondaryClass.getAttacksPerRound(this) : 0);
     }
 
     public void equipWeapon(Weapon newWeapon) {
