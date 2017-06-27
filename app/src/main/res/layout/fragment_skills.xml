@@ -8,14 +8,16 @@
 <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp">
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:stretchColumns="1"
+            android:padding="0dp"
+            android:layout_margin="0dp"
+            android:stretchColumns="2"
             android:id="@+id/table_skills">
         </TableLayout>
 </ScrollView>
