@@ -3,9 +3,7 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
-import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
 import java.io.Externalizable;
@@ -49,7 +47,7 @@ public class Paladin_vengeance extends Paladin_base implements Externalizable {
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_paladin);
+        return App.getResString(R.string.class_paladin_vengeance);
     }
 
 

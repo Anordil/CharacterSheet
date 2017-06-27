@@ -46,7 +46,7 @@ public class Rogue_assassin extends Rogue_base implements Externalizable {
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_rogue);
+        return App.getResString(R.string.class_rogue_assassin);
     }
 
 
@@ -89,7 +89,7 @@ public class Rogue_assassin extends Rogue_base implements Externalizable {
             powers.add(new Power("Impostor", "You can mimic a person's speech, writing and behavior.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 17) {
-            powers.add(new Power("Death Strike", "When you attack and hit a surprised creature, it must make a CON saving throw of DC " + (8 + iCharac.getProficiencyBonus() + iCharac.getModifier(Enumerations.Attributes.DEX)) + ". On a failed save, it takes double damage.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
+            powers.add(new Power("Death Strike", "When you attack and hit a surprised creature, it must make a CON saving throw of DC " + (8 + iCharac.getProficiencyBonus() + iCharac.getModifier(Enumerations.Attributes.DEX)) + ". On a failed save, it takes double damage.", "Melee", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
 
         return powers;

@@ -100,14 +100,14 @@ public abstract class Barbarian_base implements Class {
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class.getName().startsWith("Barbarian_totem") ? iCharacter._level : iCharacter._levelSecondaryClass;
+        int level = iCharacter._class.getName().startsWith("Barbarian") ? iCharacter._level : iCharacter._levelSecondaryClass;
         return (level >= 5 ? 2 : 1);
     }
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Barbarian_totem level " + iNewCharacterLevel + "!");
+        levelUp.add("Welcome to Barbarian level " + iNewCharacterLevel + "!");
         return levelUp;
     }
 
@@ -175,7 +175,7 @@ public abstract class Barbarian_base implements Class {
         	}
         }
         if (iLevel >= 11) {
-            powers.add(new Power("Relentless Rage", "Your rage can keep you fighting despite grievous wounds. If you drop to O hit points while you're raging and don't die outright, you can make a DC 10 Constitution saving throw. If you succeed, you drop to 1 hit point inslead. Each time you use this feature after the first, the DC increases by 5. When you finish a short or long rest, the DC resets to 10", "", -1, -1, true,Enumerations.ActionType.PASSIVE));
+            powers.add(new Power("Relentless Rage", "Your rage can keep you fighting despite grievous wounds. If you drop to O hit points while you're raging and don't die outright, you can make a DC 10 Constitution saving throw. If you succeed, you drop to 1 hit point instead. Each time you use this feature after the first, the DC increases by 5. When you finish a short or long rest, the DC resets to 10", "", -1, -1, true,Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 15) {
             powers.add(new Power("Persistent Rage", "Your rage is so fierce that it ends early only if you fall unconscious or if you choose to end it", "", -1, -1, true,Enumerations.ActionType.PASSIVE));

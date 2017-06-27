@@ -1,13 +1,9 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
-import android.util.Log;
-
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
-import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
 import java.io.Externalizable;
@@ -49,7 +45,7 @@ public class Warlock_blade_fiend extends Warlock_base implements Externalizable 
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_warlock_blade);
+        return App.getResString(R.string.class_warlock_blade_fiend);
     }
 
 
@@ -103,7 +99,7 @@ public class Warlock_blade_fiend extends Warlock_base implements Externalizable 
     	}
 
         if (iLevel >= 14) {
-            powers.add(new Power("Hurl through Hell", "When hitting a creature with a melee attack, teleports it to Hell. It reappears at the end of your next turn and is dealt 10D10 psychic damage if it's not a fiend.", "Melee", 1, -1, true, Enumerations.ActionType.ACTION));
+            powers.add(new Power("Hurl through Hell", "When hitting a creature with a melee attack, teleports it to Hell. It reappears at the end of your next turn and is dealt 10D10 psychic damage if it's not a fiend.", "Melee", 1, -1, true, Enumerations.ActionType.PASSIVE));
         }
 
         return powers;

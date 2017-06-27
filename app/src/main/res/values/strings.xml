@@ -4,12 +4,12 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="class_paladin">Paladin (Vengeance)</string>
-    <string name="class_warlock">Warlock (Tome, Ancient)</string>
-    <string name="class_warlock_blade">Warlock (Blade, Fiend)</string>
+    <string name="class_paladin_vengeance">Paladin (Vengeance)</string>
+    <string name="class_warlock_tome_oldOne">Warlock (Tome, Ancient)</string>
+    <string name="class_warlock_blade_fiend">Warlock (Blade, Fiend)</string>
     <string name="class_rogue_assassin">Rogue (Assassin)</string>
-    <string name="class_barbarian">Barbarian</string>
-    <string name="class_rogue">Rogue</string>
+    <string name="class_rogue_swashbuckler">Rogue (Swashbuckler)</string>
+    <string name="class_barbarian_totem">Barbarian (totem)</string>
 
 
     <string name="race_mtn_dwarf">Mountain Dwarf</string>

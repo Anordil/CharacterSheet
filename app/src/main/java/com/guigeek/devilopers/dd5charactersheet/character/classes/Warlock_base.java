@@ -94,7 +94,7 @@ public abstract class Warlock_base implements Class {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Warlock_tome_oldOne level " + iNewCharacterLevel + "!");
+        levelUp.add("Welcome to Warlock level " + iNewCharacterLevel + "!");
 
         // Cantrips
         int index = 1;

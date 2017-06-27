@@ -19,6 +19,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
@@ -81,6 +82,9 @@ public class CreateCharacter extends AppCompatActivity {
                     break;
                 case 4:
                     aClass = new Rogue_assassin();
+                    break;
+                case 5:
+                    aClass = new Rogue_swashbuckler();
                     break;
                 default:
                     aClass = new Paladin_vengeance();

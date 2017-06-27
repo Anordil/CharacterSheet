@@ -47,7 +47,7 @@ public class Barbarian_totem extends Barbarian_base implements Externalizable {
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_barbarian);
+        return App.getResString(R.string.class_barbarian_totem);
     }
 
 

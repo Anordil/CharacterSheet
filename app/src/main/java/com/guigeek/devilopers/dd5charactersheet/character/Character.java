@@ -5,6 +5,7 @@ import android.util.Log;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
@@ -139,6 +140,9 @@ public class Character implements Externalizable {
             }
             else if (aClass instanceof Rogue_assassin) {
                 _class = new Rogue_assassin((Rogue_assassin) aClass);
+            }
+            else if (aClass instanceof Rogue_swashbuckler) {
+                _class = new Rogue_swashbuckler((Rogue_swashbuckler) aClass);
             }
             Log.d("UNWRAP", "After class");
 
@@ -283,6 +287,9 @@ public class Character implements Externalizable {
             }
             else if (aClass instanceof Rogue_assassin) {
                 _secondaryClass = new Rogue_assassin((Rogue_assassin) aClass);
+            }
+            else if (aClass instanceof Rogue_swashbuckler) {
+                _secondaryClass = new Rogue_swashbuckler((Rogue_swashbuckler) aClass);
             }
             _levelSecondaryClass = oi.readInt();
             _hitDiceSecondary = oi.readInt();

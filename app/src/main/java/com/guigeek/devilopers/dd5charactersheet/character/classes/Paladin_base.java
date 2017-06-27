@@ -102,14 +102,14 @@ public abstract class Paladin_base implements Class {
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class.getName().startsWith("Paladin_vengeance") ? iCharacter._level : iCharacter._levelSecondaryClass;
+        int level = iCharacter._class.getName().startsWith("Paladin") ? iCharacter._level : iCharacter._levelSecondaryClass;
         return (level >= 5 ? 2 : 1);
     }
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Paladin_vengeance level " + iNewCharacterLevel + "!");
+        levelUp.add("Welcome to Paladin level " + iNewCharacterLevel + "!");
         return levelUp;
     }
 

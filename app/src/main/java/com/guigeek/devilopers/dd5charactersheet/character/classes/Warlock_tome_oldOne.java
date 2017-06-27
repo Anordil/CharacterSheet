@@ -4,7 +4,6 @@ import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -47,7 +46,7 @@ public class Warlock_tome_oldOne extends Warlock_base implements Externalizable 
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_warlock);
+        return App.getResString(R.string.class_warlock_tome_oldOne);
     }
 
 
