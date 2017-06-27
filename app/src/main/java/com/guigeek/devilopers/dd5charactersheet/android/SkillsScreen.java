@@ -86,7 +86,7 @@ public class SkillsScreen extends Fragment {
         TextView proficiency = new TextView(getContext());
         proficiency.setText("Proficiency bonus: +" + _character.getProficiencyBonus());
         TableRow.LayoutParams paramProficiency = new TableRow.LayoutParams();
-        paramProficiency.span = 4;
+        paramProficiency.span = 6;
         paramProficiency.setMargins(0,0,0, 20);
         proficiency.setLayoutParams(paramProficiency);
         rowProficiency.addView(proficiency);
@@ -97,7 +97,7 @@ public class SkillsScreen extends Fragment {
         TextView saves = new TextView(getContext());
         saves.setText("Saving throws");
         TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-        paramsSaves.span = 4;
+        paramsSaves.span = 6;
         saves.setLayoutParams(paramsSaves);
         rowSave.addView(saves);
         ll.addView(rowSave);
@@ -105,7 +105,7 @@ public class SkillsScreen extends Fragment {
 
         for (SavingThrow skill: _character._savingThrows) {
             TableRow row = new TableRow(getContext());
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
             row.setLayoutParams(lp);
 
             TextView name = new TextView(getContext()), value = new TextView(getContext());
@@ -113,11 +113,14 @@ public class SkillsScreen extends Fragment {
             name.setTextSize(20.0f);
             value.setTextSize(20.0f);
 
+            TableRow.LayoutParams paramCB = new TableRow.LayoutParams();
+            paramCB.span = 1;
             CheckBox isProficient = new CheckBox(getContext());
             isProficient.setChecked(skill._isProficient);
             isProficient.setOnClickListener(new SavingThrowListener(skill, value));
             isProficient.setScaleX(1.5f);
             isProficient.setScaleY(1.5f);
+            isProficient.setLayoutParams(paramCB);
 
             name.setText(skill._name);
             value.setTextColor(skill._score < 0 ? getResources().getColor(android.R.color.holo_red_light):
@@ -126,6 +129,8 @@ public class SkillsScreen extends Fragment {
 
             TableRow.LayoutParams paramNameTV = new TableRow.LayoutParams();
             paramNameTV.span = 2;
+            paramNameTV.weight = 1;
+            paramNameTV.column = 2;
             name.setLayoutParams(paramNameTV);
 
             TableRow.LayoutParams valueParam = new TableRow.LayoutParams();
@@ -162,7 +167,7 @@ public class SkillsScreen extends Fragment {
         TextView skills = new TextView(getContext());
         skills.setText("Skills");
         TableRow.LayoutParams paramsSk = new TableRow.LayoutParams();
-        paramsSk.span = 4;
+        paramsSk.span = 6;
         paramsSk.topMargin = 10;
         skills.setLayoutParams(paramsSk);
         rowSk.addView(skills);
@@ -171,7 +176,7 @@ public class SkillsScreen extends Fragment {
 
         for (Skill skill: _character._skills) {
             TableRow row = new TableRow(getContext());
-            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+            TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
             row.setLayoutParams(lp);
 
             TextView name = new TextView(getContext()), attr = new TextView(getContext()), value = new TextView(getContext());
@@ -188,35 +193,38 @@ public class SkillsScreen extends Fragment {
             isProficient.setScaleY(1.5f);
 
             CheckBox isDoublyProficient = new CheckBox(getContext());
+            TableRow.LayoutParams dpParams = new TableRow.LayoutParams();
+            dpParams.leftMargin = 30;
             isDoublyProficient.setEnabled(skill._isProficient);
             isDoublyProficient.setChecked(skill._isDoublyProficient);
             isDoublyProficient.setScaleX(1.5f);
             isDoublyProficient.setScaleY(1.5f);
+            isDoublyProficient.setLayoutParams(dpParams);
 
             isDoublyProficient.setOnClickListener(new SavingThrowDoubleProficiencyListener(skill, value));
             isProficient.setOnClickListener(new SkillListener(skill, value, isDoublyProficient));
 
             if (!_character._class.getName().startsWith("Rogue") && !(_character._secondaryClass != null && _character._secondaryClass.getName().startsWith("Rogue"))) {
-                isDoublyProficient.setVisibility(View.GONE);
+                isDoublyProficient.setVisibility(View.INVISIBLE);
             }
 
             name.setText(skill._name);
-            attr.setText(skill._attribute.toString());
+            attr.setText(skill._attribute.getShortName());
             value.setText((skill._score > 0 ? "+": "") + Integer.toString(skill._score));
 
             TableRow.LayoutParams valueParam = new TableRow.LayoutParams();
             valueParam.gravity = Gravity.RIGHT;
             value.setLayoutParams(valueParam);
 
+            TableRow.LayoutParams nameParam = new TableRow.LayoutParams();
+            nameParam.weight = 1;
+            name.setLayoutParams(nameParam);
+
 
             ImageView advantageIcon = new ImageView(getContext());
             advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_dice_advantage));
             boolean hasAdvantage = skillAdv.contains(skill._name);
             boolean hasDisadvantage = skillDisadv.contains(skill._name);
-
-            Log.d("SKILL", skill._name + " adv " + hasAdvantage + " disadv " + hasDisadvantage);
-            Log.d("ADV", skillAdv.toString());
-            Log.d("DISADV", skillDisadv.toString());
 
             if (hasAdvantage && hasDisadvantage) {
                 advantageIcon.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_perspective_dice_six_faces_one));
@@ -249,7 +257,7 @@ public class SkillsScreen extends Fragment {
         powerHeader.setText("Passive effects");
         powerHeader.setTextSize(20.0f);
         TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-        paramsSaves.span = 4;
+        paramsSaves.span = 6;
         paramsSaves.topMargin = 10;
         powerHeader.setLayoutParams(paramsSaves);
         rowPowerHeader.addView(powerHeader);
@@ -266,7 +274,7 @@ public class SkillsScreen extends Fragment {
                 fettle._type == Enumerations.FettleType.SAVING_THROW_DISADVANTAGE)
             {
                 TableRow row = new TableRow(getContext());
-                TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+                TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
                 row.setLayoutParams(lp);
 
                 TextView description = new TextView(getContext());
@@ -278,7 +286,7 @@ public class SkillsScreen extends Fragment {
 
 
                 TableRow.LayoutParams paramRow = new TableRow.LayoutParams();
-                paramRow.span = 4;
+                paramRow.span = 6;
                 description.setLayoutParams(paramRow);
 
 

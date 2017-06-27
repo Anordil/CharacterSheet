@@ -500,7 +500,7 @@ public class CombatScreen extends Fragment {
                 rowMeleeOffHand.setVisibility(View.VISIBLE);
                 rowNameOffHand.setVisibility(View.VISIBLE);
                 rowThrownOffHand.setVisibility(View.VISIBLE);
-                weaponNameOffHand.setText(weapon._name);
+                weaponNameOffHand.setText(weapon.toString());
             }
 
             boolean distanceWeapon = weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE;

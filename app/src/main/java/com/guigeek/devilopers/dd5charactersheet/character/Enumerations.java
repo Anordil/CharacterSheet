@@ -46,6 +46,9 @@ public class Enumerations {
         STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), WIS("Wisdom"), CHA("Charisma");
 
         private String _name;
+        public String getShortName() {
+            return _name.substring(0, 3);
+        }
 
         Attributes(String n) {
             _name = n;
