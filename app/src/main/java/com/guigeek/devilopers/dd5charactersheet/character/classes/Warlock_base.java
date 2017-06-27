@@ -37,7 +37,7 @@ public abstract class Warlock_base implements Class {
         return fettles;
     }
 
-    // Warlock have a single-level spell slot, used for all their spells. Treat it like a Power
+    // Warlock_tome_oldOne have a single-level spell slot, used for all their spells. Treat it like a Power
     int[][] _spellSlots = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -94,7 +94,7 @@ public abstract class Warlock_base implements Class {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Warlock level " + iNewCharacterLevel + "!");
+        levelUp.add("Welcome to Warlock_tome_oldOne level " + iNewCharacterLevel + "!");
 
         // Cantrips
         int index = 1;
@@ -204,7 +204,7 @@ public abstract class Warlock_base implements Class {
 
 
         if (iLevel >= 20) {
-            powers.add(new Power("Eldritch Master", "Recover all Warlock spell slots.", "", 1, -1, true, Enumerations.ActionType.ACTION));
+            powers.add(new Power("Eldritch Master", "Recover all Warlock_tome_oldOne spell slots.", "", 1, -1, true, Enumerations.ActionType.ACTION));
         }
 
         return powers;

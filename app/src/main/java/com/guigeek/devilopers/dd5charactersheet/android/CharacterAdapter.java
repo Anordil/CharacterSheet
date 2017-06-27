@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 
 /**
  * Created by ggallani on 25/03/2016.

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public class Paladin implements Class, Externalizable {
+public abstract class Paladin_base implements Class {
 
     @Override
     public int getAC(Character character) {
@@ -77,36 +77,13 @@ public class Paladin implements Class, Externalizable {
                 {0, 4, 3, 3, 3, 2, 0, 0, 0, 0}//ln 20
         };
 
-    public static final long serialVersionUID = 201L;
-    protected int _version = 1;
-
-    public Paladin(){}
-    public Paladin(Paladin other) {
+    public Paladin_base(){}
+    public Paladin_base(Paladin_base other) {
         _spellSlots = other._spellSlots;
     }
 
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
-    }
 
 
-    @Override
-    public String getName() {
-        return App.getResString(R.string.class_paladin);
-    }
 
     @Override
     public int getHitDie() {
@@ -125,14 +102,14 @@ public class Paladin implements Class, Externalizable {
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class.getName().startsWith("Paladin") ? iCharacter._level : iCharacter._levelSecondaryClass;
+        int level = iCharacter._class.getName().startsWith("Paladin_vengeance") ? iCharacter._level : iCharacter._levelSecondaryClass;
         return (level >= 5 ? 2 : 1);
     }
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Paladin level " + iNewCharacterLevel + "!");
+        levelUp.add("Welcome to Paladin_vengeance level " + iNewCharacterLevel + "!");
         return levelUp;
     }
 
@@ -170,17 +147,6 @@ public class Paladin implements Class, Externalizable {
         }
         if (iLevel >= 14) {
             powers.add(new Power("Cleansing touch", "Remove spell on self/ally", "Melee", iCharac.getModifier(Enumerations.Attributes.CHA), -1, true,Enumerations.ActionType.ACTION));
-        }
-
-        // Vengeance
-        if (iLevel >= 3) {
-            powers.add(new Power("Channel Divinity", "One creature within 60ft must make a wisdom saving throw. Undead/fiends have disadvantage. On a failed save, it is freightened and its speed is 0 for 1mn or until it takes damage.\nOr target a creature within 10ft: you have advantage on attack rolls against it for 1mn.", "60ft/10ft", 1, -1, false, Enumerations.ActionType.ACTION));
-        }
-        if (iLevel >= 7) {
-            powers.add(new Power("Relentless avenger", "Opportunity attack enables to move at half speed during reaction. Doesn't trigger OA.", "Melee", -1, -1, false, Enumerations.ActionType.REACTION));
-        }
-        if (iLevel >= 15) {
-            powers.add(new Power("Soul of Vengeance", "Creature targeted by Vow on Enmity triggers OA for me when attacking", "Melee", -1, -1, false, Enumerations.ActionType.PASSIVE));
         }
 
         return powers;

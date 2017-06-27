@@ -108,14 +108,4 @@ public class Warlock_blade_fiend extends Warlock_base implements Externalizable 
 
         return powers;
     }
-
-    public Enumerations.Attributes getMainSpellAttribute() {
-        return Enumerations.Attributes.CHA;
-    }
-
-
-    @Override
-    public int getIconResource() {
-        return R.drawable.ic_warlock;
-    }
 }

@@ -2,7 +2,6 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.BaseBundle;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -21,9 +20,9 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 
 import java.io.Serializable;
@@ -128,10 +127,10 @@ public class StatsScreen extends Fragment {
                         _character._secondaryClass = new Barbarian();
                         break;
                     case 1:
-                        _character._secondaryClass = new Paladin();
+                        _character._secondaryClass = new Paladin_vengeance();
                         break;
                     case 2:
-                        _character._secondaryClass = new Warlock();
+                        _character._secondaryClass = new Warlock_tome_oldOne();
                         break;
                     case 3:
                         _character._secondaryClass = new Warlock_blade_fiend();
@@ -140,7 +139,7 @@ public class StatsScreen extends Fragment {
                         _character._secondaryClass = new Rogue_assassin();
                         break;
                     default:
-                        _character._secondaryClass = new Paladin();
+                        _character._secondaryClass = new Paladin_vengeance();
                         break;
                 }
             }
@@ -244,8 +243,8 @@ public class StatsScreen extends Fragment {
 
         if (_character._secondaryClass != null) {
             if (_character._secondaryClass instanceof Barbarian) spSecondaryClass.setSelection(0);
-            if (_character._secondaryClass instanceof Paladin) spSecondaryClass.setSelection(1);
-            if (_character._secondaryClass instanceof Warlock) spSecondaryClass.setSelection(2);
+            if (_character._secondaryClass instanceof Paladin_vengeance) spSecondaryClass.setSelection(1);
+            if (_character._secondaryClass instanceof Warlock_tome_oldOne) spSecondaryClass.setSelection(2);
             if (_character._secondaryClass instanceof Warlock_blade_fiend) spSecondaryClass.setSelection(3);
             if (_character._secondaryClass instanceof Rogue_assassin) spSecondaryClass.setSelection(4);
         }

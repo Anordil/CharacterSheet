@@ -11,16 +11,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
@@ -72,10 +71,10 @@ public class CreateCharacter extends AppCompatActivity {
                     aClass = new Barbarian();
                     break;
                 case 1:
-                    aClass = new Paladin();
+                    aClass = new Paladin_vengeance();
                     break;
                 case 2:
-                    aClass = new Warlock();
+                    aClass = new Warlock_tome_oldOne();
                     break;
                 case 3:
                     aClass = new Warlock_blade_fiend();
@@ -84,7 +83,7 @@ public class CreateCharacter extends AppCompatActivity {
                     aClass = new Rogue_assassin();
                     break;
                 default:
-                    aClass = new Paladin();
+                    aClass = new Paladin_vengeance();
                     break;
             }
 
