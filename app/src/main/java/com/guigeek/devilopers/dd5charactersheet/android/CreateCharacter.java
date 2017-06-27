@@ -27,6 +27,8 @@ import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
 import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
 
+import java.util.List;
+
 public class CreateCharacter extends AppCompatActivity {
 
     Button btnCreate;
@@ -113,7 +115,7 @@ public class CreateCharacter extends AppCompatActivity {
             intent.putExtra(Constants.CHARACTER, aHero);
             setResult(RESULT_OK, intent);
 
-            String[] levelUpBoons = aHero._class.getLevelUpBenefits(aHero._level);
+            List<String> levelUpBoons = aHero._class.getLevelUpBenefits(aHero._level);
 
             String boons = "";
             for (String s : levelUpBoons) {

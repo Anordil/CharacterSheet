@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by totou on 15/06/2016.
@@ -127,9 +128,9 @@ public class Barbarian implements Class, Externalizable {
     }
 
     @Override
-    public String[] getLevelUpBenefits(int iNewCharacterLevel) {
-        String[] levelUp = new String[1];
-        levelUp[0] = "Welcome to Barbarian level " + iNewCharacterLevel + "!";
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
+        List<String> levelUp = new LinkedList<>();
+        levelUp.add("Welcome to Barbarian level " + iNewCharacterLevel + "!");
         return levelUp;
     }
 

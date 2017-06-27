@@ -27,6 +27,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class StatsScreen extends Fragment {
 
@@ -172,7 +173,7 @@ public class StatsScreen extends Fragment {
                     _character.doLongRest();
 
                     // Show level up window
-                    String[] levelUpBoons = _character._class.getLevelUpBenefits(_character._level);
+                    List<String> levelUpBoons = _character._class.getLevelUpBenefits(_character._level);
 
                     String boons = "";
                     for (String s : levelUpBoons) {
@@ -198,7 +199,7 @@ public class StatsScreen extends Fragment {
                     _character.doLongRest();
 
                     // Show level up window
-                    String[] levelUpBoons = _character._secondaryClass.getLevelUpBenefits(_character._levelSecondaryClass);
+                    List<String> levelUpBoons = _character._secondaryClass.getLevelUpBenefits(_character._levelSecondaryClass);
 
                     String boons = "";
                     for (String s : levelUpBoons) {

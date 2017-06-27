@@ -15,52 +15,11 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.LinkedList;
+import java.util.List;
 
 
-public class Warlock_blade_fiend implements Class, Externalizable {
+public class Warlock_blade_fiend extends Warlock_base implements Externalizable {
 
-    @Override
-    public int getAC(Character character) {
-        int ac = character._equippedArmor.getAC(character);
-
-        if (character._equippedShield != null && character._equippedShield._type == Enumerations.ArmorTypes.SHIELD) {
-            ac+= character._equippedShield.getAC(character);
-        }
-
-        return ac;
-    }
-
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
-        return fettles;
-    }
-
-    // Warlock have a single-level spell slot, used for all their spells. Treat it like a Power
-    int[][] _spellSlots = {
-            // spell level 0-9
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 5
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 10
-            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0}, // Arcanum spells
-            {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 0},//lv 15
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 1}//ln 20
-    };
 
     public static final long serialVersionUID = 204L;
     protected int _version = 1;
@@ -93,20 +52,6 @@ public class Warlock_blade_fiend implements Class, Externalizable {
         return App.getResString(R.string.class_warlock_blade);
     }
 
-    @Override
-    public int getHitDie() {
-        return 8;
-    }
-
-    @Override
-    public boolean isCaster() {
-        return true;
-    }
-
-    @Override
-    public int[] getSpellSlots(int iCharacterLevel) {
-        return _spellSlots[Math.min(20, iCharacterLevel)];
-    }
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
@@ -117,103 +62,32 @@ public class Warlock_blade_fiend implements Class, Externalizable {
                 break;
             }
         }
-        Log.d("DDD", "Bladelock attacks: " + (hasThirstingBlade ? 2:1));
         return hasThirstingBlade ? 2:1;
     }
 
     @Override
-    public String[] getLevelUpBenefits(int iNewCharacterLevel) {
-        String[] levelUp = new String[100];
-        levelUp[0] = "Welcome to Warlock level " + iNewCharacterLevel + "!";
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
+        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
 
-        // Cantrips
-        int index = 1;
-        if (iNewCharacterLevel == 10) {
-            levelUp[index++] = "You now know 4 cantrips.";
-        }
-        else if (iNewCharacterLevel == 4) {
-            levelUp[index++] = "You now know 3 cantrips.";
-        }
-        else if (iNewCharacterLevel == 1) {
-            levelUp[index++] = "You know 2 cantrips.";
-        }
-
-        // Spells
         if (iNewCharacterLevel == 1) {
-            levelUp[index++] = "You know 2 spells.";
+            levelUp.add("You gained Dark One's Blessing!");
         }
-        else if (iNewCharacterLevel <= 9) {
-            levelUp[index++] = "You now know " + (iNewCharacterLevel+1) + " spells.";
+        if (iNewCharacterLevel == 6) {
+            levelUp.add("You gained Dark One's Own Luck!");
         }
-        else if (iNewCharacterLevel % 2 != 0) {
-            float count = iNewCharacterLevel -10;
-            levelUp[index++] = "You now know " + (10+(int)(Math.ceil(count/2))) + " spells.";
+        if (iNewCharacterLevel == 10) {
+            levelUp.add("You gained Fiendish Resilience!");
         }
-
-        // Invocations
-        if (iNewCharacterLevel == 2) {
-            levelUp[index++] = "You now know 2 invocations.";
-        }
-        else if (iNewCharacterLevel == 5) {
-            levelUp[index++] = "You now know 3 invocations.";
-        }
-        else if (iNewCharacterLevel == 7) {
-            levelUp[index++] = "You now know 4 invocations.";
-        }
-        else if (iNewCharacterLevel == 9) {
-            levelUp[index++] = "You now know 5 invocations.";
-        }
-        else if (iNewCharacterLevel == 15) {
-            levelUp[index++] = "You now know 6 invocations.";
-        }
-        else if (iNewCharacterLevel == 15) {
-            levelUp[index++] = "You now know 7 invocations.";
-        }
-        else if (iNewCharacterLevel == 18) {
-            levelUp[index++] = "You now know 8 invocations.";
+        if (iNewCharacterLevel == 14) {
+            levelUp.add("You gained Hurl through Hell!");
         }
 
         return levelUp;
     }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
-        LinkedList<Power> powers = new LinkedList<>();
+        LinkedList<Power> powers = super.getPowers(iLevel, iCharac);
 
-        // Spell slot
-        if (iLevel >= 1) {
-            int spellLevel = 1;
-            int spellSlots = 1;
-            int dd = 8 + iCharac.getProficiencyBonus() + iCharac.getModifier(getMainSpellAttribute());
-            if (iLevel >= 17) {
-                spellSlots = 4;
-                spellLevel = 5;
-            }
-            else if (iLevel >= 11) {
-                spellSlots = 3;
-                spellLevel = 5;
-            }
-            else if (iLevel >= 9) {
-                spellSlots = 2;
-                spellLevel = 5;
-            }
-            else if (iLevel >= 7) {
-                spellSlots = 2;
-                spellLevel = 4;
-            }
-            else if (iLevel >= 5) {
-                spellSlots = 2;
-                spellLevel = 3;
-            }
-            else if (iLevel >= 3) {
-                spellSlots = 2;
-                spellLevel = 2;
-            }
-            else if (iLevel >= 2) {
-                spellSlots = 2;
-                spellLevel = 1;
-            }
-            powers.add(new Power("Spell slot", "Consume a slot to cast a spell which level is no more than " + spellLevel + ".\nThe spell is cast as a " + spellLevel + (spellLevel == 1 ? "st" : (spellLevel == 2 ? "nd" : (spellLevel == 3 ? "rd": "th"))) + " level spell.", "Spell", spellSlots, dd, false, Enumerations.ActionType.ACTION));
-        }
 
         if (iLevel >= 1) {
             int thp = iLevel + iCharac.getModifier(Enumerations.Attributes.CHA);
@@ -230,10 +104,6 @@ public class Warlock_blade_fiend implements Class, Externalizable {
 
         if (iLevel >= 14) {
             powers.add(new Power("Hurl through Hell", "When hitting a creature with a melee attack, teleports it to Hell. It reappears at the end of your next turn and is dealt 10D10 psychic damage if it's not a fiend.", "Melee", 1, -1, true, Enumerations.ActionType.ACTION));
-        }
-
-        if (iLevel >= 20) {
-            powers.add(new Power("Eldritch Master", "Recover all Warlock spell slots.", "", 1, -1, true, Enumerations.ActionType.ACTION));
         }
 
         return powers;

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by ggallani on 19/02/2016.
@@ -129,9 +130,9 @@ public class Paladin implements Class, Externalizable {
     }
 
     @Override
-    public String[] getLevelUpBenefits(int iNewCharacterLevel) {
-        String[] levelUp = new String[1];
-        levelUp[0] = "Welcome to Paladin level " + iNewCharacterLevel + "!";
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
+        List<String> levelUp = new LinkedList<>();
+        levelUp.add("Welcome to Paladin level " + iNewCharacterLevel + "!");
         return levelUp;
     }
 
