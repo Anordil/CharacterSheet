@@ -18,7 +18,7 @@ public class Rogue_swashbuckler extends Rogue_base implements Externalizable {
 
 
 
-    public static final long serialVersionUID = 205L;
+    public static final long serialVersionUID = 206L;
     protected int _version = 1;
 
 

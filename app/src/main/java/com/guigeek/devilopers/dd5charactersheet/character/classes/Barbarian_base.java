@@ -100,7 +100,7 @@ public abstract class Barbarian_base implements Class {
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class.getName().startsWith("Barbarian") ? iCharacter._level : iCharacter._levelSecondaryClass;
+        int level = iCharacter._class instanceof Barbarian_base ? iCharacter._level : iCharacter._levelSecondaryClass;
         return (level >= 5 ? 2 : 1);
     }
 

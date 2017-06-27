@@ -102,7 +102,7 @@ public abstract class Paladin_base implements Class {
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class.getName().startsWith("Paladin") ? iCharacter._level : iCharacter._levelSecondaryClass;
+        int level = iCharacter._class instanceof Paladin_base ? iCharacter._level : iCharacter._levelSecondaryClass;
         return (level >= 5 ? 2 : 1);
     }
 

@@ -17,6 +17,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Serializable;
@@ -453,7 +454,16 @@ public class CombatScreen extends Fragment {
 
         viewSpeed.setText(_character._race.getSpeedInFeet() + " ft.");
         int dexBonus = _character.getModifier(Enumerations.Attributes.DEX);
-        viewInit.setText((dexBonus > 0 ? "+": "") + dexBonus);
+
+        int initiativeBonus = dexBonus;
+        if (_character._class instanceof Rogue_swashbuckler && _character._level >= 3) {
+            initiativeBonus += _character.getModifier(Enumerations.Attributes.CHA);
+        }
+        else if (_character._secondaryClass != null && _character._secondaryClass instanceof Rogue_swashbuckler && _character._levelSecondaryClass >= 3) {
+            initiativeBonus += _character.getModifier(Enumerations.Attributes.CHA);
+        }
+
+        viewInit.setText((initiativeBonus > 0 ? "+": "") + initiativeBonus);
 
 
         // Magic properties
