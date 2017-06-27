@@ -16,7 +16,7 @@ import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
@@ -68,7 +68,7 @@ public class CreateCharacter extends AppCompatActivity {
 
             switch(spClass.getSelectedItemPosition()) {
                 case 0:
-                    aClass = new Barbarian();
+                    aClass = new Barbarian_totem();
                     break;
                 case 1:
                     aClass = new Paladin_vengeance();

@@ -19,7 +19,7 @@ import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
@@ -124,7 +124,7 @@ public class StatsScreen extends Fragment {
                 levelSecondary.setVisibility(View.VISIBLE);
                 switch(spSecondaryClass.getSelectedItemPosition()) {
                     case 0:
-                        _character._secondaryClass = new Barbarian();
+                        _character._secondaryClass = new Barbarian_totem();
                         break;
                     case 1:
                         _character._secondaryClass = new Paladin_vengeance();
@@ -242,7 +242,7 @@ public class StatsScreen extends Fragment {
 
 
         if (_character._secondaryClass != null) {
-            if (_character._secondaryClass instanceof Barbarian) spSecondaryClass.setSelection(0);
+            if (_character._secondaryClass instanceof Barbarian_totem) spSecondaryClass.setSelection(0);
             if (_character._secondaryClass instanceof Paladin_vengeance) spSecondaryClass.setSelection(1);
             if (_character._secondaryClass instanceof Warlock_tome_oldOne) spSecondaryClass.setSelection(2);
             if (_character._secondaryClass instanceof Warlock_blade_fiend) spSecondaryClass.setSelection(3);

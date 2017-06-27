@@ -2,7 +2,7 @@ package com.guigeek.devilopers.dd5charactersheet.character;
 
 import android.util.Log;
 
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
@@ -131,8 +131,8 @@ public class Character implements Externalizable {
             else if (aClass instanceof Warlock_tome_oldOne) {
                 _class = new Warlock_tome_oldOne((Warlock_tome_oldOne) aClass);
             }
-            else if (aClass instanceof Barbarian) {
-                _class = new Barbarian((Barbarian) aClass);
+            else if (aClass instanceof Barbarian_totem) {
+                _class = new Barbarian_totem((Barbarian_totem) aClass);
             }
             else if (aClass instanceof Warlock_blade_fiend) {
                 _class = new Warlock_blade_fiend((Warlock_blade_fiend) aClass);
@@ -275,8 +275,8 @@ public class Character implements Externalizable {
             else if (aClass instanceof Warlock_tome_oldOne) {
                 _secondaryClass = new Warlock_tome_oldOne((Warlock_tome_oldOne) aClass);
             }
-            else if (aClass instanceof Barbarian) {
-                _secondaryClass = new Barbarian((Barbarian) aClass);
+            else if (aClass instanceof Barbarian_totem) {
+                _secondaryClass = new Barbarian_totem((Barbarian_totem) aClass);
             }
             else if (aClass instanceof Warlock_blade_fiend) {
                 _secondaryClass = new Warlock_blade_fiend((Warlock_blade_fiend) aClass);

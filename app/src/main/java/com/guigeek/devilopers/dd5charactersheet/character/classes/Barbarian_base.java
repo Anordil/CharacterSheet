@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by totou on 15/06/2016.
  */
-public class Barbarian implements Class, Externalizable {
+public abstract class Barbarian_base implements Class {
 
     @Override
     public int getAC(Character character) {
@@ -75,36 +75,13 @@ public class Barbarian implements Class, Externalizable {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}//ln 20
         };
 
-    public static final long serialVersionUID = 203L;
-    protected int _version = 1;
 
-    public Barbarian(){}
+    public Barbarian_base(){}
 
-    public Barbarian(Barbarian other) {
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
+    public Barbarian_base(Barbarian_base other) {
     }
 
 
-    @Override
-    public String getName() {
-        return App.getResString(R.string.class_barbarian);
-    }
 
     @Override
     public int getHitDie() {
@@ -123,14 +100,14 @@ public class Barbarian implements Class, Externalizable {
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class.getName().startsWith("Barbarian") ? iCharacter._level : iCharacter._levelSecondaryClass;
+        int level = iCharacter._class.getName().startsWith("Barbarian_totem") ? iCharacter._level : iCharacter._levelSecondaryClass;
         return (level >= 5 ? 2 : 1);
     }
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Barbarian level " + iNewCharacterLevel + "!");
+        levelUp.add("Welcome to Barbarian_totem level " + iNewCharacterLevel + "!");
         return levelUp;
     }
 
@@ -178,15 +155,9 @@ public class Barbarian implements Class, Externalizable {
             powers.add(new Power("Reckless Attack", "You can throw aside all concern for defense to attack with fierce desperation. When you make your first attack on your turn, you can decide to attack recklessly. Doing so gives you advantage on melee weapon attack rolls using Strength during this turn, but attack rolls against you have advantage until your next turn", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
             powers.add(new Power("Danger Sense", "You gain an uncanny sense of when things nearby aren't as they should be, giving you an edge when you dodge away from danger. You have advantage on Dexterity saving throws against effects that you can see, such as traps and spells. To gain this benefit, you can't be blinded, deafened, or incapacitated", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
-        if (iLevel >= 3) {
-            powers.add(new Power("Primal Path", "Path of the Totem Warrior: Spirit Totem: Bear (Resistance to all damage type except psychic)", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
-        }
         if (iLevel >= 5) {
             powers.add(new Power("Extra Attack", "You can attack twice, instead of once, whenever you take the Attack action on your turn", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
             powers.add(new Power("Fast Movement", "Your speed increases by 10 feet while you aren't wearing heavy armor", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
-        }
-        if (iLevel >= 6) {
-            powers.add(new Power("Primal Path", "Path of the Totem Warrior: Aspect of the Beast: Eagle (You gain the eyesight of an eagle. You can see up to 1 mile away with no difficulty, able to discern even fine details as though looking at something no more than 100 feet away from you. Additionally, dim light doesn't impose disadvantage on your Wisdom (Perception) checks.)", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 7) {
         	powers.add(new Power("Feral Instinct", "Your instincts are so honed that you have advantage on initiative rolls. Additionally, if you are surprised at the beginning of combat and aren't incapacitated, you can act normally on your first turn, but only if you enter your rage before doing anything else on that turn", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
