@@ -1,16 +1,21 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
@@ -41,10 +46,15 @@ public class CombatScreen extends Fragment {
     ProgressBar pb;
     TableRow rowSecondaryHD;
 
+    LinearLayout failRow, successRow;
+    TableLayout allTables;
+
     TextView tvAtkOffHand, tvDmgOffHand, tvAtkThrownOffHand, tvDmgThrownOffHand;
 
     List<TextView> spellSlotTextViews;
     TableLayout fettleTable, damageModsTable, fettleTableOffHand;
+
+    Button btnRevive;
 
     public CombatScreen() {}
 
@@ -140,6 +150,34 @@ public class CombatScreen extends Fragment {
         fettleTableOffHand = (TableLayout)rootView.findViewById(R.id.combatWeaponPropertiesOffHand);
         damageModsTable = (TableLayout)rootView.findViewById(R.id.combatTableDamageMods);
 
+        // Did he dieded?
+        failRow = (LinearLayout)rootView.findViewById(R.id.failedSavesLayout);
+        successRow = (LinearLayout)rootView.findViewById(R.id.successSavesLayout);
+        allTables = (TableLayout)rootView.findViewById(R.id.tablelayout);
+        btnRevive = (Button)rootView.findViewById(R.id.btnRevive);
+        btnRevive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                failRow.setVisibility(View.GONE);
+                successRow.setVisibility(View.GONE);
+                allTables.setVisibility(View.VISIBLE);
+                _character.changeHP(1);
+                viewHPCurrent.setText(Integer.toString(_character._hpCurrent));
+                pb.setProgress(_character._hpCurrent);
+            }
+        });
+
+        if (_character._hpCurrent > 0) {
+            failRow.setVisibility(View.GONE);
+            successRow.setVisibility(View.GONE);
+            allTables.setVisibility(View.VISIBLE);
+        }
+        else {
+            failRow.setVisibility(View.VISIBLE);
+            successRow.setVisibility(View.VISIBLE);
+            allTables.setVisibility(View.GONE);
+        }
+
         addButtonListener(rootView);
         createFettlesBar(rootView);
         createSpellBars(rootView);
@@ -172,9 +210,7 @@ public class CombatScreen extends Fragment {
         };
 
         rootView.findViewById(R.id.btnHPMin1).setOnClickListener(hpList);
-        rootView.findViewById(R.id.btnHPMin5).setOnClickListener(hpList);
         rootView.findViewById(R.id.btnHPPlus1).setOnClickListener(hpList);
-        rootView.findViewById(R.id.btnHPPlus5).setOnClickListener(hpList);
 
         rootView.findViewById(R.id.btnHDMin1).setOnClickListener(hdList);
         rootView.findViewById(R.id.btnHDPlus1).setOnClickListener(hdList);
@@ -611,10 +647,47 @@ public class CombatScreen extends Fragment {
     }
 
     public void changeHP(View v) {
-        int value = Integer.parseInt(v.getTag().toString());
-        _character.changeHP(value);
-        viewHPCurrent.setText(Integer.toString(_character._hpCurrent));
-        pb.setProgress(_character._hpCurrent);
+        final int value = Integer.parseInt(v.getTag().toString());
+
+        // Amount?
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final EditText text = new EditText(getActivity());
+
+        builder.setTitle(value > 0 ? "Add HP":"Remove HP").setMessage(value > 0 ? "HP healed:" : "Damage taken:").setView(text);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface di, int i) {
+                final String amountStr = text.getText().toString();
+                try {
+                    int amount = Integer.parseInt(amountStr);
+                    _character.changeHP(value * amount);
+                    viewHPCurrent.setText(Integer.toString(_character._hpCurrent));
+                    pb.setProgress(_character._hpCurrent);
+
+                    if (_character._hpCurrent > 0) {
+                        failRow.setVisibility(View.GONE);
+                        successRow.setVisibility(View.GONE);
+                        allTables.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        failRow.setVisibility(View.VISIBLE);
+                        successRow.setVisibility(View.VISIBLE);
+                        allTables.setVisibility(View.GONE);
+                    }
+
+                }
+                catch (Exception e) {
+                    Toast.makeText(getContext(), "Invalid amount", Toast.LENGTH_SHORT).show();
+                    text.setText("");
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface di, int i) {
+            }
+        });
+        builder.create().show();
     }
 
     public void changeHD(View v) {
