@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
@@ -98,8 +99,13 @@ public class CombatScreen extends Fragment {
         spellAtk = (TextView)rootView.findViewById(R.id.tvSpellAtk);
         spellDD = (TextView)rootView.findViewById(R.id.tvSpellDD);
 
-        spellDD.setText(Integer.toString(8 + _character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
-        spellAtk.setText("+" + Integer.toString(_character.getProficiencyBonus() + _character.getModifier(_character._class.getMainSpellAttribute())));
+        Class aSpellCasterClass = _character._class;
+        if (!aSpellCasterClass.isCaster() && _character._secondaryClass != null) {
+            aSpellCasterClass = _character._secondaryClass;
+        }
+
+        spellDD.setText(Integer.toString(8 + _character.getProficiencyBonus() + _character.getModifier(aSpellCasterClass.getMainSpellAttribute())));
+        spellAtk.setText("+" + Integer.toString(_character.getProficiencyBonus() + _character.getModifier(aSpellCasterClass.getMainSpellAttribute())));
 
 
         tvHitDiceDesc = (TextView)rootView.findViewById(R.id.textViewHitDice);
@@ -125,7 +131,7 @@ public class CombatScreen extends Fragment {
         rowDamageModsTitle = (TableRow)rootView.findViewById(R.id.rowDamageModsTitle);
 
 
-        if (!_character._class.isCaster()) {
+        if (!aSpellCasterClass.isCaster()) {
             TableRow spellRow = (TableRow)rootView.findViewById(R.id.rowSpell);
             spellRow.setVisibility(View.GONE);
         }

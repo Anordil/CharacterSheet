@@ -204,7 +204,7 @@ public abstract class Warlock_base implements Class {
 
 
         if (iLevel >= 20) {
-            powers.add(new Power("Eldritch Master", "Recover all Warlock_tome_oldOne spell slots.", "", 1, -1, true, Enumerations.ActionType.ACTION));
+            powers.add(new Power("Eldritch Master", "Recover all Warlock spell slots.", "", 1, -1, true, Enumerations.ActionType.ACTION));
         }
 
         return powers;

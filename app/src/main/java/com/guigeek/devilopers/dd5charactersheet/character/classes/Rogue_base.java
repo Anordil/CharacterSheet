@@ -169,7 +169,7 @@ public abstract class Rogue_base implements Class {
             powers.add(new Power("Elusive", "No attack roll has the advantage against you while you aren't incapacitated.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 20) {
-            powers.add(new Power("Stroke of Luck", "You can turn a missed attack roll into a hit, or a failed ability check as a critical success. You may only use this feature once per short/long rest.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
+            powers.add(new Power("Stroke of Luck", "You can turn a missed attack roll into a hit, or a failed ability check into a critical success. You may only use this feature once per short/long rest.", "Self", 1, -1, false, Enumerations.ActionType.PASSIVE));
         }
 
         return powers;
