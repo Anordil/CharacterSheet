@@ -138,7 +138,6 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
 
                 // This might affect the off-hand spinner
                 if (weapon._hands == Enumerations.WeaponHandCount.TWO_HANDED) {
-                    Log.d("Switch", "Equipped a 2H weapon");
                     // No off hand
                     _character._offHandWeapon = emptyWeaponOffHand;
                     _character._equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
@@ -148,11 +147,9 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                 }
                 else {
                     spinnerWeaponOffHand.setEnabled(true);
-                    Log.d("Switch", "Equipped a single hand weapon");
                     LinkedList<Externalizable> availableOffHand = new LinkedList<>(), referenceList = null;
                     Externalizable previousSelection = (Externalizable) spinnerWeaponOffHand.getSelectedItem();
                     if (hasDualWielding) {
-                        Log.d("Switch", "Light or dual");
                         referenceList = offHandItemsForDualWielder;
                     }
                     else if (weapon._weight == Enumerations.WeaponWeightCategory.LIGHT) {
@@ -259,7 +256,10 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     @Override
     public void onResume() {
         super.onResume();
+        setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
+        initEquipmentSpinners();
         setListViewHeightBasedOnChildren(getListView());
+        updateContent();
     }
 
     public void updateContent() {
@@ -401,7 +401,6 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                 updateContent();
                 setListViewHeightBasedOnChildren(getListView());
             } catch (Exception e) {
-                Log.d("TOTO", "Item creation failed, ");
                 e.printStackTrace();
             }
         }

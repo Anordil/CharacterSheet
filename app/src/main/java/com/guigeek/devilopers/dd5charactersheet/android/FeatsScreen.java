@@ -71,6 +71,12 @@ public class FeatsScreen extends android.support.v4.app.ListFragment {
         initFeats(view);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setListAdapter(new FeatAdapter(getContext(), R.layout.list_feat, _character.getFeats()));
+    }
+
     public void initFeats(View root) {
         ListView listView = getListView();
         setListAdapter(new FeatAdapter(getContext(), R.layout.list_feat, _character.getFeats()));

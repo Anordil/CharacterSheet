@@ -1,11 +1,14 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Character;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -25,20 +33,25 @@ import java.util.List;
 public class SwipeActivity extends AppCompatActivity {
 
     /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
+     * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
      * loaded fragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+     * {@link FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    protected com.guigeek.devilopers.dd5charactersheet.character.Character _character;
+    protected Character _character;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
     private List<Fragment> fragments = new LinkedList<>();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +60,7 @@ public class SwipeActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         Serializable data = bundle.getSerializable(Constants.CHARACTER);
-        _character = (com.guigeek.devilopers.dd5charactersheet.character.Character) data;
+        _character = (Character) data;
 
         _character.refreshFettles();
 
@@ -74,7 +87,26 @@ public class SwipeActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Fragment aActivePage = mSectionsPagerAdapter.getItem(position);
+                aActivePage.onResume();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
         setTitle(_character._name);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -98,9 +130,9 @@ public class SwipeActivity extends AppCompatActivity {
         }
         if (id == R.id.action_shortrest) {
             _character.doShortRest();
-            for (Fragment frg: fragments) {
+            for (Fragment frg : fragments) {
                 if (frg instanceof CombatScreen) {
-                    ((CombatScreen)frg).refreshSheet();
+                    ((CombatScreen) frg).refreshSheet();
                     getSupportFragmentManager()
                             .beginTransaction()
                             .detach(frg)
@@ -113,9 +145,9 @@ public class SwipeActivity extends AppCompatActivity {
         }
         if (id == R.id.action_longrest) {
             _character.doLongRest();
-            for (Fragment frg: fragments) {
+            for (Fragment frg : fragments) {
                 if (frg instanceof CombatScreen) {
-                    ((CombatScreen)frg).refreshSheet();
+                    ((CombatScreen) frg).refreshSheet();
                     getSupportFragmentManager()
                             .beginTransaction()
                             .detach(frg)
@@ -128,6 +160,42 @@ public class SwipeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Swipe Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 
 
