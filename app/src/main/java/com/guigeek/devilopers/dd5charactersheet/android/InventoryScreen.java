@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -343,6 +344,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         public void onClick(View v) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             final EditText text = new EditText(getActivity());
+            text.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             builder.setTitle(isGoldAdded ? "Add gold":"Remove gold").setMessage("Amount to be " + (isGoldAdded ? "added":"removed")).setView(text);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {

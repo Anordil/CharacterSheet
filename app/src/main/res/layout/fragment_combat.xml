@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tablelayout"
             android:stretchColumns="1"
+            android:shrinkColumns="2,3,4,5"
             android:layout_gravity="center_horizontal">
 
             <TableRow
@@ -169,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:text="Ice (+3 Longsword)"
-                    android:layout_span="8"
+                    android:layout_span="6"
                     android:id="@+id/tvWeaponName" />
             </TableRow>
 
@@ -284,7 +285,7 @@
                 <TableLayout
                     android:id="@+id/combatWeaponProperties"
                     android:layout_width="match_parent"
-                    android:layout_span="8"
+                    android:layout_span="6"
                     android:shrinkColumns="*"
                     android:layout_height="wrap_content" />
             </TableRow>
@@ -299,7 +300,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/rowNameOffHand">
 
-                <LinearLayout android:layout_span="8">
+                <LinearLayout android:layout_span="6">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -343,7 +344,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="+8"
+                        android:text="+6"
                         android:paddingRight="20dp"
                         android:id="@+id/tvAtkBonusOffHand"  />
 
@@ -362,7 +363,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/Name"
-                        android:text="1D8+5S + 1D6(Cold)"
+                        android:text="1D6+5S + 1D6(Cold)"
                         android:id="@+id/tvDamageOffHand" />
 
                 </LinearLayout>
@@ -428,7 +429,7 @@
                 <TableLayout
                     android:id="@+id/combatWeaponPropertiesOffHand"
                     android:layout_width="match_parent"
-                    android:layout_span="8"
+                    android:layout_span="6"
                     android:shrinkColumns="*"
                     android:layout_height="wrap_content" />
             </TableRow>
@@ -486,24 +487,75 @@
 
 
                 <Button
-                    android:minHeight="50dp"
-                    android:minWidth="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:padding="-10dp"
                     android:text="-"
                     android:onClick="changeHP"
                     android:tag="-1"
                     android:id="@+id/btnHPMin1"  />
 
                 <Button
-                    android:minHeight="50dp"
-                    android:minWidth="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
                     android:text="+"
                     android:onClick="changeHP"
                     android:tag="1"
                     android:id="@+id/btnHPPlus1"  />
+
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_span="2"
+                    android:layout_gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_chained_heart"
+                        android:layout_gravity="center_vertical|left" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Temporary HP"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="31"
+                    android:minWidth="25dp"
+                    android:layout_span="2"
+                    android:id="@+id/tvTempHP"
+                    android:textColor="@android:color/black" />
+
+
+
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:padding="-10dp"
+                    android:text="GAIN THP"
+                    android:onClick="changeTempHP"
+                    android:layout_span="2"
+                    android:id="@+id/btnTempHPMin"  />
+
 
 
 
@@ -516,7 +568,7 @@
                 android:layout_height="match_parent">
                 <TextView android:text="DAMAGE MODIFIERS"
                     android:layout_width="wrap_content"
-                    android:layout_span="2"
+                    android:layout_span="6"
                 />
 
                 <ProgressBar
@@ -536,7 +588,7 @@
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_span="8"
+                    android:layout_span="6"
                     android:id="@+id/combatTableDamageMods"
                     ></TableLayout>
             </TableRow>
@@ -588,10 +640,8 @@
                  />
 
                 <Button
-                    android:minHeight="50dp"
-                    android:minWidth="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
                     android:text="-1"
                     android:onClick="changeHD"
                     android:tag="-1"
@@ -599,10 +649,8 @@
                      />
 
                 <Button
-                    android:minHeight="50dp"
-                    android:minWidth="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
                     android:text="+1"
                     android:onClick="changeHD"
                     android:tag="1"
@@ -658,20 +706,16 @@
                     />
 
                 <Button
-                    android:minHeight="50dp"
-                    android:minWidth="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
                     android:text="-1"
                     android:onClick="changeHD"
                     android:tag="-1"
                     android:id="@+id/btnHDMin1Secondary" />
 
                 <Button
-                    android:minHeight="50dp"
-                    android:minWidth="40dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
                     android:text="+1"
                     android:onClick="changeHD"
                     android:tag="1"

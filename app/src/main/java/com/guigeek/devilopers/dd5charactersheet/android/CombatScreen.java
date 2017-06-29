@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ import java.util.List;
 public class CombatScreen extends Fragment {
 
     protected Character _character;
-    TextView viewHPCurrent, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc, tvHitDiceDescSec, tvAtkThrown, tvDmgThrown;
+    TextView viewHPCurrent, viewTempHP, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc, tvHitDiceDescSec, tvAtkThrown, tvDmgThrown;
     TextView viewHitDiceCurrentSecondary, viewHitDiceMaxSecondary;
     TextView viewSpeed, viewInit, spellAtk, spellDD, weaponName, weaponNameOffHand;
     ImageView imageWeaponHit;
@@ -91,6 +92,7 @@ public class CombatScreen extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_combat, container, false);
         viewHPCurrent = (TextView)rootView.findViewById(R.id.tvHPCurrent);
+        viewTempHP = (TextView)rootView.findViewById(R.id.tvTempHP);
         viewHPMax = (TextView)rootView.findViewById(R.id.tvHPMax);
         viewHitDiceCurrent = (TextView)rootView.findViewById(R.id.tvHitDiceCurrent);
         viewHitDiceCurrentSecondary = (TextView)rootView.findViewById(R.id.tvHitDiceCurrentSecondary);
@@ -170,6 +172,7 @@ public class CombatScreen extends Fragment {
                 allTables.setVisibility(View.VISIBLE);
                 _character.changeHP(1);
                 viewHPCurrent.setText(Integer.toString(_character._hpCurrent));
+                viewTempHP.setText(Integer.toString(_character._hpTemp));
                 pb.setProgress(_character._hpCurrent);
             }
         });
@@ -215,6 +218,12 @@ public class CombatScreen extends Fragment {
                 changeHDSecondary(v);
             }
         };
+        View.OnClickListener tempHpList = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeTempHP(v);
+            }
+        };
 
         rootView.findViewById(R.id.btnHPMin1).setOnClickListener(hpList);
         rootView.findViewById(R.id.btnHPPlus1).setOnClickListener(hpList);
@@ -224,6 +233,8 @@ public class CombatScreen extends Fragment {
 
         rootView.findViewById(R.id.btnHDMin1Secondary).setOnClickListener(hdListSecondary);
         rootView.findViewById(R.id.btnHDPlus1Secondary).setOnClickListener(hdListSecondary);
+
+        rootView.findViewById(R.id.btnTempHPMin).setOnClickListener(tempHpList);
     }
 
 
@@ -239,7 +250,7 @@ public class CombatScreen extends Fragment {
             powerHeader.setText("Passive effects");
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-            paramsSaves.span = 8;
+            paramsSaves.span = 6;
             paramsSaves.topMargin = 10;
             powerHeader.setLayoutParams(paramsSaves);
             rowPowerHeader.addView(powerHeader);
@@ -254,7 +265,7 @@ public class CombatScreen extends Fragment {
                 TextView description = new TextView(getContext());
                 description.setText(fettle.toString());
                 TableRow.LayoutParams paramRow = new TableRow.LayoutParams();
-                paramRow.span = 8;
+                paramRow.span = 6;
                 description.setLayoutParams(paramRow);
 
                 row.addView(description);
@@ -275,7 +286,7 @@ public class CombatScreen extends Fragment {
             powerHeader.setText("Spell slots by level");
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-            paramsSaves.span = 8;
+            paramsSaves.span = 6;
             paramsSaves.topMargin = 10;
             powerHeader.setLayoutParams(paramsSaves);
             rowPowerHeader.addView(powerHeader);
@@ -291,7 +302,7 @@ public class CombatScreen extends Fragment {
                 row.setLayoutParams(lp);
 
                 TextView level = new TextView(getContext()), current = new TextView(getContext()), max = new TextView(getContext());
-                level.setText(Integer.toString(i));
+                level.setText("Spell level " + Integer.toString(i));
                 current.setText(Integer.toString(_character._spellSlotsCurrent[i]));
                 max.setText(Integer.toString(_character._spellSlotsMax[i]));
                 current.setTextColor(getResources().getColor(android.R.color.black));
@@ -315,11 +326,16 @@ public class CombatScreen extends Fragment {
                     }
                 });
 
+
                 TableRow.LayoutParams rowParam = new TableRow.LayoutParams();
                 rowParam.span = 2;
-                minus.setLayoutParams(rowParam);
-                plus.setLayoutParams(rowParam);
                 level.setLayoutParams(rowParam);
+
+                TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                buttonParams.width = 50;
+                buttonParams.height = 120;
+                minus.setLayoutParams(buttonParams);
+                plus.setLayoutParams(buttonParams);
 
                 row.addView(level);
                 row.addView(current);
@@ -344,7 +360,7 @@ public class CombatScreen extends Fragment {
             powerHeader.setText(title);
             powerHeader.setTextSize(20.0f);
             TableRow.LayoutParams paramsSaves = new TableRow.LayoutParams();
-            paramsSaves.span = 8;
+            paramsSaves.span = 6;
             paramsSaves.topMargin = 10;
             powerHeader.setLayoutParams(paramsSaves);
             rowPowerHeader.addView(powerHeader);
@@ -373,10 +389,10 @@ public class CombatScreen extends Fragment {
             dd.setText((power._dd > 0 ? "DD" + power._dd : "") + "");
 
             TableRow.LayoutParams rowParamName = new TableRow.LayoutParams();
-            rowParamName.span = 4;
+            rowParamName.span = 3;
             name.setLayoutParams(rowParamName);
             TableRow.LayoutParams rowParamNameDesc = new TableRow.LayoutParams();
-            rowParamNameDesc.span = 3;
+            rowParamNameDesc.span = 2;
             description.setLayoutParams(rowParamNameDesc);
 
             row.addView(name);
@@ -394,14 +410,18 @@ public class CombatScreen extends Fragment {
 
                 TableRow.LayoutParams rowParam = new TableRow.LayoutParams();
                 rowParam.span = 2;
-                minus.setLayoutParams(rowParam);
-                plus.setLayoutParams(rowParam);
 
                 TableRow rowUsage= new TableRow(getContext());
 
                 TextView aLongRestShortRestTV = new TextView(getContext());
                 aLongRestShortRestTV.setText(power._isLongRest ? "LR" : "SR");
                 aLongRestShortRestTV.setLayoutParams(rowParam);
+
+                TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                buttonParams.width = 50;
+//                buttonParams.height = 40;
+                minus.setLayoutParams(buttonParams);
+                plus.setLayoutParams(buttonParams);
 
                 rowUsage.addView(aLongRestShortRestTV);
                 rowUsage.addView(current);
@@ -414,7 +434,7 @@ public class CombatScreen extends Fragment {
             }
 
             TableRow.LayoutParams rowParamDesc = new TableRow.LayoutParams();
-            rowParamDesc.span = 8;
+            rowParamDesc.span = 6;
             desc.setLayoutParams(rowParamDesc);
             rowDesc.addView(desc);
             ll.addView(rowDesc);
@@ -427,6 +447,7 @@ public class CombatScreen extends Fragment {
         pb.setProgress(_character._hpCurrent);
 
         viewHPCurrent.setText(Integer.toString(_character._hpCurrent));
+        viewTempHP.setText(Integer.toString(_character._hpTemp));
         viewHPMax.setText(Integer.toString(_character._hpMax));
 
         viewHitDiceMax.setText(Integer.toString(_character._level));
@@ -659,6 +680,7 @@ public class CombatScreen extends Fragment {
         // Amount?
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final EditText text = new EditText(getActivity());
+        text.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         builder.setTitle(value > 0 ? "Add HP":"Remove HP").setMessage(value > 0 ? "HP healed:" : "Damage taken:").setView(text);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -669,6 +691,7 @@ public class CombatScreen extends Fragment {
                     int amount = Integer.parseInt(amountStr);
                     _character.changeHP(value * amount);
                     viewHPCurrent.setText(Integer.toString(_character._hpCurrent));
+                    viewTempHP.setText(Integer.toString(_character._hpTemp));
                     pb.setProgress(_character._hpCurrent);
 
                     if (_character._hpCurrent > 0) {
@@ -682,6 +705,36 @@ public class CombatScreen extends Fragment {
                         allTables.setVisibility(View.GONE);
                     }
 
+                }
+                catch (Exception e) {
+                    Toast.makeText(getContext(), "Invalid amount", Toast.LENGTH_SHORT).show();
+                    text.setText("");
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface di, int i) {
+            }
+        });
+        builder.create().show();
+    }
+
+    public void changeTempHP(View v) {
+        // Amount?
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final EditText text = new EditText(getActivity());
+        text.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        builder.setTitle("Gain temporary HP").setMessage("Temporary HP:").setView(text);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface di, int i) {
+                final String amountStr = text.getText().toString();
+                try {
+                    int amount = Integer.parseInt(amountStr);
+                    _character.adjustTemporaryHP(amount);
+                    viewTempHP.setText(Integer.toString(_character._hpTemp));
                 }
                 catch (Exception e) {
                     Toast.makeText(getContext(), "Invalid amount", Toast.LENGTH_SHORT).show();

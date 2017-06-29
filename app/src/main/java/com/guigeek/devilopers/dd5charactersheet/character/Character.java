@@ -452,9 +452,28 @@ public class Character implements Externalizable {
     }
 
     public void changeHP(int iQuantity) {
+
+        // Consider temp HP
+        if (iQuantity < 0) {
+            _hpTemp += iQuantity;
+
+            if (_hpTemp < 0) {
+                iQuantity = _hpTemp;
+                _hpTemp = 0;
+            }
+            else {
+                iQuantity = 0;
+            }
+        }
+
         _hpCurrent += iQuantity;
         _hpCurrent = Math.min(_hpCurrent, _hpMax);
         _hpCurrent = Math.max(_hpCurrent, 0);
+    }
+
+    // Keep best source of THP
+    public void adjustTemporaryHP(int newAmount) {
+        _hpTemp = Math.max(_hpTemp, newAmount);
     }
 
     public void changeHD(int iQuantity) {
