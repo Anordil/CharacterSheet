@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -173,6 +175,8 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                     adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, availableOffHand);
                     spinnerWeaponOffHand.setAdapter(adapterOffHand);
                     spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(previousSelection));
+
+                    _character.refreshFettles();
                 }
             }
 
@@ -191,6 +195,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                     _character._offHandWeapon = (Weapon)offHandItem;
                 }
 
+                _character.refreshFettles();
             }
 
             @Override
@@ -200,6 +205,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 _character._equippedArmor = adapterArmor.getItem(position);
+                _character.refreshFettles();
             }
 
             @Override
@@ -227,6 +233,23 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         });
 
         etDamageBonus = (EditText)root.findViewById(R.id.inWeapDmgBonus);
+        etDamageBonus.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    _character._dmgBonus = Integer.parseInt(etDamageBonus.getText().toString());
+                }
+                catch (Exception e) {
+                    _character._dmgBonus = 0;
+                }
+            }
+        });
 
 
         spinnerArmor = (Spinner)root.findViewById(R.id.inSpinnerArmor);
@@ -237,13 +260,22 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
 
         etGold = (TextView)root.findViewById(R.id.inGold);
         etItemsText = (EditText)root.findViewById(R.id.inInventory);
+        etItemsText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _character._allItems = etItemsText.getText().toString();
+            }
+        });
+
         addItemBtn = (Button)root.findViewById(R.id.btnAddItem);
         addGoldBtn = (Button)root.findViewById(R.id.btnAddGold);
         removeGoldBtn = (Button)root.findViewById(R.id.btnRemoveGold);
-
-        InventoryListener aListener = new InventoryListener();
-        Button aBtnUpdateInventory = (Button)root.findViewById(R.id.btnUpdateInventory);
-        aBtnUpdateInventory.setOnClickListener(aListener);
 
         InventoryInsertListener aInventoryInsertListener = new InventoryInsertListener();
         addItemBtn.setOnClickListener(aInventoryInsertListener);
@@ -312,17 +344,6 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         listView.setLayoutParams(params);
     }
 
-
-    class InventoryListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            _character._dmgBonus = Integer.parseInt(etDamageBonus.getText().toString());
-            _character._allItems = etItemsText.getText().toString();
-
-            ((SwipeActivity)getActivity()).save();
-        }
-    }
 
     class InventoryInsertListener implements View.OnClickListener {
         @Override
@@ -394,6 +415,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
             setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
             updateContent();
             setListViewHeightBasedOnChildren(getListView());
+            _character.refreshFettles();
         }
         else if (data != null && data.getSerializableExtra(Constants.ITEM) != null) {
             try {
@@ -402,6 +424,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                 setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
                 updateContent();
                 setListViewHeightBasedOnChildren(getListView());
+                _character.refreshFettles();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -431,6 +454,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
             updateContent();
             setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
             setListViewHeightBasedOnChildren(getListView());
+            _character.refreshFettles();
         }
         return true;
     }

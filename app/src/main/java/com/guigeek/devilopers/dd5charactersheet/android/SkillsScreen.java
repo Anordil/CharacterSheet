@@ -3,7 +3,6 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +31,8 @@ public class SkillsScreen extends Fragment {
     HashSet<String> skillAdv = new HashSet<>(), skillDisadv = new HashSet<>();
     HashSet<String> throwAdv = new HashSet<>(), throwDisadv = new HashSet<>();
 
+    TableLayout ll;
+
     public SkillsScreen() {
     }
 
@@ -50,21 +51,6 @@ public class SkillsScreen extends Fragment {
             Bundle bundle = getArguments();
             Serializable data = bundle.getSerializable(Constants.CHARACTER);
             _character = (Character) data;
-
-            for (Fettle fettle : _character.getFettles()) {
-                if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE) {
-                    skillAdv.add(Enumerations.Skills.values()[fettle._describer].toString());
-                }
-                else if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE) {
-                    skillDisadv.add(Enumerations.Skills.values()[fettle._describer].toString());
-                }
-                else if (fettle._type == Enumerations.FettleType.SAVING_THROW_ADVANTAGE) {
-                    throwAdv.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
-                }
-                else if (fettle._type == Enumerations.FettleType.SAVING_THROW_DISADVANTAGE) {
-                    throwDisadv.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
-                }
-            }
         }
     }
 
@@ -73,14 +59,41 @@ public class SkillsScreen extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_skills, container, false);
-        initSkills(root);
+        ll = (TableLayout) root.findViewById(R.id.table_skills);
+        initSkills();
         return root;
     }
 
-    public void initSkills(View root) {
-        TableLayout ll = (TableLayout) root.findViewById(R.id.table_skills);
+    @Override
+    public void onResume() {
+        super.onResume();
+        initSkills();
+    }
+
+    public void initSkills() {
         _character.recomputeSkills();
         _character.recomputeSavingThrows();
+
+        skillAdv.clear();
+        skillDisadv.clear();
+        throwAdv.clear();
+        throwDisadv.clear();
+        for (Fettle fettle : _character.getFettles()) {
+            if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE) {
+                skillAdv.add(Enumerations.Skills.values()[fettle._describer].toString());
+            }
+            else if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE) {
+                skillDisadv.add(Enumerations.Skills.values()[fettle._describer].toString());
+            }
+            else if (fettle._type == Enumerations.FettleType.SAVING_THROW_ADVANTAGE) {
+                throwAdv.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
+            }
+            else if (fettle._type == Enumerations.FettleType.SAVING_THROW_DISADVANTAGE) {
+                throwDisadv.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
+            }
+        }
+
+        ll.removeAllViews();
 
         createFettlesBar(ll);
 

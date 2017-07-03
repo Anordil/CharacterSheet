@@ -100,10 +100,10 @@ public abstract class Rogue_base implements Class {
 
         if (iNewCharacterLevel == 1) {
             levelUp.add("Choose two of your skill proficiencies (or one + thieves' tool). Your proficiency bonus is doubled for those.");
+            levelUp.add("Gained Thieves' cant !");
         }
 
         if (iNewCharacterLevel == 2) {
-            levelUp.add("Gained Thieves' cant !");
             levelUp.add("Gained Cunning Action !");
         }
 
@@ -144,11 +144,10 @@ public abstract class Rogue_base implements Class {
         int sneakAttackDice = (int) Math.ceil(((double)iLevel)/2);
 
         powers.add(new Power("Sneak Attack", "Once per turn, you may deal an extra " + sneakAttackDice + "D6 damage to one creature you hit with an attack if you have advantage on the attack, using a finesse or ranged weapon. You don't need advantage if the enemy is adjacent to an ally, isn't incapacitated and you don't have disadvantage.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
-
+        powers.add(new Power("Thieves Cant", "You speak the thieves' secret language.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
 
 
         if (iLevel >= 2) {
-            powers.add(new Power("Thieves Cant", "You speak the thieves' secret language.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
             powers.add(new Power("Cunning Action", "You may use you bonus action to Dash, Disengage or Hide.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
 

@@ -17,7 +17,7 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="wrap_content" >
 
                     <TextView
                         android:text="Main hand"
@@ -34,24 +34,11 @@
                         />
                 </TableRow>
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-                    <LinearLayout
-                        android:layout_height="wrap_content"
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_span="4"
-                        android:id="@+id/weaponLayout"
-                    />
-                </TableRow>
-
-
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="15dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                     <TextView
                         android:text="Armor"
@@ -70,8 +57,9 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="15dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    >
 
 
                     <TextView
@@ -95,7 +83,7 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -110,7 +98,7 @@
                         android:inputType="number"
                         android:ems="2"
                         android:id="@+id/inWeapDmgBonus"
-                        android:paddingLeft="10dp" />
+                        android:layout_marginLeft="10dp" />
                 </TableRow>
 
 
@@ -160,8 +148,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Items"
+                        android:text="Inventory"
                         android:id="@+id/textView18" />
+
+                    <Button
+                        style="?android:attr/buttonStyleSmall"
+                        android:layout_column="2"
+                        android:layout_span="2"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_height="wrap_content"
+                        android:text="Add item"
+                        android:id="@+id/btnAddItem"
+                        />
                 </TableRow>
 
                 <TableRow
@@ -172,32 +171,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:inputType="textMultiLine"
+                        android:hint="List of misc. items"
                         android:id="@+id/inInventory"
                         android:layout_span="4" />
                 </TableRow>
 
             </TableLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent" android:orientation="horizontal" android:gravity="center|bottom"
-                android:layout_height="wrap_content">
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_height="wrap_content"
-                    android:text="Update inventory"
-                    android:id="@+id/btnUpdateInventory"
-                    />
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_height="wrap_content"
-                    android:text="Add item"
-                    android:id="@+id/btnAddItem"
-                    />
-            </LinearLayout>
 
             <ListView
                 android:layout_width="match_parent"

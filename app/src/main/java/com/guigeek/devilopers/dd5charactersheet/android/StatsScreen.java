@@ -59,6 +59,12 @@ public class StatsScreen extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initInputValue();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -259,7 +265,7 @@ public class StatsScreen extends Fragment {
                     case CON : bonusCON.setText(property._value + ""); break;
                     case INT : bonusINT.setText(property._value + ""); break;
                     case WIS : bonusWIS.setText(property._value + ""); break;
-                    case CHA : bonusSTR.setText(property._value + ""); break;
+                    case CHA : bonusCHA.setText(property._value + ""); break;
                 }
             }
         }

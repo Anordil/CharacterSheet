@@ -419,7 +419,7 @@ public class CombatScreen extends Fragment {
 
                 TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 buttonParams.width = 50;
-//                buttonParams.height = 40;
+                buttonParams.height = 120;
                 minus.setLayoutParams(buttonParams);
                 plus.setLayoutParams(buttonParams);
 

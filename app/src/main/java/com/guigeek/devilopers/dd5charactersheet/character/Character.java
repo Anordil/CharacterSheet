@@ -591,6 +591,7 @@ public class Character implements Externalizable {
             if (item instanceof Item) {
                 for (Fettle property : ((Item)item)._magicProperties) {
                     _effect.add(property);
+                    Log.d("INVENTORY", "Added a Fettle");
                 }
             }
         }
