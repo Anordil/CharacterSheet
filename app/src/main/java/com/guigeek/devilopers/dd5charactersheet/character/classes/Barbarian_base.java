@@ -39,7 +39,7 @@ public abstract class Barbarian_base implements Class {
     public LinkedList<Fettle> getFettles(Character character) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
 
-        int level = character._level;
+        int level = character._class instanceof Barbarian_base ? character._level : character._levelSecondaryClass;
         if (level >= 2) {
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.DEX_BARBARIAN.ordinal()));
         }

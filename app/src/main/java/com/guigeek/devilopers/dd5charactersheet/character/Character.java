@@ -2,10 +2,14 @@ package com.guigeek.devilopers.dd5charactersheet.character;
 
 import android.util.Log;
 
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_base;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_dragon;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
@@ -20,6 +24,7 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.lang.reflect.Constructor;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -66,6 +71,14 @@ public class Character implements Externalizable {
     public Weapon _equippedWeapon, _offHandWeapon;
 
     public LinkedList<Externalizable> _inventory;
+
+    // Order doesn't matter here
+    private java.lang.Class[] _allClasses = {
+            Barbarian_totem.class,
+            Rogue_assassin.class, Rogue_swashbuckler.class,
+            Warlock_blade_fiend.class, Warlock_tome_oldOne.class,
+            Sorcerer_dragon.class, Sorcerer_storm.class, Sorcerer_wild.class
+    };
 
 
     @Override
@@ -126,23 +139,17 @@ public class Character implements Externalizable {
 
             Log.d("UNWRAP", "Before class");
             Object aClass = oi.readObject();
-            if (aClass instanceof Paladin_vengeance) {
-                _class = new Paladin_vengeance((Paladin_vengeance) aClass);
-            }
-            else if (aClass instanceof Warlock_tome_oldOne) {
-                _class = new Warlock_tome_oldOne((Warlock_tome_oldOne) aClass);
-            }
-            else if (aClass instanceof Barbarian_totem) {
-                _class = new Barbarian_totem((Barbarian_totem) aClass);
-            }
-            else if (aClass instanceof Warlock_blade_fiend) {
-                _class = new Warlock_blade_fiend((Warlock_blade_fiend) aClass);
-            }
-            else if (aClass instanceof Rogue_assassin) {
-                _class = new Rogue_assassin((Rogue_assassin) aClass);
-            }
-            else if (aClass instanceof Rogue_swashbuckler) {
-                _class = new Rogue_swashbuckler((Rogue_swashbuckler) aClass);
+
+            for (java.lang.Class aClassInArray : _allClasses) {
+                if (aClass.getClass() == aClassInArray) {
+                    try {
+                        Constructor<?> ctor = aClassInArray.getConstructor(aClassInArray);
+                        _class = (Class) ctor.newInstance(new Object[] { aClassInArray.cast(aClass) });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
             }
             Log.d("UNWRAP", "After class");
 
@@ -273,27 +280,21 @@ public class Character implements Externalizable {
 
         if (version >= 9) {
             Object aClass = oi.readObject();
-            if (aClass instanceof Paladin_vengeance) {
-                _secondaryClass = new Paladin_vengeance((Paladin_vengeance) aClass);
-            }
-            else if (aClass instanceof Warlock_tome_oldOne) {
-                _secondaryClass = new Warlock_tome_oldOne((Warlock_tome_oldOne) aClass);
-            }
-            else if (aClass instanceof Barbarian_totem) {
-                _secondaryClass = new Barbarian_totem((Barbarian_totem) aClass);
-            }
-            else if (aClass instanceof Warlock_blade_fiend) {
-                _secondaryClass = new Warlock_blade_fiend((Warlock_blade_fiend) aClass);
-            }
-            else if (aClass instanceof Rogue_assassin) {
-                _secondaryClass = new Rogue_assassin((Rogue_assassin) aClass);
-            }
-            else if (aClass instanceof Rogue_swashbuckler) {
-                _secondaryClass = new Rogue_swashbuckler((Rogue_swashbuckler) aClass);
+            if (aClass != null) {
+                for (java.lang.Class aClassInArray : _allClasses) {
+                    if (aClass.getClass() == aClassInArray) {
+                        try {
+                            Constructor<?> ctor = aClassInArray.getConstructor(aClassInArray);
+                            _secondaryClass = (Class) ctor.newInstance(new Object[] { aClassInArray.cast(aClass) });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                }
             }
             _levelSecondaryClass = oi.readInt();
             _hitDiceSecondary = oi.readInt();
-            Log.d("HD", "Read HT sec: " + _hitDiceSecondary);
         }
         else {
             _secondaryClass = null;

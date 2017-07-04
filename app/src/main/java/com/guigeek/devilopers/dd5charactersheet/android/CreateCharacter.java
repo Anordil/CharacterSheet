@@ -20,6 +20,9 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_tote
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_dragon;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
@@ -86,8 +89,17 @@ public class CreateCharacter extends AppCompatActivity {
                 case 5:
                     aClass = new Rogue_swashbuckler();
                     break;
+                case 6:
+                    aClass = new Sorcerer_dragon();
+                    break;
+                case 7:
+                    aClass = new Sorcerer_wild();
+                    break;
+                case 8:
+                    aClass = new Sorcerer_storm();
+                    break;
                 default:
-                    aClass = new Paladin_vengeance();
+                    aClass = null;
                     break;
             }
 
@@ -105,7 +117,7 @@ public class CreateCharacter extends AppCompatActivity {
                     aRace = new MountainDwarf();
                     break;
                 default:
-                    aRace = new MountainDwarf();
+                    aRace = null;
                     break;
             }
 

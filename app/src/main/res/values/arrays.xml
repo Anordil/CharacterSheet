@@ -7,6 +7,9 @@
         <item>Warlock (Blade, Fiend)</item>
         <item>Rogue (Assassin)</item>
         <item>Rogue (Swashbuckler)</item>
+        <item>Sorcerer (Draconic)</item>
+        <item>Sorcerer (Wild)</item>
+        <item>Sorcerer (Storm)</item>
 
 
     </string-array>
@@ -99,6 +102,14 @@
         <item>[Warlock Invocation] Voice of the chain master</item>
         <item>[Warlock Invocation] Whispers of the grave</item>
         <item>[Warlock Invocation] Witch sight (15th level)</item>
+        <item>[Sorcerer Metamagic] Careful spell</item>
+        <item>[Sorcerer Metamagic] Distant spell</item>
+        <item>[Sorcerer Metamagic] Empowered spell</item>
+        <item>[Sorcerer Metamagic] Extended spell</item>
+        <item>[Sorcerer Metamagic] Heightened spell</item>
+        <item>[Sorcerer Metamagic] Quickened spell</item>
+        <item>[Sorcerer Metamagic] Subtle spell</item>
+        <item>[Sorcerer Metamagic] Twinned spell</item>
     </string-array>
     <string-array name="featsDescription">
         <item>You have studied the secrets of alchemy and are an expert in its practice, gaining the following benefits:\nIncrease your Intelligence score by 1, to a maximum of 20.\nYou gain proficiency with alchemist’s supplies. If you are already proficient with them, you add double your proficiency bonus to checks you make with them. \nAs an action, you can identify one potion within 5 feet of you, as if you had tasted it. You must see the liquid for this benefit to work. \nOver the course of any short rest, you can temporarily improve the potency of one potion of healing of any rarity. To use this benefit, you must have alchemist’s supplies with you, and the potion must be within reach. If the potion is drunk no more than 1 hour after the short rest ends, the creature drinking the potion can forgo the potion’s die roll and regains the maximum number of hit points that the potion can restore.</item>
@@ -181,5 +192,13 @@
         <item>See book</item>
         <item>Cast Speak with dead at will</item>
         <item>You can see the true form of any shapechanger or creature concealed by illusion/transmutation within 30ft and line of sight</item>
+        <item>1 sorcery point : A chosen number of creatures (up to your CHA) automatically succed on the saving throw for that spell</item>
+        <item>1 sorcery point : Double the range of a spell that has a range of 5ft or more. Gives touch spells a range of 30ft.</item>
+        <item>1 sorcery point : Reroll a number of damage die up to your CHA (keep the new result). This Metamagic option may be combined with another.</item>
+        <item>1 sorcery point : Double the duration of a spell that lasts at least 1mn, up to 24 hours.</item>
+        <item>3 sorcery point : Give one target disadvantage against the saving throw for that spell.</item>
+        <item>2 sorcery point : Change the casting time of the spell form 1 action to 1 bonus action.</item>
+        <item>1 sorcery point : Cast this spell without verbal and somatic components.</item>
+        <item>1 sorcery point/spell level (1 for cantrips) : A spell that targets one creature and doesn\'t have a range of Self may targets a second creature in range.</item>
     </string-array>
 </resources>
