@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -29,6 +30,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SwipeActivity extends AppCompatActivity {
 
@@ -42,6 +45,9 @@ public class SwipeActivity extends AppCompatActivity {
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     protected Character _character;
+
+    private Timer _timer;
+    private float _initialBrightness = 1F;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -54,9 +60,31 @@ public class SwipeActivity extends AppCompatActivity {
     private GoogleApiClient client;
 
     @Override
+    public void onUserInteraction() {
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        layout.screenBrightness = _initialBrightness;
+        getWindow().setAttributes(layout);
+
+        try {
+            _timer.cancel();
+        }
+        catch (Exception up){}
+        _timer = new Timer();
+        _timer.schedule(new DimDisplayTask(), 20000);
+
+        super.onUserInteraction();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        WindowManager.LayoutParams layout = getWindow().getAttributes();
+        _initialBrightness = layout.screenBrightness;
+
+        _timer = new Timer();
 
         Bundle bundle = this.getIntent().getExtras();
         Serializable data = bundle.getSerializable(Constants.CHARACTER);
@@ -250,6 +278,21 @@ public class SwipeActivity extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(App.getContext(), "Saved failed", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
+        }
+    }
+
+    public class DimDisplayTask extends TimerTask {
+
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    WindowManager.LayoutParams layout = getWindow().getAttributes();
+                    layout.screenBrightness = 0F;
+                    getWindow().setAttributes(layout);
+                }
+            });
         }
     }
 }
