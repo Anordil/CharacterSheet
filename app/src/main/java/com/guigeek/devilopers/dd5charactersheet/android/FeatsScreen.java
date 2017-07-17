@@ -92,9 +92,8 @@ public class FeatsScreen extends android.support.v4.app.ListFragment {
                 b.setTitle("Select a feat to add");
 
                 LinkedList<Power> allFeats = new LinkedList<Power>();
-                final String[] featNames = getResources().getStringArray(R.array.featsName);
-                final String[] featDescriptions = getResources().getStringArray(R.array.featsDescription);
-
+                String[] featNames = getResources().getStringArray(R.array.featsName);
+                String[] featDescriptions = getResources().getStringArray(R.array.featsDescription);
 
                 for (int i = 0; i < featNames.length; ++i) {
                     // Skip warlock invocations?
@@ -114,12 +113,15 @@ public class FeatsScreen extends android.support.v4.app.ListFragment {
                     allFeats.add(new Power(featNames[i], featDescriptions[i], "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
                 }
 
+               final Object[] featsFiltered = allFeats.toArray();
+
                 b.setAdapter(new FeatAdapter(getContext(), R.layout.list_feat, allFeats), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         dialog.dismiss();
-                        _character._feats.add(new Power(featNames[which], featDescriptions[which], "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
+                        Power feat = (Power)featsFiltered[which];
+                        _character._feats.add(new Power(feat._name, feat._description, "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
                         setListAdapter(new FeatAdapter(getContext(), R.layout.list_feat, _character.getFeats()));
                     }
                 });
