@@ -59,6 +59,31 @@ public abstract class Sorcerer_base implements Class {
                 {0, 4, 3, 3, 3, 3, 2, 2, 1, 1}//ln 20
         };
 
+    int[][] _spellsKnown = {
+            // cantrips, spells
+            {0, 0},
+            {4, 2}, //character lv 1
+            {4, 3},
+            {4, 4},
+            {5, 5},
+            {5, 6},//lv 5
+            {5, 7},
+            {5, 8},
+            {5, 9},
+            {5, 10},
+            {6, 11},//lv 10
+            {6, 12},
+            {6, 12},
+            {6, 13},
+            {6, 13},
+            {6, 14},//lv 15
+            {6, 14},
+            {6, 15},
+            {6, 15},
+            {6, 15},
+            {6, 15}//ln 20
+    };
+
     public Sorcerer_base(){}
     public Sorcerer_base(Sorcerer_base other) {
         _spellSlots = other._spellSlots;
@@ -80,6 +105,11 @@ public abstract class Sorcerer_base implements Class {
     @Override
     public int[] getSpellSlots(int iCharacterLevel) {
         return _spellSlots[Math.min(20, iCharacterLevel)];
+    }
+
+    @Override
+    public int[] getSpellsKnown(int iCharacterLevel) {
+        return _spellsKnown[Math.min(20, iCharacterLevel)];
     }
 
     @Override

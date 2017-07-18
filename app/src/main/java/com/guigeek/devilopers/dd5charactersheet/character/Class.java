@@ -13,6 +13,7 @@ public interface Class  {
 
     public boolean isCaster();
     public int[] getSpellSlots(int iCharacterLevel);
+    public int[] getSpellsKnown(int iCharacterLevel);
     public int getAttacksPerRound(Character iCharacter);
 
     public List<String> getLevelUpBenefits(int iNewCharacterLevel);

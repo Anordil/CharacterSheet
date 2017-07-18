@@ -63,6 +63,31 @@ public abstract class Warlock_base implements Class {
             {0, 0, 0, 0, 0, 0, 1, 1, 1, 1}//ln 20
     };
 
+    int[][] _spellsKnown = {
+            // cantrips, spells
+            {0, 0},
+            {2, 2}, //character lv 1
+            {2, 3},
+            {2, 4},
+            {3, 5},
+            {3, 6},//lv 5
+            {3, 7},
+            {3, 8},
+            {3, 9},
+            {3, 10},
+            {4, 10},//lv 10
+            {4, 11},
+            {4, 11},
+            {4, 12},
+            {4, 12},
+            {4, 13},//lv 15
+            {4, 13},
+            {4, 14},
+            {4, 14},
+            {4, 15},
+            {4, 15}//ln 20
+    };
+
 
     public Warlock_base(){}
     public Warlock_base(Warlock_base other) {
@@ -84,6 +109,11 @@ public abstract class Warlock_base implements Class {
     @Override
     public int[] getSpellSlots(int iCharacterLevel) {
         return _spellSlots[Math.min(20, iCharacterLevel)];
+    }
+
+    @Override
+    public int[] getSpellsKnown(int iCharacterLevel) {
+        return _spellsKnown[Math.min(20, iCharacterLevel)];
     }
 
     @Override

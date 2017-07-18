@@ -84,6 +84,11 @@ public abstract class Rogue_base implements Class {
     }
 
     @Override
+    public int[] getSpellsKnown(int iCharacterLevel) {
+        return new int[]{0,0};
+    }
+
+    @Override
     public int getAttacksPerRound(Character iCharacter) {
         return 1;
     }

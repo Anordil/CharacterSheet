@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
@@ -34,8 +35,11 @@ public class StatsScreen extends Fragment {
 
     Button updateButton, multiclassButton;
     EditText name, level, str, dex, con, intel, wis, cha, levelSecondary;
-    TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA, tvSecondaryClass;
+    TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA, tvSecondaryClass, knownCantrips, knownSpells;
     Spinner spSecondaryClass;
+
+    TableRow rowCantrips, rowSpells;
+
 
     public StatsScreen() {
     }
@@ -89,6 +93,12 @@ public class StatsScreen extends Fragment {
         bonusWIS = (TextView)root.findViewById(R.id.bonusWIS);
         bonusCHA = (TextView)root.findViewById(R.id.bonusCHA);
 
+        knownCantrips = (TextView)root.findViewById(R.id.knownCantrips);
+        knownSpells = (TextView)root.findViewById(R.id.knownSpells);
+
+        rowCantrips = (TableRow)root.findViewById(R.id.rowCantrips);
+        rowSpells = (TableRow)root.findViewById(R.id.rowSpells);
+
         multiclassButton = (Button)root.findViewById(R.id.buttonMulticlass);
         spSecondaryClass = (Spinner)root.findViewById(R.id.spinnerClass);
 
@@ -104,6 +114,23 @@ public class StatsScreen extends Fragment {
             tvSecondaryClass.setVisibility(View.GONE);
             spSecondaryClass.setVisibility(View.VISIBLE);
             spSecondaryClass.setEnabled(false);
+        }
+
+        if (_character._class.getSpellsKnown(_character._level)[0] > 0) {
+            rowCantrips.setVisibility(View.VISIBLE);
+            rowSpells.setVisibility(View.VISIBLE);
+            knownCantrips.setText(Integer.toString(_character._class.getSpellsKnown(_character._level)[0]));
+            knownSpells.setText(Integer.toString(_character._class.getSpellsKnown(_character._level)[1]));
+        }
+        else if (_character._secondaryClass != null && _character._secondaryClass.getSpellsKnown(_character._levelSecondaryClass)[0] > 0) {
+            rowCantrips.setVisibility(View.VISIBLE);
+            rowSpells.setVisibility(View.VISIBLE);
+            knownCantrips.setText(Integer.toString(_character._secondaryClass.getSpellsKnown(_character._levelSecondaryClass)[0]));
+            knownSpells.setText(Integer.toString(_character._secondaryClass.getSpellsKnown(_character._levelSecondaryClass)[1]));
+        }
+        else {
+            rowCantrips.setVisibility(View.GONE);
+            rowSpells.setVisibility(View.GONE);
         }
 
 
@@ -224,6 +251,24 @@ public class StatsScreen extends Fragment {
                             });
                     alertDialog.show();
                     _character.refresh();
+                }
+
+
+                if (_character._class.getSpellsKnown(_character._level)[0] > 0) {
+                    rowCantrips.setVisibility(View.VISIBLE);
+                    rowSpells.setVisibility(View.VISIBLE);
+                    knownCantrips.setText(Integer.toString(_character._class.getSpellsKnown(_character._level)[0]));
+                    knownSpells.setText(Integer.toString(_character._class.getSpellsKnown(_character._level)[1]));
+                }
+                else if (_character._secondaryClass != null && _character._secondaryClass.getSpellsKnown(_character._levelSecondaryClass)[0] > 0) {
+                    rowCantrips.setVisibility(View.VISIBLE);
+                    rowSpells.setVisibility(View.VISIBLE);
+                    knownCantrips.setText(Integer.toString(_character._secondaryClass.getSpellsKnown(_character._levelSecondaryClass)[0]));
+                    knownSpells.setText(Integer.toString(_character._secondaryClass.getSpellsKnown(_character._levelSecondaryClass)[1]));
+                }
+                else {
+                    rowCantrips.setVisibility(View.GONE);
+                    rowSpells.setVisibility(View.GONE);
                 }
 
                 ((SwipeActivity)getActivity()).refreshTabs();
