@@ -579,12 +579,13 @@ public class Character implements Externalizable {
         if (_equippedShield != null) for (Fettle property : _equippedShield._magicProperties) {
             _effect.add(property);
         }
-        if (_equippedWeapon != null) for (Fettle property : _equippedWeapon._magicProperties) {
-            _effect.add(property);
-        }
-        if (_offHandWeapon != null) for (Fettle property : _offHandWeapon._magicProperties) {
-            _effect.add(property);
-        }
+        // Commented out to not count attack bonus damages for each hand. TO be fixed if the weapon provide added STR, ...
+//        if (_equippedWeapon != null) for (Fettle property : _equippedWeapon._magicProperties) {
+//            _effect.add(property);
+//        }
+//        if (_offHandWeapon != null) for (Fettle property : _offHandWeapon._magicProperties) {
+//            _effect.add(property);
+//        }
         if (_equippedArmor != null) for (Fettle property : _equippedArmor._magicProperties) {
             _effect.add(property);
         }
