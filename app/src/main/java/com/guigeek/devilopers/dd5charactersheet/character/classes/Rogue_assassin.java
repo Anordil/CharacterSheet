@@ -2,6 +2,7 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -16,20 +17,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Rogue_assassin extends Rogue_base{
+public class Rogue_assassin extends BaseArchetype {
     static final long serialVersionUID = 203L;
 
     public Rogue_assassin(){}
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_rogue_assassin);
+        return App.getResString(R.string.rogue_assassin);
     }
 
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
+        List<String> levelUp = new LinkedList<>();
 
         if (iNewCharacterLevel == 3) {
             levelUp.add("You are now proficient with the Disguise and Poison kits.");
@@ -51,7 +52,7 @@ public class Rogue_assassin extends Rogue_base{
     }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
-        LinkedList<Power> powers = super.getPowers(iLevel, iCharac);
+        LinkedList<Power> powers = new LinkedList<>();
 
         if (iLevel >= 3) {
             powers.add(new Power("Assassinate", "You have advantage on attack rolls against any creature that hasn't taken a turn in combat yet. In addition, any hit against a surprised creature is critical.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));

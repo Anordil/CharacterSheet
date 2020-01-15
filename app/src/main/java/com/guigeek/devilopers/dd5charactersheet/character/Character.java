@@ -6,8 +6,10 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_base
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_dragon;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
@@ -140,8 +142,6 @@ public class Character implements Externalizable {
         Log.d("TOTO", "Decoding a version " + version + " character");
         _version = version;
 
-
-
             Object aClass = oi.readObject();
         Log.d("UNWRAP", "class " + aClass.getClass());
 
@@ -154,20 +154,11 @@ public class Character implements Externalizable {
         else if (aClass instanceof Paladin_vengeance) {
             _class = (Paladin_vengeance) aClass;
         }
-        else if (aClass instanceof Rogue_assassin) {
-            _class = (Rogue_assassin) aClass;
+        else if (aClass instanceof Rogue) {
+            _class = (Rogue) aClass;
         }
-        else if (aClass instanceof Rogue_swashbuckler) {
-            _class = (Rogue_swashbuckler) aClass;
-        }
-        else if (aClass instanceof Sorcerer_dragon) {
-            _class = (Sorcerer_dragon) aClass;
-        }
-        else if (aClass instanceof Sorcerer_storm) {
-            _class = (Sorcerer_storm) aClass;
-        }
-        else if (aClass instanceof Sorcerer_wild) {
-            _class = (Sorcerer_wild) aClass;
+        else if (aClass instanceof Sorcerer) {
+            _class = (Sorcerer) aClass;
         }
         else if (aClass instanceof Warlock_blade_fiend) {
             _class = (Warlock_blade_fiend) aClass;
@@ -295,20 +286,11 @@ public class Character implements Externalizable {
                 else if (aSecondaryClass instanceof Paladin_vengeance) {
                     _secondaryClass = (Paladin_vengeance) aClass;
                 }
-                else if (aSecondaryClass instanceof Rogue_assassin) {
-                    _secondaryClass = (Rogue_assassin) aClass;
+                else if (aSecondaryClass instanceof Rogue) {
+                    _secondaryClass = (Rogue) aClass;
                 }
-                else if (aSecondaryClass instanceof Rogue_swashbuckler) {
-                    _secondaryClass = (Rogue_swashbuckler) aClass;
-                }
-                else if (aSecondaryClass instanceof Sorcerer_dragon) {
-                    _secondaryClass = (Sorcerer_dragon) aClass;
-                }
-                else if (aSecondaryClass instanceof Sorcerer_storm) {
-                    _secondaryClass = (Sorcerer_storm) aClass;
-                }
-                else if (aSecondaryClass instanceof Sorcerer_wild) {
-                    _secondaryClass = (Sorcerer_wild) aClass;
+                else if (aSecondaryClass instanceof Sorcerer) {
+                    _secondaryClass = (Sorcerer) aClass;
                 }
                 else if (aSecondaryClass instanceof Warlock_blade_fiend) {
                     _secondaryClass = (Warlock_blade_fiend) aClass;

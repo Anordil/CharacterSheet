@@ -2,6 +2,7 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
@@ -14,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Rogue_swashbuckler extends Rogue_base {
+public class Rogue_swashbuckler extends BaseArchetype {
     static final long serialVersionUID = 204L;
 
     public Rogue_swashbuckler(){}
@@ -22,13 +23,13 @@ public class Rogue_swashbuckler extends Rogue_base {
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_rogue_swashbuckler);
+        return App.getResString(R.string.rogue_swashbuckler);
     }
 
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
+        List<String> levelUp = new LinkedList<>();
 
         if (iNewCharacterLevel == 3) {
             levelUp.add("Gained Fancy Footwork !");
@@ -50,7 +51,7 @@ public class Rogue_swashbuckler extends Rogue_base {
     }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
-        LinkedList<Power> powers = super.getPowers(iLevel, iCharac);
+        LinkedList<Power> powers = new LinkedList<>();
 
         if (iLevel >= 3) {
             powers.add(new Power("Fancy Footwork", "If you make a melee attack against a creature, during your turn, that creature cannot make OA against you during the rest of your turn.", "Self", -1, -1, true, Enumerations.ActionType.PASSIVE));

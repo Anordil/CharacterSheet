@@ -7,12 +7,9 @@
     <string name="class_paladin_vengeance">Paladin (Vengeance)</string>
     <string name="class_warlock_tome_oldOne">Warlock (Tome, Ancient)</string>
     <string name="class_warlock_blade_fiend">Warlock (Blade, Fiend)</string>
-    <string name="class_rogue_assassin">Rogue (Assassin)</string>
-    <string name="class_rogue_swashbuckler">Rogue (Swashbuckler)</string>
+    <string name="class_rogue">Rogue</string>
     <string name="class_barbarian">Barbarian</string>
-    <string name="class_sorcerer_dragon">Sorcerer (Draconic)</string>
-    <string name="class_sorcerer_wild">Sorcerer (Wild)</string>
-    <string name="class_sorcerer_storm">Sorcerer (Storm)</string>
+    <string name="class_sorcerer">Sorcerer</string>
     <string name="class_blood_hunter">Blood Hunter</string>
 
 
@@ -29,4 +26,16 @@
     <string name="title_activity_swipe">Character Sheet</string>
 
     <string name="addFeat">ADD FEAT</string>
+
+    <string name="bloodhunter_ghostslayer">Ghostslayer</string>
+    <string name="bloodhunter_lycan">Lycan</string>
+    <string name="bloodhunter_mutant">Mutant</string>
+    <string name="bloodhunter_profane_soul">Profane Soul</string>
+
+    <string name="rogue_assassin">Assassin</string>
+    <string name="rogue_swashbuckler">Swashbuckler</string>
+
+    <string name="sorcerer_dragon">Draconic</string>
+    <string name="sorcerer_storm">Storm</string>
+    <string name="sorcerer_wild">Wild</string>
 </resources>

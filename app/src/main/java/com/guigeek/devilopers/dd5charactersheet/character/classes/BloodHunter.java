@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.res.Resources;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
@@ -18,6 +20,11 @@ import java.util.List;
 
 public class BloodHunter extends BaseClass {
     static final long serialVersionUID = 201L;
+
+    @Override
+    public int getArchetypes() {
+        return R.array.bloodHunterOrders;
+    }
 
     @Override
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
@@ -67,7 +74,7 @@ public class BloodHunter extends BaseClass {
 
 
     public BloodHunter(){
-        _archetype = "Ghostslayer";
+
     }
 
 
@@ -84,7 +91,11 @@ public class BloodHunter extends BaseClass {
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_blood_hunter) + " (" + _archetype + ")";
+        String name = App.getResString(R.string.class_blood_hunter);
+        if (_archetype != null) {
+            name += " (" + _archetype.getName() + ")";
+        }
+        return name;
     }
 
     @Override
@@ -149,75 +160,10 @@ public class BloodHunter extends BaseClass {
         }
 
         // Order powers
-        if (_archetype.equals("Ghostslayer")) {
-            if (iNewCharacterLevel == 3) {
-                levelUp.add("Welcome to the order of the Ghostslayer.");
-            }
-            else if (iNewCharacterLevel == 7) {
-
-            }
-            else if (iNewCharacterLevel == 11) {
-
-            }
-            else if (iNewCharacterLevel == 15) {
-
-            }
-            else if (iNewCharacterLevel == 18) {
-
-            }
+        if (_archetype != null) {
+            List<String> levelUpArchetype = _archetype.getLevelUpBenefits(iNewCharacterLevel);
+            levelUp.addAll(levelUpArchetype);
         }
-        if (_archetype.equals("Lycan")) {
-            if (iNewCharacterLevel == 3) {
-                levelUp.add("Welcome to the order of the Lycan.");
-            }
-            else if (iNewCharacterLevel == 7) {
-
-            }
-            else if (iNewCharacterLevel == 11) {
-
-            }
-            else if (iNewCharacterLevel == 15) {
-
-            }
-            else if (iNewCharacterLevel == 18) {
-
-            }
-        }
-        if (_archetype.equals("Mutant")) {
-            if (iNewCharacterLevel == 3) {
-                levelUp.add("Welcome to the order of the Mutant.");
-            }
-            else if (iNewCharacterLevel == 7) {
-
-            }
-            else if (iNewCharacterLevel == 11) {
-
-            }
-            else if (iNewCharacterLevel == 15) {
-
-            }
-            else if (iNewCharacterLevel == 18) {
-
-            }
-        }
-        if (_archetype.equals("Profane Soul")) {
-            if (iNewCharacterLevel == 3) {
-                levelUp.add("Welcome to the order of the Profane Soul.");
-            }
-            else if (iNewCharacterLevel == 7) {
-
-            }
-            else if (iNewCharacterLevel == 11) {
-
-            }
-            else if (iNewCharacterLevel == 15) {
-
-            }
-            else if (iNewCharacterLevel == 18) {
-
-            }
-        }
-
 
         return levelUp;
     }
@@ -267,6 +213,10 @@ public class BloodHunter extends BaseClass {
             powers.add(new Power("Sanguine Mastery", "When you are below one fourth of your current maximum hit points, all of your crimson rite damage dice are maximized.\n" +
                     "\n" +
                     "In addition, when you critically hit with a weapon attack that bears your crimson rite, you regain a use of your Blood Maledict feature.", "", -1, -1, false, Enumerations.ActionType.PASSIVE));
+        }
+
+        if (_archetype != null) {
+            powers.addAll(_archetype.getPowers(iLevel, iCharac));
         }
 
 

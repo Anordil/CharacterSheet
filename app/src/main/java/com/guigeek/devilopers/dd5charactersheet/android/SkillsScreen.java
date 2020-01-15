@@ -1,9 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +18,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.SavingThrow;
 import com.guigeek.devilopers.dd5charactersheet.character.Skill;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_base;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -262,7 +260,7 @@ public class SkillsScreen extends Fragment {
             isDoublyProficient.setOnClickListener(new SavingThrowDoubleProficiencyListener(skill, value));
             isProficient.setOnClickListener(new SkillListener(skill, value, isDoublyProficient));
 
-            if (!(_character._class instanceof Rogue_base) && !(_character._secondaryClass != null && _character._secondaryClass instanceof Rogue_base)) {
+            if (!(_character._class instanceof Rogue) && !(_character._secondaryClass != null && _character._secondaryClass instanceof Rogue)) {
                 isDoublyProficient.setVisibility(View.INVISIBLE);
             }
 

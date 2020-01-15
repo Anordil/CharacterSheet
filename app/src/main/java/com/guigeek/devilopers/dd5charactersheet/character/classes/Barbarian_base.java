@@ -30,7 +30,11 @@ public abstract class Barbarian_base extends BaseClass {
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_barbarian) + " (" + _archetype + ")";
+        String name = App.getResString(R.string.class_barbarian);
+        if (_archetype != null) {
+            name += " (" + _archetype.getName() + ")";
+        }
+        return name;
     }
 
     @Override
@@ -65,7 +69,6 @@ public abstract class Barbarian_base extends BaseClass {
 
 
     public Barbarian_base(){
-        _archetype = "Totem";
     }
 
     @Override

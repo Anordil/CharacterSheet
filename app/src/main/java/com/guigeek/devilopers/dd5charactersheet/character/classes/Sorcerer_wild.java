@@ -2,6 +2,7 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
@@ -14,19 +15,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Sorcerer_wild extends Sorcerer_base {
+public class Sorcerer_wild extends BaseArchetype {
     static final long serialVersionUID = 207L;
 
     public Sorcerer_wild(){}
 
     @Override
     public String getName() {
-        return App.getResString(R.string.class_sorcerer_wild);
+        return App.getResString(R.string.sorcerer_wild);
     }
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
+        List<String> levelUp = new LinkedList<>();
 
         if (iNewCharacterLevel == 1) {
             levelUp.add("You gained Magic Surge!");
@@ -46,7 +47,7 @@ public class Sorcerer_wild extends Sorcerer_base {
     }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
-        LinkedList<Power> powers = super.getPowers(iLevel, iCharac);
+        LinkedList<Power> powers = new LinkedList<>();
 
 
         if (iLevel >= 1) {

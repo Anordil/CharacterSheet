@@ -1,6 +1,9 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.res.Resources;
+
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -20,7 +23,11 @@ import java.util.List;
 public abstract class BaseClass implements Class, Externalizable {
 
     protected int _version = 1;
-    protected String _archetype = null;
+    protected Archetype _archetype = null;
+
+    public int getArchetypes() {
+        return 0;
+    }
 
     int[][] _spellSlots = {
             // spell level 0-9
@@ -104,7 +111,7 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
-    public void setArchetype(String iArchetype) {
+    public void setArchetype(Archetype iArchetype) {
         _archetype = iArchetype;
     }
 
@@ -128,7 +135,7 @@ public abstract class BaseClass implements Class, Externalizable {
         int version = oi.readInt();
         _version = version;
         if (version >= 1) {
-            _archetype = (String) oi.readObject();
+            _archetype = (Archetype) oi.readObject();
             _spellSlots = (int[][])oi.readObject();
             _spellsKnown = (int[][])oi.readObject();
         }

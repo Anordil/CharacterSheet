@@ -16,7 +16,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public abstract class Rogue_base extends BaseClass {
+public class Rogue extends BaseClass {
+
+    @Override
+    public int getArchetypes() {
+        return R.array.rogueArchetypes;
+    }
 
     @Override
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
@@ -32,7 +37,16 @@ public abstract class Rogue_base extends BaseClass {
         return fettles;
     }
 
-    public Rogue_base(){}
+    public Rogue(){}
+
+    @Override
+    public String getName() {
+        String name = App.getResString(R.string.class_rogue);
+        if (_archetype != null) {
+            name += " (" + _archetype.getName() + ")";
+        }
+        return name;
+    }
 
     @Override
     public int getHitDie() {

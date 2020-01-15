@@ -1,8 +1,8 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
@@ -13,7 +13,12 @@ import java.util.List;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public abstract class Sorcerer_base extends BaseClass {
+public class Sorcerer extends BaseClass {
+
+    @Override
+    public int getArchetypes() {
+        return R.array.sorcererArchetypes;
+    }
 
     @Override
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
@@ -27,7 +32,7 @@ public abstract class Sorcerer_base extends BaseClass {
     public LinkedList<Fettle> getFettles(Character character) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
 
-        int level = character._class instanceof Sorcerer_base ? character._level : character._levelSecondaryClass;
+        int level = character._class instanceof Sorcerer ? character._level : character._levelSecondaryClass;
         return fettles;
     }
 
@@ -81,10 +86,17 @@ public abstract class Sorcerer_base extends BaseClass {
             {6, 15}//ln 20
     };
 
-    public Sorcerer_base(){}
+    public Sorcerer(){}
 
 
-
+    @Override
+    public String getName() {
+        String name = App.getResString(R.string.class_sorcerer);
+        if (_archetype != null) {
+            name += " (" + _archetype.getName() + ")";
+        }
+        return name;
+    }
 
     @Override
     public int getHitDie() {

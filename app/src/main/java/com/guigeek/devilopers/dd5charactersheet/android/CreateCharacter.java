@@ -7,11 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
@@ -21,14 +19,15 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter_lycan;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_base;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_dragon;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_base;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
@@ -39,7 +38,6 @@ import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
 import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CreateCharacter extends AppCompatActivity {
@@ -87,16 +85,10 @@ public class CreateCharacter extends AppCompatActivity {
                 aClass = new Warlock_tome_oldOne();
             } else if (aClassName.equals(App.getResString(R.string.class_warlock_blade_fiend))) {
                 aClass = new Warlock_blade_fiend();
-            } else if (aClassName.equals(App.getResString(R.string.class_rogue_assassin))) {
-                aClass = new Rogue_assassin();
-            } else if (aClassName.equals(App.getResString(R.string.class_rogue_swashbuckler))) {
-                aClass = new Rogue_swashbuckler();
-            } else if (aClassName.equals(App.getResString(R.string.class_sorcerer_dragon))) {
-                aClass = new Sorcerer_dragon();
-            } else if (aClassName.equals(App.getResString(R.string.class_sorcerer_wild))) {
-                aClass = new Sorcerer_wild();
-            } else if (aClassName.equals(App.getResString(R.string.class_sorcerer_storm))) {
-                aClass = new Sorcerer_storm();
+            } else if (aClassName.equals(App.getResString(R.string.class_rogue))) {
+                aClass = new Rogue();
+            } else if (aClassName.equals(App.getResString(R.string.class_sorcerer))) {
+                aClass = new Sorcerer();
             } else if (aClassName.equals(App.getResString(R.string.class_blood_hunter))) {
                 aClass = new BloodHunter();
             }
@@ -126,7 +118,7 @@ public class CreateCharacter extends AppCompatActivity {
         if (aRace instanceof Dragonborn) {
             // Choose ancestry
             AlertDialog.Builder b = new AlertDialog.Builder(CreateCharacter.this);
-            b.setTitle("Select a draconic ancestry");
+            b.setTitle("Select a subrace");
 
             final String[] allAncestriesArray = getResources().getStringArray(R.array.draconicAncestries);
             List<String> allAncestries = Arrays.asList(allAncestriesArray);
@@ -149,12 +141,13 @@ public class CreateCharacter extends AppCompatActivity {
     }
 
     private void handleArchetype(final Race aRace, final Class aClass) {
-        if (aClass instanceof BloodHunter) {
-            // Choose Blood Order
+        // Classes with implemented archetypes
+        if (aClass instanceof BloodHunter || aClass instanceof Rogue || aClass instanceof Sorcerer) {
             AlertDialog.Builder b = new AlertDialog.Builder(CreateCharacter.this);
-            b.setTitle("Select a Blood Hunter Order");
+            b.setTitle("Select an Archetype for this class");
 
-            final String[] allOptions = getResources().getStringArray(R.array.bloodHunterOrders);
+            int archetypesArray = aClass.getArchetypes();
+            final String[] allOptions = getResources().getStringArray(archetypesArray);
             final List<String> allOptionsList = Arrays.asList(allOptions);
 
             b.setAdapter(new StringListAdapter(CreateCharacter.this, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
@@ -163,7 +156,26 @@ public class CreateCharacter extends AppCompatActivity {
                     dialog.dismiss();
                     String selectedOption = allOptions[which];
                     Log.d("Create", "Archetype: " + selectedOption);
-                    aClass.setArchetype(selectedOption);
+
+                    if (selectedOption.equals(App.getResString(R.string.bloodhunter_lycan))) {
+                        aClass.setArchetype(new BloodHunter_lycan());
+                    }
+                    else if (selectedOption.equals(App.getResString(R.string.rogue_assassin))) {
+                        aClass.setArchetype(new Rogue_assassin());
+                    }
+                    else if (selectedOption.equals(App.getResString(R.string.rogue_swashbuckler))) {
+                        aClass.setArchetype(new Rogue_swashbuckler());
+                    }
+                    else if (selectedOption.equals(App.getResString(R.string.sorcerer_dragon))) {
+                        aClass.setArchetype(new Sorcerer_dragon());
+                    }
+                    else if (selectedOption.equals(App.getResString(R.string.sorcerer_storm))) {
+                        aClass.setArchetype(new Sorcerer_storm());
+                    }
+                    else if (selectedOption.equals(App.getResString(R.string.sorcerer_wild))) {
+                        aClass.setArchetype(new Sorcerer_wild());
+                    }
+
                     createCharacter(aRace, aClass);
                 }
             });

@@ -22,6 +22,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
@@ -169,7 +170,7 @@ public class StatsScreen extends Fragment {
                         _character._secondaryClass = new Warlock_blade_fiend();
                         break;
                     case 4:
-                        _character._secondaryClass = new Rogue_assassin();
+                        _character._secondaryClass = new Rogue();
                         break;
                     default:
                         _character._secondaryClass = new Paladin_vengeance();

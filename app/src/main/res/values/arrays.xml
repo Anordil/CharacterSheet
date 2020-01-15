@@ -4,11 +4,8 @@
         <item>@string/class_barbarian</item>
         <item>@string/class_blood_hunter</item>
         <item>@string/class_paladin_vengeance</item>
-        <item>@string/class_rogue_assassin</item>
-        <item>@string/class_rogue_swashbuckler</item>
-        <item>@string/class_sorcerer_dragon</item>
-        <item>@string/class_sorcerer_storm</item>
-        <item>@string/class_sorcerer_wild</item>
+        <item>@string/class_rogue</item>
+        <item>@string/class_sorcerer</item>
         <item>@string/class_warlock_blade_fiend</item>
         <item>@string/class_warlock_tome_oldOne</item>
 
@@ -230,9 +227,20 @@
     </string-array>
 
     <string-array name="bloodHunterOrders">
-        <item>Ghostslayer</item>
-        <item>Lycan</item>
-        <item>Mutant</item>
-        <item>Profane Soul</item>
+        <item>@string/bloodhunter_ghostslayer</item>
+        <item>@string/bloodhunter_lycan</item>
+        <item>@string/bloodhunter_mutant</item>
+        <item>@string/bloodhunter_profane_soul</item>
+    </string-array>
+
+    <string-array name="sorcererArchetypes">
+        <item>@string/sorcerer_dragon</item>
+        <item>@string/sorcerer_storm</item>
+        <item>@string/sorcerer_wild</item>
+    </string-array>
+
+    <string-array name="rogueArchetypes">
+        <item>@string/rogue_assassin</item>
+        <item>@string/rogue_swashbuckler</item>
     </string-array>
 </resources>

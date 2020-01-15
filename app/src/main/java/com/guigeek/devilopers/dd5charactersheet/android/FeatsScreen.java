@@ -1,13 +1,9 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
-import android.app.ListFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -15,19 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
-import com.guigeek.devilopers.dd5charactersheet.character.Skill;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_base;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_base;
 
 import java.io.Serializable;
@@ -105,7 +95,7 @@ public class FeatsScreen extends android.support.v4.app.ListFragment {
 
                     // Skip Sorcerer metamagic?
                     if (featNames[i].startsWith("[Sorcerer Metamagic]")) {
-                        if (!(_character._class instanceof Sorcerer_base) && !(_character._secondaryClass instanceof Sorcerer_base)) {
+                        if (!(_character._class instanceof Sorcerer) && !(_character._secondaryClass instanceof Sorcerer)) {
                             continue;
                         }
                     }

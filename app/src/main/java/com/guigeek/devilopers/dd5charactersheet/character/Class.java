@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
+import android.content.res.Resources;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +29,9 @@ public interface Class  {
 
     public int getAC(Character character);
 
-    public void setArchetype(String iArchetype);
+    public void setArchetype(Archetype iArchetype);
 
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies();
+
+    public int getArchetypes();
 }
