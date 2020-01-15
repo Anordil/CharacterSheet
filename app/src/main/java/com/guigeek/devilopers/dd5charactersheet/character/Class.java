@@ -26,4 +26,8 @@ public interface Class  {
     public LinkedList<Fettle> getFettles(Character character);
 
     public int getAC(Character character);
+
+    public void setArchetype(String iArchetype);
+
+    public Enumerations.SavingThrows[] getSavingThrowsProficiencies();
 }

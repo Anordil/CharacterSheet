@@ -18,10 +18,9 @@ import java.util.LinkedList;
 /**
  * Created by totou on 14/03/2016.
  */
-public class HalfOrc implements Race, Externalizable {
+public class HalfOrc extends BaseRace {
 
     public static final long serialVersionUID = 103L;
-    int _version = 2;
 
     @Override
     public LinkedList<Fettle> getFettles() {
@@ -34,13 +33,8 @@ public class HalfOrc implements Race, Externalizable {
     }
 
     @Override
-    public int getSpeedInFeet() {
-        return 30;
-    }
-
-    @Override
     public Fettle[] getAttributeBoost() {
-        Fettle[] raceBonuses = new Fettle[1];
+        Fettle[] raceBonuses = new Fettle[2];
         raceBonuses[0] = new AttributeAlteration(2, Enumerations.Attributes.STR);
         raceBonuses[1] = new AttributeAlteration(1, Enumerations.Attributes.CON);
         return raceBonuses;
@@ -58,19 +52,5 @@ public class HalfOrc implements Race, Externalizable {
         racialTraits.add(new Power("Savage Attacks", "When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the criticaI hit", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
 
         return racialTraits;
-    }
-
-
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException {
-        int version = oi.readInt();
-        _version = version;
     }
 }

@@ -16,34 +16,10 @@ import java.util.List;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public class Paladin_vengeance extends Paladin_base implements Externalizable {
-
-
-    public static final long serialVersionUID = 201L;
-    protected int _version = 1;
+public class Paladin_vengeance extends Paladin_base {
+    static final long serialVersionUID = 202L;
 
     public Paladin_vengeance(){}
-    public Paladin_vengeance(Paladin_vengeance other) {
-        _spellSlots = other._spellSlots;
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
-    }
-
 
     @Override
     public String getName() {

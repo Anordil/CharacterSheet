@@ -16,17 +16,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public abstract class Rogue_base implements Class {
+public abstract class Rogue_base extends BaseClass {
 
     @Override
-    public int getAC(Character character) {
-        int ac = character._equippedArmor.getAC(character);
-
-        if (character._equippedShield != null && character._equippedShield._type == Enumerations.ArmorTypes.SHIELD) {
-            ac+= character._equippedShield.getAC(character);
-        }
-
-        return ac;
+    public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
+        return new Enumerations.SavingThrows[] {
+                Enumerations.SavingThrows.DEX,
+                Enumerations.SavingThrows.INT
+        };
     }
 
     @Override
@@ -35,62 +32,11 @@ public abstract class Rogue_base implements Class {
         return fettles;
     }
 
-    int[][] _spellSlots = {
-            // spell level 0-9
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 5
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 10
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 15
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}//ln 20
-    };
-
-
     public Rogue_base(){}
-    public Rogue_base(Rogue_base other) {
-        _spellSlots = other._spellSlots;
-    }
-
-
 
     @Override
     public int getHitDie() {
         return 8;
-    }
-
-    @Override
-    public boolean isCaster() {
-        return false;
-    }
-
-    @Override
-    public int[] getSpellSlots(int iCharacterLevel) {
-        return _spellSlots[Math.min(20, iCharacterLevel)];
-    }
-
-    @Override
-    public int[] getSpellsKnown(int iCharacterLevel) {
-        return new int[]{0,0};
-    }
-
-    @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        return 1;
     }
 
     @Override
@@ -178,11 +124,6 @@ public abstract class Rogue_base implements Class {
 
         return powers;
     }
-
-    public Enumerations.Attributes getMainSpellAttribute() {
-        return Enumerations.Attributes.CHA;
-    }
-
 
     @Override
     public int getIconResource() {

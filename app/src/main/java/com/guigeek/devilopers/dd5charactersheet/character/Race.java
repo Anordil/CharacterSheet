@@ -16,4 +16,6 @@ public interface Race {
     public Fettle[] getAttributeBoost();
 
     public LinkedList<Fettle> getFettles();
+
+    public void setSubRace(String iSubRace);
 }

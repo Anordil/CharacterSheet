@@ -15,34 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Sorcerer_storm extends Sorcerer_base implements Externalizable {
-
-
-    public static final long serialVersionUID = 209L;
-    protected int _version = 1;
-
+public class Sorcerer_storm extends Sorcerer_base {
+    static final long serialVersionUID = 206L;
 
     public Sorcerer_storm(){}
-    public Sorcerer_storm(Sorcerer_storm other) {
-        _spellSlots = other._spellSlots;
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
-    }
 
     @Override
     public String getName() {

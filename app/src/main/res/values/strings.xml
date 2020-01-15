@@ -9,18 +9,22 @@
     <string name="class_warlock_blade_fiend">Warlock (Blade, Fiend)</string>
     <string name="class_rogue_assassin">Rogue (Assassin)</string>
     <string name="class_rogue_swashbuckler">Rogue (Swashbuckler)</string>
-    <string name="class_barbarian_totem">Barbarian (totem)</string>
+    <string name="class_barbarian">Barbarian</string>
     <string name="class_sorcerer_dragon">Sorcerer (Draconic)</string>
     <string name="class_sorcerer_wild">Sorcerer (Wild)</string>
     <string name="class_sorcerer_storm">Sorcerer (Storm)</string>
+    <string name="class_blood_hunter">Blood Hunter</string>
 
 
     <string name="race_mtn_dwarf">Mountain Dwarf</string>
-    <string name="race_half_elf">Half Elf</string>
-    <string name="race_half_orc">Half Orc</string>
+    <string name="race_half_elf">Half-Elf</string>
+    <string name="race_half_orc">Half-Orc</string>
     <string name="race_human">Human</string>
     <string name="race_gnome">Gnome</string>
     <string name="race_halfling">Halfling</string>
+    <string name="race_elf">Elf</string>
+    <string name="race_tiefling">Tiefling</string>
+    <string name="race_dragonborn">Dragonborn</string>
 
     <string name="title_activity_swipe">Character Sheet</string>
 

@@ -392,7 +392,7 @@ public class CombatScreen extends Fragment {
             rowParamName.span = 3;
             name.setLayoutParams(rowParamName);
             TableRow.LayoutParams rowParamNameDesc = new TableRow.LayoutParams();
-            rowParamNameDesc.span = 2;
+            rowParamNameDesc.span = 3;
             description.setLayoutParams(rowParamNameDesc);
 
             row.addView(name);
@@ -414,7 +414,7 @@ public class CombatScreen extends Fragment {
                 TableRow rowUsage= new TableRow(getContext());
 
                 TextView aLongRestShortRestTV = new TextView(getContext());
-                aLongRestShortRestTV.setText(power._isLongRest ? "LR" : "SR");
+                aLongRestShortRestTV.setText(power._isLongRest ? "per Long rest" : "per Short Rest");
                 aLongRestShortRestTV.setLayoutParams(rowParam);
 
                 TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -505,10 +505,22 @@ public class CombatScreen extends Fragment {
             }
         }
 
+        // Fighting styles
+        boolean hasArchery = _character.hasFeat("[Fighting Style] Archery");
+        boolean hasDueling = _character.hasFeat("[Fighting Style] Dueling");
+
         int abilityModifier = (distanceWeapon ? modDex : (finesseWeapon ? (Math.max(modDex, modStr)) : modStr));
 
         int dmgBonus = abilityModifier +  _character._dmgBonus + weapon._magicModifier;
         int attackBonus = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
+
+        if (hasArchery && distanceWeapon) {
+            attackBonus += 2;
+        }
+
+        if (hasDueling && !distanceWeapon && weapon._hands != Enumerations.WeaponHandCount.TWO_HANDED && (_character._offHandWeapon == null || _character._offHandWeapon._type == Enumerations.WeaponTypes.UNARMED)) {
+            dmgBonus += 2;
+        }
 
         int diceDamage = weapon._diceValue;
         if (weapon._hands == Enumerations.WeaponHandCount.VERSATILE && _character._equippedShield._type == Enumerations.ArmorTypes.NONE) {
@@ -633,6 +645,9 @@ public class CombatScreen extends Fragment {
             }
 
             int dmgBonus = _character._dmgBonus + weapon._magicModifier; // No bonus damage in the off hand
+            if(_character.hasFeat("[Fighting Style] Two-Weapon Fighting")) {
+                dmgBonus += abilityModifier;
+            }
             int attackBonus = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
 
             int diceDamage = weapon._diceValue;

@@ -18,17 +18,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public abstract class Warlock_base implements Class {
+public abstract class Warlock_base extends BaseClass {
 
     @Override
-    public int getAC(Character character) {
-        int ac = character._equippedArmor.getAC(character);
-
-        if (character._equippedShield != null && character._equippedShield._type == Enumerations.ArmorTypes.SHIELD) {
-            ac+= character._equippedShield.getAC(character);
-        }
-
-        return ac;
+    public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
+        return new Enumerations.SavingThrows[] {
+                Enumerations.SavingThrows.WIS,
+                Enumerations.SavingThrows.CHA
+        };
     }
 
     @Override
@@ -90,10 +87,6 @@ public abstract class Warlock_base implements Class {
 
 
     public Warlock_base(){}
-    public Warlock_base(Warlock_base other) {
-        _spellSlots = other._spellSlots;
-    }
-
 
 
     @Override
@@ -104,21 +97,6 @@ public abstract class Warlock_base implements Class {
     @Override
     public boolean isCaster() {
         return true;
-    }
-
-    @Override
-    public int[] getSpellSlots(int iCharacterLevel) {
-        return _spellSlots[Math.min(20, iCharacterLevel)];
-    }
-
-    @Override
-    public int[] getSpellsKnown(int iCharacterLevel) {
-        return _spellsKnown[Math.min(20, iCharacterLevel)];
-    }
-
-    @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        return 1;
     }
 
     @Override

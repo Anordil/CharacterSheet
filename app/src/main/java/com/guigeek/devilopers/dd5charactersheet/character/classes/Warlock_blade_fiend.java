@@ -14,34 +14,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Warlock_blade_fiend extends Warlock_base implements Externalizable {
-
-
-    public static final long serialVersionUID = 204L;
-    protected int _version = 1;
-
+public class Warlock_blade_fiend extends Warlock_base {
+    static final long serialVersionUID = 208L;
 
     public Warlock_blade_fiend(){}
-    public Warlock_blade_fiend(Warlock_blade_fiend other) {
-        _spellSlots = other._spellSlots;
-    }
 
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
-    }
 
     @Override
     public String getName() {

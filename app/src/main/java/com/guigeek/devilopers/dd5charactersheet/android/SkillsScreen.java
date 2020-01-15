@@ -3,6 +3,7 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ public class SkillsScreen extends Fragment {
 
     HashSet<String> skillAdv = new HashSet<>(), skillDisadv = new HashSet<>();
     HashSet<String> throwAdv = new HashSet<>(), throwDisadv = new HashSet<>();
+    HashSet<String> skillProficiency = new HashSet<>();
+    HashSet<String> throwProficiency = new HashSet<>();
 
     TableLayout ll;
 
@@ -76,8 +79,10 @@ public class SkillsScreen extends Fragment {
 
         skillAdv.clear();
         skillDisadv.clear();
+        skillProficiency.clear();
         throwAdv.clear();
         throwDisadv.clear();
+        throwProficiency.clear();
         for (Fettle fettle : _character.getFettles()) {
             if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE) {
                 skillAdv.add(Enumerations.Skills.values()[fettle._describer].toString());
@@ -85,11 +90,17 @@ public class SkillsScreen extends Fragment {
             else if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE) {
                 skillDisadv.add(Enumerations.Skills.values()[fettle._describer].toString());
             }
+            else if (fettle._type == Enumerations.FettleType.ABILITY_PROFICIENCY) {
+                skillProficiency.add(Enumerations.Skills.values()[fettle._describer].toString());
+            }
             else if (fettle._type == Enumerations.FettleType.SAVING_THROW_ADVANTAGE) {
                 throwAdv.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
             }
             else if (fettle._type == Enumerations.FettleType.SAVING_THROW_DISADVANTAGE) {
                 throwDisadv.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
+            }
+            else if (fettle._type == Enumerations.FettleType.SAVING_THROW_PROFICIENCY) {
+                throwProficiency.add(Enumerations.SavingThrows.values()[fettle._describer].toString());
             }
         }
 
@@ -145,11 +156,13 @@ public class SkillsScreen extends Fragment {
             paramCB.bottomMargin = -10;
             paramCB.topMargin = -10;
             CheckBox isProficient = new CheckBox(getContext());
-            isProficient.setChecked(skill._isProficient);
+            boolean isProficientFromFettle = throwProficiency.contains(skill._name);
+            isProficient.setChecked(skill._isProficient || isProficientFromFettle);
             isProficient.setOnClickListener(new SavingThrowListener(skill, value));
             isProficient.setScaleX(1.0f);
             isProficient.setScaleY(1.0f);
             isProficient.setLayoutParams(paramCB);
+            isProficient.setEnabled(!isProficientFromFettle);
 
             name.setText(skill._name);
             name.setGravity(Gravity.CENTER_VERTICAL);
@@ -231,10 +244,12 @@ public class SkillsScreen extends Fragment {
             dpParams.topMargin = -10;
 
             CheckBox isProficient = new CheckBox(getContext());
-            isProficient.setChecked(skill._isProficient);
+            boolean isProficientFromFettle = skillProficiency.contains(skill._name);
+            isProficient.setChecked(skill._isProficient || isProficientFromFettle);
             isProficient.setScaleX(1.0f);
             isProficient.setScaleY(1.0f);
             isProficient.setLayoutParams(dpParams);
+            isProficient.setEnabled(!isProficientFromFettle);
 
 
             CheckBox isDoublyProficient = new CheckBox(getContext());

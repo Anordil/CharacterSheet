@@ -33,8 +33,23 @@ public class Skill implements Externalizable {
     }
 
     public void recompute(Character iChar) {
+        int bonus = 0;
+        boolean isProficientFromFettle = false;
+        for (Fettle fettle : iChar.getFettles()) {
+            if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER &&
+                    (fettle._describer == Enumerations.Skills.ALL.ordinal() ||  Enumerations.Skills.values()[fettle._describer].toString().equals(_name)))
+            {
+                bonus = Math.max(bonus, fettle._value);
+            }
+            else if (fettle._type == Enumerations.FettleType.ABILITY_PROFICIENCY &&
+                    (fettle._describer == Enumerations.Skills.ALL.ordinal() ||  Enumerations.Skills.values()[fettle._describer].toString().equals(_name)))
+            {
+                isProficientFromFettle = true;
+            }
+        }
+
         _score = iChar.getModifier(_attribute);
-        if (_isProficient) {
+        if (_isProficient || isProficientFromFettle) {
             _score += iChar.getProficiencyBonus();
 
             if (_isDoublyProficient) {
@@ -42,14 +57,6 @@ public class Skill implements Externalizable {
             }
         }
 
-        int bonus = 0;
-        for (Fettle fettle : iChar.getFettles()) {
-            if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER &&
-                    (fettle._describer == Enumerations.Skills.ALL.ordinal() ||  Enumerations.Skills.values()[fettle._describer].toString().equals(_name)))
-            {
-                bonus = Math.max(bonus, fettle._value);
-            }
-        }
         _score += bonus;
     }
 

@@ -42,10 +42,8 @@ public class SavingThrow extends Skill implements Externalizable {
     @Override
     public void recompute(Character iChar) {
         _score = iChar.getModifier(_attribute);
-        if (_isProficient) {
-            _score += iChar.getProficiencyBonus();
-        }
 
+        boolean isProficientFromFettle = false;
         int bonus = 0;
         for (Fettle fettle : iChar.getFettles()) {
             if (fettle._type == Enumerations.FettleType.SAVING_THROW_MODIFIER &&
@@ -53,7 +51,16 @@ public class SavingThrow extends Skill implements Externalizable {
             {
                 bonus = Math.max(bonus, fettle._value);
             }
+            else if (fettle._type == Enumerations.FettleType.SAVING_THROW_PROFICIENCY &&
+                    (fettle._describer == Enumerations.SavingThrows.ALL.ordinal() ||  Enumerations.SavingThrows.values()[fettle._describer].toString().equals(_name)))
+            {
+                isProficientFromFettle = true;
+            }
         }
+        if (_isProficient || isProficientFromFettle) {
+            _score += iChar.getProficiencyBonus();
+        }
+
         _score += bonus;
     }
 

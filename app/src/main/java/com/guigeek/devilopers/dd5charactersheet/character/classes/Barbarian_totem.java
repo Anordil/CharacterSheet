@@ -16,41 +16,9 @@ import java.util.List;
 /**
  * Created by totou on 15/06/2016.
  */
-public class Barbarian_totem extends Barbarian_base implements Externalizable {
-
-
-    public static final long serialVersionUID = 203L;
-    protected int _version = 1;
-
+public class Barbarian_totem extends Barbarian_base {
+    static final long serialVersionUID = 200L;
     public Barbarian_totem(){}
-
-    public Barbarian_totem(Barbarian_totem other) {
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
-    }
-
-
-    @Override
-    public String getName() {
-        return App.getResString(R.string.class_barbarian_totem);
-    }
-
-
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
@@ -77,10 +45,6 @@ public class Barbarian_totem extends Barbarian_base implements Externalizable {
         }
 
         return powers;
-    }
-
-    public Enumerations.Attributes getMainSpellAttribute() {
-        return Enumerations.Attributes.CHA;
     }
 
     @Override

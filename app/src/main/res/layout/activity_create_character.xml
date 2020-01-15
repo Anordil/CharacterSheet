@@ -16,7 +16,7 @@
         android:layout_below="@+id/inName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:spinnerMode="dialog" />
 
     <Spinner
@@ -26,7 +26,7 @@
         android:layout_below="@+id/spinnerRace"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:spinnerMode="dialog" />
 
     <EditText

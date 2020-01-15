@@ -14,9 +14,8 @@ import java.util.LinkedList;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public class MountainDwarf implements Race, Externalizable {
+public class MountainDwarf extends BaseRace {
     public static final long serialVersionUID = 102L;
-    int _version = 2;
 
 
     @Override
@@ -44,19 +43,6 @@ public class MountainDwarf implements Race, Externalizable {
         Fettle[] raceBonuses = new Fettle[1];
         raceBonuses[0] = new AttributeAlteration(2, Enumerations.Attributes.STR);
         return raceBonuses;
-    }
-
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException {
-        int version = oi.readInt();
-        _version = version;
     }
 
     @Override

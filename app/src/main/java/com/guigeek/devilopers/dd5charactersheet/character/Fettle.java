@@ -106,6 +106,8 @@ public class Fettle  implements Externalizable {
                 return "Disadvantage to saving throws against " + Enumerations.SavingThrows.values()[_describer].toString();
             case SAVING_THROW_MODIFIER:
                 return (_value >= 0 ? "+" : "") + _value + " to " + Enumerations.SavingThrows.values()[_describer].toString() + " saving throws";
+            case SAVING_THROW_PROFICIENCY:
+                return "Proficient in " + Enumerations.SavingThrows.values()[_describer].toString() + " saving throws";
             case IMMUNITY:
                 return "Immune to " + Enumerations.Immunities.values()[_describer].toString();
             case ATTRIBUTE_MODIFIER:
@@ -114,6 +116,8 @@ public class Fettle  implements Externalizable {
                 return "Advantage on " + Enumerations.Skills.values()[_describer].toString() + " checks";
             case ABILITY_CHECK_DISADVANTAGE:
                 return "Disadvantage on " + Enumerations.Skills.values()[_describer].toString() + " checks";
+            case ABILITY_PROFICIENCY:
+                return "Proficient in " + Enumerations.Skills.values()[_describer].toString() + " checks";
             case ABILITY_CHECK_MODIFIER:
                 return (_value >= 0 ? "+" : "") + _value + " to " + Enumerations.Skills.values()[_describer].toString() + " checks";
             case ARMOR_CLASS_MODIFIER:

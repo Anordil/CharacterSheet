@@ -14,10 +14,9 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.LinkedList;
 
-public class Human implements Race, Externalizable {
+public class Human extends BaseRace {
 
     public static final long serialVersionUID = 104L;
-    int _version = 1;
 
     @Override
     public LinkedList<Fettle> getFettles() {
@@ -31,13 +30,8 @@ public class Human implements Race, Externalizable {
     }
 
     @Override
-    public int getSpeedInFeet() {
-        return 30;
-    }
-
-    @Override
     public Fettle[] getAttributeBoost() {
-        Fettle[] raceBonuses = new Fettle[1];
+        Fettle[] raceBonuses = new Fettle[6];
         raceBonuses[0] = new AttributeAlteration(1, Enumerations.Attributes.STR);
         raceBonuses[1] = new AttributeAlteration(1, Enumerations.Attributes.DEX);
         raceBonuses[2] = new AttributeAlteration(1, Enumerations.Attributes.CON);
@@ -53,19 +47,5 @@ public class Human implements Race, Externalizable {
     public LinkedList<Power> getRacialFeatures() {
         LinkedList<Power> racialTraits = new LinkedList<>();
         return racialTraits;
-    }
-
-
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException {
-        int version = oi.readInt();
-        _version = version;
     }
 }

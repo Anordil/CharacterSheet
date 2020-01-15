@@ -16,33 +16,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Rogue_assassin extends Rogue_base implements Externalizable {
-
-
-
-    public static final long serialVersionUID = 205L;
-    protected int _version = 1;
-
+public class Rogue_assassin extends Rogue_base{
+    static final long serialVersionUID = 203L;
 
     public Rogue_assassin(){}
-    public Rogue_assassin(Rogue_assassin other) {
-        _spellSlots = other._spellSlots;
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        _spellSlots = (int[][])oi.readObject();
-    }
 
     @Override
     public String getName() {
@@ -53,9 +30,6 @@ public class Rogue_assassin extends Rogue_base implements Externalizable {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
         List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
-
-
-
 
         if (iNewCharacterLevel == 3) {
             levelUp.add("You are now proficient with the Disguise and Poison kits.");

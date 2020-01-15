@@ -22,6 +22,15 @@ public class Power implements Externalizable {
 
     public Power(){}
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Power) {
+            Power other = (Power) obj;
+            return other._name.equals(_name);
+        }
+        return false;
+    }
+
     public Power (String nm, String desc, String rng, int max, int dd, boolean isLR, Enumerations.ActionType useType) {
         _name = nm;
         _range = rng;
@@ -64,9 +73,9 @@ public class Power implements Externalizable {
 //            result += " - " + (_isLongRest ? "Long rest":"Short Rest");
 //        }
 
-//        if (_dd > 0) {
-//            result += " DD" + _dd;
-//        }
+        if (_dd > 0) {
+            result += " DD" + _dd;
+        }
 
         return result;
     }

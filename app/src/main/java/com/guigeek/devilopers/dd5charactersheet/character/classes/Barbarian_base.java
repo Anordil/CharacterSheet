@@ -18,7 +18,20 @@ import java.util.List;
 /**
  * Created by totou on 15/06/2016.
  */
-public abstract class Barbarian_base implements Class {
+public abstract class Barbarian_base extends BaseClass {
+
+    @Override
+    public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
+        return new Enumerations.SavingThrows[] {
+                Enumerations.SavingThrows.CON,
+                Enumerations.SavingThrows.STR
+        };
+    }
+
+    @Override
+    public String getName() {
+        return App.getResString(R.string.class_barbarian) + " (" + _archetype + ")";
+    }
 
     @Override
     public int getAC(Character character) {
@@ -50,57 +63,14 @@ public abstract class Barbarian_base implements Class {
         return fettles;
     }
 
-    int[][] _spellSlots = {
-                // spell level 0-9
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 5
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 10
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//lv 15
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}//ln 20
-        };
 
-
-    public Barbarian_base(){}
-
-    public Barbarian_base(Barbarian_base other) {
+    public Barbarian_base(){
+        _archetype = "Totem";
     }
-
-
 
     @Override
     public int getHitDie() {
         return 12;
-    }
-
-    @Override
-    public boolean isCaster() {
-        return false;
-    }
-
-    @Override
-    public int[] getSpellSlots(int iCharacterLevel) {
-        return _spellSlots[Math.min(20, iCharacterLevel)];
-    }
-
-    @Override
-    public int[] getSpellsKnown(int iCharacterLevel) {
-        return new int[]{0,0};
     }
 
     @Override
@@ -193,10 +163,6 @@ public abstract class Barbarian_base implements Class {
         }
 
         return powers;
-    }
-
-    public Enumerations.Attributes getMainSpellAttribute() {
-        return Enumerations.Attributes.CHA;
     }
 
     @Override

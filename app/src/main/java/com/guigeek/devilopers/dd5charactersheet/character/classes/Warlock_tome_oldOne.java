@@ -15,34 +15,10 @@ import java.util.List;
 /**
  * Created by totou on 14/03/2016.
  */
-public class Warlock_tome_oldOne extends Warlock_base implements Externalizable {
-
-
-    public static final long serialVersionUID = 202L;
-    protected int _version = 1;
-
+public class Warlock_tome_oldOne extends Warlock_base {
+    static final long serialVersionUID = 209L;
 
     public Warlock_tome_oldOne(){}
-    public Warlock_tome_oldOne(Warlock_tome_oldOne other) {
-        _spellSlots = other._spellSlots;
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
-    }
 
     @Override
     public String getName() {

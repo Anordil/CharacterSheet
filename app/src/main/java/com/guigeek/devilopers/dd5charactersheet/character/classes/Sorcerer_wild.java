@@ -14,34 +14,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class Sorcerer_wild extends Sorcerer_base implements Externalizable {
-
-
-    public static final long serialVersionUID = 208L;
-    protected int _version = 1;
-
+public class Sorcerer_wild extends Sorcerer_base {
+    static final long serialVersionUID = 207L;
 
     public Sorcerer_wild(){}
-    public Sorcerer_wild(Sorcerer_wild other) {
-        _spellSlots = other._spellSlots;
-    }
-
-    @Override
-    public void writeExternal(ObjectOutput oo) throws IOException
-    {
-        oo.writeInt(_version);
-        oo.writeObject(_spellSlots);
-    }
-
-    @Override
-    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException
-    {
-        int version = oi.readInt();
-        _version = version;
-        if (version >= 1) {
-            _spellSlots = (int[][])oi.readObject();
-        }
-    }
 
     @Override
     public String getName() {

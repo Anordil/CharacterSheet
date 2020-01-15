@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_base;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
@@ -12,6 +13,8 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
@@ -34,8 +37,7 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    public int _version = 9;
-    public static final int _latestVersion = 9;
+    public int _version = 10;
 
     public Class _class;
     public Class _secondaryClass;
@@ -77,14 +79,16 @@ public class Character implements Externalizable {
             Barbarian_totem.class,
             Rogue_assassin.class, Rogue_swashbuckler.class,
             Warlock_blade_fiend.class, Warlock_tome_oldOne.class,
-            Sorcerer_dragon.class, Sorcerer_storm.class, Sorcerer_wild.class
+            Sorcerer_dragon.class, Sorcerer_storm.class, Sorcerer_wild.class,
+            Paladin_vengeance.class,
+            BloodHunter.class
     };
 
 
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {
-        oo.writeInt(_latestVersion);
+        oo.writeInt(_version);
 
         oo.writeObject(_class);
         oo.writeObject(_race);
@@ -126,7 +130,7 @@ public class Character implements Externalizable {
         oo.writeObject(_secondaryClass);
         oo.writeInt(_levelSecondaryClass);
         oo.writeInt(_hitDiceSecondary);
-        Log.d("WRAP", "All good");
+        Log.d("WRAP", "Finished writing");
     }
 
     @Override
@@ -135,22 +139,43 @@ public class Character implements Externalizable {
         int version = oi.readInt();
         Log.d("TOTO", "Decoding a version " + version + " character");
         _version = version;
-        if (version >= 1) {
 
-            Log.d("UNWRAP", "Before class");
+
+
             Object aClass = oi.readObject();
+        Log.d("UNWRAP", "class " + aClass.getClass());
 
-            for (java.lang.Class aClassInArray : _allClasses) {
-                if (aClass.getClass() == aClassInArray) {
-                    try {
-                        Constructor<?> ctor = aClassInArray.getConstructor(aClassInArray);
-                        _class = (Class) ctor.newInstance(new Object[] { aClassInArray.cast(aClass) });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-            }
+        if (aClass instanceof Barbarian_base) {
+            _class = (Barbarian_base) aClass;
+        }
+        else if (aClass instanceof BloodHunter) {
+            _class = (BloodHunter) aClass;
+        }
+        else if (aClass instanceof Paladin_vengeance) {
+            _class = (Paladin_vengeance) aClass;
+        }
+        else if (aClass instanceof Rogue_assassin) {
+            _class = (Rogue_assassin) aClass;
+        }
+        else if (aClass instanceof Rogue_swashbuckler) {
+            _class = (Rogue_swashbuckler) aClass;
+        }
+        else if (aClass instanceof Sorcerer_dragon) {
+            _class = (Sorcerer_dragon) aClass;
+        }
+        else if (aClass instanceof Sorcerer_storm) {
+            _class = (Sorcerer_storm) aClass;
+        }
+        else if (aClass instanceof Sorcerer_wild) {
+            _class = (Sorcerer_wild) aClass;
+        }
+        else if (aClass instanceof Warlock_blade_fiend) {
+            _class = (Warlock_blade_fiend) aClass;
+        }
+        else if (aClass instanceof Warlock_tome_oldOne) {
+            _class = (Warlock_tome_oldOne) aClass;
+        }
+
             Log.d("UNWRAP", "After class");
 
             Object aRace = oi.readObject();
@@ -166,6 +191,21 @@ public class Character implements Externalizable {
             else if (aRace instanceof Human) {
                 _race = (Human) aRace;
             }
+            else if (aRace instanceof Elf) {
+                _race = (Elf) aRace;
+            }
+            else if (aRace instanceof Dragonborn) {
+                _race = (Dragonborn) aRace;
+            }
+//            else if (aRace instanceof Gnome) {
+//                _race = (Gnome) aRace;
+//            }
+//            else if (aRace instanceof Halfling) {
+//                _race = (Halfling) aRace;
+//            }
+//            else if (aRace instanceof Tiefling) {
+//                _race = (Tiefling) aRace;
+//            }
             Log.d("UNWRAP", "After race");
 
 
@@ -200,38 +240,21 @@ public class Character implements Externalizable {
             _weaponDmgDice = (String) oi.readObject();
             _isWeaponRanged = oi.readBoolean();
             _allItems = (String) oi.readObject();
-        }
-        if (version >= 2) {
+
+
             _spellSlotsCurrent = (int[]) oi.readObject();
             _spellSlotsMax = (int[]) oi.readObject();
-        }
-        else {
-            // Need to force-refresh spell slots as old version didn't serialize them.
-            _spellSlotsMax = _class.getSpellSlots(_level);
-            _spellSlotsCurrent = new int[_spellSlotsMax.length];
-            for (int i = 0; i < _spellSlotsMax.length; i++) {
-                _spellSlotsCurrent[i] = _spellSlotsMax[i];
-            }
-        }
 
-        // Feats added in V3
-        if (version >= 3) {
+
+
             _feats = (LinkedList<Power>) oi.readObject();
-        }
-        else {
-            _feats = new LinkedList<Power>();
-        }
 
-        // Fettles added in V4
-        if (version >= 4) {
+
+
             _effect = (LinkedList<Fettle>) oi.readObject();
-        }
-        else {
-            _effect = new LinkedList<Fettle>();
-        }
 
-        // V6: armor and other equipment
-        if (version >= 6) {
+
+
             try {
                 _equippedArmor = (Armor) oi.readObject();
                 _equippedWeapon = (Weapon) oi.readObject();
@@ -244,63 +267,58 @@ public class Character implements Externalizable {
                 oi.readObject(); //removed quipped items
                 _equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
             }
-        }
-        else {
-            _equippedArmor = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
-            _equippedWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
-            oi.readObject(); //removed quipped items
-            _equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
-        }
-        // V7: off hand weapons
-        if (version >= 7) {
+
+
             try {
                 _offHandWeapon = (Weapon) oi.readObject();
             }
             catch (Exception e) {
                 _offHandWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
             }
-        }
-        else {
-            _offHandWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
-        }
 
 
-        // V8: added inventory list
-        if (version >= 8) {
             try {
                 _inventory = (LinkedList<Externalizable>)oi.readObject();
             }
             catch (Exception e) {
                 _inventory = new LinkedList<>();
             }
-        }
-        else {
-            _inventory = new LinkedList<>();
-        }
 
-        if (version >= 9) {
-            Object aClass = oi.readObject();
-            if (aClass != null) {
-                for (java.lang.Class aClassInArray : _allClasses) {
-                    if (aClass.getClass() == aClassInArray) {
-                        try {
-                            Constructor<?> ctor = aClassInArray.getConstructor(aClassInArray);
-                            _secondaryClass = (Class) ctor.newInstance(new Object[] { aClassInArray.cast(aClass) });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    }
+            Object aSecondaryClass = oi.readObject();
+            if (aSecondaryClass != null) {
+                if (aSecondaryClass instanceof Barbarian_base) {
+                    _secondaryClass = (Barbarian_base) aClass;
+                }
+                else if (aSecondaryClass instanceof BloodHunter) {
+                    _secondaryClass = (BloodHunter) aClass;
+                }
+                else if (aSecondaryClass instanceof Paladin_vengeance) {
+                    _secondaryClass = (Paladin_vengeance) aClass;
+                }
+                else if (aSecondaryClass instanceof Rogue_assassin) {
+                    _secondaryClass = (Rogue_assassin) aClass;
+                }
+                else if (aSecondaryClass instanceof Rogue_swashbuckler) {
+                    _secondaryClass = (Rogue_swashbuckler) aClass;
+                }
+                else if (aSecondaryClass instanceof Sorcerer_dragon) {
+                    _secondaryClass = (Sorcerer_dragon) aClass;
+                }
+                else if (aSecondaryClass instanceof Sorcerer_storm) {
+                    _secondaryClass = (Sorcerer_storm) aClass;
+                }
+                else if (aSecondaryClass instanceof Sorcerer_wild) {
+                    _secondaryClass = (Sorcerer_wild) aClass;
+                }
+                else if (aSecondaryClass instanceof Warlock_blade_fiend) {
+                    _secondaryClass = (Warlock_blade_fiend) aClass;
+                }
+                else if (aSecondaryClass instanceof Warlock_tome_oldOne) {
+                    _secondaryClass = (Warlock_tome_oldOne) aClass;
                 }
             }
             _levelSecondaryClass = oi.readInt();
             _hitDiceSecondary = oi.readInt();
-        }
-        else {
-            _secondaryClass = null;
-            _levelSecondaryClass = 0;
-            _hitDiceSecondary = 0;
-        }
 
 
         if (_equippedArmor == null) {
@@ -342,7 +360,6 @@ public class Character implements Externalizable {
         _dmgBonus = 0;
         _gold = 0;
         _allItems = "";
-
 
         initLevel();
 
@@ -410,6 +427,11 @@ public class Character implements Externalizable {
         if (_secondaryClass != null) {
             _hpMax += (_levelSecondaryClass) * (int) Math.ceil(_secondaryClass.getHitDie() / 2 + 1) + _levelSecondaryClass * getModifier(Enumerations.Attributes.CON);
         }
+
+        if (hasFeat("Tough")) {
+            _hpMax += 2*_level + 2*_levelSecondaryClass;
+        }
+
         _powers = getClassPowers();
     }
 
@@ -557,9 +579,7 @@ public class Character implements Externalizable {
 
 
     public void recomputeSavingThrows() {
-        if (_savingThrows == null || _savingThrows.size() == 0) {
-            initSavingThrows();
-        }
+        initSavingThrows();
 
         for (SavingThrow skill : _savingThrows) {
             skill.recompute(this);
@@ -607,6 +627,29 @@ public class Character implements Externalizable {
         _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.INT.toString(), Enumerations.Attributes.INT));
         _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.WIS.toString(), Enumerations.Attributes.WIS));
         _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.CHA.toString(), Enumerations.Attributes.CHA));
+
+        // Add class proficiencies
+        for (Enumerations.SavingThrows proficientSave: _class.getSavingThrowsProficiencies()) {
+            if (proficientSave == Enumerations.SavingThrows.STR) {
+                _savingThrows.get(0)._isProficient = true;
+            }
+            if (proficientSave == Enumerations.SavingThrows.DEX) {
+                _savingThrows.get(1)._isProficient = true;
+            }
+            if (proficientSave == Enumerations.SavingThrows.CON) {
+                _savingThrows.get(2)._isProficient = true;
+            }
+            if (proficientSave == Enumerations.SavingThrows.INT) {
+                _savingThrows.get(3)._isProficient = true;
+            }
+            if (proficientSave == Enumerations.SavingThrows.WIS) {
+                _savingThrows.get(4)._isProficient = true;
+            }
+            if (proficientSave == Enumerations.SavingThrows.CHA) {
+                _savingThrows.get(5)._isProficient = true;
+            }
+        }
+
     }
 
     public boolean hasFeat(String s) {
