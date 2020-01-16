@@ -1,7 +1,10 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
@@ -21,8 +24,8 @@ public class Barbarian_totem extends Barbarian_base {
     public Barbarian_totem(){}
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
+        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel, context);
         // TODO: add gained powers from spec
         return levelUp;
     }

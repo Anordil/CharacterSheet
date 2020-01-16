@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
@@ -21,7 +23,7 @@ public class BloodHunter_lycan extends BaseArchetype {
     }
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
 
         if (iNewCharacterLevel == 3) {

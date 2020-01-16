@@ -1,41 +1,53 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
-import com.guigeek.devilopers.dd5charactersheet.character.*;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
+import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by totou on 14/03/2016.
  */
-public class Warlock_tome_oldOne extends Warlock_base {
-    static final long serialVersionUID = 216L;
+public class Warlock_patron_oldOne extends BaseArchetype {
+    static final long serialVersionUID = 218L;
 
-    public Warlock_tome_oldOne(){}
+    public Warlock_patron_oldOne(){}
 
     @Override
-    public String getClassName() {
-        return App.getResString(R.string.class_warlock_tome_oldOne);
+    public String getName() {
+        return App.getResString(R.string.warlock_patron_ancient);
     }
 
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
+        List<String> levelUp = new LinkedList<>();
 
-        // TODO: add gained powers
+        if (iNewCharacterLevel == 1) {
+            levelUp.add("You gained Awakened Mind!");
+        }
+        if (iNewCharacterLevel == 6) {
+            levelUp.add("You gained Entropic Ward!");
+        }
+        if (iNewCharacterLevel == 10) {
+            levelUp.add("You gained Thought Shield!");
+        }
+        if (iNewCharacterLevel == 14) {
+            levelUp.add("You gained Create Thrall!");
+        }
+
         return levelUp;
     }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
-        LinkedList<Power> powers = super.getPowers(iLevel, iCharac);
+        LinkedList<Power> powers = new LinkedList<>();
 
         if (iLevel >= 1) {
             powers.add(new Power("Awakened Mind", "You can communicate telepathically with any creature you can see within 30 feet of you.", "30ft", -1, -1, true, Enumerations.ActionType.PASSIVE));

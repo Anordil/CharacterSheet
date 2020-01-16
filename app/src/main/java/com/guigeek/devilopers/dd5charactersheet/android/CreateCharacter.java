@@ -30,8 +30,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_dragon;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
@@ -45,7 +44,7 @@ import java.util.List;
 
 public class CreateCharacter extends AppCompatActivity {
 
-    Button btnCreate;
+    Button btnCreate, btnDone;
     Spinner spRace, spClass;
     EditText inName;
 
@@ -61,6 +60,7 @@ public class CreateCharacter extends AppCompatActivity {
         setContentView(R.layout.activity_create_character);
 
         btnCreate = (Button) findViewById(R.id.btnCreate);
+        btnDone = (Button) findViewById(R.id.btnDone);
         spRace = (Spinner) findViewById(R.id.spinnerRace);
         spClass = (Spinner) findViewById(R.id.spinnerClass);
         inName = (EditText)findViewById(R.id.inName);
@@ -116,6 +116,12 @@ public class CreateCharacter extends AppCompatActivity {
         spClass.setAdapter(adapterClass);
 
         btnCreate.setOnClickListener(new CreateListener());
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void updateStatsBonuses() {
@@ -151,10 +157,8 @@ public class CreateCharacter extends AppCompatActivity {
                 aClass = new Barbarian_totem();
             } else if (aClassName.equals(App.getResString(R.string.class_paladin_vengeance))) {
                 aClass = new Paladin_vengeance();
-            } else if (aClassName.equals(App.getResString(R.string.class_warlock_tome_oldOne))) {
-                aClass = new Warlock_tome_oldOne();
-            } else if (aClassName.equals(App.getResString(R.string.class_warlock_blade_fiend))) {
-                aClass = new Warlock_blade_fiend();
+            } else if (aClassName.equals(App.getResString(R.string.class_warlock))) {
+                aClass = new Warlock();
             } else if (aClassName.equals(App.getResString(R.string.class_rogue))) {
                 aClass = new Rogue();
             } else if (aClassName.equals(App.getResString(R.string.class_sorcerer))) {
@@ -186,59 +190,12 @@ public class CreateCharacter extends AppCompatActivity {
                     String subrace = allAncestriesArray[which];
                     Log.d("Create", "sub-race: " + subrace);
                     aRace.setSubRace(subrace);
-                    handleArchetype(aRace, aClass);
-                }
-            });
-
-            b.show();
-        } else {
-            handleArchetype(aRace, aClass);
-        }
-    }
-
-    private void handleArchetype(final Race aRace, final Class aClass) {
-        // Classes with implemented archetypes
-        if (aClass instanceof BloodHunter || aClass instanceof Rogue || aClass instanceof Sorcerer) {
-            AlertDialog.Builder b = new AlertDialog.Builder(CreateCharacter.this);
-            b.setTitle("Select an Archetype for this class");
-
-            int archetypesArray = aClass.getChoosableArchetypes();
-            final String[] allOptions = getResources().getStringArray(archetypesArray);
-            final List<String> allOptionsList = Arrays.asList(allOptions);
-
-            b.setAdapter(new StringListAdapter(CreateCharacter.this, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    String selectedOption = allOptions[which];
-                    Log.d("Create", "Archetype: " + selectedOption);
-
-                    if (selectedOption.equals(App.getResString(R.string.bloodhunter_lycan))) {
-                        aClass.addArchetype(new BloodHunter_lycan());
-                    }
-                    else if (selectedOption.equals(App.getResString(R.string.rogue_assassin))) {
-                        aClass.addArchetype(new Rogue_assassin());
-                    }
-                    else if (selectedOption.equals(App.getResString(R.string.rogue_swashbuckler))) {
-                        aClass.addArchetype(new Rogue_swashbuckler());
-                    }
-                    else if (selectedOption.equals(App.getResString(R.string.sorcerer_dragon))) {
-                        aClass.addArchetype(new Sorcerer_dragon());
-                    }
-                    else if (selectedOption.equals(App.getResString(R.string.sorcerer_storm))) {
-                        aClass.addArchetype(new Sorcerer_storm());
-                    }
-                    else if (selectedOption.equals(App.getResString(R.string.sorcerer_wild))) {
-                        aClass.addArchetype(new Sorcerer_wild());
-                    }
-
                     createCharacter(aRace, aClass);
                 }
             });
 
             b.show();
-        }
-        else {
+        } else {
             createCharacter(aRace, aClass);
         }
     }
@@ -259,7 +216,7 @@ public class CreateCharacter extends AppCompatActivity {
         intent.putExtra(Constants.CHARACTER, aHero);
         setResult(RESULT_OK, intent);
 
-        List<String> levelUpBoons = aHero._class.getAllLevelUpBenefits(aHero._level);
+        List<String> levelUpBoons = aHero._class.getAllLevelUpBenefits(1, CreateCharacter.this);
 
         String boons = "";
         for (String s : levelUpBoons) {
@@ -275,7 +232,8 @@ public class CreateCharacter extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        finish();
+                        findViewById(R.id.createCharacterLayout).setVisibility(View.GONE);
+                        btnDone.setVisibility(View.VISIBLE);
                     }
                 });
         alertDialog.show();

@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
@@ -90,7 +92,7 @@ public abstract class Paladin_base extends BaseClass {
     }
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Welcome to Paladin level " + iNewCharacterLevel + "!");
         return levelUp;

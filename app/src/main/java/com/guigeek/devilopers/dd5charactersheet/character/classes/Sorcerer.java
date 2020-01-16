@@ -1,7 +1,10 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -18,8 +21,20 @@ public class Sorcerer extends BaseClass {
     static final long serialVersionUID = 210L;
 
     @Override
-    public int getChoosableArchetypes() {
-        return R.array.sorcererArchetypes;
+    public int getChoosableArchetypes(int iNewLevel) {
+        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.sorcererArchetypes : -1;
+    }
+
+    @Override
+    public Archetype getArchetypeByName(String iName) {
+        if (iName.equals(App.getResString(R.string.sorcerer_wild))) {
+            return new Sorcerer_wild();
+        } else if (iName.equals(App.getResString(R.string.sorcerer_storm))) {
+            return new Sorcerer_storm();
+        } else if (iName.equals(App.getResString(R.string.sorcerer_dragon))) {
+            return new Sorcerer_dragon();
+        }
+        return null;
     }
 
     @Override
@@ -108,7 +123,7 @@ public class Sorcerer extends BaseClass {
     }
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Welcome to Sorcerer level " + iNewCharacterLevel + "!");
 

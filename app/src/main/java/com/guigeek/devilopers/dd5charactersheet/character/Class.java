@@ -1,6 +1,9 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
+import android.content.Context;
 import android.content.res.Resources;
+
+import com.guigeek.devilopers.dd5charactersheet.android.StatsScreen;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +22,7 @@ public interface Class  {
     public int[] getSpellsKnown(int iCharacterLevel);
     public int getAttacksPerRound(Character iCharacter);
 
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel);
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getPowers(int iLevel, Character iCharac);
 
     public Enumerations.Attributes getMainSpellAttribute();
@@ -31,13 +34,14 @@ public interface Class  {
     public int getAC(Character character);
 
     public void addArchetype(Archetype iArchetype);
+    public Archetype getArchetypeByName(String iName);
 
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies();
 
-    public int getChoosableArchetypes();
+    public int getChoosableArchetypes(int iNewLevel);
+    void clearArchetypesOnLevelDown(int iNewlevel);
 
-
-    public List<String> getAllLevelUpBenefits(int iNewCharacterLevel);
+    public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getAllPowers(int iLevel, Character iCharac);
     public LinkedList<Fettle> getAllFettles(Character character);
 }

@@ -1,18 +1,72 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
+
+import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.android.CreateCharacter;
+import com.guigeek.devilopers.dd5charactersheet.android.MainActivity;
+import com.guigeek.devilopers.dd5charactersheet.android.StatsScreen;
+import com.guigeek.devilopers.dd5charactersheet.android.StringListAdapter;
+import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 
-public abstract class Warlock_base extends BaseClass {
+public class Warlock extends BaseClass {
     static final long serialVersionUID = 214L;
+
+    @Override
+    public int getChoosableArchetypes(int iNewLevel) {
+        // Patron at level 1, pact at level 3
+        if (iNewLevel == 1) {
+            return _archetypes.size() == 0 ? R.array.warlockPatrons : -1;
+        }
+        return iNewLevel >= 3 && _archetypes.size() == 1 ? R.array.warlockPacts : -1;
+    }
+
+    @Override
+    public Archetype getArchetypeByName(String iName) {
+        if (iName.equals(App.getResString(R.string.warlock_pact_tome))) {
+            return new Warlock_pact_tome();
+        } else if (iName.equals(App.getResString(R.string.warlock_pact_blade))) {
+            return new Warlock_pact_blade();
+        } else if (iName.equals(App.getResString(R.string.warlock_patron_ancient))) {
+            return new Warlock_patron_oldOne();
+        } else if (iName.equals(App.getResString(R.string.warlock_patron_fiend))) {
+            return new Warlock_patron_fiend();
+        }
+        return null;
+    }
+
+    @Override
+    public void clearArchetypesOnLevelDown(int iNewlevel) {
+        // Only pact can be cleared as the Patron is chosen at level 1
+        if (iNewlevel < 3 && _archetypes.size() > 0) {
+            Archetype pact = null;
+            for (Archetype arc: _archetypes) {
+                if (arc instanceof Warlock_pact_blade || arc instanceof Warlock_pact_tome) {
+                    pact = arc;
+                    break;
+                }
+            }
+
+            if (pact != null) {
+                _archetypes.remove(pact);
+            }
+        }
+    }
+
 
     @Override
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
@@ -23,12 +77,23 @@ public abstract class Warlock_base extends BaseClass {
     }
 
     @Override
+    public int getAttacksPerRound(Character iCharacter) {
+        boolean hasThirstingBlade = false;
+        for (Power feat : iCharacter.getFeats()) {
+            if (feat._name.contains("Thirsting Blade")) {
+                hasThirstingBlade = true;
+                break;
+            }
+        }
+        return hasThirstingBlade ? 2:1;
+    }
+
+    @Override
     public LinkedList<Fettle> getFettles(Character character) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
         return fettles;
     }
 
-    // Warlock_tome_oldOne have a single-level spell slot, used for all their spells. Treat it like a Power
     int[][] _spellSlots = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -80,8 +145,13 @@ public abstract class Warlock_base extends BaseClass {
     };
 
 
-    public Warlock_base(){}
+    public Warlock(){}
 
+
+    @Override
+    public String getClassName() {
+        return App.getResString(R.string.class_warlock);
+    }
 
     @Override
     public int getHitDie() {
@@ -94,8 +164,8 @@ public abstract class Warlock_base extends BaseClass {
     }
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> levelUp = new LinkedList<>();
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
+        final List<String> levelUp = new LinkedList<>();
         levelUp.add("Welcome to Warlock level " + iNewCharacterLevel + "!");
 
         // Cantrips

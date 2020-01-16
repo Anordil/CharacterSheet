@@ -1,9 +1,13 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
@@ -16,8 +20,16 @@ public class BloodHunter extends BaseClass {
     static final long serialVersionUID = 203L;
 
     @Override
-    public int getChoosableArchetypes() {
-        return R.array.bloodHunterOrders;
+    public int getChoosableArchetypes(int iNewLevel) {
+        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.bloodHunterOrders : -1;
+    }
+
+    @Override
+    public Archetype getArchetypeByName(String iName) {
+        if (iName.equals(App.getResString(R.string.bloodhunter_lycan))) {
+            return new BloodHunter_lycan();
+        }
+        return null;
     }
 
     @Override
@@ -90,7 +102,7 @@ public class BloodHunter extends BaseClass {
     }
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Welcome to Blood Hunter level " + iNewCharacterLevel + "!");
 

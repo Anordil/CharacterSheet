@@ -24,13 +24,13 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_tote
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class StatsScreen extends Fragment {
+
+
 
     protected Character _character;
 
@@ -157,24 +157,7 @@ public class StatsScreen extends Fragment {
                 multiclassButton.setVisibility(View.GONE);
                 levelSecondary.setVisibility(View.VISIBLE);
                 switch(spSecondaryClass.getSelectedItemPosition()) {
-                    case 0:
-                        _character._secondaryClass = new Barbarian_totem();
-                        break;
-                    case 1:
-                        _character._secondaryClass = new Paladin_vengeance();
-                        break;
-                    case 2:
-                        _character._secondaryClass = new Warlock_tome_oldOne();
-                        break;
-                    case 3:
-                        _character._secondaryClass = new Warlock_blade_fiend();
-                        break;
-                    case 4:
-                        _character._secondaryClass = new Rogue();
-                        break;
-                    default:
-                        _character._secondaryClass = new Paladin_vengeance();
-                        break;
+
                 }
             }
 
@@ -203,10 +186,9 @@ public class StatsScreen extends Fragment {
                 _character._attributes[5] = Integer.parseInt(cha.getText().toString());
 
                 if (oldLevel != _character._level) {
-                    _character.doLongRest();
 
                     // Show level up window
-                    List<String> levelUpBoons = _character._class.getAllLevelUpBenefits(_character._level);
+                    List<String> levelUpBoons = _character._class.getAllLevelUpBenefits(_character._level, getContext());
 
                     String boons = "";
                     for (String s : levelUpBoons) {
@@ -225,14 +207,13 @@ public class StatsScreen extends Fragment {
                                 }
                             });
                     alertDialog.show();
-                    _character.refresh();
                 }
                 if (oldLevelSecondary != _character._levelSecondaryClass) {
                     Log.d("Level compare", oldLevelSecondary + " VS " + _character._levelSecondaryClass);
                     _character.doLongRest();
 
                     // Show level up window
-                    List<String> levelUpBoons = _character._secondaryClass.getAllLevelUpBenefits(_character._levelSecondaryClass);
+                    List<String> levelUpBoons = _character._secondaryClass.getAllLevelUpBenefits(_character._levelSecondaryClass, getContext());
 
                     String boons = "";
                     for (String s : levelUpBoons) {
@@ -294,11 +275,7 @@ public class StatsScreen extends Fragment {
 
 
         if (_character._secondaryClass != null) {
-            if (_character._secondaryClass instanceof Barbarian_totem) spSecondaryClass.setSelection(0);
-            if (_character._secondaryClass instanceof Paladin_vengeance) spSecondaryClass.setSelection(1);
-            if (_character._secondaryClass instanceof Warlock_tome_oldOne) spSecondaryClass.setSelection(2);
-            if (_character._secondaryClass instanceof Warlock_blade_fiend) spSecondaryClass.setSelection(3);
-            if (_character._secondaryClass instanceof Rogue_assassin) spSecondaryClass.setSelection(4);
+
         }
 
 

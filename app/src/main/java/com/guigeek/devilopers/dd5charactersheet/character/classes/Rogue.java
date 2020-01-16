@@ -1,7 +1,10 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -16,8 +19,18 @@ public class Rogue extends BaseClass {
     static final long serialVersionUID = 207L;
 
     @Override
-    public int getChoosableArchetypes() {
-        return R.array.rogueArchetypes;
+    public int getChoosableArchetypes(int iNewLevel) {
+        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.rogueArchetypes : -1;
+    }
+
+    @Override
+    public Archetype getArchetypeByName(String iName) {
+        if (iName.equals(App.getResString(R.string.rogue_assassin))) {
+            return new Rogue_assassin();
+        } else if (iName.equals(App.getResString(R.string.rogue_swashbuckler))) {
+            return new Rogue_swashbuckler();
+        }
+        return null;
     }
 
     @Override
@@ -48,7 +61,7 @@ public class Rogue extends BaseClass {
     }
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Welcome to Rogue level " + iNewCharacterLevel + "!");
 

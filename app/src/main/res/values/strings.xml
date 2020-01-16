@@ -5,8 +5,7 @@
 
 
     <string name="class_paladin_vengeance">Paladin (Vengeance)</string>
-    <string name="class_warlock_tome_oldOne">Warlock (Tome, Ancient)</string>
-    <string name="class_warlock_blade_fiend">Warlock (Blade, Fiend)</string>
+    <string name="class_warlock">Warlock</string>
     <string name="class_rogue">Rogue</string>
     <string name="class_barbarian">Barbarian</string>
     <string name="class_sorcerer">Sorcerer</string>
@@ -38,4 +37,10 @@
     <string name="sorcerer_dragon">Draconic</string>
     <string name="sorcerer_storm">Storm</string>
     <string name="sorcerer_wild">Wild</string>
+
+    <string name="warlock_pact_blade">Pact of the Blade</string>
+    <string name="warlock_pact_tome">Pact of the Tome</string>
+
+    <string name="warlock_patron_fiend">Fiend patron</string>
+    <string name="warlock_patron_ancient">Old One patron</string>
 </resources>

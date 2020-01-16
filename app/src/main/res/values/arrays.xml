@@ -6,8 +6,7 @@
         <item>@string/class_paladin_vengeance</item>
         <item>@string/class_rogue</item>
         <item>@string/class_sorcerer</item>
-        <item>@string/class_warlock_blade_fiend</item>
-        <item>@string/class_warlock_tome_oldOne</item>
+        <item>@string/class_warlock</item>
 
 
     </string-array>
@@ -242,5 +241,15 @@
     <string-array name="rogueArchetypes">
         <item>@string/rogue_assassin</item>
         <item>@string/rogue_swashbuckler</item>
+    </string-array>
+
+    <string-array name="warlockPacts">
+        <item>@string/warlock_pact_blade</item>
+        <item>@string/warlock_pact_tome</item>
+    </string-array>
+
+    <string-array name="warlockPatrons">
+        <item>@string/warlock_patron_ancient</item>
+        <item>@string/warlock_patron_fiend</item>
     </string-array>
 </resources>

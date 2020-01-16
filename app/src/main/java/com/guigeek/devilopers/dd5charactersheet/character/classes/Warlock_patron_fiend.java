@@ -1,46 +1,33 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class Warlock_blade_fiend extends Warlock_base {
-    static final long serialVersionUID = 215L;
+public class Warlock_patron_fiend extends BaseArchetype {
+    static final long serialVersionUID = 217L;
 
-    public Warlock_blade_fiend(){}
+    public Warlock_patron_fiend(){}
 
 
     @Override
-    public String getClassName() {
-        return App.getResString(R.string.class_warlock_blade_fiend);
+    public String getName() {
+        return App.getResString(R.string.warlock_patron_fiend);
     }
 
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        boolean hasThirstingBlade = false;
-        for (Power feat : iCharacter.getFeats()) {
-            if (feat._name.contains("Thirsting Blade")) {
-                hasThirstingBlade = true;
-                break;
-            }
-        }
-        return hasThirstingBlade ? 2:1;
-    }
-
-    @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
+        List<String> levelUp = new LinkedList<>();
 
         if (iNewCharacterLevel == 1) {
             levelUp.add("You gained Dark One's Blessing!");
@@ -59,7 +46,7 @@ public class Warlock_blade_fiend extends Warlock_base {
     }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
-        LinkedList<Power> powers = super.getPowers(iLevel, iCharac);
+        LinkedList<Power> powers = new LinkedList<>();
 
 
         if (iLevel >= 1) {

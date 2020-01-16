@@ -13,8 +13,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_dragon;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_tome_oldOne;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_blade_fiend;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
@@ -69,16 +68,6 @@ public class Character implements Externalizable {
     public Weapon _equippedWeapon, _offHandWeapon;
 
     public LinkedList<Externalizable> _inventory;
-
-    // Order doesn't matter here
-    private java.lang.Class[] _allClasses = {
-            Barbarian_totem.class,
-            Rogue_assassin.class, Rogue_swashbuckler.class,
-            Warlock_blade_fiend.class, Warlock_tome_oldOne.class,
-            Sorcerer_dragon.class, Sorcerer_storm.class, Sorcerer_wild.class,
-            Paladin_vengeance.class,
-            BloodHunter.class
-    };
 
 
     @Override
@@ -152,11 +141,8 @@ public class Character implements Externalizable {
         else if (aClass instanceof Sorcerer) {
             _class = (Sorcerer) aClass;
         }
-        else if (aClass instanceof Warlock_blade_fiend) {
-            _class = (Warlock_blade_fiend) aClass;
-        }
-        else if (aClass instanceof Warlock_tome_oldOne) {
-            _class = (Warlock_tome_oldOne) aClass;
+        else if (aClass instanceof Warlock) {
+            _class = (Warlock) aClass;
         }
 
             Log.d("UNWRAP", "After class");
@@ -282,11 +268,8 @@ public class Character implements Externalizable {
                 else if (aSecondaryClass instanceof Sorcerer) {
                     _secondaryClass = (Sorcerer) aClass;
                 }
-                else if (aSecondaryClass instanceof Warlock_blade_fiend) {
-                    _secondaryClass = (Warlock_blade_fiend) aClass;
-                }
-                else if (aSecondaryClass instanceof Warlock_tome_oldOne) {
-                    _secondaryClass = (Warlock_tome_oldOne) aClass;
+                else if (aSecondaryClass instanceof Warlock) {
+                    _secondaryClass = (Warlock) aClass;
                 }
             }
             _levelSecondaryClass = oi.readInt();

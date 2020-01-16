@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
@@ -28,8 +30,8 @@ public class Paladin_vengeance extends Paladin_base {
 
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel);
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
+        List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel, context);
 
         //TODO: add gained powers
         return levelUp;

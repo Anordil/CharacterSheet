@@ -1,9 +1,21 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+
+import com.guigeek.devilopers.dd5charactersheet.App;
+import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.android.StatsScreen;
+import com.guigeek.devilopers.dd5charactersheet.android.StringListAdapter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_pact_blade;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_pact_tome;
+
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,10 +26,10 @@ public abstract class BaseClass implements Class, Externalizable {
     static final long serialVersionUID = 200L;
 
     protected int _version = 1;
-    protected LinkedList<Archetype> _archetypes = null;
+    protected LinkedList<Archetype> _archetypes = new LinkedList<>();
 
-    public int getChoosableArchetypes() {
-        return 0;
+    public int getChoosableArchetypes(int iNewlevel) {
+        return -1;
     }
 
     int[][] _spellSlots = {
@@ -132,15 +144,52 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
-    public List<String> getAllLevelUpBenefits(int iNewCharacterLevel) {
-        List<String> allItems = getLevelUpBenefits(iNewCharacterLevel);
+    public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context) {
+        List<String> allItems = getLevelUpBenefits(iNewCharacterLevel, context);
         if (_archetypes != null) {
             for (Archetype arc: _archetypes) {
-                allItems.addAll(arc.getLevelUpBenefits(iNewCharacterLevel));
+                allItems.addAll(arc.getLevelUpBenefits(iNewCharacterLevel, context));
             }
         }
 
+        clearArchetypesOnLevelDown(iNewCharacterLevel);
+        checkArchetypeSelection(iNewCharacterLevel, context);
+
         return allItems;
+    }
+
+    private void checkArchetypeSelection(int iNewCharacterLevel, Context context) {
+        int choosableArchetypesArray = getChoosableArchetypes(iNewCharacterLevel);
+        if (choosableArchetypesArray != -1) {
+            AlertDialog.Builder b = new AlertDialog.Builder(context);
+            b.setTitle("Select a class feature");
+
+            final String[] allOptions = context.getResources().getStringArray(choosableArchetypesArray);
+            final List<String> allOptionsList = Arrays.asList(allOptions);
+
+            b.setAdapter(new StringListAdapter(context, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    String selectedOption = allOptions[which];
+                    addArchetype(getArchetypeByName(selectedOption));
+                }
+            });
+
+            b.show();
+        }
+    }
+
+    @Override
+    public void clearArchetypesOnLevelDown(int iNewlevel) {
+        if (iNewlevel < 3 && _archetypes.size() > 0) {
+            _archetypes.clear();
+        }
+    }
+
+    @Override
+    public Archetype getArchetypeByName(String iName) {
+        return null;
     }
 
     @Override

@@ -18,7 +18,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock_base;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -88,7 +88,7 @@ public class FeatsScreen extends android.support.v4.app.ListFragment {
                 for (int i = 0; i < featNames.length; ++i) {
                     // Skip warlock invocations?
                     if (featNames[i].startsWith("[Warlock Invocation]")) {
-                        if (!(_character._class instanceof Warlock_base) && !(_character._secondaryClass instanceof Warlock_base)) {
+                        if (!(_character._class instanceof Warlock) && !(_character._secondaryClass instanceof Warlock)) {
                             continue;
                         }
                     }
