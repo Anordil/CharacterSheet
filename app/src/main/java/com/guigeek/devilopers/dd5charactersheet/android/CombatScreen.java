@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -192,7 +191,7 @@ public class CombatScreen extends Fragment {
         createFettlesBar(rootView);
         createSpellBars(rootView);
         createSpecialPowerBars(rootView, "Class Features", _character.getClassPowers());
-        createSpecialPowerBars(rootView, "Racial Features", _character._race.getRacialFeatures());
+        createSpecialPowerBars(rootView, "Racial Features", _character._race.getRacialFeatures(_character));
         refreshSheet();
 
         return rootView;
@@ -241,7 +240,7 @@ public class CombatScreen extends Fragment {
 
 
     private void createFettlesBar(View root) {
-        if (!_character.getFettles().isEmpty()) {
+        if (!_character.getCharacterFettles().isEmpty()) {
             TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
 
             // Title
@@ -257,7 +256,7 @@ public class CombatScreen extends Fragment {
             ll.addView(rowPowerHeader);
 
             spellSlotTextViews = new ArrayList<TextView>();
-            for (Fettle fettle : _character.getFettles()) {
+            for (Fettle fettle : _character.getCharacterFettles()) {
                 TableRow row = new TableRow(getContext());
                 TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
                 row.setLayoutParams(lp);
@@ -481,7 +480,7 @@ public class CombatScreen extends Fragment {
         String propertyDamageBonus = "";
 
         // Character-wide bonuses
-        for (Fettle property : _character.getFettles()) {
+        for (Fettle property : _character.getCharacterFettles()) {
             if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
                 propertyAttackBonus = Math.max(property._value, propertyAttackBonus);
             }
@@ -548,7 +547,7 @@ public class CombatScreen extends Fragment {
             tvDmgThrown.setText(damageThrown);
         }
 
-        viewSpeed.setText(_character._race.getSpeedInFeet() + " ft.");
+        viewSpeed.setText(_character.getSpeedInFeet() + " ft.");
         int dexBonus = _character.getModifier(Enumerations.Attributes.DEX);
 
         int initiativeBonus = dexBonus;
@@ -620,7 +619,7 @@ public class CombatScreen extends Fragment {
             int propertyAttackBonus = 0;
             String propertyDamageBonus = "";
             // Character-wide bonuses
-            for (Fettle property : _character.getFettles()) {
+            for (Fettle property : _character.getCharacterFettles()) {
                 if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
                     propertyAttackBonus = Math.max(property._value, propertyAttackBonus);
                 }
@@ -699,7 +698,7 @@ public class CombatScreen extends Fragment {
 
     public void refreshDamageMods() {
         // Magic properties
-        HashSet<Fettle> properties = _character.getFettles();
+        HashSet<Fettle> properties = _character.getCharacterFettles();
         damageModsTable.removeAllViews();
 
         boolean hide = true;

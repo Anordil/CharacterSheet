@@ -17,12 +17,12 @@ import java.util.List;
  * Created by ggallani on 19/02/2016.
  */
 public class Paladin_vengeance extends Paladin_base {
-    static final long serialVersionUID = 202L;
+    static final long serialVersionUID = 206L;
 
     public Paladin_vengeance(){}
 
     @Override
-    public String getName() {
+    public String getClassName() {
         return App.getResString(R.string.class_paladin_vengeance);
     }
 

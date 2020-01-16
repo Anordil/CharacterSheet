@@ -1,24 +1,18 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
-import android.util.Log;
-
-import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
 
 public abstract class Warlock_base extends BaseClass {
+    static final long serialVersionUID = 214L;
 
     @Override
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {

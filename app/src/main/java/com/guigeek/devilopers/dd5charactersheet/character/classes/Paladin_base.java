@@ -1,17 +1,12 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
-import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +14,7 @@ import java.util.List;
  * Created by ggallani on 19/02/2016.
  */
 public abstract class Paladin_base extends BaseClass {
+    static final long serialVersionUID = 205L;
 
     @Override
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {

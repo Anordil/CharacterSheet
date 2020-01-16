@@ -2,24 +2,21 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
 
 public class Rogue extends BaseClass {
+    static final long serialVersionUID = 207L;
 
     @Override
-    public int getArchetypes() {
+    public int getChoosableArchetypes() {
         return R.array.rogueArchetypes;
     }
 
@@ -40,11 +37,8 @@ public class Rogue extends BaseClass {
     public Rogue(){}
 
     @Override
-    public String getName() {
+    public String getClassName() {
         String name = App.getResString(R.string.class_rogue);
-        if (_archetype != null) {
-            name += " (" + _archetype.getName() + ")";
-        }
         return name;
     }
 

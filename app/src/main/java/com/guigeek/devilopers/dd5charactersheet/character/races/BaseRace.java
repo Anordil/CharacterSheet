@@ -15,6 +15,7 @@ import java.io.ObjectOutput;
 import java.util.LinkedList;
 
 public abstract class BaseRace implements Race, Externalizable {
+    static final long serialVersionUID = 100L;
 
     int _version = 1;
     String _subRace = null;
@@ -45,5 +46,10 @@ public abstract class BaseRace implements Race, Externalizable {
     @Override
     public void setSubRace(String iSubRace) {
         _subRace = iSubRace;
+    }
+
+    @Override
+    public String getAttributeBoostDescription() {
+        return null;
     }
 }

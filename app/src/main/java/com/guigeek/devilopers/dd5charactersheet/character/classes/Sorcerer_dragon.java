@@ -16,7 +16,7 @@ import java.util.List;
 
 
 public class Sorcerer_dragon extends BaseArchetype {
-    static final long serialVersionUID = 205L;
+    static final long serialVersionUID = 211L;
 
     public Sorcerer_dragon(){}
 

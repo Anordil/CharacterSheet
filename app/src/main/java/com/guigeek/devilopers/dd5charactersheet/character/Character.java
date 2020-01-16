@@ -29,7 +29,6 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.lang.reflect.Constructor;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -62,13 +61,8 @@ public class Character implements Externalizable {
 
 
     public LinkedList<Fettle> _effect;
-
-
-    // DEPRECATED
-    public String _weaponDmgDice;
-    public boolean _isWeaponRanged;
     public String _allItems;
-    // end DEPRECATED
+
 
     public Armor _equippedArmor;
     public Armor _equippedShield;
@@ -111,8 +105,6 @@ public class Character implements Externalizable {
         oo.writeObject(_savingThrows);
         oo.writeObject(_powers);
 
-        oo.writeObject(_weaponDmgDice);
-        oo.writeBoolean(_isWeaponRanged);
         oo.writeObject(_allItems);
 
         oo.writeObject(_spellSlotsCurrent);
@@ -228,8 +220,6 @@ public class Character implements Externalizable {
 
             _powers = (LinkedList<Power>) oi.readObject();
 
-            _weaponDmgDice = (String) oi.readObject();
-            _isWeaponRanged = oi.readBoolean();
             _allItems = (String) oi.readObject();
 
 
@@ -351,10 +341,10 @@ public class Character implements Externalizable {
 
     public LinkedList<Power> getClassPowers() {
         if (_powers == null) { _powers = new LinkedList<>(); }
-        _powers = _class.getPowers(_level, this);
+        _powers = _class.getAllPowers(_level, this);
 
         if (_secondaryClass != null) {
-           for (Power p : _secondaryClass.getPowers(_levelSecondaryClass, this)) {
+           for (Power p : _secondaryClass.getAllPowers(_levelSecondaryClass, this)) {
                _powers.add(p);
            }
         }
@@ -372,14 +362,14 @@ public class Character implements Externalizable {
     }
     private LinkedList<Fettle> getEffectsFromRaceAndClass() {
         LinkedList<Fettle> res = new LinkedList<>();
-        for (Fettle effect : _race.getFettles()) {
+        for (Fettle effect : _race.getFettles(this)) {
             res.add(effect);
         }
-        for (Fettle effect : _class.getFettles(this)) {
+        for (Fettle effect : _class.getAllFettles(this)) {
             res.add(effect);
         }
         if (_secondaryClass != null) {
-            for (Fettle effect : _secondaryClass.getFettles(this)) {
+            for (Fettle effect : _secondaryClass.getAllFettles(this)) {
                 res.add(effect);
             }
         }
@@ -411,7 +401,10 @@ public class Character implements Externalizable {
         }
 
         if (hasFeat("Tough")) {
-            _hpMax += 2*_level + 2*_levelSecondaryClass;
+            _hpMax += 2*getLevel();
+        }
+        if (hasFeat("Draconic Resilience")) {
+            _hpMax += getLevel();
         }
 
         _powers = getClassPowers();
@@ -452,7 +445,7 @@ public class Character implements Externalizable {
 
     @Override
     public String toString() {
-        return _name + ", Level " + _level + " " + _race.getName() + " " + _class.getName();
+        return _name + ", Level " + _level + " " + _race.getName() + " " + _class.getQualifiedClassName();
 
     }
 
@@ -602,36 +595,37 @@ public class Character implements Externalizable {
     }
 
     private void initSavingThrows() {
-        _savingThrows = new LinkedList<>();
-        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.STR.toString(), Enumerations.Attributes.STR));
-        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.DEX.toString(), Enumerations.Attributes.DEX));
-        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.CON.toString(), Enumerations.Attributes.CON));
-        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.INT.toString(), Enumerations.Attributes.INT));
-        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.WIS.toString(), Enumerations.Attributes.WIS));
-        _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.CHA.toString(), Enumerations.Attributes.CHA));
+        if (_savingThrows == null || _savingThrows.size() != 6) {
+            _savingThrows = new LinkedList<>();
+            _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.STR.toString(), Enumerations.Attributes.STR));
+            _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.DEX.toString(), Enumerations.Attributes.DEX));
+            _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.CON.toString(), Enumerations.Attributes.CON));
+            _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.INT.toString(), Enumerations.Attributes.INT));
+            _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.WIS.toString(), Enumerations.Attributes.WIS));
+            _savingThrows.add(new SavingThrow(Enumerations.SavingThrows.CHA.toString(), Enumerations.Attributes.CHA));
 
-        // Add class proficiencies
-        for (Enumerations.SavingThrows proficientSave: _class.getSavingThrowsProficiencies()) {
-            if (proficientSave == Enumerations.SavingThrows.STR) {
-                _savingThrows.get(0)._isProficient = true;
-            }
-            if (proficientSave == Enumerations.SavingThrows.DEX) {
-                _savingThrows.get(1)._isProficient = true;
-            }
-            if (proficientSave == Enumerations.SavingThrows.CON) {
-                _savingThrows.get(2)._isProficient = true;
-            }
-            if (proficientSave == Enumerations.SavingThrows.INT) {
-                _savingThrows.get(3)._isProficient = true;
-            }
-            if (proficientSave == Enumerations.SavingThrows.WIS) {
-                _savingThrows.get(4)._isProficient = true;
-            }
-            if (proficientSave == Enumerations.SavingThrows.CHA) {
-                _savingThrows.get(5)._isProficient = true;
+            // Add class proficiencies
+            for (Enumerations.SavingThrows proficientSave: _class.getSavingThrowsProficiencies()) {
+                if (proficientSave == Enumerations.SavingThrows.STR) {
+                    _savingThrows.get(0)._isProficient = true;
+                }
+                if (proficientSave == Enumerations.SavingThrows.DEX) {
+                    _savingThrows.get(1)._isProficient = true;
+                }
+                if (proficientSave == Enumerations.SavingThrows.CON) {
+                    _savingThrows.get(2)._isProficient = true;
+                }
+                if (proficientSave == Enumerations.SavingThrows.INT) {
+                    _savingThrows.get(3)._isProficient = true;
+                }
+                if (proficientSave == Enumerations.SavingThrows.WIS) {
+                    _savingThrows.get(4)._isProficient = true;
+                }
+                if (proficientSave == Enumerations.SavingThrows.CHA) {
+                    _savingThrows.get(5)._isProficient = true;
+                }
             }
         }
-
     }
 
     public boolean hasFeat(String s) {
@@ -656,12 +650,27 @@ public class Character implements Externalizable {
         return armorClass;
     }
 
-    public HashSet<Fettle> getFettles() {
+    public HashSet<Fettle> getCharacterFettles() {
         HashSet<Fettle> properties = new HashSet<>();
         for (Fettle effect : _effect) {
             properties.add(effect);
         }
 
         return properties;
+    }
+
+    public int getSpeedInFeet() {
+        int baseSpeed = _race.getSpeedInFeet();
+
+        for (Fettle fettle : getCharacterFettles()) {
+            if (fettle._type == Enumerations.FettleType.MOVEMENT_SPEED_MODIFIER) {
+                baseSpeed += fettle._value;
+            }
+        }
+        return baseSpeed;
+    }
+
+    public int getLevel() {
+        return _level + _levelSecondaryClass;
     }
 }

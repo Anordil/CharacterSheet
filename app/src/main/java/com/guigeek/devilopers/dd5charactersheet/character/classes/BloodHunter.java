@@ -1,28 +1,22 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
-import android.content.res.Resources;
-
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
 
 public class BloodHunter extends BaseClass {
-    static final long serialVersionUID = 201L;
+    static final long serialVersionUID = 203L;
 
     @Override
-    public int getArchetypes() {
+    public int getChoosableArchetypes() {
         return R.array.bloodHunterOrders;
     }
 
@@ -90,11 +84,8 @@ public class BloodHunter extends BaseClass {
     }
 
     @Override
-    public String getName() {
+    public String getClassName() {
         String name = App.getResString(R.string.class_blood_hunter);
-        if (_archetype != null) {
-            name += " (" + _archetype.getName() + ")";
-        }
         return name;
     }
 
@@ -159,12 +150,6 @@ public class BloodHunter extends BaseClass {
             levelUp.add("You gained Sanguine Mastery.");
         }
 
-        // Order powers
-        if (_archetype != null) {
-            List<String> levelUpArchetype = _archetype.getLevelUpBenefits(iNewCharacterLevel);
-            levelUp.addAll(levelUpArchetype);
-        }
-
         return levelUp;
     }
 
@@ -214,11 +199,6 @@ public class BloodHunter extends BaseClass {
                     "\n" +
                     "In addition, when you critically hit with a weapon attack that bears your crimson rite, you regain a use of your Blood Maledict feature.", "", -1, -1, false, Enumerations.ActionType.PASSIVE));
         }
-
-        if (_archetype != null) {
-            powers.addAll(_archetype.getPowers(iLevel, iCharac));
-        }
-
 
         return powers;
     }

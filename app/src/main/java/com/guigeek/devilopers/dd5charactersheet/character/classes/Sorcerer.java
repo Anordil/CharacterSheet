@@ -2,6 +2,7 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
@@ -14,9 +15,10 @@ import java.util.List;
  * Created by ggallani on 19/02/2016.
  */
 public class Sorcerer extends BaseClass {
+    static final long serialVersionUID = 210L;
 
     @Override
-    public int getArchetypes() {
+    public int getChoosableArchetypes() {
         return R.array.sorcererArchetypes;
     }
 
@@ -90,11 +92,8 @@ public class Sorcerer extends BaseClass {
 
 
     @Override
-    public String getName() {
+    public String getClassName() {
         String name = App.getResString(R.string.class_sorcerer);
-        if (_archetype != null) {
-            name += " (" + _archetype.getName() + ")";
-        }
         return name;
     }
 

@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class Rogue_assassin extends BaseArchetype {
-    static final long serialVersionUID = 203L;
+    static final long serialVersionUID = 208L;
 
     public Rogue_assassin(){}
 

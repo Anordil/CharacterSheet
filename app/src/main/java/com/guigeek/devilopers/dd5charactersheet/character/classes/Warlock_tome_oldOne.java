@@ -16,12 +16,12 @@ import java.util.List;
  * Created by totou on 14/03/2016.
  */
 public class Warlock_tome_oldOne extends Warlock_base {
-    static final long serialVersionUID = 209L;
+    static final long serialVersionUID = 216L;
 
     public Warlock_tome_oldOne(){}
 
     @Override
-    public String getName() {
+    public String getClassName() {
         return App.getResString(R.string.class_warlock_tome_oldOne);
     }
 

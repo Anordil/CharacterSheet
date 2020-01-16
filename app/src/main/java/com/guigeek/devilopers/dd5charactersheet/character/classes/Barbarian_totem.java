@@ -17,7 +17,7 @@ import java.util.List;
  * Created by totou on 15/06/2016.
  */
 public class Barbarian_totem extends Barbarian_base {
-    static final long serialVersionUID = 200L;
+    static final long serialVersionUID = 202L;
     public Barbarian_totem(){}
 
     @Override

@@ -1,14 +1,4 @@
-package com.guigeek.devilopers.dd5charactersheet.character.classes;
-
-import android.content.res.Resources;
-
-import com.guigeek.devilopers.dd5charactersheet.R;
-import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
-import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
-import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
-import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
-import com.guigeek.devilopers.dd5charactersheet.character.Power;
+package com.guigeek.devilopers.dd5charactersheet.character;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -21,11 +11,12 @@ import java.util.List;
  * Created by totou on 15/06/2016.
  */
 public abstract class BaseClass implements Class, Externalizable {
+    static final long serialVersionUID = 200L;
 
     protected int _version = 1;
-    protected Archetype _archetype = null;
+    protected LinkedList<Archetype> _archetypes = null;
 
-    public int getArchetypes() {
+    public int getChoosableArchetypes() {
         return 0;
     }
 
@@ -111,8 +102,28 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
-    public void setArchetype(Archetype iArchetype) {
-        _archetype = iArchetype;
+    public void addArchetype(Archetype iArchetype) {
+        if (_archetypes == null) {
+            _archetypes = new LinkedList<>();
+        }
+        _archetypes.add(iArchetype);
+    }
+
+    @Override
+    public String getQualifiedClassName() {
+        String name = getClassName();
+
+        if (_archetypes != null && _archetypes.size() > 0) {
+            name += " (";
+            for (int i = 0; i < _archetypes.size(); ++i) {
+                name += _archetypes.get(i).getName();
+                if (i < _archetypes.size() -1) {
+                    name += ", ";
+                }
+            }
+            name += ")";
+        }
+        return name;
     }
 
     @Override
@@ -121,10 +132,47 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
+    public List<String> getAllLevelUpBenefits(int iNewCharacterLevel) {
+        List<String> allItems = getLevelUpBenefits(iNewCharacterLevel);
+        if (_archetypes != null) {
+            for (Archetype arc: _archetypes) {
+                allItems.addAll(arc.getLevelUpBenefits(iNewCharacterLevel));
+            }
+        }
+
+        return allItems;
+    }
+
+    @Override
+    public LinkedList<Power> getAllPowers(int iLevel, Character iCharac) {
+        LinkedList<Power> allItems = getPowers(iLevel, iCharac);
+        if (_archetypes != null) {
+            for (Archetype arc: _archetypes) {
+                allItems.addAll(arc.getPowers(iLevel, iCharac));
+            }
+        }
+
+        return allItems;
+    }
+
+    @Override
+    public LinkedList<Fettle> getAllFettles(Character character) {
+        LinkedList<Fettle> allItems = getFettles(character);
+        if (_archetypes != null) {
+            for (Archetype arc: _archetypes) {
+                allItems.addAll(arc.getFettles(character));
+            }
+        }
+
+        return allItems;
+    }
+
+
+    @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {
         oo.writeInt(_version);
-        oo.writeObject(_archetype);
+        oo.writeObject(_archetypes);
         oo.writeObject(_spellSlots);
         oo.writeObject(_spellsKnown);
     }
@@ -135,7 +183,7 @@ public abstract class BaseClass implements Class, Externalizable {
         int version = oi.readInt();
         _version = version;
         if (version >= 1) {
-            _archetype = (Archetype) oi.readObject();
+            _archetypes = (LinkedList<Archetype>) oi.readObject();
             _spellSlots = (int[][])oi.readObject();
             _spellsKnown = (int[][])oi.readObject();
         }

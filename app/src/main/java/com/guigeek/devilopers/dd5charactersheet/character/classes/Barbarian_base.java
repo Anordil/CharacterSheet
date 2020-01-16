@@ -2,16 +2,12 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +15,7 @@ import java.util.List;
  * Created by totou on 15/06/2016.
  */
 public abstract class Barbarian_base extends BaseClass {
+    static final long serialVersionUID = 201L;
 
     @Override
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
@@ -29,12 +26,8 @@ public abstract class Barbarian_base extends BaseClass {
     }
 
     @Override
-    public String getName() {
-        String name = App.getResString(R.string.class_barbarian);
-        if (_archetype != null) {
-            name += " (" + _archetype.getName() + ")";
-        }
-        return name;
+    public String getClassName() {
+        return App.getResString(R.string.class_barbarian);
     }
 
     @Override

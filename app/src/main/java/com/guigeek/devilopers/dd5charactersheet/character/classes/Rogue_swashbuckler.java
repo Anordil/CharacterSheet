@@ -16,7 +16,7 @@ import java.util.List;
 
 
 public class Rogue_swashbuckler extends BaseArchetype {
-    static final long serialVersionUID = 204L;
+    static final long serialVersionUID = 209L;
 
     public Rogue_swashbuckler(){}
 

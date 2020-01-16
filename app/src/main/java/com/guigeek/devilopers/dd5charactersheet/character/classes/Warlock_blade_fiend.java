@@ -15,13 +15,13 @@ import java.util.List;
 
 
 public class Warlock_blade_fiend extends Warlock_base {
-    static final long serialVersionUID = 208L;
+    static final long serialVersionUID = 215L;
 
     public Warlock_blade_fiend(){}
 
 
     @Override
-    public String getName() {
+    public String getClassName() {
         return App.getResString(R.string.class_warlock_blade_fiend);
     }
 

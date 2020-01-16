@@ -1,6 +1,5 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -11,11 +10,13 @@ public interface Race {
     public String getName();
     public int getSpeedInFeet();
 
-    public LinkedList<Power> getRacialFeatures();
+    public LinkedList<Power> getRacialFeatures(Character iCharacter);
 
     public Fettle[] getAttributeBoost();
 
-    public LinkedList<Fettle> getFettles();
+    public LinkedList<Fettle> getFettles(Character iCharacter);
 
     public void setSubRace(String iSubRace);
+
+    public String getAttributeBoostDescription();
 }

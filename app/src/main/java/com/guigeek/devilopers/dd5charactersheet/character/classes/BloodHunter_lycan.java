@@ -6,13 +6,14 @@ import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
+import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class BloodHunter_lycan extends BaseArchetype {
-    static final long serialVersionUID = 210L;
+    static final long serialVersionUID = 204L;
 
     @Override
     public String getName() {
@@ -81,5 +82,21 @@ public class BloodHunter_lycan extends BaseArchetype {
             powers.add(new Power("Iron Volition","Whenever you make a Wisdom saving throw to maintain control of your hybrid form, you do so with advantage..", "", -1, -1, false, Enumerations.ActionType.PASSIVE));
         }
         return powers;
+    }
+
+    @Override
+    public LinkedList<Fettle> getFettles(Character character) {
+        LinkedList<Fettle> fettles = new LinkedList<>();
+
+        int level = character._level;
+        if (!(character._class instanceof BloodHunter)) {
+            level = character._levelSecondaryClass;
+        }
+
+        if (level >= 7) {
+            fettles.add(new Fettle(Enumerations.FettleType.MOVEMENT_SPEED_MODIFIER, 10, 0));
+        }
+
+        return  fettles;
     }
 }

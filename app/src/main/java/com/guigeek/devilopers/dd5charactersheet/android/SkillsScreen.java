@@ -81,7 +81,7 @@ public class SkillsScreen extends Fragment {
         throwAdv.clear();
         throwDisadv.clear();
         throwProficiency.clear();
-        for (Fettle fettle : _character.getFettles()) {
+        for (Fettle fettle : _character.getCharacterFettles()) {
             if (fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE) {
                 skillAdv.add(Enumerations.Skills.values()[fettle._describer].toString());
             }
@@ -323,7 +323,7 @@ public class SkillsScreen extends Fragment {
         ll.addView(rowPowerHeader);
 
         // Display only relevant effects for this screen
-        for (Fettle fettle : _character.getFettles()) {
+        for (Fettle fettle : _character.getCharacterFettles()) {
             if (fettle._type == Enumerations.FettleType.IMMUNITY ||
                 fettle._type == Enumerations.FettleType.ABILITY_CHECK_MODIFIER ||
                 fettle._type == Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE ||

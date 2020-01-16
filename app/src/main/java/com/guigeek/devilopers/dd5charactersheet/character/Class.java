@@ -10,7 +10,8 @@ import java.util.List;
  */
 public interface Class  {
 
-    public String getName();
+    public String getClassName();
+    public String getQualifiedClassName();
     public int getHitDie();
 
     public boolean isCaster();
@@ -29,9 +30,14 @@ public interface Class  {
 
     public int getAC(Character character);
 
-    public void setArchetype(Archetype iArchetype);
+    public void addArchetype(Archetype iArchetype);
 
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies();
 
-    public int getArchetypes();
+    public int getChoosableArchetypes();
+
+
+    public List<String> getAllLevelUpBenefits(int iNewCharacterLevel);
+    public LinkedList<Power> getAllPowers(int iLevel, Character iCharac);
+    public LinkedList<Fettle> getAllFettles(Character character);
 }

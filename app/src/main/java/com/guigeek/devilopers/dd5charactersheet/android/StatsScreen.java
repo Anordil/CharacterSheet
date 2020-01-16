@@ -206,7 +206,7 @@ public class StatsScreen extends Fragment {
                     _character.doLongRest();
 
                     // Show level up window
-                    List<String> levelUpBoons = _character._class.getLevelUpBenefits(_character._level);
+                    List<String> levelUpBoons = _character._class.getAllLevelUpBenefits(_character._level);
 
                     String boons = "";
                     for (String s : levelUpBoons) {
@@ -232,7 +232,7 @@ public class StatsScreen extends Fragment {
                     _character.doLongRest();
 
                     // Show level up window
-                    List<String> levelUpBoons = _character._secondaryClass.getLevelUpBenefits(_character._levelSecondaryClass);
+                    List<String> levelUpBoons = _character._secondaryClass.getAllLevelUpBenefits(_character._levelSecondaryClass);
 
                     String boons = "";
                     for (String s : levelUpBoons) {
@@ -302,7 +302,7 @@ public class StatsScreen extends Fragment {
         }
 
 
-        for (Fettle property : _character.getFettles()) {
+        for (Fettle property : _character.getCharacterFettles()) {
             if (property._type == Enumerations.FettleType.ATTRIBUTE_MODIFIER) {
                 Enumerations.Attributes attr = Enumerations.Attributes.values()[property._describer];
                 switch (attr) {

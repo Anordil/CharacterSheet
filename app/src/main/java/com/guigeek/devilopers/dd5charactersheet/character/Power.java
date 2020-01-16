@@ -68,15 +68,6 @@ public class Power implements Externalizable {
             result += " (" + _range + ")";
         }
 
-//        // Long/short rest
-//        if (_max > 0) {
-//            result += " - " + (_isLongRest ? "Long rest":"Short Rest");
-//        }
-
-        if (_dd > 0) {
-            result += " DD" + _dd;
-        }
-
         return result;
     }
 

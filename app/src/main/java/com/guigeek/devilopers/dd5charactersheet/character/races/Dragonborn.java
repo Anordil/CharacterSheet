@@ -3,15 +3,11 @@ package com.guigeek.devilopers.dd5charactersheet.character.races;
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.AttributeAlteration;
+import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
-import com.guigeek.devilopers.dd5charactersheet.character.Race;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 
 /**
@@ -22,7 +18,7 @@ public class Dragonborn extends BaseRace {
 
 
     @Override
-    public LinkedList<Fettle> getFettles() {
+    public LinkedList<Fettle> getFettles(Character iCharacter) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
         fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, getDamageType()));
         return fettles;
@@ -64,11 +60,18 @@ public class Dragonborn extends BaseRace {
         }
     }
 
-    private String getBreathDescription() {
+    private String getBreathDescription(Character iCharacter) {
+        int lvl = iCharacter.getLevel();
+        String damage = "2d6";
+        if (lvl >= 16) damage = "5d6";
+        else if (lvl >= 11) damage = "4d6";
+        else if (lvl >= 6) damage = "3d6";
+
         return "Each creature in a " + getBreathForm() + " must make a " + getSaveType()
-                + " saving throw. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 "
+                + " saving throw. A creature takes "
+                + damage + " "
                 + Enumerations.DamageTypes.values()[getDamageType()].toString()
-                + " damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level. After you use your breath weapon, you can’t use it again until you complete a short or long rest.";
+                + " damage on a failed save, and half as much damage on a successful one.";
     }
 
     @Override
@@ -89,10 +92,11 @@ public class Dragonborn extends BaseRace {
     }
 
     @Override
-    public LinkedList<Power> getRacialFeatures() {
+    public LinkedList<Power> getRacialFeatures(Character iCharacter) {
         LinkedList<Power> racialTraits = new LinkedList<>();
 
-        racialTraits.add(new Power("Breath", getBreathDescription(), "", 1, -1, false, Enumerations.ActionType.ACTION));
+        int dd = 8 + iCharacter.getModifier(Enumerations.Attributes.CON) + iCharacter.getProficiencyBonus();
+        racialTraits.add(new Power("Breath", getBreathDescription(iCharacter), "", 1, dd, false, Enumerations.ActionType.ACTION));
 
         return racialTraits;
     }

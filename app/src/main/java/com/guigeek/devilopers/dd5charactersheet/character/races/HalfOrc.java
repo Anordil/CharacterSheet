@@ -3,16 +3,11 @@ package com.guigeek.devilopers.dd5charactersheet.character.races;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.character.AttributeAlteration;
+import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
-import com.guigeek.devilopers.dd5charactersheet.character.Race;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -23,7 +18,7 @@ public class HalfOrc extends BaseRace {
     public static final long serialVersionUID = 103L;
 
     @Override
-    public LinkedList<Fettle> getFettles() {
+    public LinkedList<Fettle> getFettles(Character iCharacter) {
         return new LinkedList<Fettle>();
     }
 
@@ -43,7 +38,7 @@ public class HalfOrc extends BaseRace {
     public HalfOrc(){}
 
     @Override
-    public LinkedList<Power> getRacialFeatures() {
+    public LinkedList<Power> getRacialFeatures(Character iCharacter) {
         LinkedList<Power> racialTraits = new LinkedList<>();
 
         racialTraits.add(new Power("Darkvision", "You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.", "60ft", -1, -1, true, Enumerations.ActionType.PASSIVE));

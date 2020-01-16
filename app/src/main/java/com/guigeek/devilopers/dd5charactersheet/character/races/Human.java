@@ -3,15 +3,11 @@ package com.guigeek.devilopers.dd5charactersheet.character.races;
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.AttributeAlteration;
+import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
-import com.guigeek.devilopers.dd5charactersheet.character.Race;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
 import java.util.LinkedList;
 
 public class Human extends BaseRace {
@@ -19,7 +15,7 @@ public class Human extends BaseRace {
     public static final long serialVersionUID = 104L;
 
     @Override
-    public LinkedList<Fettle> getFettles() {
+    public LinkedList<Fettle> getFettles(Character iCharacter) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
         return fettles;
     }
@@ -44,7 +40,7 @@ public class Human extends BaseRace {
     public Human(){}
 
     @Override
-    public LinkedList<Power> getRacialFeatures() {
+    public LinkedList<Power> getRacialFeatures(Character iCharacter) {
         LinkedList<Power> racialTraits = new LinkedList<>();
         return racialTraits;
     }
