@@ -47,7 +47,7 @@ public abstract class Paladin_base extends BaseClass {
         return fettles;
     }
 
-    int[][] _spellSlots = {
+    int[][] _spellSlotsSubclass = {
                 // spell level 0-9
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
@@ -72,7 +72,9 @@ public abstract class Paladin_base extends BaseClass {
                 {0, 4, 3, 3, 3, 2, 0, 0, 0, 0}//ln 20
         };
 
-    public Paladin_base(){}
+    public Paladin_base(){
+        _spellSlots = _spellSlotsSubclass;
+    }
 
 
     @Override

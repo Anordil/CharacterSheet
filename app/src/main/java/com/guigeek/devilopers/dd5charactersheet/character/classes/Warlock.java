@@ -94,7 +94,7 @@ public class Warlock extends BaseClass {
         return fettles;
     }
 
-    int[][] _spellSlots = {
+    int[][] _spellSlotsSubclass = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
@@ -119,7 +119,7 @@ public class Warlock extends BaseClass {
             {0, 0, 0, 0, 0, 0, 1, 1, 1, 1}//ln 20
     };
 
-    int[][] _spellsKnown = {
+    int[][] _spellsKnownSubclass = {
             // cantrips, spells
             {0, 0},
             {2, 2}, //character lv 1
@@ -145,7 +145,10 @@ public class Warlock extends BaseClass {
     };
 
 
-    public Warlock(){}
+    public Warlock(){
+        _spellSlots = _spellSlotsSubclass;
+        _spellsKnown = _spellsKnownSubclass;
+    }
 
 
     @Override

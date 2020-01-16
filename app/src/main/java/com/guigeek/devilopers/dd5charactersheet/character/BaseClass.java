@@ -32,7 +32,7 @@ public abstract class BaseClass implements Class, Externalizable {
         return -1;
     }
 
-    int[][] _spellSlots = {
+    protected int[][] _spellSlots = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
@@ -57,7 +57,7 @@ public abstract class BaseClass implements Class, Externalizable {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}//ln 20
     };
 
-    int[][] _spellsKnown = {
+    protected int[][] _spellsKnown = {
             // cantrips, spells
             {0, 0},
             {0, 0}, //character lv 1

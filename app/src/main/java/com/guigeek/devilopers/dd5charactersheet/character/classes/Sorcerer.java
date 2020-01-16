@@ -53,7 +53,7 @@ public class Sorcerer extends BaseClass {
         return fettles;
     }
 
-    int[][] _spellSlots = {
+    int[][] _spellSlotsSubclass = {
                 // spell level 0-9
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 2, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
@@ -78,7 +78,7 @@ public class Sorcerer extends BaseClass {
                 {0, 4, 3, 3, 3, 3, 2, 2, 1, 1}//ln 20
         };
 
-    int[][] _spellsKnown = {
+    int[][] _spellsKnownSubclass = {
             // cantrips, spells
             {0, 0},
             {4, 2}, //character lv 1
@@ -103,7 +103,10 @@ public class Sorcerer extends BaseClass {
             {6, 15}//ln 20
     };
 
-    public Sorcerer(){}
+    public Sorcerer(){
+        _spellSlots = _spellSlotsSubclass;
+        _spellsKnown = _spellsKnownSubclass;
+    }
 
 
     @Override
