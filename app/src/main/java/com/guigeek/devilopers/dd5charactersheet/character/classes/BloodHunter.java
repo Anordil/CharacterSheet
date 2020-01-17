@@ -217,6 +217,6 @@ public class BloodHunter extends BaseClass {
 
     @Override
     public int getIconResource() {
-        return R.drawable.ic_warlock;
+        return R.drawable.ic_werewolf;
     }
 }

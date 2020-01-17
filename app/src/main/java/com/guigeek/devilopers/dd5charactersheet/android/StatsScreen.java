@@ -37,6 +37,7 @@ public class StatsScreen extends Fragment {
     Button updateButton, multiclassButton;
     EditText name, level, str, dex, con, intel, wis, cha, levelSecondary;
     TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA, tvSecondaryClass, knownCantrips, knownSpells;
+    TextView proficiencyBonus, modSTR, modDEX, modCON, modINT, modWIS, modCHA;
     Spinner spSecondaryClass;
 
     TableRow rowCantrips, rowSpells;
@@ -87,12 +88,20 @@ public class StatsScreen extends Fragment {
         cha = (EditText)root.findViewById(R.id.inCHA);
         tvSecondaryClass = (TextView)root.findViewById(R.id.tvSecondaryClass);
 
-        bonusSTR = (TextView)root.findViewById(R.id.bonusSTR);
-        bonusDEX = (TextView)root.findViewById(R.id.bonusDEX);
-        bonusCON = (TextView)root.findViewById(R.id.bonusCON);
-        bonusINT = (TextView)root.findViewById(R.id.bonusINT);
-        bonusWIS = (TextView)root.findViewById(R.id.bonusWIS);
-        bonusCHA = (TextView)root.findViewById(R.id.bonusCHA);
+        bonusSTR = root.findViewById(R.id.bonusSTR);
+        bonusDEX = root.findViewById(R.id.bonusDEX);
+        bonusCON = root.findViewById(R.id.bonusCON);
+        bonusINT = root.findViewById(R.id.bonusINT);
+        bonusWIS = root.findViewById(R.id.bonusWIS);
+        bonusCHA = root.findViewById(R.id.bonusCHA);
+
+        modSTR = root.findViewById(R.id.modSTR);
+        modDEX = root.findViewById(R.id.modDEX);
+        modCON = root.findViewById(R.id.modCON);
+        modINT = root.findViewById(R.id.modINT);
+        modWIS = root.findViewById(R.id.modWIS);
+        modCHA = root.findViewById(R.id.modCHA);
+        proficiencyBonus = root.findViewById(R.id.proficiencyBonus);
 
         knownCantrips = (TextView)root.findViewById(R.id.knownCantrips);
         knownSpells = (TextView)root.findViewById(R.id.knownSpells);
@@ -274,11 +283,6 @@ public class StatsScreen extends Fragment {
         cha.setText(_character._attributes[5] + "");
 
 
-        if (_character._secondaryClass != null) {
-
-        }
-
-
         for (Fettle property : _character.getCharacterFettles()) {
             if (property._type == Enumerations.FettleType.ATTRIBUTE_MODIFIER) {
                 Enumerations.Attributes attr = Enumerations.Attributes.values()[property._describer];
@@ -292,5 +296,14 @@ public class StatsScreen extends Fragment {
                 }
             }
         }
+
+        modSTR.setText("" + _character.getModifier(_character._attributes[0] + Integer.parseInt(bonusSTR.getText().toString())));
+        modDEX.setText("" + _character.getModifier(_character._attributes[1] + Integer.parseInt(bonusDEX.getText().toString())));
+        modCON.setText("" + _character.getModifier(_character._attributes[2] + Integer.parseInt(bonusCON.getText().toString())));
+        modINT.setText("" + _character.getModifier(_character._attributes[3] + Integer.parseInt(bonusINT.getText().toString())));
+        modWIS.setText("" + _character.getModifier(_character._attributes[4] + Integer.parseInt(bonusWIS.getText().toString())));
+        modCHA.setText("" + _character.getModifier(_character._attributes[5] + Integer.parseInt(bonusCHA.getText().toString())));
+
+        proficiencyBonus.setText("+" + _character.getProficiencyBonus());
     }
 }

@@ -5,11 +5,13 @@ import android.content.Context;
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
+import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
+import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -46,6 +48,47 @@ public class BloodHunter_lycan extends BaseArchetype {
         }
 
         return levelUp;
+    }
+
+    @Override
+    public List<Attack> getSpecialClassAttacks(Character iCharacter) {
+        LinkedList<Attack> hybridStrikes = new LinkedList<>();
+
+        int level = iCharacter._level;
+        int proficiency = iCharacter.getProficiencyBonus();
+
+        Weapon weapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+        weapon._isMagical = level >= 7;
+        weapon._name = "Predatory Strikes";
+        weapon._damageType = Enumerations.DamageTypes.SLASHING;
+        weapon._diceCount = 1;
+        weapon._diceValue = level >= 18 ? 10 : level >= 11 ? 8 : 6;
+
+        int dmg = 0;
+        int atk = iCharacter.getProficiencyBonus();
+
+        // Feral might
+        dmg += (int)Math.floor(proficiency/2);
+
+        // Predatory strikes - DEX or STR
+        atk += Math.max(iCharacter.getModifier(Enumerations.Attributes.STR), iCharacter.getModifier(Enumerations.Attributes.DEX));
+        dmg += Math.max(iCharacter.getModifier(Enumerations.Attributes.STR), iCharacter.getModifier(Enumerations.Attributes.DEX));
+
+        // Beastly precision
+        if (level >= 11) {
+            atk += (int)Math.floor(proficiency/2);
+        }
+
+        hybridStrikes.add(new Attack(
+                weapon,
+                "When in hybrid form only. You may use a Bonus Action to attack again if you used your Action to attack.",
+                atk,
+                dmg,
+                iCharacter.getAttacksPerRound(),
+                R.drawable.ic_werewolf
+        ));
+
+        return hybridStrikes;
     }
 
     public String getUnarmedStrikesDice(int iLevel) {

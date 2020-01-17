@@ -237,4 +237,19 @@ public abstract class BaseClass implements Class, Externalizable {
             _spellsKnown = (int[][])oi.readObject();
         }
     }
+
+    @Override
+    public List<Attack> getSpecialClassAttacks(Character iCharacter) {
+        return new LinkedList<>();
+    }
+
+    @Override
+    public List<Attack> getAllSpecialClassAttacks(Character iCharacter) {
+        List<Attack> allAttacks = getSpecialClassAttacks(iCharacter);
+
+        for (Archetype arc: _archetypes) {
+            allAttacks.addAll(arc.getSpecialClassAttacks(iCharacter));
+        }
+        return allAttacks;
+    }
 }

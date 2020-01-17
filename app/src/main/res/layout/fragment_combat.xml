@@ -203,11 +203,6 @@
                         android:paddingRight="20dp"
                         android:id="@+id/tvAtkBonus"  />
 
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent" >
-
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -435,7 +430,31 @@
             </TableRow>
 
 
-
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/combatRowSpecialAttacks">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_span="6"
+                >
+                    <TextView
+                        android:text="Class attacks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        ></TextView>
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/combatTableSpecialAttacks"
+                    >
+                    </TableLayout>
+                </LinearLayout>
+            </TableRow>
 
 
 

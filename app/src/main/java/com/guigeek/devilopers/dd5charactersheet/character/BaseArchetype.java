@@ -37,4 +37,9 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         return new LinkedList<>();
     }
+
+    @Override
+    public List<Attack> getSpecialClassAttacks(Character iCharacter) {
+        return new LinkedList<>();
+    }
 }

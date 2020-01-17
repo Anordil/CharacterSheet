@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -56,6 +57,9 @@ public class CombatScreen extends Fragment {
     TableLayout fettleTable, damageModsTable, fettleTableOffHand;
 
     Button btnRevive;
+
+    TableRow rowSpecial;
+    TableLayout tableSpecial;
 
     public CombatScreen() {}
 
@@ -116,6 +120,9 @@ public class CombatScreen extends Fragment {
 
         spellAtk = (TextView)rootView.findViewById(R.id.tvSpellAtk);
         spellDD = (TextView)rootView.findViewById(R.id.tvSpellDD);
+
+        rowSpecial = rootView.findViewById(R.id.combatRowSpecialAttacks);
+        tableSpecial = rootView.findViewById(R.id.combatTableSpecialAttacks);
 
         Class aSpellCasterClass = _character._class;
         if (!aSpellCasterClass.isCaster() && _character._secondaryClass != null) {
@@ -482,7 +489,7 @@ public class CombatScreen extends Fragment {
         // Character-wide bonuses
         for (Fettle property : _character.getCharacterFettles()) {
             if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
-                propertyAttackBonus = Math.max(property._value, propertyAttackBonus);
+                propertyAttackBonus += propertyAttackBonus;
             }
             else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER) {
                 propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._value + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
@@ -494,7 +501,7 @@ public class CombatScreen extends Fragment {
         // Weapon-specific bonuses
         for (Fettle property : weapon._magicProperties) {
             if (property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
-                propertyAttackBonus = Math.max(property._value, propertyAttackBonus);
+                propertyAttackBonus += propertyAttackBonus;
             }
             else if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER) {
                 propertyDamageBonus += " " + (property._value >= 0 ? "+" : "") + property._value + "(" + Enumerations.DamageTypes.values()[property._describer].toString() + ")";
@@ -560,26 +567,9 @@ public class CombatScreen extends Fragment {
 
         viewInit.setText((initiativeBonus > 0 ? "+": "") + initiativeBonus);
 
-
-        // Magic properties
-        LinkedList<Fettle> magicProperties = weapon._magicProperties;
-        if (magicProperties != null) {
-            for (Fettle effect : magicProperties) {
-                if (effect._type == Enumerations.FettleType.ATTACK_DAMAGE_DICE
-                        || effect._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER
-                        || effect._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
-                    continue;
-                }
-                TableRow aRow = new TableRow(getContext());
-                TextView effectDescription = new TextView(getContext());
-                effectDescription.setText(effect.toString());
-                aRow.addView(effectDescription);
-                fettleTable.addView(aRow);
-            }
-        }
-
         refreshOffHand();
         refreshDamageMods();
+        addClassAttacks();
     }
 
     public void refreshOffHand() {
@@ -694,6 +684,78 @@ public class CombatScreen extends Fragment {
             }
         }
     }
+
+    public void addClassAttacks() {
+        tableSpecial.removeAllViews();
+        if (_character._class.getAllSpecialClassAttacks(_character).size() > 0) {
+            rowSpecial.setVisibility(View.VISIBLE);
+
+            for (Attack atk: _character._class.getAllSpecialClassAttacks(_character)) {
+                TableRow aRowName = new TableRow(getContext());
+
+                TextView weaponName = new TextView(getContext());
+                weaponName.setText(atk._weapon._name);
+
+                if (atk._icon != -1) {
+                    ImageView aIcon = new ImageView(getContext());
+                    aIcon.setImageDrawable(getContext().getDrawable(atk._icon));
+                    aRowName.addView(aIcon);
+                }
+
+                aRowName.addView(weaponName);
+                tableSpecial.addView(aRowName);
+
+                // Description
+                if (atk._description != null) {
+                    TableRow rowDesc = new TableRow(getContext());
+                    TextView textDesc = new TextView(getContext());
+
+                    TableRow.LayoutParams rowParamNameDesc = new TableRow.LayoutParams();
+                    rowParamNameDesc.span = 6;
+                    textDesc.setLayoutParams(rowParamNameDesc);
+
+                    rowDesc.addView(textDesc);
+                    tableSpecial.addView(rowDesc);
+                    textDesc.setText(atk._description);
+                }
+
+                tableSpecial.addView(createWeaponAttackRow(atk));
+            }
+        } else {
+            rowSpecial.setVisibility(View.GONE);
+        }
+    }
+
+    public TableRow createWeaponAttackRow(Attack iAtk) {
+        TableRow aRow = new TableRow(getContext());
+
+        ImageView meleeOrDist = new ImageView(getContext());
+        ImageView dmg = new ImageView(getContext());
+        TextView atkDesc = new TextView(getContext());
+        TextView dmgDesc = new TextView(getContext());
+
+        aRow.addView(meleeOrDist);
+        aRow.addView(atkDesc);
+        aRow.addView(dmg);
+        aRow.addView(dmgDesc);
+
+        meleeOrDist.setImageDrawable(getContext().getDrawable(iAtk._weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE ? R.drawable.ic_thrown_daggers : R.drawable.ic_sword_clash));
+        dmg.setImageDrawable(getContext().getDrawable(R.drawable.ic_broken_heart));
+
+        atkDesc.setText((iAtk._attackMod > 0 ? "+" + iAtk._attackMod : iAtk._attackMod) + " " + (iAtk._atkCount > 1 ? "x" + iAtk._atkCount:""));
+
+        String dmgDescText = iAtk._weapon._diceCount + "D" + iAtk._weapon._diceValue;
+        if (iAtk._dmgMod != 0) {
+            dmgDescText += (iAtk._dmgMod != 0 ? iAtk._dmgMod > 0 ? " +" + iAtk._dmgMod: " " + iAtk._dmgMod : "") + " ";
+        }
+        dmgDescText += iAtk._weapon._damageType.toString();
+
+        dmgDesc.setText(dmgDescText);
+
+        return aRow;
+    }
+
+
 
 
     public void refreshDamageMods() {

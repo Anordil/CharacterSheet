@@ -44,4 +44,7 @@ public interface Class  {
     public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getAllPowers(int iLevel, Character iCharac);
     public LinkedList<Fettle> getAllFettles(Character character);
+
+    public List<Attack> getSpecialClassAttacks(Character iCharacter);
+    public List<Attack> getAllSpecialClassAttacks(Character iCharacter);
 }

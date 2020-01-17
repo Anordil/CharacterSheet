@@ -16,5 +16,6 @@ public interface Archetype {
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getPowers(int iLevel, Character iCharac);
     public LinkedList<Fettle> getFettles(Character character);
+    public List<Attack> getSpecialClassAttacks(Character iCharacter);
 
 }

@@ -19,7 +19,7 @@ import java.util.LinkedList;
 public class Weapon implements Externalizable {
 
     public static final long serialVersionUID = 21L;
-    int _version = 3;
+    int _version = 4;
 
 
     public Enumerations.WeaponTypes _type;
@@ -38,6 +38,8 @@ public class Weapon implements Externalizable {
     public LinkedList<Fettle> _magicProperties;
 
     public String _name;
+
+    public boolean _isMagical;
 
 
     public Weapon(){
@@ -463,6 +465,8 @@ public class Weapon implements Externalizable {
 
         oo.writeObject(_name);
         oo.writeObject(_hands);
+
+        oo.writeBoolean(_isMagical);
     }
 
     @Override
@@ -497,6 +501,11 @@ public class Weapon implements Externalizable {
         }
         if (version >= 3) {
             _hands = (Enumerations.WeaponHandCount)oi.readObject();
+        }
+        if (version >= 4) {
+            _isMagical = oi.readBoolean();
+        } else {
+            _isMagical = false;
         }
     }
 }

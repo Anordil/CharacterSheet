@@ -1,6 +1,8 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
 import android.util.Log;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_base;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
@@ -486,6 +488,10 @@ public class Character implements Externalizable {
             }
         }
 
+        return getModifier(value);
+    }
+
+    public int getModifier(int value) {
         return (int) Math.floor((value - 10) / 2);
     }
 
@@ -557,13 +563,27 @@ public class Character implements Externalizable {
         if (_equippedShield != null) for (Fettle property : _equippedShield._magicProperties) {
             _effect.add(property);
         }
-        // Commented out to not count attack bonus damages for each hand. TO be fixed if the weapon provide added STR, ...
-//        if (_equippedWeapon != null) for (Fettle property : _equippedWeapon._magicProperties) {
-//            _effect.add(property);
-//        }
-//        if (_offHandWeapon != null) for (Fettle property : _offHandWeapon._magicProperties) {
-//            _effect.add(property);
-//        }
+
+        // For weapons, skill attack modifiers as they are handled in the Combat Screen
+        if (_equippedWeapon != null) for (Fettle property : _equippedWeapon._magicProperties) {
+            if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_DICE
+                    || property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER
+                    || property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
+                continue;
+            }
+            _effect.add(property);
+        }
+        if (_offHandWeapon != null) for (Fettle property : _offHandWeapon._magicProperties) {
+            if (property._type == Enumerations.FettleType.ATTACK_DAMAGE_DICE
+                    || property._type == Enumerations.FettleType.ATTACK_DAMAGE_MODIFIER
+                    || property._type == Enumerations.FettleType.ATTACK_BONUS_MODIFIER) {
+                continue;
+            }
+            _effect.add(property);
+        }
+
+
+
         if (_equippedArmor != null) for (Fettle property : _equippedArmor._magicProperties) {
             _effect.add(property);
         }
@@ -628,6 +648,13 @@ public class Character implements Externalizable {
         int armorClass = _class.getAC(this);
         if (_secondaryClass != null) {
             armorClass = Math.max(armorClass, _secondaryClass.getAC(this));
+        }
+
+        for (Fettle f : getCharacterFettles()) {
+            if (f._type == Enumerations.FettleType.ARMOR_CLASS_MODIFIER) {
+                armorClass += f._value;
+                break;
+            }
         }
 
         return armorClass;
