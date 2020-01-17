@@ -23,7 +23,7 @@ public class HalfOrc extends BaseRace {
     }
 
     @Override
-    public String getName() {
+    public String getBaseRaceName() {
         return App.getResString(R.string.race_half_orc);
     }
 

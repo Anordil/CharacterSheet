@@ -85,6 +85,7 @@ public class Enumerations {
         NECROTIC_DMG("Necrotic damage"), POISON_DMG("Poison damage"),
         PSYCHIC_DMG("Psychic damage"), RADIANT_DMG("Radiant damage"), THUNDER_DMG("Thunder damage"),
         CHARM_MAGIC("Charm magic"),
+        FEAR("Fear"),
         ALL("All"),
         STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), CHA("Charisma"), WIS("Wisdom"),
         DEX_BARBARIAN("Dexterity (from effects you can see)"), POISON("Poison");

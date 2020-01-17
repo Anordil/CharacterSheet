@@ -44,6 +44,16 @@ public abstract class BaseRace implements Race, Externalizable {
     }
 
     @Override
+    public String getName() {
+        String name = getBaseRaceName();
+        if (_subRace != null) {
+            name += " (" + _subRace + ")";
+        }
+
+        return name;
+    }
+
+    @Override
     public void setSubRace(String iSubRace) {
         _subRace = iSubRace;
     }
@@ -51,5 +61,10 @@ public abstract class BaseRace implements Race, Externalizable {
     @Override
     public String getAttributeBoostDescription() {
         return null;
+    }
+
+    @Override
+    public int getSubraceArrayId() {
+        return -1;
     }
 }

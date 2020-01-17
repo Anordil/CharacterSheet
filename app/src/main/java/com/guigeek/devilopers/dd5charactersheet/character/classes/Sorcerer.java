@@ -26,6 +26,19 @@ public class Sorcerer extends BaseClass {
     }
 
     @Override
+    public int getAC(Character character) {
+        if (_archetypes.size() != 0 && _archetypes.get(0) instanceof Sorcerer_dragon) {
+            int normalAc = super.getAC(character);
+            int dragonAC = 13 + character.getModifier(Enumerations.Attributes.DEX);
+
+            if (character._equippedArmor == null || character._equippedArmor._type == Enumerations.ArmorTypes.NONE) {
+                return Math.max(normalAc, dragonAC);
+            }
+        }
+        return super.getAC(character);
+    }
+
+    @Override
     public Archetype getArchetypeByName(String iName) {
         if (iName.equals(App.getResString(R.string.sorcerer_wild))) {
             return new Sorcerer_wild();

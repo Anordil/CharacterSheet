@@ -13,21 +13,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/createCharacterLayout">
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerRace"
-        android:layout_below="@+id/inName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        android:spinnerMode="dialog" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/layoutRace"
+            android:layout_below="@+id/inName"
+            android:weightSum="2"
+            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+
+            <Spinner
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerRace"
+
+                android:spinnerMode="dialog" />
+            <Spinner
+                android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerSubRace"
+                android:spinnerMode="dialog" />
+        </LinearLayout>
+
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerClass"
-        android:layout_below="@+id/spinnerRace"
+        android:layout_below="@+id/layoutRace"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp"

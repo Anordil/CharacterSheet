@@ -10,7 +10,7 @@ import java.util.LinkedList;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public class MountainDwarf extends BaseRace {
+public class Dwarf extends BaseRace {
     public static final long serialVersionUID = 102L;
 
 
@@ -23,8 +23,13 @@ public class MountainDwarf extends BaseRace {
     }
 
     @Override
-    public String getName() {
-        return App.getResString(R.string.race_mtn_dwarf);
+    public String getBaseRaceName() {
+        return App.getResString(R.string.race_dwarf);
+    }
+
+    @Override
+    public int getSubraceArrayId() {
+        return R.array.dwarfSubRaces;
     }
 
     @Override
@@ -32,12 +37,19 @@ public class MountainDwarf extends BaseRace {
         return 25;
     }
 
-    public MountainDwarf(){}
+    public Dwarf(){}
 
     @Override
     public Fettle[] getAttributeBoost() {
-        Fettle[] raceBonuses = new Fettle[1];
-        raceBonuses[0] = new AttributeAlteration(2, Enumerations.Attributes.STR);
+        Fettle[] raceBonuses = new Fettle[2];
+        raceBonuses[0] = new AttributeAlteration(2, Enumerations.Attributes.CON);
+
+        if (_subRace.equals("Hill")) {
+            raceBonuses[1] = new AttributeAlteration(1, Enumerations.Attributes.WIS);
+        }
+        else { // Mountain
+            raceBonuses[1] = new AttributeAlteration(2, Enumerations.Attributes.STR);
+        }
         return raceBonuses;
     }
 
@@ -49,6 +61,12 @@ public class MountainDwarf extends BaseRace {
         racialTraits.add(new Power("Dwarven Resilience", "You have advantage on saving throws against poison, and you have resistance against poison damage.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         racialTraits.add(new Power("Stonecutting", "Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
 
+        if (_subRace.equals("Hill")) {
+            racialTraits.add(new Power("Dwarven Toughness", "+1 HP/level.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        }
+        else { // Mountain
+            racialTraits.add(new Power("Dwarven Armor Training", "Proficiency with Light and Medium armor.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        }
 
         return racialTraits;
     }

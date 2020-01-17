@@ -18,7 +18,7 @@
         <item>@string/race_half_orc</item>
         <item>@string/race_halfling</item>
         <item>@string/race_human</item>
-        <item>@string/race_mtn_dwarf</item>
+        <item>@string/race_dwarf</item>
         <item>@string/race_tiefling</item>
     </string-array>
 
@@ -223,6 +223,32 @@
         <item>Red</item>
         <item>Silver</item>
         <item>White</item>
+    </string-array>
+
+    <string-array name="dwarfSubRaces">
+        <item>Hill</item>
+        <item>Mountain</item>
+    </string-array>
+
+    <string-array name="elfSubRaces">
+        <item>High</item>
+        <item>Wood</item>
+    </string-array>
+
+    <string-array name="gnomeSubRaces">
+        <item>Deep</item>
+        <item>Forest</item>
+        <item>Rock</item>
+    </string-array>
+
+    <string-array name="halflingSubRaces">
+        <item>Lightfoot</item>
+        <item>Stout</item>
+    </string-array>
+
+    <string-array name="humanSubRaces">
+        <item>Standard</item>
+        <item>Variant</item>
     </string-array>
 
     <string-array name="bloodHunterOrders">

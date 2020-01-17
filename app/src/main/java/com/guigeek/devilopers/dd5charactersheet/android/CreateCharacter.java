@@ -21,31 +21,27 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter_lycan;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_dragon;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Gnome;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Halfling;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
-import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Dwarf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Tiefling;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class CreateCharacter extends AppCompatActivity {
 
     Button btnCreate, btnDone;
-    Spinner spRace, spClass;
+    Spinner spRace, spClass, spSubRace;
     EditText inName;
 
     EditText inSTR, inDEX, inCON, inINT, inWIS, inCHA;
@@ -62,6 +58,7 @@ public class CreateCharacter extends AppCompatActivity {
         btnCreate = (Button) findViewById(R.id.btnCreate);
         btnDone = (Button) findViewById(R.id.btnDone);
         spRace = (Spinner) findViewById(R.id.spinnerRace);
+        spSubRace = (Spinner) findViewById(R.id.spinnerSubRace);
         spClass = (Spinner) findViewById(R.id.spinnerClass);
         inName = (EditText)findViewById(R.id.inName);
 
@@ -96,14 +93,46 @@ public class CreateCharacter extends AppCompatActivity {
                     aRace = new HalfOrc();
                 } else if (aRaceName.equals(App.getResString(R.string.race_human))) {
                     aRace = new Human();
-                } else if (aRaceName.equals(App.getResString(R.string.race_mtn_dwarf))) {
-                    aRace = new MountainDwarf();
+                } else if (aRaceName.equals(App.getResString(R.string.race_dwarf))) {
+                    aRace = new Dwarf();
                 } else if (aRaceName.equals(App.getResString(R.string.race_elf))) {
                     aRace = new Elf();
                 } else if (aRaceName.equals(App.getResString(R.string.race_dragonborn))) {
                     aRace = new Dragonborn();
+                } else if (aRaceName.equals(App.getResString(R.string.race_tiefling))) {
+                    aRace = new Tiefling();
+                } else if (aRaceName.equals(App.getResString(R.string.race_gnome))) {
+                    aRace = new Gnome();
+                } else if (aRaceName.equals(App.getResString(R.string.race_halfling))) {
+                    aRace = new Halfling();
                 }
 
+                // Handle subraces
+                int subRacesArrayId = aRace.getSubraceArrayId();
+                if (subRacesArrayId == -1) {
+                    aRace.setSubRace(null);
+                    spSubRace.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    spSubRace.setVisibility(View.VISIBLE);
+                    ArrayAdapter<CharSequence> adapterSubRace = ArrayAdapter.createFromResource(CreateCharacter.this, subRacesArrayId, android.R.layout.simple_spinner_item);
+                    adapterSubRace.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spSubRace.setAdapter(adapterSubRace);
+                    aRace.setSubRace(getResources().getStringArray(subRacesArrayId)[0]);
+                }
+
+                updateStatsBonuses();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
+        spSubRace.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String aSubRaceName = (String)spSubRace.getSelectedItem();
+                aRace.setSubRace(aSubRaceName);
                 updateStatsBonuses();
             }
 
@@ -167,35 +196,9 @@ public class CreateCharacter extends AppCompatActivity {
                 aClass = new BloodHunter();
             }
 
-            Log.d("Create", "Selected race: " + aRace.getName());
+            Log.d("Create", "Selected race: " + aRace.getBaseRaceName());
             Log.d("Create", "Selected class: " + aClass.getQualifiedClassName());
 
-            handleSubrace(aRace, aClass);
-        }
-    }
-
-    private void handleSubrace(final Race aRace, final Class aClass) {
-        if (aRace instanceof Dragonborn) {
-            // Choose ancestry
-            AlertDialog.Builder b = new AlertDialog.Builder(CreateCharacter.this);
-            b.setTitle("Select a subrace");
-
-            final String[] allAncestriesArray = getResources().getStringArray(R.array.draconicAncestries);
-            List<String> allAncestries = Arrays.asList(allAncestriesArray);
-
-            b.setAdapter(new StringListAdapter(CreateCharacter.this, R.layout.list_string, allAncestries), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    String subrace = allAncestriesArray[which];
-                    Log.d("Create", "sub-race: " + subrace);
-                    aRace.setSubRace(subrace);
-                    createCharacter(aRace, aClass);
-                }
-            });
-
-            b.show();
-        } else {
             createCharacter(aRace, aClass);
         }
     }

@@ -7,6 +7,7 @@ import java.util.LinkedList;
  */
 public interface Race {
 
+    public String getBaseRaceName();
     public String getName();
     public int getSpeedInFeet();
 
@@ -17,6 +18,7 @@ public interface Race {
     public LinkedList<Fettle> getFettles(Character iCharacter);
 
     public void setSubRace(String iSubRace);
+    public int getSubraceArrayId();
 
     public String getAttributeBoostDescription();
 }

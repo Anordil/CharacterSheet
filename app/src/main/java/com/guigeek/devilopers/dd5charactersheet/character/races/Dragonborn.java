@@ -75,12 +75,17 @@ public class Dragonborn extends BaseRace {
     }
 
     @Override
-    public String getName() {
-        return App.getResString(R.string.race_dragonborn) + " (" + _subRace + ")";
+    public String getBaseRaceName() {
+        return App.getResString(R.string.race_dragonborn);
     }
 
     public Dragonborn() {
         _subRace = "Black";
+    }
+
+    @Override
+    public int getSubraceArrayId() {
+        return R.array.draconicAncestries;
     }
 
     @Override

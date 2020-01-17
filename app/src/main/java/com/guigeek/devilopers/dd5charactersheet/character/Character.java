@@ -1,27 +1,19 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
 import android.util.Log;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_base;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_dragon;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_storm;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer_wild;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
-import com.guigeek.devilopers.dd5charactersheet.character.races.MountainDwarf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Dwarf;
 import com.guigeek.devilopers.dd5charactersheet.item.Armor;
 import com.guigeek.devilopers.dd5charactersheet.item.Item;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
@@ -153,8 +145,8 @@ public class Character implements Externalizable {
             if (aRace instanceof HalfElf) {
                 _race = (HalfElf) aRace;
             }
-            else if (aRace instanceof MountainDwarf) {
-                _race = (MountainDwarf) aRace;
+            else if (aRace instanceof Dwarf) {
+                _race = (Dwarf) aRace;
             }
             else if (aRace instanceof HalfOrc) {
                 _race = (HalfOrc) aRace;
@@ -388,11 +380,15 @@ public class Character implements Externalizable {
         if (hasFeat("Tough")) {
             _hpMax += 2*getLevel();
         }
-        if (hasFeat("Draconic Resilience")) {
+        if (hasPower("Dwarven Toughness")) {
+            _hpMax += getLevel();
+        }
+        if (hasPower("Draconic Resilience")) {
             _hpMax += getLevel();
         }
 
         _powers = getClassPowers();
+        _powers.addAll(_race.getRacialFeatures(this));
     }
 
     public void doLongRest() {
@@ -410,6 +406,7 @@ public class Character implements Externalizable {
 
         if (_powers == null) {
             _powers = getClassPowers();
+            _powers.addAll(_race.getRacialFeatures(this));
         }
         for (Power p : getClassPowers()) {
             p._left = p._max;
@@ -419,6 +416,7 @@ public class Character implements Externalizable {
     public void doShortRest() {
         if (_powers == null) {
             _powers = getClassPowers();
+            _powers.addAll(_race.getRacialFeatures(this));
         }
         for (Power p : getClassPowers()) {
             if (!p._isLongRest) {
@@ -430,7 +428,7 @@ public class Character implements Externalizable {
 
     @Override
     public String toString() {
-        return _name + ", Level " + _level + " " + _race.getName() + " " + _class.getQualifiedClassName();
+        return _name + ", Level " + _level + " " + _race.getBaseRaceName() + " " + _class.getQualifiedClassName();
 
     }
 
@@ -636,6 +634,19 @@ public class Character implements Externalizable {
             _feats = new LinkedList<>();
         }
         for (Power p : _feats) {
+            if (p != null && p._name != null &&  p._name.toLowerCase().equals(s.toLowerCase())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    public boolean hasPower(String s) {
+        if (_powers == null) {
+            _powers = getClassPowers();
+            _powers.addAll(_race.getRacialFeatures(this));
+        }
+        for (Power p : _powers) {
             if (p != null && p._name != null &&  p._name.toLowerCase().equals(s.toLowerCase())) {
                 return true;
             }
