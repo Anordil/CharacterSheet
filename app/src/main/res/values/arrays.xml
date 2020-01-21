@@ -304,6 +304,9 @@
     </string-array>
 
     <string-array name="paladinArchetypes">
+        <item>@string/paladin_devotion</item>
+        <item>@string/paladin_ancients</item>
         <item>@string/paladin_vengeance</item>
+        <item>@string/paladin_oathbreaker</item>
     </string-array>
 </resources>

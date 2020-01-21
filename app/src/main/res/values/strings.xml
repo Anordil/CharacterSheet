@@ -51,5 +51,8 @@
     <string name="barbarian_storm">Storm Herald</string>
     <string name="barbarian_zealot">Zealot</string>
 
+    <string name="paladin_devotion">Oath of Devotion</string>
+    <string name="paladin_ancients">Oath of the Ancients</string>
     <string name="paladin_vengeance">Oath of Vengeance</string>
+    <string name="paladin_oathbreaker">Oathbreaker</string>
 </resources>

@@ -42,6 +42,12 @@ public class Paladin extends BaseClass {
     public Archetype getArchetypeByName(String iName) {
         if (iName.equals(App.getResString(R.string.paladin_vengeance))) {
             return new Paladin_vengeance();
+        } else if (iName.equals(App.getResString(R.string.paladin_ancients))) {
+            return new Paladin_ancients();
+        } else if (iName.equals(App.getResString(R.string.paladin_devotion))) {
+            return new Paladin_devotion();
+        } else if (iName.equals(App.getResString(R.string.paladin_oathbreaker))) {
+            return new Paladin_oathbreaker();
         }
         return null;
     }

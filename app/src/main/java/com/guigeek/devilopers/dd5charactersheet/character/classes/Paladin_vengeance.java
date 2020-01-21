@@ -33,7 +33,19 @@ public class Paladin_vengeance extends BaseArchetype {
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel, context);
 
-        //TODO: add gained powers
+        if (iNewCharacterLevel == 3) {
+            levelUp.add("You gained Channel Divinity.");
+        }
+        else if (iNewCharacterLevel == 7) {
+            levelUp.add("You gained Relentless Avenger");
+        }
+        else if (iNewCharacterLevel == 15) {
+            levelUp.add("You gained Soul of Vengeance");
+        }
+        else if (iNewCharacterLevel == 20) {
+            levelUp.add("You gained Avenging Angel");
+        }
+
         return levelUp;
     }
 
@@ -49,6 +61,13 @@ public class Paladin_vengeance extends BaseArchetype {
         }
         if (iLevel >= 15) {
             powers.add(new Power("Soul of Vengeance", "Creature targeted by Vow on Enmity triggers OA for me when attacking", "Melee", -1, -1, false, Enumerations.ActionType.PASSIVE));
+        }
+        if (iLevel >= 20) {
+            powers.add(new Power("Avenging Angel", "Using your action, you undergo a transformation. For 1 hour, you gain the following benefits:\n" +
+                    "\n" +
+                    "- Wings sprout from your back and grant you a flying speed of 60 feet.\n" +
+                    "- You emanate an aura of menace in a 30-foot radius. The first time any enemy creature enters the aura or starts its turn there during a battle, the creature must succeed on a Wisdom saving throw or become frightened of you for 1 minute or until it takes any damage. Attack rolls against the frightened creature have advantage.\n" +
+                    "Once you use this feature, you can’t use it again until you finish a long rest.", "", 1, -1, true, Enumerations.ActionType.ACTION));
         }
 
         return powers;

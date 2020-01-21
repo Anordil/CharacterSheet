@@ -65,7 +65,7 @@ public class Enumerations {
     public enum DamageTypes {
         PIERCING("Piercing"), SLASHING("Slashing"), BLUDGEONING("Bludgeoning"),
         ACID("Acid"), COLD("Cold"), FIRE("Fire"), FORCE("Force"), LIGHTNING("Lightning"), NECROTIC("Necrotic"), POISON("Poison"),
-        PSYCHIC("Psychic"), RADIANT("Radiant"), THUNDER("Thunder");
+        PSYCHIC("Psychic"), RADIANT("Radiant"), THUNDER("Thunder"), SPELLS("Spells");
 
         private String _name;
 
