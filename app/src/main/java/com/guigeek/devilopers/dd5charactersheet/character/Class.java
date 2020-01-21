@@ -33,7 +33,7 @@ public interface Class  {
 
     public int getAC(Character character);
 
-    public void addArchetype(Archetype iArchetype);
+    public void addArchetype(Archetype iArchetype, int iNewCharacterLevel, Context context);
     public Archetype getArchetypeByName(String iName);
 
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies();

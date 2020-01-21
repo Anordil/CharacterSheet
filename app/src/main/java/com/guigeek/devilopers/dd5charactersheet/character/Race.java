@@ -18,6 +18,7 @@ public interface Race {
     public LinkedList<Fettle> getFettles(Character iCharacter);
 
     public void setSubRace(String iSubRace);
+    public String getSubRace();
     public int getSubraceArrayId();
 
     public String getAttributeBoostDescription();

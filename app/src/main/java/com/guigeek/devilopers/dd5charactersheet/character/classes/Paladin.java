@@ -2,7 +2,9 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import android.content.Context;
 
+import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -15,8 +17,13 @@ import java.util.List;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public abstract class Paladin_base extends BaseClass {
+public class Paladin extends BaseClass {
     static final long serialVersionUID = 205L;
+
+    @Override
+    public String getClassName() {
+        return App.getResString(R.string.class_paladin);
+    }
 
     @Override
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies() {
@@ -24,6 +31,19 @@ public abstract class Paladin_base extends BaseClass {
                 Enumerations.SavingThrows.WIS,
                 Enumerations.SavingThrows.CHA
         };
+    }
+
+    @Override
+    public int getChoosableArchetypes(int iNewLevel) {
+        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.paladinArchetypes : -1;
+    }
+
+    @Override
+    public Archetype getArchetypeByName(String iName) {
+        if (iName.equals(App.getResString(R.string.paladin_vengeance))) {
+            return new Paladin_vengeance();
+        }
+        return null;
     }
 
     @Override
@@ -72,7 +92,7 @@ public abstract class Paladin_base extends BaseClass {
                 {0, 4, 3, 3, 3, 2, 0, 0, 0, 0}//ln 20
         };
 
-    public Paladin_base(){
+    public Paladin(){
         _spellSlots = _spellSlotsSubclass;
     }
 
@@ -89,7 +109,7 @@ public abstract class Paladin_base extends BaseClass {
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class instanceof Paladin_base ? iCharacter._level : iCharacter._levelSecondaryClass;
+        int level = iCharacter._class instanceof Paladin ? iCharacter._level : iCharacter._levelSecondaryClass;
         return (level >= 5 ? 2 : 1);
     }
 

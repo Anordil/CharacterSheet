@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
-import com.guigeek.devilopers.dd5charactersheet.android.StatsScreen;
+import com.guigeek.devilopers.dd5charactersheet.character.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by totou on 15/06/2016.
  */
-public abstract class Barbarian_base extends BaseClass {
+public class Barbarian extends BaseClass {
     static final long serialVersionUID = 201L;
 
     @Override
@@ -26,6 +26,19 @@ public abstract class Barbarian_base extends BaseClass {
                 Enumerations.SavingThrows.CON,
                 Enumerations.SavingThrows.STR
         };
+    }
+
+    @Override
+    public int getChoosableArchetypes(int iNewLevel) {
+        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.barbarianArchetypes : -1;
+    }
+
+    @Override
+    public Archetype getArchetypeByName(String iName) {
+        if (iName.equals(App.getResString(R.string.barbarian_totem))) {
+            return new Barbarian_totem();
+        }
+        return null;
     }
 
     @Override
@@ -52,7 +65,7 @@ public abstract class Barbarian_base extends BaseClass {
     public LinkedList<Fettle> getFettles(Character character) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
 
-        int level = character._class instanceof Barbarian_base ? character._level : character._levelSecondaryClass;
+        int level = character._class instanceof Barbarian ? character._level : character._levelSecondaryClass;
         if (level >= 2) {
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.DEX_BARBARIAN.ordinal()));
         }
@@ -64,7 +77,7 @@ public abstract class Barbarian_base extends BaseClass {
     }
 
 
-    public Barbarian_base(){
+    public Barbarian(){
     }
 
     @Override
@@ -74,7 +87,7 @@ public abstract class Barbarian_base extends BaseClass {
 
     @Override
     public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class instanceof Barbarian_base ? iCharacter._level : iCharacter._levelSecondaryClass;
+        int level = iCharacter._class instanceof Barbarian ? iCharacter._level : iCharacter._levelSecondaryClass;
         return (level >= 5 ? 2 : 1);
     }
 

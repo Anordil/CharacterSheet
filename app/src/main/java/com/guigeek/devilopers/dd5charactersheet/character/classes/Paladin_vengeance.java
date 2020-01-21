@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
@@ -18,16 +19,15 @@ import java.util.List;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public class Paladin_vengeance extends Paladin_base {
+public class Paladin_vengeance extends BaseArchetype {
     static final long serialVersionUID = 206L;
 
     public Paladin_vengeance(){}
 
     @Override
-    public String getClassName() {
-        return App.getResString(R.string.class_paladin_vengeance);
+    public String getName() {
+        return App.getResString(R.string.paladin_vengeance);
     }
-
 
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {

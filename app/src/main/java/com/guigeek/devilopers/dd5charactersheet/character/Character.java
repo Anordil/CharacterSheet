@@ -2,18 +2,22 @@ package com.guigeek.devilopers.dd5charactersheet.character;
 
 import android.util.Log;
 
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_base;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Gnome;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfElf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Halfling;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dwarf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Tiefling;
 import com.guigeek.devilopers.dd5charactersheet.item.Armor;
 import com.guigeek.devilopers.dd5charactersheet.item.Item;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
@@ -120,14 +124,14 @@ public class Character implements Externalizable {
             Object aClass = oi.readObject();
         Log.d("UNWRAP", "class " + aClass.getClass());
 
-        if (aClass instanceof Barbarian_base) {
-            _class = (Barbarian_base) aClass;
+        if (aClass instanceof Barbarian) {
+            _class = (Barbarian) aClass;
         }
         else if (aClass instanceof BloodHunter) {
             _class = (BloodHunter) aClass;
         }
-        else if (aClass instanceof Paladin_vengeance) {
-            _class = (Paladin_vengeance) aClass;
+        else if (aClass instanceof Paladin) {
+            _class = (Paladin) aClass;
         }
         else if (aClass instanceof Rogue) {
             _class = (Rogue) aClass;
@@ -160,16 +164,17 @@ public class Character implements Externalizable {
             else if (aRace instanceof Dragonborn) {
                 _race = (Dragonborn) aRace;
             }
-//            else if (aRace instanceof Gnome) {
-//                _race = (Gnome) aRace;
-//            }
-//            else if (aRace instanceof Halfling) {
-//                _race = (Halfling) aRace;
-//            }
-//            else if (aRace instanceof Tiefling) {
-//                _race = (Tiefling) aRace;
-//            }
-            Log.d("UNWRAP", "After race");
+            else if (aRace instanceof Gnome) {
+                _race = (Gnome) aRace;
+            }
+            else if (aRace instanceof Halfling) {
+                _race = (Halfling) aRace;
+            }
+            else if (aRace instanceof Tiefling) {
+                _race = (Tiefling) aRace;
+            }
+
+            Log.d("UNWRAP", "After race, subrace is " + _race.getSubRace());
 
 
             _name = (String) oi.readObject();
@@ -247,14 +252,14 @@ public class Character implements Externalizable {
 
             Object aSecondaryClass = oi.readObject();
             if (aSecondaryClass != null) {
-                if (aSecondaryClass instanceof Barbarian_base) {
-                    _secondaryClass = (Barbarian_base) aClass;
+                if (aSecondaryClass instanceof Barbarian) {
+                    _secondaryClass = (Barbarian) aClass;
                 }
                 else if (aSecondaryClass instanceof BloodHunter) {
                     _secondaryClass = (BloodHunter) aClass;
                 }
-                else if (aSecondaryClass instanceof Paladin_vengeance) {
-                    _secondaryClass = (Paladin_vengeance) aClass;
+                else if (aSecondaryClass instanceof Paladin) {
+                    _secondaryClass = (Paladin) aClass;
                 }
                 else if (aSecondaryClass instanceof Rogue) {
                     _secondaryClass = (Rogue) aClass;
@@ -288,7 +293,7 @@ public class Character implements Externalizable {
     }
 
     public Character(){
-        this("New hero", new Paladin_vengeance(), new HalfElf(), 1, new int[6], null, 0);
+        this("New hero", new Paladin(), new HalfElf(), 1, new int[6], null, 0);
     };
 
     public Character(String name, Class iClass, Race iRace, int level, int[] attr, Class iSecClass, int secondLevel) {

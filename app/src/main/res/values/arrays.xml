@@ -3,7 +3,7 @@
     <string-array name="classes">
         <item>@string/class_barbarian</item>
         <item>@string/class_blood_hunter</item>
-        <item>@string/class_paladin_vengeance</item>
+        <item>@string/class_paladin</item>
         <item>@string/class_rogue</item>
         <item>@string/class_sorcerer</item>
         <item>@string/class_warlock</item>
@@ -277,5 +277,20 @@
     <string-array name="warlockPatrons">
         <item>@string/warlock_patron_ancient</item>
         <item>@string/warlock_patron_fiend</item>
+    </string-array>
+
+    <string-array name="barbarianArchetypes">
+        <item>@string/barbarian_totem</item>
+    </string-array>
+    <string-array name="barbarianTotemAnimals">
+        <item>Bear</item>
+        <item>Eagle</item>
+        <item>Elk</item>
+        <item>Tiger</item>
+        <item>Wolf</item>
+    </string-array>
+
+    <string-array name="paladinArchetypes">
+        <item>@string/paladin_vengeance</item>
     </string-array>
 </resources>

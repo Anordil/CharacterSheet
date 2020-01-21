@@ -19,8 +19,9 @@ import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Class;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
@@ -183,9 +184,9 @@ public class CreateCharacter extends AppCompatActivity {
             Class aClass = null;
             String aClassName = (String)spClass.getSelectedItem();
             if (aClassName.equals(App.getResString(R.string.class_barbarian))) {
-                aClass = new Barbarian_totem();
-            } else if (aClassName.equals(App.getResString(R.string.class_paladin_vengeance))) {
-                aClass = new Paladin_vengeance();
+                aClass = new Barbarian();
+            } else if (aClassName.equals(App.getResString(R.string.class_paladin))) {
+                aClass = new Paladin();
             } else if (aClassName.equals(App.getResString(R.string.class_warlock))) {
                 aClass = new Warlock();
             } else if (aClassName.equals(App.getResString(R.string.class_rogue))) {

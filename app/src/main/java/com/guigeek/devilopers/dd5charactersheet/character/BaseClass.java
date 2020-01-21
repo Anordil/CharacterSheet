@@ -114,11 +114,31 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
-    public void addArchetype(Archetype iArchetype) {
+    public void addArchetype(final Archetype iArchetype, final int iNewCharacterLevel, final Context context) {
         if (_archetypes == null) {
             _archetypes = new LinkedList<>();
         }
         _archetypes.add(iArchetype);
+
+        int choosableFeatureArray = iArchetype.getChoosableFeature(iNewCharacterLevel);
+        if (choosableFeatureArray != -1) {
+            AlertDialog.Builder b = new AlertDialog.Builder(context);
+            b.setTitle("Select a feature for your Archetype");
+
+            final String[] allOptions = context.getResources().getStringArray(choosableFeatureArray);
+            final List<String> allOptionsList = Arrays.asList(allOptions);
+
+            b.setAdapter(new StringListAdapter(context, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    String selectedOption = allOptions[which];
+                    iArchetype.setArchetypeFeature(selectedOption);
+                }
+            });
+
+            b.show();
+        }
     }
 
     @Override
@@ -145,6 +165,9 @@ public abstract class BaseClass implements Class, Externalizable {
 
     @Override
     public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context) {
+        clearArchetypesOnLevelDown(iNewCharacterLevel);
+
+        // Get level up perks
         List<String> allItems = getLevelUpBenefits(iNewCharacterLevel, context);
         if (_archetypes != null) {
             for (Archetype arc: _archetypes) {
@@ -152,13 +175,36 @@ public abstract class BaseClass implements Class, Externalizable {
             }
         }
 
-        clearArchetypesOnLevelDown(iNewCharacterLevel);
+        // Existing Archetypes may need a feature chosen
+        for (final Archetype arc: _archetypes) {
+            int choosableFeatureArray = arc.getChoosableFeature(iNewCharacterLevel);
+            if (choosableFeatureArray != -1) {
+                AlertDialog.Builder b = new AlertDialog.Builder(context);
+                b.setTitle("Select a " + arc.getName() + " feature");
+
+                final String[] allOptions = context.getResources().getStringArray(choosableFeatureArray);
+                final List<String> allOptionsList = Arrays.asList(allOptions);
+
+                b.setAdapter(new StringListAdapter(context, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        String selectedOption = allOptions[which];
+                        arc.setArchetypeFeature(selectedOption);
+                    }
+                });
+
+                b.show();
+            }
+        }
+
+        // New archetype may be added for this level
         checkArchetypeSelection(iNewCharacterLevel, context);
 
         return allItems;
     }
 
-    private void checkArchetypeSelection(int iNewCharacterLevel, Context context) {
+    private void checkArchetypeSelection(final int iNewCharacterLevel, final Context context) {
         int choosableArchetypesArray = getChoosableArchetypes(iNewCharacterLevel);
         if (choosableArchetypesArray != -1) {
             AlertDialog.Builder b = new AlertDialog.Builder(context);
@@ -172,7 +218,7 @@ public abstract class BaseClass implements Class, Externalizable {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     String selectedOption = allOptions[which];
-                    addArchetype(getArchetypeByName(selectedOption));
+                    addArchetype(getArchetypeByName(selectedOption), iNewCharacterLevel, context);
                 }
             });
 

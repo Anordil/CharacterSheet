@@ -18,4 +18,8 @@ public interface Archetype {
     public LinkedList<Fettle> getFettles(Character character);
     public List<Attack> getSpecialClassAttacks(Character iCharacter);
 
+    public int getChoosableFeature(int iLevel);
+    public void setArchetypeFeature(String iFeature);
+    public String getArchetypeFeature();
+
 }

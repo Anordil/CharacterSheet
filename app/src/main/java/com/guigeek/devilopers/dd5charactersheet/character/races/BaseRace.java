@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.races;
 
+import android.util.Log;
+
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.AttributeAlteration;
@@ -41,13 +43,14 @@ public abstract class BaseRace implements Race, Externalizable {
         int version = oi.readInt();
         _version = version;
         _subRace = (String) oi.readObject();
+        Log.d("RACE", "Subrace: " + _subRace);
     }
 
     @Override
     public String getName() {
         String name = getBaseRaceName();
         if (_subRace != null) {
-            name += " (" + _subRace + ")";
+            name = _subRace + " " + name;
         }
 
         return name;
@@ -56,6 +59,11 @@ public abstract class BaseRace implements Race, Externalizable {
     @Override
     public void setSubRace(String iSubRace) {
         _subRace = iSubRace;
+    }
+
+    @Override
+    public String getSubRace() {
+        return _subRace;
     }
 
     @Override
