@@ -45,7 +45,11 @@
     <string name="warlock_patron_ancient">Old One patron</string>
 
 
-    <string name="barbarian_totem">Totem</string>
+    <string name="barbarian_totem">Totem Warrior</string>
+    <string name="barbarian_ancestral">Ancestral Guardian</string>
+    <string name="barbarian_berserker">Berserker</string>
+    <string name="barbarian_storm">Storm Herald</string>
+    <string name="barbarian_zealot">Zealot</string>
 
     <string name="paladin_vengeance">Oath of Vengeance</string>
 </resources>

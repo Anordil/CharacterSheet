@@ -37,7 +37,16 @@ public class Barbarian extends BaseClass {
     public Archetype getArchetypeByName(String iName) {
         if (iName.equals(App.getResString(R.string.barbarian_totem))) {
             return new Barbarian_totem();
+        } else if (iName.equals(App.getResString(R.string.barbarian_ancestral))) {
+            return new Barbarian_ancestral();
+        } else if (iName.equals(App.getResString(R.string.barbarian_berserker))) {
+            return new Barbarian_berserker();
+        } else if (iName.equals(App.getResString(R.string.barbarian_storm))) {
+            return new Barbarian_storm();
+        } else if (iName.equals(App.getResString(R.string.barbarian_zealot))) {
+            return new Barbarian_zealot();
         }
+
         return null;
     }
 

@@ -45,7 +45,7 @@ public class Barbarian_totem extends BaseArchetype {
             levelUp.add("You gained Aspect of the Beast");
         }
         else if (iNewCharacterLevel == 10) {
-            levelUp.add("YSpirit Walker");
+            levelUp.add("You gained Spirit Walker");
         }
         else if (iNewCharacterLevel == 14) {
             levelUp.add("You gained Totemic Attunement");

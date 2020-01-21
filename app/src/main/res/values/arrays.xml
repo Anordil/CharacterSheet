@@ -280,7 +280,11 @@
     </string-array>
 
     <string-array name="barbarianArchetypes">
+        <item>@string/barbarian_ancestral</item>
+        <item>@string/barbarian_berserker</item>
+        <item>@string/barbarian_storm</item>
         <item>@string/barbarian_totem</item>
+        <item>@string/barbarian_zealot</item>
     </string-array>
     <string-array name="barbarianTotemAnimals">
         <item>Bear</item>
@@ -288,6 +292,15 @@
         <item>Elk</item>
         <item>Tiger</item>
         <item>Wolf</item>
+    </string-array>
+    <string-array name="barbarianStormAuras">
+        <item>Desert</item>
+        <item>Sea</item>
+        <item>Tundra</item>
+    </string-array>
+    <string-array name="barbarianZealotDamage">
+        <item>Necrotic</item>
+        <item>Radiant</item>
     </string-array>
 
     <string-array name="paladinArchetypes">
