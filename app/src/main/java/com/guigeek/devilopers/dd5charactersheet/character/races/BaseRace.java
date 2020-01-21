@@ -2,19 +2,10 @@ package com.guigeek.devilopers.dd5charactersheet.character.races;
 
 import android.util.Log;
 
-import com.guigeek.devilopers.dd5charactersheet.App;
-import com.guigeek.devilopers.dd5charactersheet.R;
-import com.guigeek.devilopers.dd5charactersheet.character.AttributeAlteration;
-import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
-import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
-import com.guigeek.devilopers.dd5charactersheet.character.Power;
-import com.guigeek.devilopers.dd5charactersheet.character.Race;
-
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.util.LinkedList;
 
 public abstract class BaseRace implements Race, Externalizable {
     static final long serialVersionUID = 100L;

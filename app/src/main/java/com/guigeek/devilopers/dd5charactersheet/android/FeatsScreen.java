@@ -17,8 +17,8 @@ import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.sorcerer.Sorcerer;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.warlock.Warlock;
 
 import java.io.Serializable;
 import java.util.LinkedList;

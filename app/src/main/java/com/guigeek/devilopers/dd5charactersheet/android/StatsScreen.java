@@ -20,10 +20,6 @@ import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian_totem;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin_vengeance;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_assassin;
 
 import java.io.Serializable;
 import java.util.List;

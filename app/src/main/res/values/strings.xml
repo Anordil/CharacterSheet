@@ -10,6 +10,7 @@
     <string name="class_barbarian">Barbarian</string>
     <string name="class_sorcerer">Sorcerer</string>
     <string name="class_blood_hunter">Blood Hunter</string>
+    <string name="class_monk">Monk</string>
 
 
     <string name="race_dwarf">Dwarf</string>
@@ -55,4 +56,14 @@
     <string name="paladin_ancients">Oath of the Ancients</string>
     <string name="paladin_vengeance">Oath of Vengeance</string>
     <string name="paladin_oathbreaker">Oathbreaker</string>
+
+    <string name="monk_mercy">Way of Mercy</string>
+    <string name="monk_shadow">Way of Shadow</string>
+    <string name="monk_astral">Way of the Astral Self</string>
+    <string name="monk_drunken">Way of the Drunken Master</string>
+    <string name="monk_elements">Way of Four Elements</string>
+    <string name="monk_kensei">Way of Kensei</string>
+    <string name="monk_death">Way of Long Death</string>
+    <string name="monk_hand">Way of Open Hand</string>
+    <string name="monk_sunsoul">Way of the Sun Soul</string>
 </resources>

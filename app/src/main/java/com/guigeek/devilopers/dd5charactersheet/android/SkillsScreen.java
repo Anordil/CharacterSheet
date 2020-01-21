@@ -18,7 +18,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.SavingThrow;
 import com.guigeek.devilopers.dd5charactersheet.character.Skill;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
 
 import java.io.Serializable;
 import java.util.HashSet;

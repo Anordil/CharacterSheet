@@ -19,7 +19,7 @@ import java.util.LinkedList;
 public class Weapon implements Externalizable {
 
     public static final long serialVersionUID = 21L;
-    int _version = 4;
+    int _version = 5;
 
 
     public Enumerations.WeaponTypes _type;
@@ -39,7 +39,7 @@ public class Weapon implements Externalizable {
 
     public String _name;
 
-    public boolean _isMagical;
+    public boolean _isMagical, _isMonk;
 
 
     public Weapon(){
@@ -82,6 +82,7 @@ public class Weapon implements Externalizable {
                 _damageType = Enumerations.DamageTypes.BLUDGEONING;
                 _hands = Enumerations.WeaponHandCount.ONE_HANDED;
                 _weight = Enumerations.WeaponWeightCategory.LIGHT;
+                _isMonk = true;
                 break;
             case DAGGER:
                 _distance = Enumerations.WeaponDistanceTypes.THROWN;
@@ -111,6 +112,7 @@ public class Weapon implements Externalizable {
                 _diceCount = 1;
                 _diceValue = 6;
                 _damageType = Enumerations.DamageTypes.SLASHING;
+                _isMonk = true;
                 break;
             case JAVELIN:
                 _distance = Enumerations.WeaponDistanceTypes.THROWN;
@@ -121,6 +123,7 @@ public class Weapon implements Externalizable {
                 _damageType = Enumerations.DamageTypes.PIERCING;
                 _hands = Enumerations.WeaponHandCount.ONE_HANDED;
                 _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _isMonk = true;
                 break;
             case LIGHT_HAMMER:
                 _distance = Enumerations.WeaponDistanceTypes.THROWN;
@@ -149,6 +152,7 @@ public class Weapon implements Externalizable {
                 _diceCountVersatile = 1;
                 _diceValueVersatile = 8;
                 _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _isMonk = true;
                 break;
             case SICKLE:
                 _distance = Enumerations.WeaponDistanceTypes.MELEE;
@@ -169,6 +173,7 @@ public class Weapon implements Externalizable {
                 _diceCountVersatile = 1;
                 _diceValueVersatile = 8;
                 _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _isMonk = true;
                 break;
             case LIGHT_CROSSBOW:
                 _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
@@ -189,6 +194,7 @@ public class Weapon implements Externalizable {
                 _diceValue = 4;
                 _damageType = Enumerations.DamageTypes.PIERCING;
                 _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _isMonk = true;
                 break;
             case SHORTBOW:
                 _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
@@ -332,6 +338,7 @@ public class Weapon implements Externalizable {
                 _diceValue = 6;
                 _damageType = Enumerations.DamageTypes.PIERCING;
                 _isFinesse = true;
+                _isMonk = true;
                 break;
             case TRIDENT:
                 _distance = Enumerations.WeaponDistanceTypes.THROWN;
@@ -467,6 +474,7 @@ public class Weapon implements Externalizable {
         oo.writeObject(_hands);
 
         oo.writeBoolean(_isMagical);
+        oo.writeBoolean(_isMonk);
     }
 
     @Override
@@ -506,6 +514,12 @@ public class Weapon implements Externalizable {
             _isMagical = oi.readBoolean();
         } else {
             _isMagical = false;
+        }
+
+        if (version >= 5) {
+            _isMonk = oi.readBoolean();
+        } else {
+            _isMonk = false;
         }
     }
 }

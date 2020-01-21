@@ -21,11 +21,11 @@ import android.widget.Toast;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
-import com.guigeek.devilopers.dd5charactersheet.character.Class;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue_swashbuckler;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue_swashbuckler;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Serializable;

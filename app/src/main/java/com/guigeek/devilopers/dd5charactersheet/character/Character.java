@@ -2,13 +2,13 @@ package com.guigeek.devilopers.dd5charactersheet.character;
 
 import android.util.Log;
 
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Barbarian;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.BloodHunter;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Paladin;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Rogue;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Sorcerer;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.bloodhunter.BloodHunter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.paladin.Paladin;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.sorcerer.Sorcerer;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.warlock.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Gnome;
@@ -17,6 +17,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.races.HalfOrc;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Halfling;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dwarf;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Race;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Tiefling;
 import com.guigeek.devilopers.dd5charactersheet.item.Armor;
 import com.guigeek.devilopers.dd5charactersheet.item.Item;

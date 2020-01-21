@@ -309,4 +309,16 @@
         <item>@string/paladin_vengeance</item>
         <item>@string/paladin_oathbreaker</item>
     </string-array>
+
+    <string-array name="monkArchetypes">
+        <item>@string/monk_mercy</item>
+        <item>@string/monk_shadow</item>
+        <item>@string/monk_astral</item>
+        <item>@string/monk_drunken</item>
+        <item>@string/monk_elements</item>
+        <item>@string/monk_kensei</item>
+        <item>@string/monk_death</item>
+        <item>@string/monk_hand</item>
+        <item>@string/monk_sunsoul</item>
+    </string-array>
 </resources>
