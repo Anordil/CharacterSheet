@@ -100,7 +100,7 @@ public abstract class BaseClass implements Class, Externalizable {
 
     @Override
     public int getAC(Character character) {
-        int ac = character._equippedArmor.getAC(character);
+        int ac = character._equippedArmor == null ? 10 : character._equippedArmor.getAC(character);
 
         if (character._equippedShield != null && character._equippedShield._type == Enumerations.ArmorTypes.SHIELD) {
             ac+= character._equippedShield.getAC(character);
@@ -121,6 +121,14 @@ public abstract class BaseClass implements Class, Externalizable {
         }
         _archetypes.add(iArchetype);
 
+        // When adding an archetype some features may need to be chosen. In case those are "Feats",
+        // we need a different selection screen.
+
+        // For Feat-like
+        // TODO: how can we display benefits from an Archetype that has just been added?
+        iArchetype.getLevelUpBenefits(iNewCharacterLevel, context);
+
+        // For simple features
         int choosableFeatureArray = iArchetype.getChoosableFeature(iNewCharacterLevel);
         if (choosableFeatureArray != -1) {
             AlertDialog.Builder b = new AlertDialog.Builder(context);

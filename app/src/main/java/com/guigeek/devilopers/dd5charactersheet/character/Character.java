@@ -5,6 +5,7 @@ import android.util.Log;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bloodhunter.BloodHunter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.monk.Monk;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.paladin.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.sorcerer.Sorcerer;
@@ -122,7 +123,7 @@ public class Character implements Externalizable {
         Log.d("TOTO", "Decoding a version " + version + " character");
         _version = version;
 
-            Object aClass = oi.readObject();
+        Object aClass = oi.readObject();
         Log.d("UNWRAP", "class " + aClass.getClass());
 
         if (aClass instanceof Barbarian) {
@@ -142,6 +143,9 @@ public class Character implements Externalizable {
         }
         else if (aClass instanceof Warlock) {
             _class = (Warlock) aClass;
+        }
+        else if (aClass instanceof Monk) {
+            _class = (Monk) aClass;
         }
 
             Log.d("UNWRAP", "After class");
@@ -270,6 +274,9 @@ public class Character implements Externalizable {
                 }
                 else if (aSecondaryClass instanceof Warlock) {
                     _secondaryClass = (Warlock) aClass;
+                }
+                else if (aSecondaryClass instanceof Monk) {
+                    _secondaryClass = (Monk) aClass;
                 }
             }
             _levelSecondaryClass = oi.readInt();

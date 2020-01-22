@@ -57,9 +57,9 @@ public class Barbarian extends BaseClass {
 
     @Override
     public int getAC(Character character) {
-        int ac = character._equippedArmor.getAC(character);
+        int ac = character._equippedArmor == null ? 10 : character._equippedArmor.getAC(character);
 
-        if (character._equippedArmor._type == Enumerations.ArmorTypes.NONE) {
+        if (character._equippedArmor._type == null || character._equippedArmor._type == Enumerations.ArmorTypes.NONE) {
             ac = 10 + character.getModifier(Enumerations.Attributes.DEX) + character.getModifier(Enumerations.Attributes.CON);
         }
 

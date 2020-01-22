@@ -1,6 +1,8 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes.monk;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.Log;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
@@ -41,23 +43,23 @@ public class Monk extends BaseClass {
     @Override
     public Archetype getArchetypeByName(String iName) {
         if (iName.equals(App.getResString(R.string.monk_astral))) {
-            return new Barbarian_totem();
+            return new Monk_astral();
         } else if (iName.equals(App.getResString(R.string.monk_death))) {
-            return new Barbarian_ancestral();
+            return new Monk_death();
         } else if (iName.equals(App.getResString(R.string.monk_drunken))) {
-            return new Barbarian_berserker();
+            return new Monk_drunken();
         } else if (iName.equals(App.getResString(R.string.monk_elements))) {
-            return new Barbarian_storm();
+            return new Monk_elements();
         } else if (iName.equals(App.getResString(R.string.monk_hand))) {
-            return new Barbarian_zealot();
+            return new Monk_hand();
         } else if (iName.equals(App.getResString(R.string.monk_kensei))) {
-            return new Barbarian_zealot();
+            return new Monk_kensei();
         } else if (iName.equals(App.getResString(R.string.monk_mercy))) {
-            return new Barbarian_zealot();
+            return new Monk_mercy();
         } else if (iName.equals(App.getResString(R.string.monk_shadow))) {
-            return new Barbarian_zealot();
+            return new Monk_shadow();
         } else if (iName.equals(App.getResString(R.string.monk_sunsoul))) {
-            return new Barbarian_zealot();
+            return new Monk_sunsoul();
         }
 
         return null;
@@ -173,16 +175,51 @@ public class Monk extends BaseClass {
         return iLevel >= 17? 10 : iLevel >= 11? 8 : iLevel >= 5 ? 6 : 4;
     }
 
+    @Override
+    public boolean isCaster() {
+        boolean caster = false;
+        for (Archetype arc: _archetypes) {
+            if (arc instanceof Monk_elements) {
+                caster = true;
+            }
+        }
+
+        return caster;
+    }
+
+    @Override
+    public Enumerations.Attributes getMainSpellAttribute() {
+        return Enumerations.Attributes.WIS;
+    }
+
     public boolean canUseMonkBenefits(Character character) {
         // No armor nor shield
-        return character._equippedArmor._type == Enumerations.ArmorTypes.NONE && (character._equippedShield == null || character._equippedShield._type == Enumerations.ArmorTypes.NONE);
+        return (character._equippedArmor == null || character._equippedArmor._type == Enumerations.ArmorTypes.NONE)
+                && (character._equippedShield == null || character._equippedShield._type == Enumerations.ArmorTypes.NONE);
+    }
+
+    @Override
+    public LinkedList<Power> getAllPowers(int iLevel, Character iCharac) {
+        LinkedList<Power> allItems = getPowers(iLevel, iCharac);
+        if (_archetypes != null) {
+            for (Archetype arc: _archetypes) {
+                allItems.addAll(arc.getPowers(iLevel, iCharac));
+
+                // Override for Monk because of the Disciplines for the Way of the Four elements
+                if (arc instanceof Monk_elements) {
+                    allItems.addAll(((Monk_elements)arc)._chosenDisciplines);
+                }
+            }
+        }
+
+        return allItems;
     }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 
         if (iLevel >= 1) {
-        	powers.add(new Power("martial Arts", "Your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons, which are shortswords and any simple melee weapons that don’t have the two-handed or heavy property.\n" +
+        	powers.add(new Power("Martial Arts", "Your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons, which are shortswords and any simple melee weapons that don’t have the two-handed or heavy property.\n" +
                     "\n" +
                     "You gain the following benefits while you are unarmed or wielding only monk weapons and you aren’t wearing armor or wielding a shield:\n" +
                     "\n" +
@@ -194,23 +231,22 @@ public class Monk extends BaseClass {
             int dc = 8 + iCharac.getProficiencyBonus() + iCharac.getModifier(Enumerations.Attributes.WIS);
 
             String kiDescription = "You can spend Ki poins to do the following:\n" +
-                    "\nFlurry of Blows: Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action." +
-                    "\nPatient Defense: You can spend 1 ki point to take the Dodge action as a bonus action on your turn." +
-                    "\nStep of the Wind: You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn.";
+                    "- Flurry of Blows: Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action." +
+                    "\n\n- Patient Defense: You can spend 1 ki point to take the Dodge action as a bonus action on your turn." +
+                    "\n\n- Step of the Wind: You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn.";
 
             if (iLevel >= 5) {
-                kiDescription += "\nStunning Strike: When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn.";
+                kiDescription += "\n\n- Stunning Strike: When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn.";
             }
             if (iLevel >= 14) {
-                kiDescription += "\nDiamond Soul: You can spend 1 ki to reroll a failed saving throw and take the second result.";
+                kiDescription += "\n\n- Diamond Soul: You can spend 1 ki to reroll a failed saving throw and take the second result.";
             }
             if (iLevel >= 15) {
-                kiDescription += "\nEmpty Body: You can use your action to spend 4 ki and become invisible for 1mn. Yu also get resistance to all damage but force during that time.";
-                kiDescription += "\nEmpty Body II: You can spend 8 ki to cast astral projection without needing the material components. You cannot take any other creature with you..";
+                kiDescription += "\n\n- Empty Body: You can use your action to spend 4 ki and become invisible for 1mn. Yu also get resistance to all damage but force during that time.";
+                kiDescription += "\n\n- Empty Body II: You can spend 8 ki to cast astral projection without needing the material components. You cannot take any other creature with you..";
             }
 
-            powers.add(new Power("Ki", kiDescription
-                    , "", iLevel, dc, false, Enumerations.ActionType.PASSIVE));
+            powers.add(new Power("Ki", kiDescription, "", iLevel, dc, false, Enumerations.ActionType.PASSIVE));
             powers.add(new Power("Unarmored movement", "If you're not wearing armor or using a shield, you get a bonus to your movement speed."
                     + (iLevel >= 9 ? "\nYou gain the ability to move along vertical surfaces and across liquids on your turn without falling during the move." : ""), "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }

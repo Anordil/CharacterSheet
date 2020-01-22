@@ -21,6 +21,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bloodhunter.BloodHunter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.monk.Monk;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.paladin.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.sorcerer.Sorcerer;
@@ -195,6 +196,8 @@ public class CreateCharacter extends AppCompatActivity {
                 aClass = new Sorcerer();
             } else if (aClassName.equals(App.getResString(R.string.class_blood_hunter))) {
                 aClass = new BloodHunter();
+            } else if (aClassName.equals(App.getResString(R.string.class_monk))) {
+                aClass = new Monk();
             }
 
             Log.d("Create", "Selected race: " + aRace.getBaseRaceName());
