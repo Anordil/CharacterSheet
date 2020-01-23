@@ -35,7 +35,7 @@ public class Paladin extends BaseClass {
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
-        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.paladinArchetypes : -1;
+        return iNewLevel == 3 && _archetypes.size() == 0 ? R.array.paladinArchetypes : -1;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class Paladin extends BaseClass {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Paladin level " + iNewCharacterLevel + "!");
+        levelUp.add("Paladin level " + iNewCharacterLevel + " benefits:");
         return levelUp;
     }
 

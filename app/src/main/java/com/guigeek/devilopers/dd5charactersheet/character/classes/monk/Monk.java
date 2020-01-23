@@ -37,7 +37,7 @@ public class Monk extends BaseClass {
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
-        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.monkArchetypes : -1;
+        return iNewLevel == 3 && _archetypes.size() == 0 ? R.array.monkArchetypes : -1;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class Monk extends BaseClass {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Monk level " + iNewCharacterLevel + "!");
+        levelUp.add("Monk level " + iNewCharacterLevel + " benefits:");
 
         if (iNewCharacterLevel == 1) {
             levelUp.add("You gained Martial Arts");
@@ -224,26 +224,26 @@ public class Monk extends BaseClass {
                     "You gain the following benefits while you are unarmed or wielding only monk weapons and you aren’t wearing armor or wielding a shield:\n" +
                     "\n" +
                     "You can use Dexterity instead of Strength for the attack and damage rolls of your unarmed strikes and monk weapons.\n" +
-                    "You can roll a d" + getMonkDamageDie(iLevel) + " in place of the normal damage of your unarmed strike or monk weapon.\n" +
+                    "You can roll a D" + getMonkDamageDie(iLevel) + " in place of the normal damage of your unarmed strike or monk weapon.\n" +
                     "When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 2) {
             int dc = 8 + iCharac.getProficiencyBonus() + iCharac.getModifier(Enumerations.Attributes.WIS);
 
             String kiDescription = "You can spend Ki poins to do the following:\n" +
-                    "- Flurry of Blows: Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action." +
-                    "\n\n- Patient Defense: You can spend 1 ki point to take the Dodge action as a bonus action on your turn." +
-                    "\n\n- Step of the Wind: You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn.";
+                    "[Flurry of Blows] Immediately after you take the Attack action on your turn, you can spend 1 ki point to make two unarmed strikes as a bonus action." +
+                    "\n\n[Patient Defense] You can spend 1 ki point to take the Dodge action as a bonus action on your turn." +
+                    "\n\n[Step of the Wind] You can spend 1 ki point to take the Disengage or Dash action as a bonus action on your turn, and your jump distance is doubled for the turn.";
 
             if (iLevel >= 5) {
-                kiDescription += "\n\n- Stunning Strike: When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn.";
+                kiDescription += "\n\n[Stunning Strike] When you hit another creature with a melee weapon attack, you can spend 1 ki point to attempt a stunning strike. The target must succeed on a Constitution saving throw or be stunned until the end of your next turn.";
             }
             if (iLevel >= 14) {
-                kiDescription += "\n\n- Diamond Soul: You can spend 1 ki to reroll a failed saving throw and take the second result.";
+                kiDescription += "\n\n[Diamond Soul] You can spend 1 ki to reroll a failed saving throw and take the second result.";
             }
             if (iLevel >= 15) {
-                kiDescription += "\n\n- Empty Body: You can use your action to spend 4 ki and become invisible for 1mn. Yu also get resistance to all damage but force during that time.";
-                kiDescription += "\n\n- Empty Body II: You can spend 8 ki to cast astral projection without needing the material components. You cannot take any other creature with you..";
+                kiDescription += "\n\n[Empty Body]: You can use your action to spend 4 ki and become invisible for 1mn. Yu also get resistance to all damage but force during that time.";
+                kiDescription += "\n\n[Empty Body II]: You can spend 8 ki to cast astral projection without needing the material components. You cannot take any other creature with you..";
             }
 
             powers.add(new Power("Ki", kiDescription, "", iLevel, dc, false, Enumerations.ActionType.PASSIVE));

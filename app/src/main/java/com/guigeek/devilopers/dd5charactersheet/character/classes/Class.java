@@ -42,7 +42,6 @@ public interface Class  {
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies();
 
     public int getChoosableArchetypes(int iNewLevel);
-    void clearArchetypesOnLevelDown(int iNewlevel);
 
     public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getAllPowers(int iLevel, Character iCharac);
@@ -50,4 +49,7 @@ public interface Class  {
 
     public List<Attack> getSpecialClassAttacks(Character iCharacter);
     public List<Attack> getAllSpecialClassAttacks(Character iCharacter);
+
+    public void doLevelUp(int oldLevel, int newLevel, Context context, Runnable showBenefits);
+    public void doLevelDown(int oldLevel, int newLevel);
 }

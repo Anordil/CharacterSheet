@@ -120,33 +120,12 @@ public abstract class BaseClass implements Class, Externalizable {
             _archetypes = new LinkedList<>();
         }
         _archetypes.add(iArchetype);
+    }
 
-        // When adding an archetype some features may need to be chosen. In case those are "Feats",
-        // we need a different selection screen.
-
-        // For Feat-like
-        // TODO: how can we display benefits from an Archetype that has just been added?
-        iArchetype.getLevelUpBenefits(iNewCharacterLevel, context);
-
-        // For simple features
-        int choosableFeatureArray = iArchetype.getChoosableFeature(iNewCharacterLevel);
-        if (choosableFeatureArray != -1) {
-            AlertDialog.Builder b = new AlertDialog.Builder(context);
-            b.setTitle("Select a feature for your Archetype");
-
-            final String[] allOptions = context.getResources().getStringArray(choosableFeatureArray);
-            final List<String> allOptionsList = Arrays.asList(allOptions);
-
-            b.setAdapter(new StringListAdapter(context, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    String selectedOption = allOptions[which];
-                    iArchetype.setArchetypeFeature(selectedOption);
-                }
-            });
-
-            b.show();
+    @Override
+    public void doLevelDown(int oldLevel, int newLevel) {
+        if (newLevel < 3) {
+            _archetypes.clear();
         }
     }
 
@@ -174,8 +153,6 @@ public abstract class BaseClass implements Class, Externalizable {
 
     @Override
     public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context) {
-        clearArchetypesOnLevelDown(iNewCharacterLevel);
-
         // Get level up perks
         List<String> allItems = getLevelUpBenefits(iNewCharacterLevel, context);
         if (_archetypes != null) {
@@ -207,38 +184,44 @@ public abstract class BaseClass implements Class, Externalizable {
             }
         }
 
-        // New archetype may be added for this level
-        checkArchetypeSelection(iNewCharacterLevel, context);
-
         return allItems;
     }
 
-    private void checkArchetypeSelection(final int iNewCharacterLevel, final Context context) {
-        int choosableArchetypesArray = getChoosableArchetypes(iNewCharacterLevel);
-        if (choosableArchetypesArray != -1) {
-            AlertDialog.Builder b = new AlertDialog.Builder(context);
-            b.setTitle("Select a class feature");
-
-            final String[] allOptions = context.getResources().getStringArray(choosableArchetypesArray);
-            final List<String> allOptionsList = Arrays.asList(allOptions);
-
-            b.setAdapter(new StringListAdapter(context, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    String selectedOption = allOptions[which];
-                    addArchetype(getArchetypeByName(selectedOption), iNewCharacterLevel, context);
-                }
-            });
-
-            b.show();
-        }
-    }
-
     @Override
-    public void clearArchetypesOnLevelDown(int iNewlevel) {
-        if (iNewlevel < 3 && _archetypes.size() > 0) {
-            _archetypes.clear();
+    public void doLevelUp(int oldLevel, int newLevel, final Context context, final Runnable showBenefits) {
+        final int[] openedDialogs = {0};
+        for (int i = oldLevel +1; i <= newLevel; ++i) {
+            // New archetype may be added for this level
+            int choosableArchetypesArray = getChoosableArchetypes(i);
+            if (choosableArchetypesArray != -1) {
+                AlertDialog.Builder b = new AlertDialog.Builder(context);
+                b.setTitle("Select a class feature");
+                openedDialogs[0]++;
+
+                final String[] allOptions = context.getResources().getStringArray(choosableArchetypesArray);
+                final List<String> allOptionsList = Arrays.asList(allOptions);
+                final int level = i;
+
+                b.setAdapter(new StringListAdapter(context, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        openedDialogs[0]--;
+                        String selectedOption = allOptions[which];
+                        addArchetype(getArchetypeByName(selectedOption), level, context);
+
+                        if (openedDialogs[0] == 0) {
+                            showBenefits.run();
+                        }
+                    }
+                });
+
+                b.show();
+            }
+        }
+
+        if (openedDialogs[0] == 0) {
+            showBenefits.run();
         }
     }
 

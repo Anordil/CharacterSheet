@@ -20,7 +20,7 @@ public class BloodHunter extends BaseClass {
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
-        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.bloodHunterOrders : -1;
+        return iNewLevel == 3 && _archetypes.size() == 0 ? R.array.bloodHunterOrders : -1;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class BloodHunter extends BaseClass {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Blood Hunter level " + iNewCharacterLevel + "!");
+        levelUp.add("Blood Hunter level " + iNewCharacterLevel + " benefits:");
 
         // Blood Curses
         if (iNewCharacterLevel == 2) {

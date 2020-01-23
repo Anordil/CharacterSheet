@@ -20,7 +20,7 @@ public class Rogue extends BaseClass {
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
-        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.rogueArchetypes : -1;
+        return iNewLevel == 3 && _archetypes.size() == 0 ? R.array.rogueArchetypes : -1;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Rogue extends BaseClass {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Rogue level " + iNewCharacterLevel + "!");
+        levelUp.add("Rogue level " + iNewCharacterLevel + " benefits:");
 
         // Sneak attack
         if (iNewCharacterLevel %2 != 0) {

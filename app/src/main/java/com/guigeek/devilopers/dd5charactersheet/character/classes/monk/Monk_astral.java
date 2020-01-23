@@ -66,7 +66,7 @@ public class Monk_astral extends BaseArchetype {
                     "\n" +
                     "[Deflect Energy] When you take acid, cold, fire, lightning, or force damage, you can use your reaction to deflect it. When you do so, the damage you take is reduced by 1d10 + your Wisdom modifier + your monk level.\n" +
                     "\n" +
-                    "[Empowered Arms] Once on each of your turns when you hit a target with your astral arms, you can deal " + ((Monk)iCharac._class).getMonkDamageDie(iLevel) + " extra damage to the target.\n" +
+                    "[Empowered Arms] Once on each of your turns when you hit a target with your astral arms, you can deal 1D" + ((Monk)iCharac._class).getMonkDamageDie(iLevel) + " extra damage to the target.\n" +
                     "\n" +
                     "[Word of the Spirit] When you speak through your visage, you can direct your words to a creature of your choice that you can see within 30 feet of you, making it so only that creature can hear you. Alternatively, you can amplify your voice so that all creatures within 600 feet can hear you.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }

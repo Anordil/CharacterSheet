@@ -22,7 +22,7 @@ public class Sorcerer extends BaseClass {
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
-        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.sorcererArchetypes : -1;
+        return iNewLevel == 3 && _archetypes.size() == 0 ? R.array.sorcererArchetypes : -1;
     }
 
     @Override
@@ -141,7 +141,7 @@ public class Sorcerer extends BaseClass {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Sorcerer level " + iNewCharacterLevel + "!");
+        levelUp.add("Sorcerer level " + iNewCharacterLevel + " benefits:");
 
         if (iNewCharacterLevel >= 2) {
             levelUp.add("You now have " + iNewCharacterLevel + " Sorcery points.");

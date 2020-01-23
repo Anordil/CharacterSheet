@@ -24,7 +24,7 @@ public class Warlock extends BaseClass {
         if (iNewLevel == 1) {
             return _archetypes.size() == 0 ? R.array.warlockPatrons : -1;
         }
-        return iNewLevel >= 3 && _archetypes.size() == 1 ? R.array.warlockPacts : -1;
+        return iNewLevel == 3 && _archetypes.size() == 1 ? R.array.warlockPacts : -1;
     }
 
     @Override
@@ -42,9 +42,9 @@ public class Warlock extends BaseClass {
     }
 
     @Override
-    public void clearArchetypesOnLevelDown(int iNewlevel) {
+    public void doLevelDown(int oldLevel, int newLevel) {
         // Only pact can be cleared as the Patron is chosen at level 1
-        if (iNewlevel < 3 && _archetypes.size() > 0) {
+        if (newLevel < 3 && _archetypes.size() > 0) {
             Archetype pact = null;
             for (Archetype arc: _archetypes) {
                 if (arc instanceof Warlock_pact_blade || arc instanceof Warlock_pact_tome) {
@@ -161,7 +161,7 @@ public class Warlock extends BaseClass {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         final List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Warlock level " + iNewCharacterLevel + "!");
+        levelUp.add("Warlock level " + iNewCharacterLevel + " benefits:");
 
         // Cantrips
         int index = 1;

@@ -30,7 +30,7 @@ public class Barbarian extends BaseClass {
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
-        return iNewLevel >= 3 && _archetypes.size() == 0 ? R.array.barbarianArchetypes : -1;
+        return iNewLevel == 3 && _archetypes.size() == 0 ? R.array.barbarianArchetypes : -1;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Barbarian extends BaseClass {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Welcome to Barbarian level " + iNewCharacterLevel + "!");
+        levelUp.add("Barbarian level " + iNewCharacterLevel + " benefits:");
         return levelUp;
     }
 

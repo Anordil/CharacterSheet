@@ -179,7 +179,7 @@ public class StatsScreen extends Fragment {
             public void onClick(View v) {
                 _character._name = name.getText().toString();
 
-                int oldLevel = _character._level;
+                final int oldLevel = _character._level;
                 int oldLevelSecondary = _character._levelSecondaryClass;
                 _character._level = Integer.parseInt(level.getText().toString());
                 _character._levelSecondaryClass = Integer.parseInt(levelSecondary.getText().toString());
@@ -192,53 +192,79 @@ public class StatsScreen extends Fragment {
 
                 if (oldLevel != _character._level) {
 
-                    // Show level up window
-                    List<String> levelUpBoons = _character._class.getAllLevelUpBenefits(_character._level, getContext());
+                    if (oldLevel < _character._level) {
 
-                    String boons = "";
-                    for (String s : levelUpBoons) {
-                        if (s != null && s.length() > 0) {
-                            boons += s + "\n";
-                        }
-                    }
+                        Runnable displayBenefits = new Runnable() {
+                            @Override
+                            public void run() {
+                                String boons = "";
 
-                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                    alertDialog.setTitle("Level up");
-                    alertDialog.setMessage(boons);
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
+                                for (int level = oldLevel + 1; level <= _character._level; ++level) {
+                                    List<String> levelUpBoons = _character._class.getAllLevelUpBenefits(level, getContext());
+                                    for (String s : levelUpBoons) {
+                                        if (s != null && s.length() > 0) {
+                                            boons += s + "\n";
+                                        }
+                                    }
                                 }
-                            });
-                    alertDialog.show();
-                }
-                if (oldLevelSecondary != _character._levelSecondaryClass) {
-                    Log.d("Level compare", oldLevelSecondary + " VS " + _character._levelSecondaryClass);
-                    _character.doLongRest();
 
-                    // Show level up window
-                    List<String> levelUpBoons = _character._secondaryClass.getAllLevelUpBenefits(_character._levelSecondaryClass, getContext());
+                                // Show level up window
+                                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                                alertDialog.setTitle("Leveled up to " + _character._class.getClassName() + " " + _character._level);
+                                alertDialog.setMessage(boons);
+                                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.show();
+                            }
+                        };
 
-                    String boons = "";
-                    for (String s : levelUpBoons) {
-                        if (s != null && s.length() > 0) {
-                            boons += s + "\n";
-                        }
+                        _character._class.doLevelUp(oldLevel, _character._level, getContext(), displayBenefits);
+
+
+                    } else {
+                        _character._class.doLevelDown(oldLevel, _character._level);
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                        alertDialog.setTitle("Leveled down to " + _character._class.getClassName() + " " + _character._level);
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
                     }
-
-                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                    alertDialog.setTitle("Level up");
-                    alertDialog.setMessage(boons);
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-                    _character.refresh();
                 }
+                // TODO: fix dual class
+//                if (oldLevelSecondary != _character._levelSecondaryClass) {
+//                    Log.d("Level compare", oldLevelSecondary + " VS " + _character._levelSecondaryClass);
+//                    _character.doLongRest();
+//
+//                    // Show level up window
+//                    List<String> levelUpBoons = _character._secondaryClass.getAllLevelUpBenefits(_character._levelSecondaryClass, getContext());
+//
+//                    String boons = "";
+//                    for (String s : levelUpBoons) {
+//                        if (s != null && s.length() > 0) {
+//                            boons += s + "\n";
+//                        }
+//                    }
+//
+//                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+//                    alertDialog.setTitle("Level up");
+//                    alertDialog.setMessage(boons);
+//                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                            new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    dialog.dismiss();
+//                                }
+//                            });
+//                    alertDialog.show();
+//                    _character.refresh();
+//                }
 
 
                 if (_character._class.getSpellsKnown(_character._level)[0] > 0) {
