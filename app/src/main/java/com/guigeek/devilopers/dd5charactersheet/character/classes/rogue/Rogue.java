@@ -16,7 +16,7 @@ import java.util.List;
 
 
 public class Rogue extends BaseClass {
-    static final long serialVersionUID = 207L;
+    static final long serialVersionUID = 2070L;
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
@@ -29,6 +29,20 @@ public class Rogue extends BaseClass {
             return new Rogue_assassin();
         } else if (iName.equals(App.getResString(R.string.rogue_swashbuckler))) {
             return new Rogue_swashbuckler();
+        } else if (iName.equals(App.getResString(R.string.rogue_arcane))) {
+            return new Rogue_arcane();
+        } else if (iName.equals(App.getResString(R.string.rogue_inquisitive))) {
+            return new Rogue_inquisitive();
+        } else if (iName.equals(App.getResString(R.string.rogue_mastermind))) {
+            return new Rogue_mastermind();
+        } else if (iName.equals(App.getResString(R.string.rogue_revived))) {
+            return new Rogue_revived();
+        } else if (iName.equals(App.getResString(R.string.rogue_scout))) {
+            return new Rogue_scout();
+        } else if (iName.equals(App.getResString(R.string.rogue_soul_knife))) {
+            return new Rogue_soulknife();
+        } else if (iName.equals(App.getResString(R.string.rogue_thief))) {
+            return new Rogue_thief();
         }
         return null;
     }
@@ -47,7 +61,60 @@ public class Rogue extends BaseClass {
         return fettles;
     }
 
-    public Rogue(){}
+    int[][] _spellSlotsSubclass = {
+            // spell level 0-9
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //character lv 1
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 2, 0, 0, 0, 0, 0, 0, 0, 0}, // lv 3
+            {0, 3, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 3, 0, 0, 0, 0, 0, 0, 0, 0},//lv 5
+            {0, 4, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 4, 2, 0, 0, 0, 0, 0, 0, 0},
+            {0, 4, 2, 0, 0, 0, 0, 0, 0, 0},
+            {0, 4, 2, 0, 0, 0, 0, 0, 0, 0},
+            {0, 4, 3, 0, 0, 0, 0, 0, 0, 0},//lv 10
+            {0, 4, 3, 0, 0, 0, 0, 0, 0, 0},
+            {0, 4, 3, 0, 0, 0, 0, 0, 0, 0},
+            {0, 4, 3, 2, 0, 0, 0, 0, 0, 0},
+            {0, 4, 3, 2, 0, 0, 0, 0, 0, 0},
+            {0, 4, 3, 2, 0, 0, 0, 0, 0, 0},//lv 15
+            {0, 4, 3, 3, 0, 0, 0, 0, 0, 0},
+            {0, 4, 3, 3, 0, 0, 0, 0, 0, 0},
+            {0, 4, 3, 3, 0, 0, 0, 0, 0, 0},
+            {0, 4, 3, 3, 1, 0, 0, 0, 0, 0},
+            {0, 4, 3, 3, 1, 0, 0, 0, 0, 0}//ln 20
+    };
+
+    int[][] _spellsKnownSubclass = {
+            // cantrips, spells
+            {0, 0},
+            {0, 0}, //character lv 1
+            {0, 0},
+            {3, 3},
+            {3, 4},
+            {3, 4},//lv 5
+            {3, 4},
+            {3, 5},
+            {3, 6},
+            {3, 6},
+            {4, 7},//lv 10
+            {4, 8},
+            {4, 8},
+            {4, 9},
+            {4, 10},
+            {4, 10},//lv 15
+            {4, 11},
+            {4, 11},
+            {4, 11},
+            {4, 12},
+            {4, 13}//ln 20
+    };
+
+    public Rogue(){
+        _spellsKnown = _spellsKnownSubclass;
+        _spellSlots = _spellSlotsSubclass;
+    }
 
     @Override
     public String getClassName() {
@@ -149,5 +216,19 @@ public class Rogue extends BaseClass {
     @Override
     public int getIconResource() {
         return R.drawable.ic_rogue;
+    }
+
+    @Override
+    public boolean isCaster() {
+        for (Archetype arc: _archetypes) {
+            if (arc instanceof Rogue_arcane) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Enumerations.Attributes getMainSpellAttribute() {
+        return Enumerations.Attributes.INT;
     }
 }

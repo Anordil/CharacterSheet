@@ -512,8 +512,8 @@ public class CombatScreen extends Fragment {
         }
 
         // Fighting styles
-        boolean hasArchery = _character.hasFeat("[Fighting Style] Archery");
-        boolean hasDueling = _character.hasFeat("[Fighting Style] Dueling");
+        boolean hasArchery = _character.hasPower("[Fighting Style] Archery");
+        boolean hasDueling = _character.hasPower("[Fighting Style] Dueling");
 
         int abilityModifier = (distanceWeapon ? modDex : (finesseWeapon ? (Math.max(modDex, modStr)) : modStr));
 
@@ -634,7 +634,7 @@ public class CombatScreen extends Fragment {
             }
 
             int dmgBonus = _character._dmgBonus + weapon._magicModifier; // No bonus damage in the off hand
-            if(_character.hasFeat("[Fighting Style] Two-Weapon Fighting")) {
+            if(_character.hasPower("[Fighting Style] Two-Weapon Fighting")) {
                 dmgBonus += abilityModifier;
             }
             int attackBonus = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;

@@ -34,6 +34,13 @@
 
     <string name="rogue_assassin">Assassin</string>
     <string name="rogue_swashbuckler">Swashbuckler</string>
+    <string name="rogue_arcane">Arcane Trickster</string>
+    <string name="rogue_inquisitive">Inquisitive</string>
+    <string name="rogue_mastermind">Mastermind</string>
+    <string name="rogue_scout">Scout</string>
+    <string name="rogue_soul_knife">Soulknife</string>
+    <string name="rogue_revived">Revived</string>
+    <string name="rogue_thief">Thief</string>
 
     <string name="sorcerer_dragon">Draconic</string>
     <string name="sorcerer_storm">Storm</string>

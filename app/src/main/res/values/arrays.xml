@@ -271,8 +271,15 @@
     </string-array>
 
     <string-array name="rogueArchetypes">
+        <item>@string/rogue_arcane</item>
         <item>@string/rogue_assassin</item>
+        <item>@string/rogue_inquisitive</item>
+        <item>@string/rogue_mastermind</item>
+        <item>@string/rogue_scout</item>
+        <item>@string/rogue_soul_knife</item>
         <item>@string/rogue_swashbuckler</item>
+        <item>@string/rogue_revived</item>
+        <item>@string/rogue_thief</item>
     </string-array>
 
     <string-array name="warlockPacts">

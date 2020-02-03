@@ -1,8 +1,6 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes.monk;
 
 import android.content.Context;
-import android.os.Build;
-import android.util.Log;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
@@ -12,11 +10,6 @@ import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BaseClass;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian_ancestral;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian_berserker;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian_storm;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian_totem;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian_zealot;
 
 import java.util.LinkedList;
 import java.util.List;
