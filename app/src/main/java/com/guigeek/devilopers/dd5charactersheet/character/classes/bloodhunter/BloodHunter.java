@@ -1,22 +1,44 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes.bloodhunter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.android.FeatAdapter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.monk.Monk_elements;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.warlock.Warlock_pact_blade;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.warlock.Warlock_pact_tome;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
 
 public class BloodHunter extends BaseClass {
     static final long serialVersionUID = 203L;
+    protected Power _fightingStyle;
+
+    @Override
+    public void writeExternal(ObjectOutput oo) throws IOException {
+        super.writeExternal(oo);
+        oo.writeObject(_fightingStyle);
+    }
+
+    @Override
+    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException {
+        super.readExternal(oi);
+        _fightingStyle = (Power)oi.readObject();
+    }
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
@@ -101,6 +123,14 @@ public class BloodHunter extends BaseClass {
     }
 
     @Override
+    public void doLevelDown(int oldLevel, int newLevel) {
+        super.doLevelDown(oldLevel, newLevel);
+        if (newLevel < 2) {
+            _fightingStyle = null;
+        }
+    }
+
+    @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Blood Hunter level " + iNewCharacterLevel + " benefits:");
@@ -132,8 +162,31 @@ public class BloodHunter extends BaseClass {
             levelUp.add("You gained one Primal Crimson Rite (Fire, Cold or Lightning).");
         }
         if (iNewCharacterLevel == 2) {
-            levelUp.add("You gained a Fighting style! Choose it in the Feats screen.");
             levelUp.add("You gained Blood Maledict.");
+
+            AlertDialog.Builder b = new AlertDialog.Builder(context);
+            b.setTitle("Select a fighting style");
+
+            LinkedList<Power> allStyles = new LinkedList<Power>();
+            String[] styleNames = context.getResources().getStringArray(R.array.bloodHunterStyleNames);
+            String[] styleDesc = context.getResources().getStringArray(R.array.bloodHunterStyleDesc);
+
+            for (int i = 0; i < styleNames.length; ++i) {
+                allStyles.add(new Power(styleNames[i], styleDesc[i], "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
+            }
+
+            final Object[] featsFiltered = allStyles.toArray();
+
+            b.setAdapter(new FeatAdapter(context, R.layout.list_feat, allStyles), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Power feat = (Power)featsFiltered[which];
+                    _fightingStyle = new Power(feat._name, feat._description, "", -1,-1, false, Enumerations.ActionType.PASSIVE);
+                }
+            });
+
+            b.show();
         }
         if (iNewCharacterLevel == 6) {
             levelUp.add("You gained one Primal Crimson Rite (Fire, Cold or Lightning).");
@@ -209,6 +262,10 @@ public class BloodHunter extends BaseClass {
             powers.add(new Power("Sanguine Mastery", "When you are below one fourth of your current maximum hit points, all of your crimson rite damage dice are maximized.\n" +
                     "\n" +
                     "In addition, when you critically hit with a weapon attack that bears your crimson rite, you regain a use of your Blood Maledict feature.", "", -1, -1, false, Enumerations.ActionType.PASSIVE));
+        }
+
+        if (_fightingStyle != null) {
+            powers.add(_fightingStyle);
         }
 
         return powers;

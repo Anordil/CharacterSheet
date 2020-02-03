@@ -4,10 +4,12 @@ import android.content.Context;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BaseArchetype;
+import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -83,5 +85,38 @@ public class Monk_astral extends BaseArchetype {
         }
 
         return powers;
+    }
+
+    @Override
+    public List<Attack> getSpecialClassAttacks(Character iCharacter) {
+        LinkedList<Attack> astralArms = new LinkedList<>();
+
+        int level = iCharacter._level;
+        int proficiency = iCharacter.getProficiencyBonus();
+
+        Weapon weapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+        weapon._hasReach = true;
+        weapon._name = "Astral Arms";
+        weapon._damageType = Enumerations.DamageTypes.RADIANT;
+        weapon._diceCount = 1;
+        weapon._diceValue = ((Monk)iCharacter._class).getMonkDamageDie(level);
+
+        int dmg = 0;
+        int atk = iCharacter.getProficiencyBonus();
+
+        // STR or WIS or DEX
+        atk += Math.max(iCharacter.getModifier(Enumerations.Attributes.STR), Math.max(iCharacter.getModifier(Enumerations.Attributes.WIS), iCharacter.getModifier(Enumerations.Attributes.DEX)));
+        dmg += Math.max(iCharacter.getModifier(Enumerations.Attributes.STR), Math.max(iCharacter.getModifier(Enumerations.Attributes.WIS), iCharacter.getModifier(Enumerations.Attributes.DEX)));
+
+        astralArms.add(new Attack(
+                weapon,
+                "When using Astral Arms only. Bonus Action extra attacks: " + (level >= 17 ? 3 : level >= 11 ? 2 : 1),
+                atk,
+                dmg,
+                iCharacter.getAttacksPerRound(),
+                R.drawable.ic_monk
+        ));
+
+        return astralArms;
     }
 }

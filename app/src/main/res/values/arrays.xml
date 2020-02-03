@@ -113,11 +113,8 @@
         <item>[Sorcerer Metamagic] Quickened spell</item>
         <item>[Sorcerer Metamagic] Subtle spell</item>
         <item>[Sorcerer Metamagic] Twinned spell</item>
-        <item>[Fighting Style] Archery</item>
-        <item>[Fighting Style] Dueling</item>
-        <item>[Fighting Style] Great Weapon Fighting</item>
-        <item>[Fighting Style] Two-Weapon Fighting</item>
     </string-array>
+
     <string-array name="featsDescription">
         <item>You have studied the secrets of alchemy and are an expert in its practice, gaining the following benefits:\nIncrease your Intelligence score by 1, to a maximum of 20.\nYou gain proficiency with alchemist’s supplies. If you are already proficient with them, you add double your proficiency bonus to checks you make with them. \nAs an action, you can identify one potion within 5 feet of you, as if you had tasted it. You must see the liquid for this benefit to work. \nOver the course of any short rest, you can temporarily improve the potency of one potion of healing of any rarity. To use this benefit, you must have alchemist’s supplies with you, and the potion must be within reach. If the potion is drunk no more than 1 hour after the short rest ends, the creature drinking the potion can forgo the potion’s die roll and regains the maximum number of hit points that the potion can restore.</item>
         <item>Always on the lookout for danger, you gain the following benefits:\nYou gain a +5 bonus to initiative.\nYou can’t be surprised while you are conscious.\nOther creatures don’t gain advantage on attack rolls against you as a result of being hidden from you.</item>
@@ -207,10 +204,6 @@
         <item>2 sorcery point : Change the casting time of the spell form 1 action to 1 bonus action.</item>
         <item>1 sorcery point : Cast this spell without verbal and somatic components.</item>
         <item>1 sorcery point/spell level (1 for cantrips) : A spell that targets one creature and doesn\'t have a range of Self may targets a second creature in range.</item>
-        <item>You gain a +2 bonus to attack rolls you make with ranged weapons.</item>
-        <item>When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.</item>
-        <item>When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit.</item>
-        <item>When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.</item>
     </string-array>
 
     <string-array name="draconicAncestries">
@@ -257,6 +250,18 @@
         <item>@string/bloodhunter_lycan</item>
         <item>@string/bloodhunter_mutant</item>
         <item>@string/bloodhunter_profane_soul</item>
+    </string-array>
+    <string-array name="bloodHunterStyleNames">
+        <item>[Fighting Style] Archery</item>
+        <item>[Fighting Style] Dueling</item>
+        <item>[Fighting Style] Great Weapon Fighting</item>
+        <item>[Fighting Style] Two-Weapon Fighting</item>
+    </string-array>
+    <string-array name="bloodHunterStyleDesc">
+        <item>You gain a +2 bonus to attack rolls you make with ranged weapons.</item>
+        <item>When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.</item>
+        <item>When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit.</item>
+        <item>When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.</item>
     </string-array>
 
     <string-array name="sorcererArchetypes">
