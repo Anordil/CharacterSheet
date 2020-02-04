@@ -18,6 +18,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.SavingThrow;
 import com.guigeek.devilopers.dd5charactersheet.character.Skill;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.bard.Bard;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
 
 import java.io.Serializable;
@@ -260,7 +261,7 @@ public class SkillsScreen extends Fragment {
             isDoublyProficient.setOnClickListener(new SavingThrowDoubleProficiencyListener(skill, value));
             isProficient.setOnClickListener(new SkillListener(skill, value, isDoublyProficient));
 
-            if (!(_character._class instanceof Rogue) && !(_character._secondaryClass != null && _character._secondaryClass instanceof Rogue)) {
+            if (!(_character._class instanceof Rogue) && !(_character._class instanceof Bard)) {
                 isDoublyProficient.setVisibility(View.INVISIBLE);
             }
 

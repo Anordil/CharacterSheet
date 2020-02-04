@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="classes">
+        <item>@string/class_bard</item>
         <item>@string/class_barbarian</item>
         <item>@string/class_blood_hunter</item>
         <item>@string/class_monk</item>
@@ -371,4 +372,23 @@
         <item>You can spend 2 ki points as an action to create a whip of water that shoves and pulls a creature to unbalance it. A creature that you can see that is within 30 feet of you must make a Dexterity saving throw. On a failed save, the creature takes 3d10 bludgeoning damage, plus an extra 1d10 bludgeoning damage for each additional ki point you spend, and you can either knock it prone or pull it up to 25 feet closer to you. On a successful save, the creature takes half as much damage, and you don’t pull it or knock it prone.</item>
         <item>(17th level required)\nYou can spend 6 ki points to cast wall of stone. (17th Level Required)</item>
     </string-array>
+
+
+
+    <string-array name="bardArchetypes">
+        <item>@string/bard_glamour</item>
+        <item>@string/bard_lore</item>
+        <item>@string/bard_swords</item>
+        <item>@string/bard_valor</item>
+        <item>@string/bard_whispers</item>
+    </string-array>
+    <string-array name="bardStyleNames">
+        <item>[Fighting Style] Dueling</item>
+        <item>[Fighting Style] Two-Weapon Fighting</item>
+    </string-array>
+    <string-array name="bardStyleDesc">
+        <item>When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.</item>
+        <item>When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.</item>
+    </string-array>
+
 </resources>

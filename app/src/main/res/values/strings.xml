@@ -11,6 +11,7 @@
     <string name="class_sorcerer">Sorcerer</string>
     <string name="class_blood_hunter">Blood Hunter</string>
     <string name="class_monk">Monk</string>
+    <string name="class_bard">Bard</string>
 
 
     <string name="race_dwarf">Dwarf</string>
@@ -73,4 +74,10 @@
     <string name="monk_death">Way of Long Death</string>
     <string name="monk_hand">Way of Open Hand</string>
     <string name="monk_sunsoul">Way of the Sun Soul</string>
+
+    <string name="bard_glamour">College of Glamour</string>
+    <string name="bard_lore">College of Lore</string>
+    <string name="bard_swords">College of Swords</string>
+    <string name="bard_valor">College of Valor</string>
+    <string name="bard_whispers">College of Whispers</string>
 </resources>
