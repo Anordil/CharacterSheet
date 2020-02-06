@@ -110,7 +110,8 @@ public class Enumerations {
         PIERCING("Piercing damage"), SLASHING("Slashing damage"), BLUDGEONING("Bludgeoning damage"),
         ACID("Acid damage"), COLD("Cold damage"), FIRE("Fire damage"), FORCE("Force damage"), LIGHTNING("Lightning damage"), NECROTIC("Necrotic damage"), POISON("Poison damage"),
         PSYCHIC("Psychic damage"), RADIANT("Radiant damage"), THUNDER("Thunder damage"),
-        CHARM_MAGIC("Charm magic"), DISEASES("Diseases"), FEAR("Fear");
+        CHARM_MAGIC("Charm magic"), DISEASES("Diseases"), FEAR("Fear"),
+        BLINDED("Blinded"), DEAFENED("Deafened"), POISONED("Poisoned");
 
         private String _name;
         Immunities(String n) {

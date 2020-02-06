@@ -100,4 +100,11 @@
     <string name="cleric_trickery">Trickery Domain</string>
     <string name="cleric_twilight">Twilight Domain</string>
     <string name="cleric_war">War Domain</string>
+
+    <string name="druid_dreams">Circle of Dreams</string>
+    <string name="druid_land">Circle of Land</string>
+    <string name="druid_spores">Circle of Spores</string>
+    <string name="druid_shepherd">Circle of Shepherd</string>
+    <string name="druid_moon">Circle of Moon</string>
+    <string name="druid_wildfire">Circle of Wildfire</string>
 </resources>

@@ -5,6 +5,7 @@
         <item>@string/class_barbarian</item>
         <item>@string/class_blood_hunter</item>
         <item>@string/class_cleric</item>
+        <item>@string/class_druid</item>
         <item>@string/class_monk</item>
         <item>@string/class_paladin</item>
         <item>@string/class_rogue</item>
@@ -407,6 +408,15 @@
         <item>@string/cleric_trickery</item>
         <item>@string/cleric_twilight</item>
         <item>@string/cleric_war</item>
+    </string-array>
+
+    <string-array name="druidArchetypes">
+        <item>@string/druid_dreams</item>
+        <item>@string/druid_spores</item>
+        <item>@string/druid_land</item>
+        <item>@string/druid_moon</item>
+        <item>@string/druid_shepherd</item>
+        <item>@string/druid_wildfire</item>
     </string-array>
 
 </resources>

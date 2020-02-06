@@ -7,6 +7,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barb
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bard.Bard;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bloodhunter.BloodHunter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.cleric.Cleric;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.monk.Monk;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.paladin.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
@@ -155,6 +156,9 @@ public class Character implements Externalizable {
         else if (aClass instanceof Cleric) {
             _class = (Cleric) aClass;
         }
+        else if (aClass instanceof Druid) {
+            _class = (Druid) aClass;
+        }
 
             Log.d("UNWRAP", "After class");
 
@@ -291,6 +295,9 @@ public class Character implements Externalizable {
                 }
                 else if (aSecondaryClass instanceof Cleric) {
                     _secondaryClass = (Cleric) aClass;
+                }
+                else if (aSecondaryClass instanceof Druid) {
+                    _secondaryClass = (Druid) aClass;
                 }
             }
             _levelSecondaryClass = oi.readInt();
