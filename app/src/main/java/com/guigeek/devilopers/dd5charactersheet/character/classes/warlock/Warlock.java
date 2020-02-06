@@ -33,10 +33,20 @@ public class Warlock extends BaseClass {
             return new Warlock_pact_tome();
         } else if (iName.equals(App.getResString(R.string.warlock_pact_blade))) {
             return new Warlock_pact_blade();
+        } else if (iName.equals(App.getResString(R.string.warlock_pact_chain))) {
+            return new Warlock_pact_chain();
         } else if (iName.equals(App.getResString(R.string.warlock_patron_ancient))) {
             return new Warlock_patron_oldOne();
         } else if (iName.equals(App.getResString(R.string.warlock_patron_fiend))) {
             return new Warlock_patron_fiend();
+        } else if (iName.equals(App.getResString(R.string.warlock_patron_archfey))) {
+            return new Warlock_patron_archfey();
+        } else if (iName.equals(App.getResString(R.string.warlock_patron_celestial))) {
+            return new Warlock_patron_celestial();
+        } else if (iName.equals(App.getResString(R.string.warlock_patron_hexblade))) {
+            return new Warlock_patron_hexblade();
+        } else if (iName.equals(App.getResString(R.string.warlock_patron_undying))) {
+            return new Warlock_patron_undying();
         }
         return null;
     }

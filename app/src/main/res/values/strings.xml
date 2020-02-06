@@ -54,9 +54,14 @@
 
     <string name="warlock_pact_blade">Pact of the Blade</string>
     <string name="warlock_pact_tome">Pact of the Tome</string>
+    <string name="warlock_pact_chain">Pact of the Chain</string>
 
     <string name="warlock_patron_fiend">Fiend patron</string>
-    <string name="warlock_patron_ancient">Old One patron</string>
+    <string name="warlock_patron_ancient">Great Old One patron</string>
+    <string name="warlock_patron_archfey">Archfey patron</string>
+    <string name="warlock_patron_celestial">Celestial patron</string>
+    <string name="warlock_patron_hexblade">Hexblade patron</string>
+    <string name="warlock_patron_undying">Undying patron</string>
 
 
     <string name="barbarian_totem">Totem Warrior</string>

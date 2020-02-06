@@ -287,12 +287,17 @@
 
     <string-array name="warlockPacts">
         <item>@string/warlock_pact_blade</item>
+        <item>@string/warlock_pact_chain</item>
         <item>@string/warlock_pact_tome</item>
     </string-array>
 
     <string-array name="warlockPatrons">
-        <item>@string/warlock_patron_ancient</item>
+        <item>@string/warlock_patron_archfey</item>
+        <item>@string/warlock_patron_celestial</item>
         <item>@string/warlock_patron_fiend</item>
+        <item>@string/warlock_patron_ancient</item>
+        <item>@string/warlock_patron_hexblade</item>
+        <item>@string/warlock_patron_undying</item>
     </string-array>
 
     <string-array name="barbarianArchetypes">
