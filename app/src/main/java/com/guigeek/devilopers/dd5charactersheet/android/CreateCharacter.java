@@ -22,6 +22,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bard.Bard;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bloodhunter.BloodHunter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.cleric.Cleric;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.monk.Monk;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.paladin.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
@@ -201,6 +202,8 @@ public class CreateCharacter extends AppCompatActivity {
                 aClass = new Monk();
             } else if (aClassName.equals(App.getResString(R.string.class_bard))) {
                 aClass = new Bard();
+            } else if (aClassName.equals(App.getResString(R.string.class_cleric))) {
+                aClass = new Cleric();
             }
 
             Log.d("Create", "Selected race: " + aRace.getBaseRaceName());
@@ -218,7 +221,7 @@ public class CreateCharacter extends AppCompatActivity {
             (bonusINT.getText().length() > 0 ? Integer.parseInt(bonusINT.getText().toString()):0) + Integer.parseInt(inINT.getText().toString()),
             (bonusWIS.getText().length() > 0 ? Integer.parseInt(bonusWIS.getText().toString()):0) + Integer.parseInt(inWIS.getText().toString()),
             (bonusCHA.getText().length() > 0 ? Integer.parseInt(bonusCHA.getText().toString()):0) + Integer.parseInt(inCHA.getText().toString())};
-        Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes, null, 0);
+        final Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes, null, 0);
 
         Log.d("Create", aHero.toString());
 
@@ -228,24 +231,36 @@ public class CreateCharacter extends AppCompatActivity {
 
         List<String> levelUpBoons = aHero._class.getAllLevelUpBenefits(1, CreateCharacter.this);
 
-        String boons = "";
-        for (String s : levelUpBoons) {
-            if (s != null && s.length() > 0) {
-                boons += s + "\n";
-            }
-        }
+        Runnable displayBenefits = new Runnable() {
+            @Override
+            public void run() {
+                String boons = "";
 
-        AlertDialog alertDialog = new AlertDialog.Builder(CreateCharacter.this).create();
-        alertDialog.setTitle("Level up");
-        alertDialog.setMessage(boons);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        findViewById(R.id.createCharacterLayout).setVisibility(View.GONE);
-                        btnDone.setVisibility(View.VISIBLE);
+                for (int level = 1; level <= aHero._level; ++level) {
+                    List<String> levelUpBoons = aHero._class.getAllLevelUpBenefits(level, CreateCharacter.this);
+                    for (String s : levelUpBoons) {
+                        if (s != null && s.length() > 0) {
+                            boons += s + "\n";
+                        }
                     }
-                });
-        alertDialog.show();
+                }
+
+                // Show level up window
+                AlertDialog alertDialog = new AlertDialog.Builder(CreateCharacter.this).create();
+                alertDialog.setTitle("Leveled up to " + aHero._class.getClassName() + " " + aHero._level);
+                alertDialog.setMessage(boons);
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                findViewById(R.id.createCharacterLayout).setVisibility(View.GONE);
+                                btnDone.setVisibility(View.VISIBLE);
+                            }
+                        });
+                alertDialog.show();
+            }
+        };
+
+        aHero._class.doLevelUp(0, aHero._level, CreateCharacter.this, displayBenefits);
     }
 }

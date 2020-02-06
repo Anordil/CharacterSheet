@@ -245,6 +245,6 @@ public class Bard extends BaseClass {
 
     @Override
     public int getIconResource() {
-        return R.drawable.ic_werewolf;
+        return R.drawable.ic_bard;
     }
 }

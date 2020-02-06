@@ -132,4 +132,15 @@ public class Armor implements Externalizable {
             _magicProperties = (LinkedList<Fettle>)oi.readObject();
         }
     }
+
+    public boolean isHeavy() {
+        if (_type == Enumerations.ArmorTypes.RING_MAIL ||
+            _type == Enumerations.ArmorTypes.CHAIN_MAIL ||
+            _type == Enumerations.ArmorTypes.SPLINT ||
+            _type == Enumerations.ArmorTypes.PLATE) {
+            return true;
+        }
+
+        return false;
+    }
 }

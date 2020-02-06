@@ -42,6 +42,7 @@ public interface Class  {
     public Enumerations.SavingThrows[] getSavingThrowsProficiencies();
 
     public int getChoosableArchetypes(int iNewLevel);
+    public Archetype getArchetype(int index);
 
     public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getAllPowers(int iLevel, Character iCharac);

@@ -4,6 +4,7 @@
         <item>@string/class_bard</item>
         <item>@string/class_barbarian</item>
         <item>@string/class_blood_hunter</item>
+        <item>@string/class_cleric</item>
         <item>@string/class_monk</item>
         <item>@string/class_paladin</item>
         <item>@string/class_rogue</item>
@@ -389,6 +390,23 @@
     <string-array name="bardStyleDesc">
         <item>When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.</item>
         <item>When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.</item>
+    </string-array>
+
+
+    <string-array name="clericArchetypes">
+        <item>@string/cleric_arcana</item>
+        <item>@string/cleric_death</item>
+        <item>@string/cleric_forge</item>
+        <item>@string/cleric_grave</item>
+        <item>@string/cleric_knowledge</item>
+        <item>@string/cleric_life</item>
+        <item>@string/cleric_light</item>
+        <item>@string/cleric_nature</item>
+        <item>@string/cleric_order</item>
+        <item>@string/cleric_tempest</item>
+        <item>@string/cleric_trickery</item>
+        <item>@string/cleric_twilight</item>
+        <item>@string/cleric_war</item>
     </string-array>
 
 </resources>

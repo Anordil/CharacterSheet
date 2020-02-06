@@ -29,6 +29,10 @@ public abstract class BaseClass implements Class, Externalizable {
     protected int _version = 1;
     protected LinkedList<Archetype> _archetypes = new LinkedList<>();
 
+    public Archetype getArchetype(int index) {
+        return _archetypes.get(index);
+    }
+
     public int getChoosableArchetypes(int iNewlevel) {
         return -1;
     }
@@ -210,7 +214,7 @@ public abstract class BaseClass implements Class, Externalizable {
                         String selectedOption = allOptions[which];
                         addArchetype(getArchetypeByName(selectedOption), level, context);
 
-                        if (openedDialogs[0] == 0) {
+                        if (openedDialogs[0] == 0 && showBenefits != null) {
                             showBenefits.run();
                         }
                     }
@@ -220,7 +224,7 @@ public abstract class BaseClass implements Class, Externalizable {
             }
         }
 
-        if (openedDialogs[0] == 0) {
+        if (openedDialogs[0] == 0 && showBenefits != null) {
             showBenefits.run();
         }
     }
