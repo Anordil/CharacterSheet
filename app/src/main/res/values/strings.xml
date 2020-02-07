@@ -14,7 +14,7 @@
     <string name="class_bard">Bard</string>
     <string name="class_cleric">Cleric</string>
     <string name="class_wizard">Wizard</string>
-    <string name="class_warrior">Warrior</string>
+    <string name="class_fighter">Fighter</string>
     <string name="class_ranger">Ranger</string>
     <string name="class_druid">Druid</string>
 
@@ -112,4 +112,32 @@
     <string name="druid_shepherd">Circle of Shepherd</string>
     <string name="druid_moon">Circle of Moon</string>
     <string name="druid_wildfire">Circle of Wildfire</string>
+
+    <string name="fighter_archer">Arcane Archer</string>
+    <string name="fighter_battlemaster">Battle Master</string>
+    <string name="fighter_cavalier">Cavalier</string>
+    <string name="fighter_champion">Champion</string>
+    <string name="fighter_eldritch">Eldritch Knight</string>
+    <string name="fighter_psychic">Psychic Warrior</string>
+    <string name="fighter_purple">Purple Dragon Knight</string>
+    <string name="fighter_rune">Rune Knight</string>
+    <string name="fighter_samurai">Samurai</string>
+
+    <string name="ranger_beast">Beast Master</string>
+    <string name="ranger_gloom">Gloom Stalker</string>
+    <string name="ranger_horizon">Horizon Walker</string>
+    <string name="ranger_hunter">Hunter</string>
+    <string name="ranger_slayer">Monster Slayer</string>
+    <string name="ranger_swarm">Swarm Keeper</string>
+
+    <string name="wizard_bladesinging">Blade Singing</string>
+    <string name="wizard_abjuration">School of Abjuration</string>
+    <string name="wizard_conjuration">School of Conjuration</string>
+    <string name="wizard_divination">School of Divination</string>
+    <string name="wizard_enchantment">School of Enchantment</string>
+    <string name="wizard_evocation">School of Evocation</string>
+    <string name="wizard_illusion">School of Illusion</string>
+    <string name="wizard_necromancy">School of Necromancy</string>
+    <string name="wizard_transmutation">School of Transmutation</string>
+    <string name="wizard_war">War Magic</string>
 </resources>

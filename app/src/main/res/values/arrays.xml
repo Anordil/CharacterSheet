@@ -6,11 +6,14 @@
         <item>@string/class_blood_hunter</item>
         <item>@string/class_cleric</item>
         <item>@string/class_druid</item>
+        <item>@string/class_fighter</item>
         <item>@string/class_monk</item>
         <item>@string/class_paladin</item>
+        <item>@string/class_ranger</item>
         <item>@string/class_rogue</item>
         <item>@string/class_sorcerer</item>
         <item>@string/class_warlock</item>
+        <item>@string/class_wizard</item>
 
 
     </string-array>
@@ -424,4 +427,37 @@
         <item>@string/druid_wildfire</item>
     </string-array>
 
+    <string-array name="fighterArchetypes">
+        <item>@string/fighter_archer</item>
+        <item>@string/fighter_battlemaster</item>
+        <item>@string/fighter_cavalier</item>
+        <item>@string/fighter_champion</item>
+        <item>@string/fighter_eldritch</item>
+        <item>@string/fighter_psychic</item>
+        <item>@string/fighter_purple</item>
+        <item>@string/fighter_rune</item>
+        <item>@string/fighter_samurai</item>
+    </string-array>
+
+    <string-array name="rangerArchetypes">
+        <item>@string/ranger_beast</item>
+        <item>@string/ranger_gloom</item>
+        <item>@string/ranger_horizon</item>
+        <item>@string/ranger_hunter</item>
+        <item>@string/ranger_slayer</item>
+        <item>@string/ranger_swarm</item>
+    </string-array>
+
+    <string-array name="wizardArchetypes">
+        <item>@string/wizard_bladesinging</item>
+        <item>@string/wizard_abjuration</item>
+        <item>@string/wizard_conjuration</item>
+        <item>@string/wizard_divination</item>
+        <item>@string/wizard_enchantment</item>
+        <item>@string/wizard_evocation</item>
+        <item>@string/wizard_illusion</item>
+        <item>@string/wizard_necromancy</item>
+        <item>@string/wizard_transmutation</item>
+        <item>@string/wizard_war</item>
+    </string-array>
 </resources>

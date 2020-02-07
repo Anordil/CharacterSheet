@@ -29,6 +29,9 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.paladin.Paladi
 import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.sorcerer.Sorcerer;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.warlock.Warlock;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.wizard.Wizard;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.fighter.Fighter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.ranger.Ranger;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Gnome;
@@ -207,6 +210,12 @@ public class CreateCharacter extends AppCompatActivity {
                 aClass = new Cleric();
             } else if (aClassName.equals(App.getResString(R.string.class_druid))) {
                 aClass = new Druid();
+            } else if (aClassName.equals(App.getResString(R.string.class_wizard))) {
+                aClass = new Wizard();
+            } else if (aClassName.equals(App.getResString(R.string.class_fighter))) {
+                aClass = new Fighter();
+            } else if (aClassName.equals(App.getResString(R.string.class_ranger))) {
+                aClass = new Ranger();
             }
 
             Log.d("Create", "Selected race: " + aRace.getBaseRaceName());

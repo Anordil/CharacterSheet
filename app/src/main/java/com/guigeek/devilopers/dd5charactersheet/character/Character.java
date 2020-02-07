@@ -8,10 +8,13 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.bard.Bard;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bloodhunter.BloodHunter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.cleric.Cleric;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.fighter.Fighter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.monk.Monk;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.paladin.Paladin;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.sorcerer.Sorcerer;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.wizard.Wizard;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.ranger.Ranger;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.warlock.Warlock;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Dragonborn;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Elf;
@@ -159,6 +162,15 @@ public class Character implements Externalizable {
         else if (aClass instanceof Druid) {
             _class = (Druid) aClass;
         }
+        else if (aClass instanceof Wizard) {
+            _class = (Wizard) aClass;
+        }
+        else if (aClass instanceof Fighter) {
+            _class = (Fighter) aClass;
+        }
+        else if (aClass instanceof Ranger) {
+            _class = (Ranger) aClass;
+        }
 
             Log.d("UNWRAP", "After class");
 
@@ -298,6 +310,15 @@ public class Character implements Externalizable {
                 }
                 else if (aSecondaryClass instanceof Druid) {
                     _secondaryClass = (Druid) aClass;
+                }
+                else if (aSecondaryClass instanceof Wizard) {
+                    _secondaryClass = (Wizard) aClass;
+                }
+                else if (aSecondaryClass instanceof Fighter) {
+                    _secondaryClass = (Fighter) aClass;
+                }
+                else if (aSecondaryClass instanceof Ranger) {
+                    _secondaryClass = (Ranger) aClass;
                 }
             }
             _levelSecondaryClass = oi.readInt();
