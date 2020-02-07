@@ -76,6 +76,15 @@ public class Ranger extends BaseClass {
         return fettles;
     }
 
+    @Override
+    public void doLevelDown(int oldLevel, int newLevel) {
+        super.doLevelDown(oldLevel, newLevel);
+
+        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Ranger_hunter) {
+            ((Ranger_hunter)_archetypes.get(0)).doLevelDown(newLevel);
+        }
+    }
+
     int[][] _spellSlotsOverride = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
