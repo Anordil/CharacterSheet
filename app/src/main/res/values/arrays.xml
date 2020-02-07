@@ -447,6 +447,18 @@
         <item>@string/ranger_slayer</item>
         <item>@string/ranger_swarm</item>
     </string-array>
+    <string-array name="rangerStyleNames">
+        <item>[Fighting Style] Archery</item>
+        <item>[Fighting Style] Dueling</item>
+        <item>[Fighting Style] Defense</item>
+        <item>[Fighting Style] Two-Weapon Fighting</item>
+    </string-array>
+    <string-array name="rangerStyleDesc">
+        <item>You gain a +2 bonus to attack rolls you make with ranged weapons.</item>
+        <item>When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.</item>
+        <item>While you are wearing armor, you gain a +1 bonus to AC.</item>
+        <item>When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.</item>
+    </string-array>
 
     <string-array name="wizardArchetypes">
         <item>@string/wizard_bladesinging</item>

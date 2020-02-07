@@ -84,7 +84,7 @@ public class Enumerations {
         ACID_DMG("Acid damage"), COLD_DMG("Cold damage"), FIRE_DMG("Fire damage"), FORCE_DMG("Force damage"), LIGHTNING_DMG("Lightning damage"),
         NECROTIC_DMG("Necrotic damage"), POISON_DMG("Poison damage"),
         PSYCHIC_DMG("Psychic damage"), RADIANT_DMG("Radiant damage"), THUNDER_DMG("Thunder damage"),
-        CHARM_MAGIC("Charm magic"),
+        CHARM_MAGIC("Charm magic"), SPELLS("Spells"),
         FEAR("Fear"), DISEASE("Disease"),
         ALL("All"),
         STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), CHA("Charisma"), WIS("Wisdom"),
