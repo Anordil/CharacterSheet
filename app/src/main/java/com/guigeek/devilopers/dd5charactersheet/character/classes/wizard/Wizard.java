@@ -140,21 +140,45 @@ public class Wizard extends BaseClass {
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
-        levelUp.add("Wizard level " + iNewCharacterLevel + " benefits:");
+
 
         if (iNewCharacterLevel == 1) {
-            levelUp.add("");
+            levelUp.add("Wizard level " + iNewCharacterLevel + " benefits:");
+            levelUp.add("Gained Arcane Recovery");
+        }
+        if (iNewCharacterLevel == 18) {
+            levelUp.add("Wizard level " + iNewCharacterLevel + " benefits:");
+            levelUp.add("Gained Spell Mastery");
+        }
+        if (iNewCharacterLevel == 20) {
+            levelUp.add("Wizard level " + iNewCharacterLevel + " benefits:");
+            levelUp.add("Gained Signature Spells");
         }
 
         return levelUp;
     }
 
+    @Override
+    public int getAttacksPerRound(Character iCharacter) {
+        if (iCharacter._level >= 6 && _archetypes.get(0) instanceof Wizard_bladesinging) {
+            return 2;
+        }
+        return 1;
+    }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 
-        if (iLevel >= 2) {
-            powers.add(new Power("", "", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        if (iLevel >= 1) {
+            powers.add(new Power("Arcane Recovery", "Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your wizard level (rounded up), and none of the slots can be 6th level or higher.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        }
+        if (iLevel >= 18) {
+            powers.add(new Power("Spell Mastery", "Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal.\n" +
+                    "\n" +
+                    "By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        }
+        if (iLevel >= 20) {
+            powers.add(new Power("Signature Spells", "Choose two 3rd-level wizard spells in your spellbook as your signature spells. You always have these spells prepared, they don’t count against the number of spells you have prepared, and you can cast each of them once at 3rd level without expending a spell slot. When you do so, you can’t do so again until you finish a short or long rest.", "", 2, -1, false, Enumerations.ActionType.PASSIVE));
         }
 
 
