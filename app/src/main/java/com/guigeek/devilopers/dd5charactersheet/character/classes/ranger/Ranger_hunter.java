@@ -45,7 +45,7 @@ public class Ranger_hunter extends BaseArchetype {
         LinkedList<Power> features = new LinkedList<>();
         if (iLevel == 3) {
             features.add(new Power("Colossus Slayer", "Your tenacity can wear down the most potent foes. When you hit a creature with a weapon attack, the creature takes an extra 1d8 damage if it’s below its hit point maximum. You can deal this extra damage only once per turn.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
-            features.add(new Power("Giant Killer", "When a Large or larger creature within 5 feet of you hits or misses you with an attack, you can use your reaction to attack that creature immediately after its attack, provided that you can see the creature.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+            features.add(new Power("Giant Killer", "When a Large or larger creature within 5 feet of you hits or misses you with an attack, you can use your reaction to attack that creature immediately after its attack, provided that you can see the creature.", "", -1, -1, true, Enumerations.ActionType.REACTION));
             features.add(new Power("Hoard Breaker", "Once on each of your turns when you make a weapon attack, you can make another attack with the same weapon against a different creature that is within 5 feet of the original target and within range of your weapon.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel == 7) {
@@ -54,13 +54,13 @@ public class Ranger_hunter extends BaseArchetype {
             features.add(new Power("Steel Will", "You have advantage on saving throws against being frightened.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel == 11) {
-            features.add(new Power("Volley", "You can use your action to make a ranged attack against any number of creatures within 10 feet of a point you can see within your weapon’s range. You must have ammunition for each target, as normal, and you make a separate attack roll for each target.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
-            features.add(new Power("Whirlwind Attack", "You can use your action to make a melee attack against any number of creatures within 5 feet of you, with a separate attack roll for each target.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+            features.add(new Power("Volley", "You can use your action to make a ranged attack against any number of creatures within 10 feet of a point you can see within your weapon’s range. You must have ammunition for each target, as normal, and you make a separate attack roll for each target.", "", -1, -1, true, Enumerations.ActionType.ACTION));
+            features.add(new Power("Whirlwind Attack", "You can use your action to make a melee attack against any number of creatures within 5 feet of you, with a separate attack roll for each target.", "", -1, -1, true, Enumerations.ActionType.ACTION));
         }
         if (iLevel == 15) {
             features.add(new Power("Evasion", "When you are subjected to an effect, such as a red dragon’s fiery breath or a lightning bolt spell, that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
-            features.add(new Power("Stand Against the Tide", "When a hostile creature misses you with a melee attack, you can use your reaction to force that creature to repeat the same attack against another creature (other than itself) of your choice.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
-            features.add(new Power("Uncanny Dodge", "When an attacker that you can see hits you with an attack, you can use your reaction to halve the attack’s damage against you.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+            features.add(new Power("Stand Against the Tide", "When a hostile creature misses you with a melee attack, you can use your reaction to force that creature to repeat the same attack against another creature (other than itself) of your choice.", "", -1, -1, true, Enumerations.ActionType.REACTION));
+            features.add(new Power("Uncanny Dodge", "When an attacker that you can see hits you with an attack, you can use your reaction to halve the attack’s damage against you.", "", -1, -1, true, Enumerations.ActionType.REACTION));
         }
 
         return features;

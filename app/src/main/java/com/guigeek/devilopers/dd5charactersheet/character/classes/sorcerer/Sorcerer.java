@@ -183,6 +183,6 @@ public class Sorcerer extends BaseClass {
 
     @Override
     public int getIconResource() {
-        return R.drawable.ic_wizard_staff;
+        return R.drawable.ic_warlock;
     }
 }

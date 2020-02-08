@@ -288,6 +288,6 @@ public class Monk extends BaseClass {
 
     @Override
     public int getIconResource() {
-        return R.drawable.ic_barbarian;
+        return R.drawable.ic_monk;
     }
 }

@@ -138,6 +138,11 @@ public class Wizard extends BaseClass {
     }
 
     @Override
+    public boolean isCaster() {
+        return  true;
+    }
+
+    @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
 
@@ -187,6 +192,6 @@ public class Wizard extends BaseClass {
 
     @Override
     public int getIconResource() {
-        return R.drawable.ic_wizard_staff;
+        return R.drawable.ic_mage;
     }
 }

@@ -39,6 +39,11 @@ public class Druid extends BaseClass {
     }
 
     @Override
+    public boolean isCaster() {
+        return  true;
+    }
+
+    @Override
     public Archetype getArchetypeByName(String iName) {
         if (iName.equals(App.getResString(R.string.druid_dreams))) {
             return new Druid_dreams();

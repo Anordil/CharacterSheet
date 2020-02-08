@@ -26,6 +26,9 @@ public class Fighter_purple extends BaseArchetype {
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
 
+        if (iNewCharacterLevel == 3) {
+            levelUp.add("Gained ");
+        }
         if (iNewCharacterLevel == 7) {
             levelUp.add("Gained ");
         }
@@ -46,6 +49,9 @@ public class Fighter_purple extends BaseArchetype {
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 
+        if (iLevel >= 3) {
+            powers.add(new Power("", "", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+        }
         if (iLevel >= 7) {
             powers.add(new Power("", "", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }

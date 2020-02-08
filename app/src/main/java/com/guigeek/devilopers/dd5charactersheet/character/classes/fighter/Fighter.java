@@ -1,9 +1,12 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes.fighter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.android.FeatAdapter;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
@@ -17,12 +20,28 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid_sh
 import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid_spores;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid_wildfire;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
 
 public class Fighter extends BaseClass {
     static final long serialVersionUID = 2600L;
+    protected Power _fightingStyle;
+
+    @Override
+    public void writeExternal(ObjectOutput oo) throws IOException {
+        super.writeExternal(oo);
+        oo.writeObject(_fightingStyle);
+    }
+
+    @Override
+    public void readExternal(ObjectInput oi) throws IOException, ClassNotFoundException {
+        super.readExternal(oi);
+        _fightingStyle = (Power)oi.readObject();
+    }
 
 
     @Override
@@ -82,13 +101,68 @@ public class Fighter extends BaseClass {
         return name;
     }
 
+    public static int getActionSurgeUses(int iLevel) {
+        return iLevel >= 17 ? 2 : iLevel >= 2 ? 1 : 0;
+    }
+
+    public static int getIndomitableUses(int iLevel) {
+        return iLevel >= 17 ? 3 : iLevel >= 13 ? 2 : iLevel >= 9 ? 1 : 0;
+    }
+
+    @Override
+    public int getAttacksPerRound(Character iCharacter) {
+        int level = iCharacter._level;
+        return level >= 20 ? 4 : level >= 11 ? 3 : level >= 5 ? 2 : 1;
+    }
+
     @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Fighter level " + iNewCharacterLevel + " benefits:");
 
         if (iNewCharacterLevel == 1) {
-            levelUp.add("");
+            levelUp.add("Gained Second Wind");
+        }
+
+        if (iNewCharacterLevel == 2) {
+            levelUp.add("Gained Action Surge");
+        }
+        if (iNewCharacterLevel == 17) {
+            levelUp.add("Gained another Action Surge");
+        }
+
+        if (iNewCharacterLevel == 9) {
+            levelUp.add("Gained Indomitable");
+        }
+        if (iNewCharacterLevel == 17 || iNewCharacterLevel == 13) {
+            levelUp.add("Gained another use of Indomitable");
+        }
+
+        // Fighting style
+        if (iNewCharacterLevel == 1) {
+            AlertDialog.Builder b = new AlertDialog.Builder(context);
+            b.setTitle("Select a fighting style");
+
+            LinkedList<Power> allStyles = new LinkedList<Power>();
+            String[] styleNames = context.getResources().getStringArray(R.array.fighterStyleNames);
+            String[] styleDesc = context.getResources().getStringArray(R.array.fighterStyleDesc);
+
+            for (int i = 0; i < styleNames.length; ++i) {
+                allStyles.add(new Power(styleNames[i], styleDesc[i], "Self", -1,-1, false, Enumerations.ActionType.PASSIVE));
+            }
+
+            final Object[] featsFiltered = allStyles.toArray();
+
+            b.setAdapter(new FeatAdapter(context, R.layout.list_feat, allStyles), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Power feat = (Power)featsFiltered[which];
+                    _fightingStyle = new Power(feat._name, feat._description, "", -1,-1, false, Enumerations.ActionType.PASSIVE);
+                }
+            });
+
+            b.show();
         }
 
         return levelUp;
@@ -98,11 +172,19 @@ public class Fighter extends BaseClass {
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 
+        if (iLevel >= 1) {
+            powers.add(new Power("Second Wind", "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. Once you use this feature, you must finish a short or long rest before you can use it again.", "", 1, -1, false, Enumerations.ActionType.BONUS_ACTION));
+        }
         if (iLevel >= 2) {
-            powers.add(new Power("", "", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+            powers.add(new Power("Action Surge", "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.", "", getActionSurgeUses(iLevel), -1, false, Enumerations.ActionType.PASSIVE));
+        }
+        if (iLevel >= 9) {
+            powers.add(new Power("Indomitable", "You can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can’t use this feature again until you finish a long rest.", "", getIndomitableUses(iLevel), -1, true, Enumerations.ActionType.PASSIVE));
         }
 
-
+        if (_fightingStyle != null) {
+            powers.add(_fightingStyle);
+        }
         return powers;
     }
 

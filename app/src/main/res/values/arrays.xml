@@ -472,4 +472,22 @@
         <item>@string/wizard_transmutation</item>
         <item>@string/wizard_war</item>
     </string-array>
+
+
+    <string-array name="fighterStyleNames">
+        <item>[Fighting Style] Archery</item>
+        <item>[Fighting Style] Defense</item>
+        <item>[Fighting Style] Dueling</item>
+        <item>[Fighting Style] Great Weapon Fighting</item>
+        <item>[Fighting Style] Protection</item>
+        <item>[Fighting Style] Two-Weapon Fighting</item>
+    </string-array>
+    <string-array name="fighterStyleDesc">
+        <item>You gain a +2 bonus to attack rolls you make with ranged weapons.</item>
+        <item>While you are wearing armor, you gain a +1 bonus to AC.</item>
+        <item>When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.</item>
+        <item>When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit.</item>
+        <item>When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.</item>
+        <item>When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.</item>
+    </string-array>
 </resources>

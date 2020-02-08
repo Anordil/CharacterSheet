@@ -85,6 +85,11 @@ public class Ranger extends BaseClass {
         }
     }
 
+    @Override
+    public boolean isCaster() {
+        return  true;
+    }
+
     int[][] _spellSlotsOverride = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

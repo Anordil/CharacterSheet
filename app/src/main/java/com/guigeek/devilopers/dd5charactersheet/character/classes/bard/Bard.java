@@ -244,6 +244,11 @@ public class Bard extends BaseClass {
     }
 
     @Override
+    public boolean isCaster() {
+        return  true;
+    }
+
+    @Override
     public int getIconResource() {
         return R.drawable.ic_bard;
     }

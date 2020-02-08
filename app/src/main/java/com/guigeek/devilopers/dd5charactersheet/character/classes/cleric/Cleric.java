@@ -30,6 +30,11 @@ public class Cleric extends BaseClass {
     }
 
     @Override
+    public boolean isCaster() {
+        return  true;
+    }
+
+    @Override
     public void doLevelDown(int oldLevel, int newLevel) {
         // Nothing to clear for Cleric since archetype is chosen at level 1
     }
@@ -271,6 +276,6 @@ public class Cleric extends BaseClass {
 
     @Override
     public int getIconResource() {
-        return R.drawable.ic_druid;
+        return R.drawable.ic_priest;
     }
 }
