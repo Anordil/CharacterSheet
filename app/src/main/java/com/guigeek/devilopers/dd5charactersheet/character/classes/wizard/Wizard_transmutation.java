@@ -52,7 +52,7 @@ public class Wizard_transmutation extends BaseArchetype {
             powers.add(new Power("Minor Alchemy", "You can temporarily alter the physical properties of one nonmagical object, changing it from one substance into another. You perform a special alchemical procedure on one object composed entirely of wood, stone (but not a gemstone), iron, copper, or silver, transforming it into a different one of those materials. For each 10 minutes you spend performing the procedure, you can transform up to 1 cubic foot of material. After 1 hour, or until you lose your concentration (as if you were concentrating on a spell), the material reverts to its original substance.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 6) {
-            powers.add(new Power("Transmuter’s Stone", "ou can spend 8 hours creating a transmuter’s stone that stores transmutation magic. You can benefit from the stone yourself or give it to another creature. A creature gains a benefit of your choice as long as the stone is in the creature’s possession. When you create the stone, choose the benefit from the following options:\n" +
+            powers.add(new Power("Transmuter’s Stone", "You can spend 8 hours creating a transmuter’s stone that stores transmutation magic. You can benefit from the stone yourself or give it to another creature. A creature gains a benefit of your choice as long as the stone is in the creature’s possession. When you create the stone, choose the benefit from the following options:\n" +
                     "\n" +
                     "Darkvision out to a range of 60 feet\n" +
                     "An increase to speed of 10 feet while the creature is unencumbered\n" +

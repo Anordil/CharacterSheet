@@ -19,6 +19,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid_mo
 import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid_shepherd;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid_spores;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.druid.Druid_wildfire;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.ranger.Ranger_hunter;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -116,6 +117,59 @@ public class Fighter extends BaseClass {
     }
 
     @Override
+    public void doLevelDown(int oldLevel, int newLevel) {
+        super.doLevelDown(oldLevel, newLevel);
+
+        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_archer) {
+            ((Fighter_archer)_archetypes.get(0)).doLevelDown(newLevel);
+        }
+        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_battlemaster) {
+            ((Fighter_battlemaster)_archetypes.get(0)).doLevelDown(newLevel);
+        }
+        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_rune) {
+            ((Fighter_rune)_archetypes.get(0)).doLevelDown(newLevel);
+        }
+    }
+
+    @Override
+    public boolean isCaster() {
+        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_eldritch) {
+            return true;
+        }
+        return false;
+    }
+
+    int[][] _spellSlotsOverride = {
+            // spell level 0-4 for Elditch Knight
+            {0, 0, 0, 0, 0, 0,0,0,0,0},
+            {0, 0, 0, 0, 0, 0,0,0,0,0}, //character lv 1
+            {0, 0, 0, 0, 0, 0,0,0,0,0},
+            {0, 2, 0, 0, 0, 0,0,0,0,0},// lv 3
+            {0, 3, 0, 0, 0, 0,0,0,0,0},
+            {0, 3, 0, 0, 0, 0,0,0,0,0},//lv 5
+            {0, 3, 0, 0, 0, 0,0,0,0,0},
+            {0, 4, 2, 0, 0, 0,0,0,0,0},
+            {0, 4, 2, 0, 0, 0,0,0,0,0},
+            {0, 4, 2, 0, 0, 0,0,0,0,0},
+            {0, 4, 3, 0, 0, 0,0,0,0,0},//lv 10
+            {0, 4, 3, 0, 0, 0,0,0,0,0},
+            {0, 4, 3, 0, 0, 0,0,0,0,0},
+            {0, 4, 3, 2, 0, 0,0,0,0,0},
+            {0, 4, 3, 2, 0, 0,0,0,0,0},
+            {0, 4, 3, 2, 0, 0,0,0,0,0},//lv 15
+            {0, 4, 3, 3, 0, 0,0,0,0,0},
+            {0, 4, 3, 3, 0, 0,0,0,0,0},
+            {0, 4, 3, 3, 0, 0,0,0,0,0},
+            {0, 4, 3, 3, 1, 0,0,0,0,0},
+            {0, 4, 3, 3, 1, 0,0,0,0,0}//ln 20
+    };
+
+    public Fighter() {
+        _spellSlots = _spellSlotsOverride;
+    }
+
+
+    @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Fighter level " + iNewCharacterLevel + " benefits:");
@@ -136,6 +190,10 @@ public class Fighter extends BaseClass {
         }
         if (iNewCharacterLevel == 17 || iNewCharacterLevel == 13) {
             levelUp.add("Gained another use of Indomitable");
+        }
+
+        if (iNewCharacterLevel == 5 || iNewCharacterLevel == 11 || iNewCharacterLevel == 11) {
+            levelUp.add("Gained an Extra Attack!");
         }
 
         // Fighting style
@@ -168,12 +226,11 @@ public class Fighter extends BaseClass {
         return levelUp;
     }
 
-
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 
         if (iLevel >= 1) {
-            powers.add(new Power("Second Wind", "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. Once you use this feature, you must finish a short or long rest before you can use it again.", "", 1, -1, false, Enumerations.ActionType.BONUS_ACTION));
+            powers.add(new Power("Second Wind", "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level.", "", 1, -1, false, Enumerations.ActionType.BONUS_ACTION));
         }
         if (iLevel >= 2) {
             powers.add(new Power("Action Surge", "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.", "", getActionSurgeUses(iLevel), -1, false, Enumerations.ActionType.PASSIVE));

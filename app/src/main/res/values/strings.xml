@@ -48,9 +48,11 @@
     <string name="rogue_revived">Revived</string>
     <string name="rogue_thief">Thief</string>
 
-    <string name="sorcerer_dragon">Draconic</string>
-    <string name="sorcerer_storm">Storm</string>
-    <string name="sorcerer_wild">Wild</string>
+    <string name="sorcerer_dragon">Draconic Bloodline</string>
+    <string name="sorcerer_storm">Storm Sorcery</string>
+    <string name="sorcerer_wild">Wild Magic</string>
+    <string name="sorcerer_divine">Divine Soul</string>
+    <string name="sorcerer_shadow">Shadow Magic</string>
 
     <string name="warlock_pact_blade">Pact of the Blade</string>
     <string name="warlock_pact_tome">Pact of the Tome</string>

@@ -243,7 +243,7 @@ public class Ranger extends BaseClass {
                     "While tracking other creatures, you also learn their exact number, their sizes, and how long ago they passed through the area.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 3) {
-            powers.add(new Power("Primeval Awareness", "ou can use your action and expend one ranger spell slot to focus your awareness on the region around you. For 1 minute per level of the spell slot you expend, you can sense whether the following types of creatures are present within 1 mile of you (or within up to 6 miles if you are in your favored terrain): aberrations, celestials, dragons, elementals, fey, fiends, and undead. This feature doesn’t reveal the creatures’ location or number.", "", -1, -1, true, Enumerations.ActionType.ACTION));
+            powers.add(new Power("Primeval Awareness", "You can use your action and expend one ranger spell slot to focus your awareness on the region around you. For 1 minute per level of the spell slot you expend, you can sense whether the following types of creatures are present within 1 mile of you (or within up to 6 miles if you are in your favored terrain): aberrations, celestials, dragons, elementals, fey, fiends, and undead. This feature doesn’t reveal the creatures’ location or number.", "", -1, -1, true, Enumerations.ActionType.ACTION));
         }
         if (iLevel >= 8) {
             powers.add(new Power("Land’s Stride", "Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.\n" +

@@ -47,6 +47,12 @@ public class Sorcerer extends BaseClass {
         } else if (iName.equals(App.getResString(R.string.sorcerer_dragon))) {
             return new Sorcerer_dragon();
         }
+        else if (iName.equals(App.getResString(R.string.sorcerer_divine))) {
+            return new Sorcerer_divine();
+        }
+        else if (iName.equals(App.getResString(R.string.sorcerer_shadow))) {
+            return new Sorcerer_shadow();
+        }
         return null;
     }
 

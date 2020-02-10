@@ -241,8 +241,6 @@ public class CreateCharacter extends AppCompatActivity {
         intent.putExtra(Constants.CHARACTER, aHero);
         setResult(RESULT_OK, intent);
 
-        List<String> levelUpBoons = aHero._class.getAllLevelUpBenefits(1, CreateCharacter.this);
-
         Runnable displayBenefits = new Runnable() {
             @Override
             public void run() {
