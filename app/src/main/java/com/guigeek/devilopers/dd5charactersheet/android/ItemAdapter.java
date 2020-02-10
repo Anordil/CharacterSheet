@@ -45,16 +45,23 @@ public class ItemAdapter extends ArrayAdapter<Externalizable> {
         Object item = _items.get(position);
 
         TextView nameTv = (TextView) convertView.findViewById(R.id.listItemName);
+        TextView listItemFirearmDetails = convertView.findViewById(R.id.listItemFirearmDetails);
         ImageView icon = (ImageView) convertView.findViewById(R.id.listItemIcon);
         TableLayout fettleTable = (TableLayout)convertView.findViewById(R.id.listItemFettleTable);
 
         LinkedList<Fettle> magicProperties = null;
+        listItemFirearmDetails.setVisibility(View.GONE);
 
         nameTv.setText(item.toString());
         if (item instanceof Weapon) {
             Weapon weapon = (Weapon)item;
             icon.setImageDrawable(this.getContext().getResources().getDrawable(getWeaponIcon(weapon)));
             magicProperties = weapon._magicProperties;
+
+            if (weapon._isFirearm) {
+                listItemFirearmDetails.setVisibility(View.VISIBLE);
+                listItemFirearmDetails.setText("Reload: " + weapon._reload + ", misfire: " + weapon._misfire);
+            }
         }
         else if (item instanceof Armor) {
             Armor armor = (Armor)item;
@@ -91,7 +98,7 @@ public class ItemAdapter extends ArrayAdapter<Externalizable> {
         return convertView;
     }
 
-    public int getWeaponIcon(Weapon weapon) {
+    public static int getWeaponIcon(Weapon weapon) {
         switch(weapon._type) {
             case CLUB:
                 return R.drawable.ic_spiked_mace;
@@ -169,6 +176,19 @@ public class ItemAdapter extends ArrayAdapter<Externalizable> {
                 return R.drawable.ic_fishing_net;
             case UNARMED:
                 return R.drawable.ic_fist;
+
+            case PISTOL:
+            case PALM_PISTOL:
+                return R.drawable.ic_crossed_pistols;
+            case MUSKET:
+                return R.drawable.ic_musket;
+            case BLUNDERBUSS:
+            case PEPPERBOX:
+                return R.drawable.ic_blunderbuss;
+            case BAD_NEWS:
+            case HAND_MORTAR:
+                return R.drawable.ic_mortar;
+
             default: return R.drawable.ic_fire_axe;
         }
     }

@@ -124,6 +124,7 @@
     <string name="fighter_purple">Purple Dragon Knight</string>
     <string name="fighter_rune">Rune Knight</string>
     <string name="fighter_samurai">Samurai</string>
+    <string name="fighter_gunslinger">Gunslinger</string>
 
     <string name="ranger_beast">Beast Master</string>
     <string name="ranger_gloom">Gloom Stalker</string>

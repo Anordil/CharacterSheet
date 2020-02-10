@@ -28,6 +28,21 @@
             android:src="@drawable/ic_armor_vest" />
 
     </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="90"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/Description"
+            android:text="Reload: 1, misfire: 1"
+            android:id="@+id/listItemFirearmDetails"
+            />
+
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"

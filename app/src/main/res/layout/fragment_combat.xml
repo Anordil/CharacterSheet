@@ -274,6 +274,55 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
+                android:id="@+id/combatRowFirearm"
+                android:gravity="center_vertical">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Misfire: 1, reload: 4"
+                    android:layout_span="2"
+                    android:id="@+id/tvFirearmDesc"  />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:minWidth="25dp"
+                    android:id="@+id/tvReloadMin"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:minWidth="25dp"
+                    android:id="@+id/tvReloadMax" />
+
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:padding="-10dp"
+                    android:text="-"
+                    android:onClick="changeHP"
+                    android:tag="-1"
+                    android:id="@+id/btnReloadMin"  />
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:text="+"
+                    android:onClick="changeHP"
+                    android:tag="1"
+                    android:id="@+id/btnReloadPlus"  />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
                 android:id="@+id/combatRowProperties"
                 android:gravity="center_vertical">
 
@@ -413,6 +462,56 @@
                 </LinearLayout>
 
             </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:id="@+id/combatRowFirearmOffhand"
+                android:gravity="center_vertical">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Misfire: 1, reload: 4"
+                    android:layout_span="2"
+                    android:id="@+id/tvFirearmDescOffhand"  />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:minWidth="25dp"
+                    android:id="@+id/tvReloadMinOffhand"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:minWidth="25dp"
+                    android:id="@+id/tvReloadMaxOffhand" />
+
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:padding="-10dp"
+                    android:text="-"
+                    android:onClick="changeHP"
+                    android:tag="-1"
+                    android:id="@+id/btnReloadMinOffhand"  />
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:text="+"
+                    android:onClick="changeHP"
+                    android:tag="1"
+                    android:id="@+id/btnReloadPlusOffhand"  />
+            </TableRow>
+
+
 
             <TableRow
                 android:layout_width="match_parent"

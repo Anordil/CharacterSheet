@@ -70,6 +70,8 @@ public class Fighter extends BaseClass {
             return new Fighter_rune();
         } else if (iName.equals(App.getResString(R.string.fighter_samurai))) {
             return new Fighter_samurai();
+        } else if (iName.equals(App.getResString(R.string.fighter_gunslinger))) {
+            return new Fighter_gunslinger();
         }
         return null;
     }
@@ -128,6 +130,9 @@ public class Fighter extends BaseClass {
         }
         if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_rune) {
             ((Fighter_rune)_archetypes.get(0)).doLevelDown(newLevel);
+        }
+        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_gunslinger) {
+            ((Fighter_gunslinger)_archetypes.get(0)).doLevelDown(newLevel);
         }
     }
 

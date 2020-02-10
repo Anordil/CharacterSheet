@@ -209,6 +209,7 @@ public class Enumerations {
         PIKE("Pike"), RAPIER("Rapier"), SCIMITAR("Scimitar"), SHORTSWORD("Shortsword"), TRIDENT("Trident"), WAR_PICK("War pick"),
         WARHAMMER("Warhammer"), WHIP("Whip"), BLOWGUN("Blowgun"), HAND_CROSSBOW("Hand crossbow"), HEAVY_CROSSBOW("Heavy crossbow"),
         LONGBOW("Longbow"), NET("Net"),
+        PALM_PISTOL("Palm Pistol"), PISTOL("Pistol"), MUSKET("Musket"), BLUNDERBUSS("Blunderbuss"), PEPPERBOX("Pepperbox"), BAD_NEWS("Bad News"), HAND_MORTAR("Hand Mortar"),
         UNARMED("Unarmed");
 
         public String _name;

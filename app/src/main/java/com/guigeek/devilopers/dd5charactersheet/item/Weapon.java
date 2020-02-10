@@ -19,7 +19,7 @@ import java.util.LinkedList;
 public class Weapon implements Externalizable {
 
     public static final long serialVersionUID = 21L;
-    int _version = 5;
+    int _version = 6;
 
 
     public Enumerations.WeaponTypes _type;
@@ -40,6 +40,9 @@ public class Weapon implements Externalizable {
     public String _name;
 
     public boolean _isMagical, _isMonk;
+
+    public boolean _isFirearm, _isExplosive;
+    public int _reload, _misfire;
 
 
     public Weapon(){
@@ -438,6 +441,102 @@ public class Weapon implements Externalizable {
                 _diceValue = 1;
                 _damageType = Enumerations.DamageTypes.BLUDGEONING;
                 break;
+
+
+            case PALM_PISTOL:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 40;
+                _distMax = 160;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.LIGHT;
+                _diceCount = 1;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _isFirearm = true;
+                _misfire = 1;
+                _reload = 1;
+                break;
+            case PISTOL:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 60;
+                _distMax = 240;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 10;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _isFirearm = true;
+                _misfire = 1;
+                _reload = 4;
+                break;
+            case MUSKET:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 120;
+                _distMax = 480;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 12;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _isFirearm = true;
+                _misfire = 2;
+                _reload = 1;
+                break;
+            case PEPPERBOX:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 80;
+                _distMax = 320;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 1;
+                _diceValue = 10;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _isFirearm = true;
+                _misfire = 2;
+                _reload = 6;
+                break;
+            case BLUNDERBUSS:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 15;
+                _distMax = 60;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 2;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _isFirearm = true;
+                _misfire = 2;
+                _reload = 1;
+                break;
+            case BAD_NEWS:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 200;
+                _distMax = 800;
+                _hands = Enumerations.WeaponHandCount.TWO_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 2;
+                _diceValue = 12;
+                _damageType = Enumerations.DamageTypes.PIERCING;
+                _isFirearm = true;
+                _misfire = 3;
+                _reload = 1;
+                _isExplosive = true;
+                break;
+            case HAND_MORTAR:
+                _distance = Enumerations.WeaponDistanceTypes.DISTANCE;
+                _distMin = 30;
+                _distMax = 60;
+                _hands = Enumerations.WeaponHandCount.ONE_HANDED;
+                _weight = Enumerations.WeaponWeightCategory.NORMAL;
+                _diceCount = 2;
+                _diceValue = 8;
+                _damageType = Enumerations.DamageTypes.FIRE;
+                _isFirearm = true;
+                _misfire = 3;
+                _reload = 1;
+                _isExplosive = true;
+                break;
+
             default:
                 break;
         }
@@ -475,6 +574,11 @@ public class Weapon implements Externalizable {
 
         oo.writeBoolean(_isMagical);
         oo.writeBoolean(_isMonk);
+
+        oo.writeBoolean(_isFirearm);
+        oo.writeBoolean(_isExplosive);
+        oo.writeInt(_misfire);
+        oo.writeInt(_reload);
     }
 
     @Override
@@ -520,6 +624,16 @@ public class Weapon implements Externalizable {
             _isMonk = oi.readBoolean();
         } else {
             _isMonk = false;
+        }
+
+        if (_version >= 6) {
+            _isFirearm = oi.readBoolean();
+            _isExplosive = oi.readBoolean();
+            _misfire = oi.readInt();
+            _reload = oi.readInt();
+        } else {
+            _isFirearm = false;
+            _isExplosive = false;
         }
     }
 }

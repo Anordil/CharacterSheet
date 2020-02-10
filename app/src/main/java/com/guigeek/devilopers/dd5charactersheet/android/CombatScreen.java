@@ -25,6 +25,8 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.fighter.Fighter;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.fighter.Fighter_gunslinger;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.rogue.Rogue_swashbuckler;
 import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
@@ -42,9 +44,9 @@ public class CombatScreen extends Fragment {
     protected Character _character;
     TextView viewHPCurrent, viewTempHP, viewHPMax, viewHitDiceCurrent, viewHitDiceMax, tvAC, tvAtk, tvDmg, tvHitDiceDesc, tvHitDiceDescSec, tvAtkThrown, tvDmgThrown;
     TextView viewHitDiceCurrentSecondary, viewHitDiceMaxSecondary;
-    TextView viewSpeed, viewInit, spellAtk, spellDD, weaponName, weaponNameOffHand;
-    ImageView imageWeaponHit;
-    TableRow rowThrown, rowThrownOffHand, rowNameOffHand, rowMeleeOffHand, rowDamageModsTitle;
+    TextView viewSpeed, viewInit, spellAtk, spellDD, weaponName, weaponNameOffHand, tvFirearmDesc, tvFirearmDescOffhand, tvReloadMin, tvReloadMax, tvReloadMinOffhand, tvReloadMaxOffhand;
+    ImageView imageWeaponHit, imageWeaponHitOffhand;
+    TableRow rowThrown, rowThrownOffHand, rowNameOffHand, rowMeleeOffHand, rowDamageModsTitle, rowFirearm, rowFirearmOffhand;
     ProgressBar pb;
     TableRow rowSecondaryHD;
 
@@ -57,6 +59,7 @@ public class CombatScreen extends Fragment {
     TableLayout fettleTable, damageModsTable, fettleTableOffHand;
 
     Button btnRevive;
+    Button btnReloadMin, btnReloadPlus, btnReloadMinOffhand, btnReloadPlusOffhand;
 
     TableRow rowSpecial;
     TableLayout tableSpecial;
@@ -148,6 +151,7 @@ public class CombatScreen extends Fragment {
         weaponName.setText(_character._equippedWeapon.toString());
 
         imageWeaponHit = (ImageView)rootView.findViewById(R.id.imgCombatHitBonus);
+        imageWeaponHitOffhand = (ImageView)rootView.findViewById(R.id.imgCombatHitBonus);
         rowThrown = (TableRow)rootView.findViewById(R.id.combatRowThrown);
 
         rowThrownOffHand = (TableRow)rootView.findViewById(R.id.combatRowThrownOffHand);
@@ -193,6 +197,21 @@ public class CombatScreen extends Fragment {
             successRow.setVisibility(View.VISIBLE);
             allTables.setVisibility(View.GONE);
         }
+
+
+        rowFirearm = rootView.findViewById(R.id.combatRowFirearm);
+        rowFirearmOffhand = rootView.findViewById(R.id.combatRowFirearmOffhand);
+        tvFirearmDesc  = rootView.findViewById(R.id.tvFirearmDesc);
+        tvFirearmDescOffhand = rootView.findViewById(R.id.tvFirearmDescOffhand);
+        tvReloadMin = rootView.findViewById(R.id.tvReloadMin);
+        tvReloadMax = rootView.findViewById(R.id.tvReloadMax);
+        tvReloadMinOffhand = rootView.findViewById(R.id.tvReloadMinOffhand);
+        tvReloadMaxOffhand = rootView.findViewById(R.id.tvReloadMaxOffhand);
+        btnReloadMin = rootView.findViewById(R.id.btnReloadMin);
+        btnReloadPlus = rootView.findViewById(R.id.btnReloadPlus);
+        btnReloadMinOffhand = rootView.findViewById(R.id.btnReloadMinOffhand);
+        btnReloadPlusOffhand = rootView.findViewById(R.id.btnReloadPlusOffhand);
+
 
         addButtonListener(rootView);
         createFettlesBar(rootView);
@@ -241,6 +260,33 @@ public class CombatScreen extends Fragment {
         rootView.findViewById(R.id.btnHDPlus1Secondary).setOnClickListener(hdListSecondary);
 
         rootView.findViewById(R.id.btnTempHPMin).setOnClickListener(tempHpList);
+
+
+        btnReloadMin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvReloadMin.setText("" + Math.max(0, Integer.parseInt(tvReloadMin.getText().toString()) -1));
+            }
+        });
+        btnReloadPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvReloadMin.setText("" + Math.min(Integer.parseInt(tvReloadMax.getText().toString()), Integer.parseInt(tvReloadMin.getText().toString()) +1));
+            }
+        });
+
+        btnReloadMinOffhand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvReloadMinOffhand.setText("" + Math.max(0, Integer.parseInt(tvReloadMinOffhand.getText().toString()) -1));
+            }
+        });
+        btnReloadPlusOffhand.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvReloadMinOffhand.setText("" + Math.min(Integer.parseInt(tvReloadMaxOffhand.getText().toString()), Integer.parseInt(tvReloadMinOffhand.getText().toString()) +1));
+            }
+        });
     }
 
 
@@ -479,9 +525,7 @@ public class CombatScreen extends Fragment {
         boolean distanceWeapon = weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE;
         boolean finesseWeapon = weapon._isFinesse;
 
-        if (distanceWeapon) {
-            imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_pocket_bow));
-        }
+        imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(ItemAdapter.getWeaponIcon(weapon)));
 
         int propertyAttackBonus = 0;
         String propertyDamageBonus = "";
@@ -554,6 +598,19 @@ public class CombatScreen extends Fragment {
             tvDmgThrown.setText(damageThrown);
         }
 
+
+
+        if (weapon._isFirearm) {
+            rowFirearm.setVisibility(View.VISIBLE);
+            tvFirearmDesc.setText("Reload: " + weapon._reload + ", misfire: " + weapon._misfire);
+
+            String reload = Integer.toString(weapon._reload);
+            tvReloadMin.setText(reload);
+            tvReloadMax.setText(reload);
+        } else {
+            rowFirearm.setVisibility(View.GONE);
+        }
+
         viewSpeed.setText(_character.getSpeedInFeet() + " ft.");
         int dexBonus = _character.getModifier(Enumerations.Attributes.DEX);
 
@@ -563,6 +620,9 @@ public class CombatScreen extends Fragment {
         }
         else if (_character._secondaryClass != null && _character._secondaryClass instanceof Rogue_swashbuckler && _character._levelSecondaryClass >= 3) {
             initiativeBonus += _character.getModifier(Enumerations.Attributes.CHA);
+        }
+        else if (_character._class instanceof Fighter && _character._level >= 7 && _character._class.getArchetype(0) instanceof Fighter_gunslinger) {
+            initiativeBonus += _character.getProficiencyBonus();
         }
 
         viewInit.setText((initiativeBonus > 0 ? "+": "") + initiativeBonus);
@@ -583,12 +643,14 @@ public class CombatScreen extends Fragment {
                 rowMeleeOffHand.setVisibility(View.GONE);
                 rowNameOffHand.setVisibility(View.GONE);
                 rowThrownOffHand.setVisibility(View.GONE);
+                rowFirearmOffhand.setVisibility(View.GONE);
                 return;
             }
             else if (weapon._type == Enumerations.WeaponTypes.UNARMED) {
                 rowMeleeOffHand.setVisibility(View.GONE);
                 rowNameOffHand.setVisibility(View.GONE);
                 rowThrownOffHand.setVisibility(View.GONE);
+                rowFirearmOffhand.setVisibility(View.GONE);
                 return;
             }
             else {
@@ -602,8 +664,18 @@ public class CombatScreen extends Fragment {
 
             int abilityModifier = (distanceWeapon ? modDex : (weapon._isFinesse ? (Math.max(modDex, modStr)) : modStr));
 
-            if (distanceWeapon) {
-                imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(R.drawable.ic_pocket_bow));
+            imageWeaponHitOffhand.setImageDrawable(this.getContext().getResources().getDrawable(ItemAdapter.getWeaponIcon(weapon)));
+
+
+            if (weapon._isFirearm) {
+                rowFirearmOffhand.setVisibility(View.VISIBLE);
+                tvFirearmDescOffhand.setText("Reload: " + weapon._reload + ", misfire: " + weapon._misfire);
+
+                String reload = Integer.toString(weapon._reload);
+                tvReloadMinOffhand.setText(reload);
+                tvReloadMaxOffhand.setText(reload);
+            } else {
+                rowFirearmOffhand.setVisibility(View.GONE);
             }
 
             int propertyAttackBonus = 0;
