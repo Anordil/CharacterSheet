@@ -73,10 +73,10 @@ public class Wizard_necromancy extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<>();
 
-        if (character._level >= 10) {
+        if (classLevel >= 10) {
             fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.NECROTIC.ordinal()));
         }
 

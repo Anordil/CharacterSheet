@@ -7,7 +7,6 @@ import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
-import com.guigeek.devilopers.dd5charactersheet.character.classes.Archetype;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -44,7 +43,7 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
         return  fettles;
     }
@@ -60,7 +59,7 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     }
 
     @Override
-    public List<Attack> getSpecialClassAttacks(Character iCharacter) {
+    public List<Attack> getSpecialClassAttacks(Character iCharacter, int classLevel) {
         return new LinkedList<>();
     }
 
@@ -72,10 +71,5 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     @Override
     public void setArchetypeFeature(String iFeature) {
         _chosenFeature = iFeature;
-    }
-
-    @Override
-    public String getArchetypeFeature() {
-        return _chosenFeature;
     }
 }

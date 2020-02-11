@@ -47,10 +47,10 @@ public class Paladin_ancients extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> perks = new LinkedList<>();
 
-        if (character._level >= 7) {
+        if (classLevel >= 7) {
             perks.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.SPELLS.ordinal()));
         }
 

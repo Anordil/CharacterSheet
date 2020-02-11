@@ -75,10 +75,10 @@ public class Warlock_patron_undying extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> f = new LinkedList<>();
 
-        if (character._level >= 1) {
+        if (classLevel >= 1) {
             f.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.DISEASE.ordinal()));
         }
 

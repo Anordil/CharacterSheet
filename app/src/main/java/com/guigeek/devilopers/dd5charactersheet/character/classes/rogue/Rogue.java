@@ -55,11 +55,6 @@ public class Rogue extends BaseClass {
         };
     }
 
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
-        return fettles;
-    }
 
     int[][] _spellSlotsSubclass = {
             // spell level 0-9

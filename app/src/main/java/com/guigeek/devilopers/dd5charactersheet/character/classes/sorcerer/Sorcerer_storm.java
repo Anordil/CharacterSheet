@@ -71,10 +71,9 @@ public class Sorcerer_storm extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int level) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
 
-        int level = character._class instanceof Sorcerer_storm ? character._level : character._levelSecondaryClass;
         if (level >= 18) {
             fettles.add(new Fettle(Enumerations.FettleType.IMMUNITY, 0, Enumerations.DamageTypes.LIGHTNING.ordinal()));
             fettles.add(new Fettle(Enumerations.FettleType.IMMUNITY, 0, Enumerations.DamageTypes.THUNDER.ordinal()));

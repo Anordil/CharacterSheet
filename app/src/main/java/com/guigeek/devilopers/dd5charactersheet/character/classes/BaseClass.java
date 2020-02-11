@@ -151,7 +151,7 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
+    public int getAttacksPerRound(Character iCharacter, int classLevel) {
         return 1;
     }
 
@@ -247,11 +247,18 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
-    public LinkedList<Fettle> getAllFettles(Character character) {
-        LinkedList<Fettle> allItems = getFettles(character);
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
+        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
+
+        return fettles;
+    }
+
+    @Override
+    public LinkedList<Fettle> getAllFettles(Character character, int classLevel) {
+        LinkedList<Fettle> allItems = getFettles(character, classLevel);
         if (_archetypes != null) {
             for (Archetype arc: _archetypes) {
-                allItems.addAll(arc.getFettles(character));
+                allItems.addAll(arc.getFettles(character, classLevel));
             }
         }
 
@@ -281,16 +288,16 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
-    public List<Attack> getSpecialClassAttacks(Character iCharacter) {
+    public List<Attack> getSpecialClassAttacks(Character iCharacter, int classLevel) {
         return new LinkedList<>();
     }
 
     @Override
-    public List<Attack> getAllSpecialClassAttacks(Character iCharacter) {
-        List<Attack> allAttacks = getSpecialClassAttacks(iCharacter);
+    public List<Attack> getAllSpecialClassAttacks(Character iCharacter, int classLevel) {
+        List<Attack> allAttacks = getSpecialClassAttacks(iCharacter, classLevel);
 
         for (Archetype arc: _archetypes) {
-            allAttacks.addAll(arc.getSpecialClassAttacks(iCharacter));
+            allAttacks.addAll(arc.getSpecialClassAttacks(iCharacter, classLevel));
         }
         return allAttacks;
     }

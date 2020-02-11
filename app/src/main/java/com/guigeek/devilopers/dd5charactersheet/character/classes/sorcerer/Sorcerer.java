@@ -1,9 +1,12 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes.sorcerer;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.android.FeatAdapter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BaseClass;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
@@ -11,6 +14,9 @@ import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +25,61 @@ import java.util.List;
  */
 public class Sorcerer extends BaseClass {
     static final long serialVersionUID = 210L;
+    protected LinkedList<Power> _metamagic = new LinkedList<>();
+
+    @Override
+    public void writeExternal(ObjectOutput objectOutput) throws IOException {
+        super.writeExternal(objectOutput);
+        objectOutput.writeObject(_metamagic);
+    }
+
+    @Override
+    public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
+        super.readExternal(objectInput);
+        _metamagic = (LinkedList<Power>) objectInput.readObject();
+    }
+
+    String[][] metamagicOptions = new String[][]{
+            new String[] {"[Metamagic] Careful Spell", "When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell’s full force. To do so, you spend 1 sorcery point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell."},
+            new String[] {"[Metamagic] Distant Spell", "When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.\n" +
+                    "\n" +
+                    "When you cast a spell that has a range of touch, you can spend 1 sorcery point to make the range of the spell 30 feet."},
+            new String[] {"[Metamagic] Empowered Spell", "When you roll damage for a spell, you can spend 1 sorcery point to reroll a number of the damage dice up to your Charisma modifier (minimum of one). You must use the new rolls.\n" +
+                    "\n" +
+                    "You can use Empowered Spell even if you have already used a different Metamagic option during the casting of the spell."},
+            new String[] {"[Metamagic] Extended Spell", "When you cast a spell that has a duration of 1 minute or longer, you can spend 1 sorcery point to double its duration, to a maximum duration of 24 hours."},
+            new String[] {"[Metamagic] Heightened Spell", "When you cast a spell that forces a creature to make a saving throw to resist its effects, you can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw made against the spell."},
+            new String[] {"[Metamagic] Quickened Spell", "When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting."},
+            new String[] {"[Metamagic] Subtle Spell", "When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components."},
+            new String[] {"[Metamagic] Twinned Spell", "When you cast a spell that targets only one creature and doesn’t have a range of self, you can spend a number of sorcery points equal to the spell’s level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).\n" +
+                    "\n" +
+                    "To be eligible, a spell must be incapable of targeting more than one creature at the spell’s current level. For example, magic missile and scorching ray aren’t eligible, but ray of frost and chromatic orb are."},
+    };
+
+    private LinkedList<Power> getAvailableMetamagic() {
+        LinkedList<Power> features = new LinkedList<>();
+        manLoop: for (String[] metaRow : metamagicOptions) {
+            for (Power p : _metamagic) {
+                if (p._name.equals(metaRow[0])) {
+                    continue manLoop;
+                }
+            }
+
+            features.add(new Power(metaRow[0], metaRow[1], "", -1, -1, false, Enumerations.ActionType.PASSIVE));
+        }
+
+        return features;
+    }
+
+    public int nbOfFeatures(int iLevel) {
+        return iLevel >= 17 ? 4 : iLevel >= 10 ? 3 : iLevel >= 3 ? 2: 0;
+    }
+
+    public void doLevelDown(int inewLevel) {
+        while(_metamagic.size() > nbOfFeatures(inewLevel)) {
+            _metamagic.removeLast();
+        }
+    }
 
     @Override
     public int getChoosableArchetypes(int iNewLevel) {
@@ -64,13 +125,6 @@ public class Sorcerer extends BaseClass {
         };
     }
 
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
-
-        int level = character._class instanceof Sorcerer ? character._level : character._levelSecondaryClass;
-        return fettles;
-    }
 
     int[][] _spellSlotsSubclass = {
                 // spell level 0-9
@@ -145,7 +199,7 @@ public class Sorcerer extends BaseClass {
     }
 
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
+    public List<String> getLevelUpBenefits(final int iNewCharacterLevel, final Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Sorcerer level " + iNewCharacterLevel + " benefits:");
 
@@ -153,14 +207,42 @@ public class Sorcerer extends BaseClass {
             levelUp.add("You now have " + iNewCharacterLevel + " Sorcery points.");
         }
 
-        if (iNewCharacterLevel == 3) {
-            levelUp.add("Gained 2 Metamagic options!");
-        }
-        if (iNewCharacterLevel == 10) {
-            levelUp.add("Gained a 3rd Metamagic option!");
-        }
-        if (iNewCharacterLevel == 17) {
-            levelUp.add("Gained a 4th Metamagic option!");
+        // Metamagic
+        if (iNewCharacterLevel == 3 || iNewCharacterLevel == 10 || iNewCharacterLevel == 17) {
+            LinkedList<Power> availableMeta = getAvailableMetamagic();
+            AlertDialog.Builder b = new AlertDialog.Builder(context);
+            b.setTitle("Select a Metamagic option" + (iNewCharacterLevel == 3 ? " (1/2)" : ""));
+            final Object[] featsFiltered = availableMeta.toArray();
+
+            b.setAdapter(new FeatAdapter(context, R.layout.list_feat, availableMeta), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Power feat = (Power)featsFiltered[which];
+                    _metamagic.add(feat);
+
+                    // Second one
+                    if (iNewCharacterLevel == 3) {
+                        LinkedList<Power> maneuvers2 = getAvailableMetamagic();
+                        AlertDialog.Builder b2 = new AlertDialog.Builder(context);
+                        b2.setTitle("Select a Metamagic option (2/2)");
+                        final Object[] featsFiltered2 = maneuvers2.toArray();
+
+                        b2.setAdapter(new FeatAdapter(context, R.layout.list_feat, maneuvers2), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Power feat = (Power) featsFiltered2[which];
+                                _metamagic.add(feat);
+                            }
+                        });
+
+                        b2.show();
+                    }
+                }
+            });
+
+            b.show();
         }
 
         if (iNewCharacterLevel == 20) {
@@ -176,6 +258,14 @@ public class Sorcerer extends BaseClass {
         if (iLevel >= 2) {
             powers.add(new Power("Font Magic", "Spend Sorcery points to restore spell slots or use metamagic options. Exhaust a spell slot to regain Sorcery points (Bonus Action). Spell level/sorcery point conversion: 1(2), 2(3), 3(5), 4(6), 5(7)", "", iLevel, -1, true, Enumerations.ActionType.BONUS_ACTION));
         }
+
+        if (iLevel >= 3) {
+            powers.add(new Power("Metamagic", "You gain the ability to twist your spells to suit your needs." +
+                    "\n" +
+                    "You can use only one Metamagic option on a spell when you cast it, unless otherwise noted.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+            powers.addAll(_metamagic);
+        }
+
         if (iLevel >= 20) {
             powers.add(new Power("Sorcerous Restoration", "You gain 4 expended Sorcery points when you finish a Short Rest.", "Self", -1, -1, true,Enumerations.ActionType.PASSIVE));
         }

@@ -329,7 +329,7 @@ public class CombatScreen extends Fragment {
 
 
     private void createSpellBars(View root) {
-        if (_character._class.isCaster()) {
+        if (_character._class.isCaster() || _character._secondaryClass.isCaster()) {
             TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
 
             // Title
@@ -759,10 +759,16 @@ public class CombatScreen extends Fragment {
 
     public void addClassAttacks() {
         tableSpecial.removeAllViews();
-        if (_character._class.getAllSpecialClassAttacks(_character).size() > 0) {
+        LinkedList<Attack> allSpecials = new LinkedList<>();
+        allSpecials.addAll(_character._class.getAllSpecialClassAttacks(_character, _character._level));
+        if (_character._secondaryClass != null) {
+            allSpecials.addAll(_character._secondaryClass.getAllSpecialClassAttacks(_character, _character._levelSecondaryClass));
+        }
+
+        if (allSpecials.size() > 0) {
             rowSpecial.setVisibility(View.VISIBLE);
 
-            for (Attack atk: _character._class.getAllSpecialClassAttacks(_character)) {
+            for (Attack atk: allSpecials) {
                 TableRow aRowName = new TableRow(getContext());
 
                 TextView weaponName = new TextView(getContext());

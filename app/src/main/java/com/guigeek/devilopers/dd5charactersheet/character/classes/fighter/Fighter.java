@@ -84,13 +84,6 @@ public class Fighter extends BaseClass {
         };
     }
 
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
-
-        return fettles;
-    }
-
 
 
     @Override
@@ -113,9 +106,8 @@ public class Fighter extends BaseClass {
     }
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._level;
-        return level >= 20 ? 4 : level >= 11 ? 3 : level >= 5 ? 2 : 1;
+    public int getAttacksPerRound(Character iCharacter, int classLevel) {
+        return classLevel >= 20 ? 4 : classLevel >= 11 ? 3 : classLevel >= 5 ? 2 : 1;
     }
 
     @Override

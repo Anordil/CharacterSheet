@@ -23,7 +23,7 @@ public interface Class  {
     public boolean isCaster();
     public int[] getSpellSlots(int iCharacterLevel);
     public int[] getSpellsKnown(int iCharacterLevel);
-    public int getAttacksPerRound(Character iCharacter);
+    public int getAttacksPerRound(Character iCharacter, int classLevel);
 
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getPowers(int iLevel, Character iCharac);
@@ -32,7 +32,7 @@ public interface Class  {
 
     public int getIconResource();
 
-    public LinkedList<Fettle> getFettles(Character character);
+    public LinkedList<Fettle> getFettles(Character character, int classLevel);
 
     public int getAC(Character character);
 
@@ -46,10 +46,10 @@ public interface Class  {
 
     public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getAllPowers(int iLevel, Character iCharac);
-    public LinkedList<Fettle> getAllFettles(Character character);
+    public LinkedList<Fettle> getAllFettles(Character character, int classLevel);
 
-    public List<Attack> getSpecialClassAttacks(Character iCharacter);
-    public List<Attack> getAllSpecialClassAttacks(Character iCharacter);
+    public List<Attack> getSpecialClassAttacks(Character iCharacter, int classLevel);
+    public List<Attack> getAllSpecialClassAttacks(Character iCharacter, int classLevel);
 
     public void doLevelUp(int oldLevel, int newLevel, Context context, Runnable showBenefits);
     public void doLevelDown(int oldLevel, int newLevel);

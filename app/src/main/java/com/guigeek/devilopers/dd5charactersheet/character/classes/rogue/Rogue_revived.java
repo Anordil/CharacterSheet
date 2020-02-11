@@ -25,10 +25,10 @@ public class Rogue_revived extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<>();
 
-        if (character._level >= 3) {
+        if (classLevel >= 3) {
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.DISEASE.ordinal()));
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.POISON.ordinal()));
             fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.POISON.ordinal()));

@@ -282,43 +282,43 @@ public class Character implements Externalizable {
             Object aSecondaryClass = oi.readObject();
             if (aSecondaryClass != null) {
                 if (aSecondaryClass instanceof Barbarian) {
-                    _secondaryClass = (Barbarian) aClass;
+                    _secondaryClass = (Barbarian) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof BloodHunter) {
-                    _secondaryClass = (BloodHunter) aClass;
+                    _secondaryClass = (BloodHunter) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Paladin) {
-                    _secondaryClass = (Paladin) aClass;
+                    _secondaryClass = (Paladin) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Rogue) {
-                    _secondaryClass = (Rogue) aClass;
+                    _secondaryClass = (Rogue) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Sorcerer) {
-                    _secondaryClass = (Sorcerer) aClass;
+                    _secondaryClass = (Sorcerer) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Warlock) {
-                    _secondaryClass = (Warlock) aClass;
+                    _secondaryClass = (Warlock) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Monk) {
-                    _secondaryClass = (Monk) aClass;
+                    _secondaryClass = (Monk) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Bard) {
-                    _secondaryClass = (Bard) aClass;
+                    _secondaryClass = (Bard) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Cleric) {
-                    _secondaryClass = (Cleric) aClass;
+                    _secondaryClass = (Cleric) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Druid) {
-                    _secondaryClass = (Druid) aClass;
+                    _secondaryClass = (Druid) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Wizard) {
-                    _secondaryClass = (Wizard) aClass;
+                    _secondaryClass = (Wizard) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Fighter) {
-                    _secondaryClass = (Fighter) aClass;
+                    _secondaryClass = (Fighter) aSecondaryClass;
                 }
                 else if (aSecondaryClass instanceof Ranger) {
-                    _secondaryClass = (Ranger) aClass;
+                    _secondaryClass = (Ranger) aSecondaryClass;
                 }
             }
             _levelSecondaryClass = oi.readInt();
@@ -397,11 +397,11 @@ public class Character implements Externalizable {
         for (Fettle effect : _race.getFettles(this)) {
             res.add(effect);
         }
-        for (Fettle effect : _class.getAllFettles(this)) {
+        for (Fettle effect : _class.getAllFettles(this, _level)) {
             res.add(effect);
         }
         if (_secondaryClass != null) {
-            for (Fettle effect : _secondaryClass.getAllFettles(this)) {
+            for (Fettle effect : _secondaryClass.getAllFettles(this, _levelSecondaryClass)) {
                 res.add(effect);
             }
         }
@@ -565,7 +565,7 @@ public class Character implements Externalizable {
     }
 
     public int getAttacksPerRound() {
-        return Math.max(_class.getAttacksPerRound(this), _secondaryClass != null ? _secondaryClass.getAttacksPerRound(this) : 0);
+        return Math.max(_class.getAttacksPerRound(this, _level), _secondaryClass != null ? _secondaryClass.getAttacksPerRound(this, _levelSecondaryClass) : 0);
     }
 
     public void equipWeapon(Weapon newWeapon) {

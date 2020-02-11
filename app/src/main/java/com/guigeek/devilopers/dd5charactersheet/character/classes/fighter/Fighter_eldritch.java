@@ -78,10 +78,4 @@ public class Fighter_eldritch extends BaseArchetype {
 
         return powers;
     }
-
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<>();
-        return fettles;
-    }
 }

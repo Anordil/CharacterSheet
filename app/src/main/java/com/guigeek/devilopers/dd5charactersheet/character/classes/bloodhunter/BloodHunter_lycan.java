@@ -50,10 +50,9 @@ public class BloodHunter_lycan extends BaseArchetype {
     }
 
     @Override
-    public List<Attack> getSpecialClassAttacks(Character iCharacter) {
+    public List<Attack> getSpecialClassAttacks(Character iCharacter, int level) {
         LinkedList<Attack> hybridStrikes = new LinkedList<>();
 
-        int level = iCharacter._level;
         int proficiency = iCharacter.getProficiencyBonus();
 
         Weapon weapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
@@ -129,13 +128,8 @@ public class BloodHunter_lycan extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int level) {
         LinkedList<Fettle> fettles = new LinkedList<>();
-
-        int level = character._level;
-        if (!(character._class instanceof BloodHunter)) {
-            level = character._levelSecondaryClass;
-        }
 
         if (level >= 7) {
             fettles.add(new Fettle(Enumerations.FettleType.MOVEMENT_SPEED_MODIFIER, 10, 0));

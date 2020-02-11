@@ -62,11 +62,11 @@ public class BloodHunter extends BaseClass {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
 
         // Hardened Soul
-        if (character._level >= 14) {
+        if (classLevel >= 14) {
             fettles.add(new Fettle(Enumerations.FettleType.IMMUNITY, 0, Enumerations.Immunities.FEAR.ordinal()));
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.CHARM_MAGIC.ordinal()));
         }
@@ -111,9 +111,8 @@ public class BloodHunter extends BaseClass {
     }
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class instanceof BloodHunter ? iCharacter._level : iCharacter._levelSecondaryClass;
-        return (level >= 5 ? 2 : 1);
+    public int getAttacksPerRound(Character iCharacter, int classLevel) {
+        return (classLevel >= 5 ? 2 : 1);
     }
 
     @Override

@@ -71,10 +71,10 @@ public class Wizard_abjuration extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<>();
 
-        if (character._level >= 14) {
+        if (classLevel >= 14) {
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.SPELLS.ordinal()));
             fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.SPELLS.ordinal()));
         }

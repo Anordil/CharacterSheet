@@ -88,11 +88,8 @@ public class Monk_astral extends BaseArchetype {
     }
 
     @Override
-    public List<Attack> getSpecialClassAttacks(Character iCharacter) {
+    public List<Attack> getSpecialClassAttacks(Character iCharacter, int level) {
         LinkedList<Attack> astralArms = new LinkedList<>();
-
-        int level = iCharacter._level;
-        int proficiency = iCharacter.getProficiencyBonus();
 
         Weapon weapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
         weapon._hasReach = true;

@@ -80,10 +80,10 @@ public class Cleric_war extends BaseArchetype implements ClericDomain {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<>();
 
-        if (character._level >= 17) {
+        if (classLevel >= 17) {
             fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.BLUDGEONING.ordinal()));
             fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.PIERCING.ordinal()));
             fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.SLASHING.ordinal()));

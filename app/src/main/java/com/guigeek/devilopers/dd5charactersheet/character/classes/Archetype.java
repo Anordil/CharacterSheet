@@ -20,11 +20,9 @@ public interface Archetype {
 
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context);
     public LinkedList<Power> getPowers(int iLevel, Character iCharac);
-    public LinkedList<Fettle> getFettles(Character character);
-    public List<Attack> getSpecialClassAttacks(Character iCharacter);
+    public LinkedList<Fettle> getFettles(Character character, int classLevel);
+    public List<Attack> getSpecialClassAttacks(Character iCharacter, int classLevel);
 
     public int getChoosableFeature(int iLevel);
     public void setArchetypeFeature(String iFeature);
-    public String getArchetypeFeature();
-
 }

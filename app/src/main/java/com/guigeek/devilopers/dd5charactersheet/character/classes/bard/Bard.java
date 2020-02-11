@@ -55,13 +55,6 @@ public class Bard extends BaseClass {
         };
     }
 
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
-
-        return fettles;
-    }
-
     int[][] _spellSlotsOverride = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -193,8 +186,8 @@ public class Bard extends BaseClass {
     }
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        return iCharacter._level >= 6 && (_archetypes.get(0) instanceof Bard_swords || _archetypes.get(0) instanceof Bard_valor) ? 2 : 1;
+    public int getAttacksPerRound(Character iCharacter, int classLevel) {
+        return classLevel >= 6 && (_archetypes.get(0) instanceof Bard_swords || _archetypes.get(0) instanceof Bard_valor) ? 2 : 1;
     }
 
     public static int getInspirationDie(int iLevel) {

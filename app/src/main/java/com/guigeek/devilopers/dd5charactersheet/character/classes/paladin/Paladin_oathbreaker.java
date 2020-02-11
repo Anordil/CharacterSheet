@@ -47,13 +47,13 @@ public class Paladin_oathbreaker extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> perks = new LinkedList<>();
 
-        if (character._level >= 7) {
+        if (classLevel >= 7) {
             perks.add(new Fettle(Enumerations.FettleType.ATTACK_BONUS_MODIFIER, Math.max(1, character.getModifier(Enumerations.Attributes.CHA)), 0));
         }
-        if (character._level >= 15) {
+        if (classLevel >= 15) {
             perks.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.BLUDGEONING.ordinal()));
             perks.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.PIERCING.ordinal()));
             perks.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.SLASHING.ordinal()));

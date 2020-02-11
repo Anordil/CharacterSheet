@@ -187,12 +187,6 @@ public class Fighter_archer extends BaseArchetype {
         return powers;
     }
 
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<>();
-        return fettles;
-    }
-
     public int nbOfFeatures(int iLevel) {
         return iLevel >= 18 ? 6 : iLevel >= 15 ? 5 : iLevel >= 10 ? 4 : iLevel >= 7 ? 3 : iLevel >= 3 ? 2 : 0;
     }

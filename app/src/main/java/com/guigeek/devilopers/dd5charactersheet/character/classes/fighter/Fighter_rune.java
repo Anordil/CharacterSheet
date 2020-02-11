@@ -192,10 +192,4 @@ public class Fighter_rune extends BaseArchetype {
 
         return powers;
     }
-
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<>();
-        return fettles;
-    }
 }

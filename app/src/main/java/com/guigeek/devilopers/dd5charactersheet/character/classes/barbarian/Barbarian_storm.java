@@ -30,9 +30,9 @@ public class Barbarian_storm extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> perks = new LinkedList<>();
-        if (character._level >= 6) {
+        if (classLevel >= 6) {
             if (_chosenFeature.equals("Desert")) {
                 perks.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.FIRE.ordinal()));
             }

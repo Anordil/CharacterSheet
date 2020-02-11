@@ -58,13 +58,6 @@ public class Wizard extends BaseClass {
         };
     }
 
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<Fettle>();
-
-        return fettles;
-    }
-
     int[][] _spellSlotsOverride = {
             // spell level 0-9
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -164,8 +157,8 @@ public class Wizard extends BaseClass {
     }
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        if (iCharacter._level >= 6 && _archetypes.get(0) instanceof Wizard_bladesinging) {
+    public int getAttacksPerRound(Character iCharacter, int classLevel) {
+        if (classLevel >= 6 && _archetypes.get(0) instanceof Wizard_bladesinging) {
             return 2;
         }
         return 1;

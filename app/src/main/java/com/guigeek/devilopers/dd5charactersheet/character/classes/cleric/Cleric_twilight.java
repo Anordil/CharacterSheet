@@ -84,9 +84,9 @@ public class Cleric_twilight extends BaseArchetype implements ClericDomain {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<>();
-        if (character._level >= 6) {
+        if (classLevel >= 6) {
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.FEAR.ordinal()));
         }
         return fettles;

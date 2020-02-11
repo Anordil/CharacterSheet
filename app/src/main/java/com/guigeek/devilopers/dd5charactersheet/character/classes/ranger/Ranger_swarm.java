@@ -78,10 +78,4 @@ public class Ranger_swarm extends BaseArchetype {
 
         return powers;
     }
-
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<>();
-        return fettles;
-    }
 }

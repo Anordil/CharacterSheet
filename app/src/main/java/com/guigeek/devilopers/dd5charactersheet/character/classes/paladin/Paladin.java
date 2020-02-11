@@ -53,10 +53,9 @@ public class Paladin extends BaseClass {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int level) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
 
-        int level = character._level;
         if (level >= 3) {
             fettles.add(new Fettle(Enumerations.FettleType.IMMUNITY, 0, Enumerations.Immunities.DISEASES.ordinal()));
         }
@@ -114,8 +113,7 @@ public class Paladin extends BaseClass {
     }
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class instanceof Paladin ? iCharacter._level : iCharacter._levelSecondaryClass;
+    public int getAttacksPerRound(Character iCharacter, int level) {
         return (level >= 5 ? 2 : 1);
     }
 

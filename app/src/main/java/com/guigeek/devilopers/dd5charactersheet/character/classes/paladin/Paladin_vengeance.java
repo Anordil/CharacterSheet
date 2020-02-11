@@ -50,7 +50,13 @@ public class Paladin_vengeance extends BaseArchetype {
 
         // Vengeance
         if (iLevel >= 3) {
-            powers.add(new Power("Channel Divinity", "One creature within 60ft must make a wisdom saving throw. Undead/fiends have disadvantage. On a failed save, it is freightened and its speed is 0 for 1mn or until it takes damage.\nOr target a creature within 10ft: you have advantage on attack rolls against it for 1mn.", "60ft/10ft", 1, -1, false, Enumerations.ActionType.ACTION));
+            powers.add(new Power("Channel Divinity", "[Abjure Enemy] As an action, you present your holy symbol and speak a prayer of denunciation, using your Channel Divinity. Choose one creature within 60 feet of you that you can see. That creature must make a Wisdom saving throw, unless it is immune to being frightened. Fiends and undead have disadvantage on this saving throw.\n" +
+                    "\n" +
+                    "On a failed save, the creature is frightened for 1 minute or until it takes any damage. While frightened, the creature’s speed is 0, and it can’t benefit from any bonus to its speed.\n" +
+                    "\n" +
+                    "On a successful save, the creature’s speed is halved for 1 minute or until the creature takes any damage.\n" +
+                    "\n" +
+                    "[Vow of Enmity] As a bonus action, you can utter a vow of enmity against a creature you can see within 10 feet of you, using your Channel Divinity. You gain advantage on attack rolls against the creature for 1 minute or until it drops to 0 hit points or falls unconscious.", "60ft/10ft", 1, -1, false, Enumerations.ActionType.ACTION));
         }
         if (iLevel >= 7) {
             powers.add(new Power("Relentless avenger", "Opportunity attack enables to move at half speed during reaction. Doesn't trigger OA.", "Melee", -1, -1, false, Enumerations.ActionType.REACTION));

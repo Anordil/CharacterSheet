@@ -124,7 +124,7 @@ public class Ranger_hunter extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<>();
 
         if (character.hasPower("Steel Will")) {

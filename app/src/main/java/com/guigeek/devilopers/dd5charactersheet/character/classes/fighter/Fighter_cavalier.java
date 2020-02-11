@@ -81,10 +81,4 @@ public class Fighter_cavalier extends BaseArchetype {
 
         return powers;
     }
-
-    @Override
-    public LinkedList<Fettle> getFettles(Character character) {
-        LinkedList<Fettle> fettles = new LinkedList<>();
-        return fettles;
-    }
 }

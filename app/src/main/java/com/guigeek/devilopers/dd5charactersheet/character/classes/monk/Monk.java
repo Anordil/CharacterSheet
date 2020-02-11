@@ -79,9 +79,8 @@ public class Monk extends BaseClass {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int level) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
-        int level = character._class instanceof Monk ? character._level : character._levelSecondaryClass;
 
         if (canUseMonkBenefits(character)) {
             if (level >= 2) {
@@ -107,8 +106,7 @@ public class Monk extends BaseClass {
     }
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class instanceof Monk ? iCharacter._level : iCharacter._levelSecondaryClass;
+    public int getAttacksPerRound(Character iCharacter, int level) {
         return (level >= 5 ? 2 : 1);
     }
 
@@ -168,17 +166,6 @@ public class Monk extends BaseClass {
         return iLevel >= 17? 10 : iLevel >= 11? 8 : iLevel >= 5 ? 6 : 4;
     }
 
-    @Override
-    public boolean isCaster() {
-        boolean caster = false;
-        for (Archetype arc: _archetypes) {
-            if (arc instanceof Monk_elements) {
-                caster = true;
-            }
-        }
-
-        return caster;
-    }
 
     @Override
     public Enumerations.Attributes getMainSpellAttribute() {

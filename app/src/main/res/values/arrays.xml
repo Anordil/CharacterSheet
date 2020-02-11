@@ -80,45 +80,6 @@
         <item>Tough</item>
         <item>War Caster</item>
         <item>Weapon Master</item>
-        <item>[Warlock Invocation] Agonizing blast</item>
-        <item>[Warlock Invocation] Armor of shadows</item>
-        <item>[Warlock Invocation] Ascendant step (9th level)</item>
-        <item>[Warlock Invocation] Best speech</item>
-        <item>[Warlock Invocation] Beguiling influence</item>
-        <item>[Warlock Invocation] Bewitching whispers (7th level)</item>
-        <item>[Warlock Invocation] Book of ancient secrets (Tome)</item>
-        <item>[Warlock Invocation] Chains of Carceri (15th level, Chain)</item>
-        <item>[Warlock Invocation] Devil\'s sight</item>
-        <item>[Warlock Invocation] Dreadful word (7th level)</item>
-        <item>[Warlock Invocation] Eldritch sight</item>
-        <item>[Warlock Invocation] Eldritch spear</item>
-        <item>[Warlock Invocation] Eyes of the rune keeper</item>
-        <item>[Warlock Invocation] Gaze of two minds</item>
-        <item>[Warlock Invocation] Lifedrinker (12th level, Blade)</item>
-        <item>[Warlock Invocation] Mask of many faces</item>
-        <item>[Warlock Invocation] Master of Myriad forms (15th level)</item>
-        <item>[Warlock Invocation] Minions of chaos (9th level)</item>
-        <item>[Warlock Invocation] Mire the mind</item>
-        <item>[Warlock Invocation] Misty visions</item>
-        <item>[Warlock Invocation] One with shadows</item>
-        <item>[Warlock Invocation] Otherwordly leap (9th level)</item>
-        <item>[Warlock Invocation] Repelling blast</item>
-        <item>[Warlock Invocation] Sculptor of flesh (7th level)</item>
-        <item>[Warlock Invocation] Sign of Ill Omen (5th level)</item>
-        <item>[Warlock Invocation] Thief of Five Fates</item>
-        <item>[Warlock Invocation] Thirsting Blade (5th level, Blade)</item>
-        <item>[Warlock Invocation] Visions of distant realms (15th level)</item>
-        <item>[Warlock Invocation] Voice of the chain master</item>
-        <item>[Warlock Invocation] Whispers of the grave</item>
-        <item>[Warlock Invocation] Witch sight (15th level)</item>
-        <item>[Sorcerer Metamagic] Careful spell</item>
-        <item>[Sorcerer Metamagic] Distant spell</item>
-        <item>[Sorcerer Metamagic] Empowered spell</item>
-        <item>[Sorcerer Metamagic] Extended spell</item>
-        <item>[Sorcerer Metamagic] Heightened spell</item>
-        <item>[Sorcerer Metamagic] Quickened spell</item>
-        <item>[Sorcerer Metamagic] Subtle spell</item>
-        <item>[Sorcerer Metamagic] Twinned spell</item>
     </string-array>
 
     <string-array name="featsDescription">
@@ -171,45 +132,6 @@
         <item>Your hit point maximum increases by an amount equal to twice your level when you gain this feat. Whenever you gain a level thereafter, your hit point maximum increases by an additional 2 hit points.</item>
         <item>Prerequisite: The ability to cast at least one spell\nYou have practiced casting spells in the midst of combat, learning techniques that grant you the following benefits\nYou have advantage on Constitution saving throws that you make to maintain your concentration on a spell when you take damage.\nYou can perform the somatic components of spells even when you have weapons or a shield in one or both hands.\nWhen a hostile creature’s movement provokes an opportunity attack from you, you can use your reaction to cast a spell at the creature, rather than making an opportunity attack. The spell must have a casting time of 1 action and must target only that creature.</item>
         <item>You have practiced extensively with a variety of weapons, gaining the following benefits:\nIncrease your Strength or Dexterity score by 1, to a maximum of 20.\nYou gain proficiency with four simple or martial weapons of your choice. </item>
-        <item>Add CHA to eldritch blast damages</item>
-        <item>Cast Mage Armor at will on yourself</item>
-        <item>Cast levitate on yourself at will</item>
-        <item>Cast speak with anumals at will</item>
-        <item>Gain proficiency in Deception and Persuasion</item>
-        <item>Cast compulsion once per long rest, using a spell slot</item>
-        <item>See book</item>
-        <item>Cast Hold monster once per long rest on a fiend, celestial or elemental, using a spell slot</item>
-        <item>You can see in darkness, both magical and otherwise, to a distance of 120ft</item>
-        <item>Cast confusion once per long rest, using a spell slot</item>
-        <item>Cast detect magic at will</item>
-        <item>Eldritch blast\'s range becomes 300ft</item>
-        <item>You can read all writings</item>
-        <item>See book</item>
-        <item>Creatures hit with your pact weapon take extyra necrotic damage equal to your CHA modifier</item>
-        <item>Cast Disguise self at will</item>
-        <item>Cast alter self at will</item>
-        <item>Cast Conjure elemental once per long rest, using a spell slot</item>
-        <item>Cast Slow once per long rest, using a spell slot</item>
-        <item>Cast Silent Image at will</item>
-        <item>When you are in an area of dim  light or darkness, you can use your action to become invisible until you move or take an action or reaction</item>
-        <item>Cast Jump at will</item>
-        <item>Eldritch blast can push enemies 10ft away in a straight line</item>
-        <item>Cast Polymorph once per long rest, using a spell slot</item>
-        <item>Cast Bestow curse once per long rest, using a spell slot</item>
-        <item>Cast Bane once per long rest, using a spell slot</item>
-        <item>You can attack with your pact weapon twice when taking the Attack action</item>
-        <item>Cast arcane eye at will</item>
-        <item>See book</item>
-        <item>Cast Speak with dead at will</item>
-        <item>You can see the true form of any shapechanger or creature concealed by illusion/transmutation within 30ft and line of sight</item>
-        <item>1 sorcery point : A chosen number of creatures (up to your CHA) automatically succed on the saving throw for that spell</item>
-        <item>1 sorcery point : Double the range of a spell that has a range of 5ft or more. Gives touch spells a range of 30ft.</item>
-        <item>1 sorcery point : Reroll a number of damage die up to your CHA (keep the new result). This Metamagic option may be combined with another.</item>
-        <item>1 sorcery point : Double the duration of a spell that lasts at least 1mn, up to 24 hours.</item>
-        <item>3 sorcery point : Give one target disadvantage against the saving throw for that spell.</item>
-        <item>2 sorcery point : Change the casting time of the spell form 1 action to 1 bonus action.</item>
-        <item>1 sorcery point : Cast this spell without verbal and somatic components.</item>
-        <item>1 sorcery point/spell level (1 for cantrips) : A spell that targets one creature and doesn\'t have a range of Self may targets a second creature in range.</item>
     </string-array>
 
     <string-array name="draconicAncestries">

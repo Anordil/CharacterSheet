@@ -72,10 +72,10 @@ public class Warlock_patron_celestial extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> f = new LinkedList<>();
 
-        if (character._level >= 6) {
+        if (classLevel >= 6) {
             f.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.RADIANT.ordinal()));
         }
 

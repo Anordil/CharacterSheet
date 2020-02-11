@@ -71,14 +71,13 @@ public class Barbarian extends BaseClass {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<Fettle>();
 
-        int level = character._class instanceof Barbarian ? character._level : character._levelSecondaryClass;
-        if (level >= 2) {
+        if (classLevel >= 2) {
             fettles.add(new Fettle(Enumerations.FettleType.SAVING_THROW_ADVANTAGE, 0, Enumerations.SavingThrows.DEX_BARBARIAN.ordinal()));
         }
-        if (level >= 7) {
+        if (classLevel >= 7) {
             fettles.add(new Fettle(Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE, 0, Enumerations.Skills.INITIATIVE.ordinal()));
         }
 
@@ -95,9 +94,8 @@ public class Barbarian extends BaseClass {
     }
 
     @Override
-    public int getAttacksPerRound(Character iCharacter) {
-        int level = iCharacter._class instanceof Barbarian ? iCharacter._level : iCharacter._levelSecondaryClass;
-        return (level >= 5 ? 2 : 1);
+    public int getAttacksPerRound(Character iCharacter, int classLevel) {
+        return (classLevel >= 5 ? 2 : 1);
     }
 
     @Override

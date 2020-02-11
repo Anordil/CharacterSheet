@@ -83,10 +83,10 @@ public class Cleric_forge extends BaseArchetype implements ClericDomain {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> fettles = new LinkedList<>();
 
-        if (character._level >= 17) {
+        if (classLevel >= 17) {
             fettles.add(new Fettle(Enumerations.FettleType.IMMUNITY, 0, Enumerations.Immunities.FIRE.ordinal()));
 
             if (character._equippedArmor != null && character._equippedArmor.isHeavy()) {
@@ -95,7 +95,7 @@ public class Cleric_forge extends BaseArchetype implements ClericDomain {
                 fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.SLASHING.ordinal()));
             }
         }
-        else if (character._level >= 6) {
+        else if (classLevel >= 6) {
             fettles.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.FIRE.ordinal()));
         }
 

@@ -77,10 +77,10 @@ public class Warlock_patron_archfey extends BaseArchetype {
     }
 
     @Override
-    public LinkedList<Fettle> getFettles(Character character) {
+    public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> f = new LinkedList<>();
 
-        if (character._level >= 10) {
+        if (classLevel >= 10) {
             f.add(new Fettle(Enumerations.FettleType.IMMUNITY, 0, Enumerations.Immunities.CHARM_MAGIC.ordinal()));
         }
 
