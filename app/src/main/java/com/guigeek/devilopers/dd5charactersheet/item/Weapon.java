@@ -44,6 +44,18 @@ public class Weapon implements Externalizable {
     public boolean _isFirearm, _isExplosive;
     public int _reload, _misfire;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Weapon) {
+            Weapon other = (Weapon) obj;
+            return other._type == _type && _name.equals(other._name)
+                    && _magicModifier == other._magicModifier
+                    && _magicProperties.equals(_magicProperties);
+        }
+
+        return super.equals(obj);
+    }
+
 
     public Weapon(){
         _distance = Enumerations.WeaponDistanceTypes.THROWN;

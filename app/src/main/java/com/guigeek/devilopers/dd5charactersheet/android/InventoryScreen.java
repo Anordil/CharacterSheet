@@ -48,6 +48,9 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     ArrayAdapter<Externalizable> adapterOffHand;
 
     Weapon emptyWeaponOffHand = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+    Weapon emptyWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+    Armor emptyArmor = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+    Armor emptyShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
 
 
     Button addItemBtn, addGoldBtn, removeGoldBtn;
@@ -114,11 +117,11 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
             }
         }
         // Add the no armor/weapon choice to all spinners
-        mainHandItems.add(new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null));
+        mainHandItems.add(emptyWeapon);
         offHandItems.add(emptyWeaponOffHand);
         offHandItemsForDualWielder.add(emptyWeaponOffHand);
         shields.add(emptyWeaponOffHand);
-        listOfArmors.add(new Armor(Enumerations.ArmorTypes.NONE, 0, null));
+        listOfArmors.add(emptyArmor);
 
 
         adapterArmor = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, listOfArmors);
@@ -127,12 +130,29 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         adapterWeapon = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, mainHandItems);
         spinnerWeapon.setAdapter(adapterWeapon);
 
-        adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, offHandItems);
+
+        LinkedList<Externalizable> availableOffHand = new LinkedList<>(), referenceList = null;
+        final boolean hasDualWielding = _character.hasFeat("Dual Wielder");
+        if (hasDualWielding) {
+            referenceList = offHandItemsForDualWielder;
+        }
+        else if (_character._equippedWeapon != null &&_character._equippedWeapon._weight == Enumerations.WeaponWeightCategory.LIGHT) {
+            referenceList = offHandItems;
+        }
+        else {
+            referenceList = shields;
+        }
+
+        for (Externalizable item : referenceList) {
+            if (item != _character._equippedWeapon) {
+                availableOffHand.add(item);
+            }
+        }
+        adapterOffHand = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, availableOffHand);
         spinnerWeaponOffHand.setAdapter(adapterOffHand);
 
 
         // Add selection listeners
-        final boolean hasDualWielding = _character.hasFeat("Dual Wielder");
         spinnerWeapon.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -143,7 +163,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                 if (weapon._hands == Enumerations.WeaponHandCount.TWO_HANDED) {
                     // No off hand
                     _character._offHandWeapon = emptyWeaponOffHand;
-                    _character._equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+                    _character._equippedShield = emptyShield;
 
                     spinnerWeaponOffHand.setEnabled(false);
                     spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(emptyWeaponOffHand));
@@ -189,9 +209,9 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
                 Externalizable offHandItem = adapterOffHand.getItem(position);
                 if (offHandItem instanceof Armor) {
                     _character._equippedShield = (Armor)offHandItem;
-                    _character._offHandWeapon = new Weapon(Enumerations.WeaponTypes.UNARMED, 0, null);
+                    _character._offHandWeapon = emptyWeaponOffHand;
                 } else {
-                    _character._equippedShield = new Armor(Enumerations.ArmorTypes.NONE, 0, null);
+                    _character._equippedShield = emptyShield;
                     _character._offHandWeapon = (Weapon)offHandItem;
                 }
 
@@ -255,7 +275,6 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         spinnerArmor = (Spinner)root.findViewById(R.id.inSpinnerArmor);
         spinnerWeapon = (Spinner)root.findViewById(R.id.inSpinnerWeapon);
         spinnerWeaponOffHand = (Spinner)root.findViewById(R.id.inSpinnerOffHand);
-        initEquipmentSpinners();
 
 
         etGold = (TextView)root.findViewById(R.id.inGold);
@@ -290,7 +309,6 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     public void onResume() {
         super.onResume();
         setListAdapter(new ItemAdapter(getContext(), R.layout.list_item, _character._inventory));
-        initEquipmentSpinners();
         setListViewHeightBasedOnChildren(getListView());
         updateContent();
     }
@@ -299,19 +317,23 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         etDamageBonus.setText(Integer.toString(_character._dmgBonus));
         etGold.setText(Integer.toString(_character._gold));
 
+        Weapon weaponCopy = _character._equippedWeapon;
+        Weapon offHandCopy = _character._offHandWeapon;
+        Armor shieldCopy = _character._equippedShield;
+
         initEquipmentSpinners();
         spinnerArmor.setSelection(adapterArmor.getPosition(_character._equippedArmor));
-        spinnerWeapon.setSelection(adapterWeapon.getPosition(_character._equippedWeapon));
+        spinnerWeapon.setSelection(adapterWeapon.getPosition(weaponCopy), true);
 
 
-        if (_character._equippedShield._type == Enumerations.ArmorTypes.SHIELD) {
-            spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(_character._equippedShield));
+        if (shieldCopy._type == Enumerations.ArmorTypes.SHIELD) {
+            spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(shieldCopy), true);
         }
-        else if (_character._offHandWeapon._type != Enumerations.WeaponTypes.UNARMED) {
-            spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(_character._offHandWeapon));
+        else if (offHandCopy._type != Enumerations.WeaponTypes.UNARMED) {
+            spinnerWeaponOffHand.setSelection(adapterOffHand.getPosition(offHandCopy), true);
         }
         else {
-            spinnerWeaponOffHand.setSelection(adapterOffHand.getCount() -1);
+            spinnerWeaponOffHand.setSelection(adapterOffHand.getCount() -1, true);
         }
 
         if (_character._equippedWeapon._hands == Enumerations.WeaponHandCount.TWO_HANDED) {

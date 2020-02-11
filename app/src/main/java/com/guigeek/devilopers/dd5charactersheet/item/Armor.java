@@ -27,6 +27,18 @@ public class Armor implements Externalizable {
 
     public LinkedList<Fettle> _magicProperties;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Armor) {
+            Armor other = (Armor) obj;
+            return other._type == _type && _name.equals(other._name)
+                    && _magicModifier == other._magicModifier
+                    && _magicProperties.equals(_magicProperties);
+        }
+
+        return super.equals(obj);
+    }
+
     public Armor(){}
 
     public Armor(Enumerations.ArmorTypes type, int magicModifier, LinkedList<Fettle> magicProperties) {

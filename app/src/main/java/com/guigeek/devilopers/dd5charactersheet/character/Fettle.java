@@ -82,7 +82,7 @@ public class Fettle  implements Externalizable {
         if (o instanceof Fettle) {
             Fettle other = (Fettle)o;
 
-            return other._type == _type && other._describer == _describer;
+            return other._type == _type && other._describer == _describer && other._value == _value;
         }
         return super.equals(o);
     }

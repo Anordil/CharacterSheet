@@ -151,7 +151,7 @@ public class CombatScreen extends Fragment {
         weaponName.setText(_character._equippedWeapon.toString());
 
         imageWeaponHit = (ImageView)rootView.findViewById(R.id.imgCombatHitBonus);
-        imageWeaponHitOffhand = (ImageView)rootView.findViewById(R.id.imgCombatHitBonus);
+        imageWeaponHitOffhand = (ImageView)rootView.findViewById(R.id.imgCombatHitBonusOffHand);
         rowThrown = (TableRow)rootView.findViewById(R.id.combatRowThrown);
 
         rowThrownOffHand = (TableRow)rootView.findViewById(R.id.combatRowThrownOffHand);
