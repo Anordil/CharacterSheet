@@ -16,6 +16,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.BaseArchetype;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,55 +28,43 @@ public class Fighter_gunslinger extends BaseArchetype {
         return App.getResString(R.string.fighter_gunslinger);
     }
 
-    protected LinkedList<Power> _chosenFeatures = new LinkedList<>();
 
-    @Override
-    public void writeExternal(ObjectOutput objectOutput) throws IOException {
-        super.writeExternal(objectOutput);
-        objectOutput.writeObject(_chosenFeatures);
-    }
-
-    @Override
-    public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
-        super.readExternal(objectInput);
-        _chosenFeatures = (LinkedList<Power>) objectInput.readObject();
-    }
-
-    String[][] maneuvers = new String[][]{
-            new String[] {"[Trick Shot] Bullying Shot", "You can use the powerful blast and thundering sound of your firearm to shake the resolve of a creature. You can expend one grit point while making a Charisma (Intimidation) check to gain advantage on the roll."},
-            new String[] {"[Trick Shot] Dazing Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to dizzy your opponent. On a hit, the creature suffers normal damage and must make a Constitution saving throw or suffer disadvantage on attacks until the end of their next turn."},
-            new String[] {"[Trick Shot] Deadeye Shot", "When you make a firearm attack against a creature, you can expend one grit point to gain advantage on the attack roll."},
-            new String[] {"[Trick Shot] Disarming Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to shoot an object from their hands. On a hit, the creature suffers normal damage and must succeed on a Strength saving throw or drop 1 held object of your choice and have that object be pushed 10 feet away from you."},
-            new String[] {"[Trick Shot] Forceful Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to trip them up and force them back. On a hit, the creature suffers normal damage and must succeed on a Strength saving throw or be pushed 15 feet away from you."},
-            new String[] {"[Trick Shot] Piercing Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to fire through multiple opponents. The initial attack gains a +1 to the firearm’s misfire score. On a hit, the creature suffers normal damage and you make an attack roll with disadvantage against every creature in a line directly behind the target within your first range increment. Only the initial attack can misfire."},
-            new String[] {"[Trick Shot] Violent Shot", "When you make a firearm attack against a creature, you can expend one or more grit points to enhance the volatility of the attack. For each grit point expended, the attack gains a +2 to the firearm’s misfire score. If the attack hits, you can roll one additional weapon damage die per grit point spent when determining the damage."},
-            new String[] {"[Trick Shot] Winging Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to topple a moving target. On a hit, the creature suffers normal damage and must make a Strength saving throw or be knocked prone."}
+    Power[] trickshots = new Power[]{
+            new Power("[Trick Shot] Bullying Shot", "You can use the powerful blast and thundering sound of your firearm to shake the resolve of a creature. You can expend one grit point while making a Charisma (Intimidation) check to gain advantage on the roll.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Trick Shot] Dazing Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to dizzy your opponent. On a hit, the creature suffers normal damage and must make a Constitution saving throw or suffer disadvantage on attacks until the end of their next turn.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Trick Shot] Deadeye Shot", "When you make a firearm attack against a creature, you can expend one grit point to gain advantage on the attack roll.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Trick Shot] Disarming Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to shoot an object from their hands. On a hit, the creature suffers normal damage and must succeed on a Strength saving throw or drop 1 held object of your choice and have that object be pushed 10 feet away from you.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Trick Shot] Forceful Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to trip them up and force them back. On a hit, the creature suffers normal damage and must succeed on a Strength saving throw or be pushed 15 feet away from you.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Trick Shot] Piercing Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to fire through multiple opponents. The initial attack gains a +1 to the firearm’s misfire score. On a hit, the creature suffers normal damage and you make an attack roll with disadvantage against every creature in a line directly behind the target within your first range increment. Only the initial attack can misfire.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Trick Shot] Violent Shot", "When you make a firearm attack against a creature, you can expend one or more grit points to enhance the volatility of the attack. For each grit point expended, the attack gains a +2 to the firearm’s misfire score. If the attack hits, you can roll one additional weapon damage die per grit point spent when determining the damage.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Trick Shot] Winging Shot", "When you make a firearm attack against a creature, you can expend one grit point to attempt to topple a moving target. On a hit, the creature suffers normal damage and must make a Strength saving throw or be knocked prone.", "", -1, -1, false, Enumerations.ActionType.PASSIVE)
     };
 
-    private LinkedList<Power> getAvailabletrickshots() {
-        LinkedList<Power> features = new LinkedList<>();
-        manLoop: for (String[] maneuverRow : maneuvers) {
-            for (Power p : _chosenFeatures) {
-                if (p._name.equals(maneuverRow[0])) {
-                    continue manLoop;
-                }
-            }
-
-            features.add(new Power(maneuverRow[0], maneuverRow[1], "", -1, -1, false, Enumerations.ActionType.PASSIVE));
+    @Override
+    public int gainedArchetypeFeatures(int classLevel) {
+        if (classLevel == 3) {
+            return 2;
+        } else if (classLevel == 7 || classLevel == 10 || classLevel == 15 || classLevel == 18) {
+            return 1;
         }
-
-        return features;
+        return 0;
     }
 
+    @Override
+    public List<Power> getAllArchetypeFeatures(int iClassLevel) {
+        return Arrays.asList(trickshots);
+    }
+
+    @Override
+    public boolean canReplaceFeature(int iClasseLevel) {
+        return (iClasseLevel == 7 || iClasseLevel == 10 || iClasseLevel == 15 || iClasseLevel == 18);
+    }
+
+    @Override
     public int nbOfFeatures(int iLevel) {
         return iLevel >= 18 ? 6 : iLevel >= 15 ? 5 : iLevel >= 10 ? 4 : iLevel >= 7 ? 3: iLevel >= 3 ? 2 : 0;
     }
 
-    public void doLevelDown(int inewLevel) {
-        while(_chosenFeatures.size() > nbOfFeatures(inewLevel)) {
-            _chosenFeatures.removeLast();
-        }
-    }
 
 
     @Override
@@ -100,45 +89,6 @@ public class Fighter_gunslinger extends BaseArchetype {
             levelUp.add("Gained Vicious Intent");
             levelUp.add("Gained Hemorrhaging Critical");
         }
-
-
-        if (iNewCharacterLevel == 3 || iNewCharacterLevel == 7 || iNewCharacterLevel == 10 || iNewCharacterLevel == 15 || iNewCharacterLevel == 18) {
-            LinkedList<Power> maneuvers = getAvailabletrickshots();
-            AlertDialog.Builder b = new AlertDialog.Builder(context);
-            b.setTitle("Select a Trick shot" + (iNewCharacterLevel == 3 ? " (1/2)" : ""));
-            final Object[] featsFiltered = maneuvers.toArray();
-
-            b.setAdapter(new FeatAdapter(context, R.layout.list_feat, maneuvers), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    Power feat = (Power)featsFiltered[which];
-                    _chosenFeatures.add(feat);
-
-                    // Second one
-                    if (iNewCharacterLevel == 3) {
-                        LinkedList<Power> maneuvers2 = getAvailabletrickshots();
-                        AlertDialog.Builder b2 = new AlertDialog.Builder(context);
-                        b2.setTitle("Select a Trick shot (2/2)");
-                        final Object[] featsFiltered2 = maneuvers2.toArray();
-
-                        b2.setAdapter(new FeatAdapter(context, R.layout.list_feat, maneuvers2), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                Power feat = (Power) featsFiltered2[which];
-                                _chosenFeatures.add(feat);
-                            }
-                        });
-
-                        b2.show();
-                    }
-                }
-            });
-
-            b.show();
-        }
-
 
         return levelUp;
     }

@@ -37,6 +37,7 @@ public class Cleric extends BaseClass {
     @Override
     public void doLevelDown(int oldLevel, int newLevel) {
         // Nothing to clear for Cleric since archetype is chosen at level 1
+        // and no features are chosen
     }
 
     @Override

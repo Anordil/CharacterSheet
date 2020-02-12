@@ -17,6 +17,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Power;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,60 +26,46 @@ import java.util.List;
  */
 public class Sorcerer extends BaseClass {
     static final long serialVersionUID = 210L;
-    protected LinkedList<Power> _metamagic = new LinkedList<>();
 
     @Override
-    public void writeExternal(ObjectOutput objectOutput) throws IOException {
-        super.writeExternal(objectOutput);
-        objectOutput.writeObject(_metamagic);
+    public int gainedClassFeatures(int classLevel) {
+        if (classLevel == 3) {
+            return 2;
+        }
+        else if (classLevel == 10 || classLevel == 17) {
+            return 1;
+        }
+
+        return 0;
     }
 
     @Override
-    public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
-        super.readExternal(objectInput);
-        _metamagic = (LinkedList<Power>) objectInput.readObject();
+    public List<Power> getAllClassFeatures(int iClassLevel) {
+        return Arrays.asList(metamagicOptions);
     }
 
-    String[][] metamagicOptions = new String[][]{
-            new String[] {"[Metamagic] Careful Spell", "When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell’s full force. To do so, you spend 1 sorcery point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell."},
-            new String[] {"[Metamagic] Distant Spell", "When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.\n" +
+
+    Power[] metamagicOptions = new Power[]{
+            new Power("[Metamagic] Careful Spell", "When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell’s full force. To do so, you spend 1 sorcery point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Metamagic] Distant Spell", "When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.\n" +
                     "\n" +
-                    "When you cast a spell that has a range of touch, you can spend 1 sorcery point to make the range of the spell 30 feet."},
-            new String[] {"[Metamagic] Empowered Spell", "When you roll damage for a spell, you can spend 1 sorcery point to reroll a number of the damage dice up to your Charisma modifier (minimum of one). You must use the new rolls.\n" +
+                    "When you cast a spell that has a range of touch, you can spend 1 sorcery point to make the range of the spell 30 feet.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Metamagic] Empowered Spell", "When you roll damage for a spell, you can spend 1 sorcery point to reroll a number of the damage dice up to your Charisma modifier (minimum of one). You must use the new rolls.\n" +
                     "\n" +
-                    "You can use Empowered Spell even if you have already used a different Metamagic option during the casting of the spell."},
-            new String[] {"[Metamagic] Extended Spell", "When you cast a spell that has a duration of 1 minute or longer, you can spend 1 sorcery point to double its duration, to a maximum duration of 24 hours."},
-            new String[] {"[Metamagic] Heightened Spell", "When you cast a spell that forces a creature to make a saving throw to resist its effects, you can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw made against the spell."},
-            new String[] {"[Metamagic] Quickened Spell", "When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting."},
-            new String[] {"[Metamagic] Subtle Spell", "When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components."},
-            new String[] {"[Metamagic] Twinned Spell", "When you cast a spell that targets only one creature and doesn’t have a range of self, you can spend a number of sorcery points equal to the spell’s level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).\n" +
+                    "You can use Empowered Spell even if you have already used a different Metamagic option during the casting of the spell.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Metamagic] Extended Spell", "When you cast a spell that has a duration of 1 minute or longer, you can spend 1 sorcery point to double its duration, to a maximum duration of 24 hours.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Metamagic] Heightened Spell", "When you cast a spell that forces a creature to make a saving throw to resist its effects, you can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw made against the spell.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Metamagic] Quickened Spell", "When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Metamagic] Subtle Spell", "When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("[Metamagic] Twinned Spell", "When you cast a spell that targets only one creature and doesn’t have a range of self, you can spend a number of sorcery points equal to the spell’s level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).\n" +
                     "\n" +
-                    "To be eligible, a spell must be incapable of targeting more than one creature at the spell’s current level. For example, magic missile and scorching ray aren’t eligible, but ray of frost and chromatic orb are."},
+                    "To be eligible, a spell must be incapable of targeting more than one creature at the spell’s current level. For example, magic missile and scorching ray aren’t eligible, but ray of frost and chromatic orb are.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
     };
 
-    private LinkedList<Power> getAvailableMetamagic() {
-        LinkedList<Power> features = new LinkedList<>();
-        manLoop: for (String[] metaRow : metamagicOptions) {
-            for (Power p : _metamagic) {
-                if (p._name.equals(metaRow[0])) {
-                    continue manLoop;
-                }
-            }
 
-            features.add(new Power(metaRow[0], metaRow[1], "", -1, -1, false, Enumerations.ActionType.PASSIVE));
-        }
-
-        return features;
-    }
-
+    @Override
     public int nbOfFeatures(int iLevel) {
         return iLevel >= 17 ? 4 : iLevel >= 10 ? 3 : iLevel >= 3 ? 2: 0;
-    }
-
-    public void doLevelDown(int inewLevel) {
-        while(_metamagic.size() > nbOfFeatures(inewLevel)) {
-            _metamagic.removeLast();
-        }
     }
 
     @Override
@@ -207,44 +194,6 @@ public class Sorcerer extends BaseClass {
             levelUp.add("You now have " + iNewCharacterLevel + " Sorcery points.");
         }
 
-        // Metamagic
-        if (iNewCharacterLevel == 3 || iNewCharacterLevel == 10 || iNewCharacterLevel == 17) {
-            LinkedList<Power> availableMeta = getAvailableMetamagic();
-            AlertDialog.Builder b = new AlertDialog.Builder(context);
-            b.setTitle("Select a Metamagic option" + (iNewCharacterLevel == 3 ? " (1/2)" : ""));
-            final Object[] featsFiltered = availableMeta.toArray();
-
-            b.setAdapter(new FeatAdapter(context, R.layout.list_feat, availableMeta), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    Power feat = (Power)featsFiltered[which];
-                    _metamagic.add(feat);
-
-                    // Second one
-                    if (iNewCharacterLevel == 3) {
-                        LinkedList<Power> maneuvers2 = getAvailableMetamagic();
-                        AlertDialog.Builder b2 = new AlertDialog.Builder(context);
-                        b2.setTitle("Select a Metamagic option (2/2)");
-                        final Object[] featsFiltered2 = maneuvers2.toArray();
-
-                        b2.setAdapter(new FeatAdapter(context, R.layout.list_feat, maneuvers2), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                Power feat = (Power) featsFiltered2[which];
-                                _metamagic.add(feat);
-                            }
-                        });
-
-                        b2.show();
-                    }
-                }
-            });
-
-            b.show();
-        }
-
         if (iNewCharacterLevel == 20) {
             levelUp.add("Gained Sorcerous Restoration!");
         }
@@ -263,7 +212,7 @@ public class Sorcerer extends BaseClass {
             powers.add(new Power("Metamagic", "You gain the ability to twist your spells to suit your needs." +
                     "\n" +
                     "You can use only one Metamagic option on a spell when you cast it, unless otherwise noted.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
-            powers.addAll(_metamagic);
+            powers.addAll(_chosenFeatures);
         }
 
         if (iLevel >= 20) {

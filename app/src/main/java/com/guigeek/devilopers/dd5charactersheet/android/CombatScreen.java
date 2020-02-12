@@ -329,7 +329,7 @@ public class CombatScreen extends Fragment {
 
 
     private void createSpellBars(View root) {
-        if (_character._class.isCaster() || _character._secondaryClass.isCaster()) {
+        if (_character._class.isCaster() || _character._secondaryClass != null && _character._secondaryClass.isCaster()) {
             TableLayout ll = (TableLayout) root.findViewById(R.id.tablelayout);
 
             // Title

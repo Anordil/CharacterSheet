@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.android.FeatAdapter;
 import com.guigeek.devilopers.dd5charactersheet.android.StringListAdapter;
 import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
@@ -26,7 +27,7 @@ import java.util.List;
 public abstract class BaseClass implements Class, Externalizable {
     static final long serialVersionUID = 2000L;
 
-    protected int _version = 1;
+    protected int _version = 2;
     protected LinkedList<Archetype> _archetypes = new LinkedList<>();
 
     public Archetype getArchetype(int index) {
@@ -36,6 +37,87 @@ public abstract class BaseClass implements Class, Externalizable {
     public int getChoosableArchetypes(int iNewlevel) {
         return -1;
     }
+
+
+    // FEATURES
+    public List<Power> _chosenFeatures = new LinkedList<>();
+
+    @Override
+    public int gainedClassFeatures(int classLevel) {
+        return 0;
+    }
+
+    @Override
+    public List<Power> getAllClassFeatures(int iClassLevel) {
+        return null;
+    }
+
+    @Override
+    public boolean canReplaceFeature(int iClasseLevel) {
+        return false;
+    }
+
+    @Override
+    public void replaceFeature(final Context context, final int classLevel) {
+        // Select a Feature to remove
+        AlertDialog.Builder removeDialog = new AlertDialog.Builder(context);
+        removeDialog.setTitle("Select a " + getClassName() + " feature to remove");
+
+        removeDialog.setAdapter(new FeatAdapter(context, R.layout.list_feat, _chosenFeatures), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                _chosenFeatures.remove(which);
+
+                // Get a new one to replace
+                selectClassFeature(context, classLevel, 1, 1);
+            }
+        });
+
+        removeDialog.show();
+    }
+
+    @Override
+    public void selectClassFeature(final Context context, final int classLevel, final int current, final int max) {
+        final List<Power> availableFeatures = filterAlreadyChosen(getAllClassFeatures(classLevel));
+        AlertDialog.Builder featureSelectionDialog = new AlertDialog.Builder(context);
+        featureSelectionDialog.setTitle("Select a " + getClassName() + " feature" + (max > 1 ? " (" + current + "/" + max + ")" : ""));
+
+        featureSelectionDialog.setAdapter(new FeatAdapter(context, R.layout.list_feat, availableFeatures), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                _chosenFeatures.add(availableFeatures.get(which));
+
+                if (current < max) {
+                    selectClassFeature(context, classLevel, current +1, max);
+                }
+            }
+        });
+
+        featureSelectionDialog.show();
+    }
+
+    private List<Power> filterAlreadyChosen(List<Power> allClassFeatures) {
+        LinkedList<Power> features = new LinkedList<>();
+        mainLoop: for (Power p : allClassFeatures) {
+            for (Power pChosen : _chosenFeatures) {
+                if (p._name.equals(pChosen._name)) {
+                    continue mainLoop;
+                }
+            }
+            features.add(p);
+        }
+
+        return features;
+    }
+
+    @Override
+    public int nbOfFeatures(int iLevel) {
+        return 0;
+    }
+    // END FEATURES
+
 
     protected int[][] _spellSlots = {
             // spell level 0-9
@@ -131,6 +213,14 @@ public abstract class BaseClass implements Class, Externalizable {
         if (newLevel < 3) {
             _archetypes.clear();
         }
+
+        while(_chosenFeatures.size() > nbOfFeatures(newLevel)) {
+            _chosenFeatures.remove(_chosenFeatures.size() -1);
+        }
+
+        for (Archetype arc: _archetypes) {
+            arc.doLevelDown(oldLevel, newLevel);
+        }
     }
 
     @Override
@@ -156,17 +246,73 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
-    public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context) {
-        // Get level up perks
+    public List<String> getAllLevelUpBenefits(final int iNewCharacterLevel, final Context context) {
+        // Get level up perks from the class
         List<String> allItems = getLevelUpBenefits(iNewCharacterLevel, context);
-        if (_archetypes != null) {
-            for (Archetype arc: _archetypes) {
-                allItems.addAll(arc.getLevelUpBenefits(iNewCharacterLevel, context));
-            }
+
+        // New Class feature gained?
+        if (gainedClassFeatures(iNewCharacterLevel) > 0) {
+            selectClassFeature(context, iNewCharacterLevel, 1, gainedClassFeatures(iNewCharacterLevel));
         }
 
-        // Existing Archetypes may need a feature chosen
+        // Feature replacement available? Display first --> code runs 2nd
+        if (canReplaceFeature(iNewCharacterLevel)) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            dialog.dismiss();
+                            replaceFeature(context, iNewCharacterLevel);
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked -> nothing to do
+                            dialog.dismiss();
+                    }
+                }
+            };
+
+            AlertDialog.Builder yesNoDialog = new AlertDialog.Builder(context);
+            yesNoDialog.setMessage("Do you want to replace a " + getClassName() + " feature?")
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener)
+                    .show();
+        }
+
+
         for (final Archetype arc: _archetypes) {
+            // Archetype level up perks
+            allItems.addAll(arc.getLevelUpBenefits(iNewCharacterLevel, context));
+
+            // New Archetype Power feature gained?
+            if (arc.gainedArchetypeFeatures(iNewCharacterLevel) > 0) {
+                arc.selectArchetypeFeature(context, iNewCharacterLevel, 1, arc.gainedArchetypeFeatures(iNewCharacterLevel));
+            }
+            // Archetype Power feature replacement?
+            if (arc.canReplaceFeature(iNewCharacterLevel)) {
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                dialog.dismiss();
+                                arc.replaceFeature(context, iNewCharacterLevel);
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked -> nothing to do
+                                dialog.dismiss();
+                        }
+                    }
+                };
+
+                AlertDialog.Builder yesNoDialog = new AlertDialog.Builder(context);
+                yesNoDialog.setMessage("Do you want to replace a " + arc.getName() + " feature?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener)
+                        .show();
+            }
+
+            // String-like feature for Archetype?
             int choosableFeatureArray = arc.getChoosableFeature(iNewCharacterLevel);
             if (choosableFeatureArray != -1) {
                 AlertDialog.Builder b = new AlertDialog.Builder(context);
@@ -180,7 +326,7 @@ public abstract class BaseClass implements Class, Externalizable {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         String selectedOption = allOptions[which];
-                        arc.setArchetypeFeature(selectedOption);
+                        arc.setArchetypeStringFeature(selectedOption);
                     }
                 });
 
@@ -273,6 +419,7 @@ public abstract class BaseClass implements Class, Externalizable {
         oo.writeObject(_archetypes);
         oo.writeObject(_spellSlots);
         oo.writeObject(_spellsKnown);
+        oo.writeObject(_chosenFeatures);
     }
 
     @Override
@@ -284,6 +431,9 @@ public abstract class BaseClass implements Class, Externalizable {
             _archetypes = (LinkedList<Archetype>) oi.readObject();
             _spellSlots = (int[][])oi.readObject();
             _spellsKnown = (int[][])oi.readObject();
+        }
+        if (version >= 2) {
+            _chosenFeatures = (LinkedList<Power>) oi.readObject();
         }
     }
 

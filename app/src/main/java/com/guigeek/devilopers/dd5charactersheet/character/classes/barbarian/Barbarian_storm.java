@@ -1,15 +1,19 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.android.StringListAdapter;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BaseArchetype;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,8 +26,8 @@ public class Barbarian_storm extends BaseArchetype {
     public String getName() {
         String name = App.getResString(R.string.barbarian_storm);
 
-        if (_chosenFeature != null) {
-            name += " - " + _chosenFeature;
+        if (_chosenStringFeature != null) {
+            name += " - " + _chosenStringFeature;
         }
 
         return name;
@@ -33,10 +37,10 @@ public class Barbarian_storm extends BaseArchetype {
     public LinkedList<Fettle> getFettles(Character character, int classLevel) {
         LinkedList<Fettle> perks = new LinkedList<>();
         if (classLevel >= 6) {
-            if (_chosenFeature.equals("Desert")) {
+            if (_chosenStringFeature.equals("Desert")) {
                 perks.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.FIRE.ordinal()));
             }
-            else if (_chosenFeature.equals("Sea")) {
+            else if (_chosenStringFeature.equals("Sea")) {
                 perks.add(new Fettle(Enumerations.FettleType.DAMAGE_RESISTANCE, 0, Enumerations.DamageTypes.LIGHTNING.ordinal()));
             }
             else { //Tundra
@@ -49,17 +53,34 @@ public class Barbarian_storm extends BaseArchetype {
 
     @Override
     public int getChoosableFeature(int iLevel) {
-        if (iLevel >= 3) {
-            return R.array.barbarianStormAuras;
-        }
         return -1;
     }
 
+    protected void selectAuraType(Context context) {
+        AlertDialog.Builder b = new AlertDialog.Builder(context);
+        b.setTitle("Select a Storm Aura type");
+
+        final String[] allOptions = context.getResources().getStringArray(R.array.barbarianStormAuras);
+        final List<String> allOptionsList = Arrays.asList(allOptions);
+
+        b.setAdapter(new StringListAdapter(context, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                String selectedOption = allOptions[which];
+                setArchetypeStringFeature(selectedOption);
+            }
+        });
+
+        b.show();
+    }
+
     @Override
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
+    public List<String> getLevelUpBenefits(int iNewCharacterLevel, final Context context) {
         List<String> levelUp = super.getLevelUpBenefits(iNewCharacterLevel, context);
         if (iNewCharacterLevel == 3) {
             levelUp.add("You gained Storm Aura. You can change its type whenever you gain a level.");
+            selectAuraType(context);
         }
         else if (iNewCharacterLevel == 6) {
             levelUp.add("You gained Storm Soul");
@@ -70,6 +91,30 @@ public class Barbarian_storm extends BaseArchetype {
         else if (iNewCharacterLevel == 14) {
             levelUp.add("You gained Raging Storm");
         }
+
+        if (iNewCharacterLevel > 3) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            dialog.dismiss();
+                            selectAuraType(context);
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked -> nothing to do
+                            dialog.dismiss();
+                    }
+                }
+            };
+
+            AlertDialog.Builder yesNoDialog = new AlertDialog.Builder(context);
+            yesNoDialog.setMessage("Do you want to change the nature of your Storm Aura?")
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener)
+                    .show();
+        }
+
         return levelUp;
     }
 
@@ -91,17 +136,17 @@ public class Barbarian_storm extends BaseArchetype {
             powers.add(new Power("Shielding Storm", "Each creature of your choice has the damage resistance you gained from the Storm Soul feature while the creature is in your Storm Aura.", "", -1, -1, false, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 14) {
-            powers.add(new Power("Raging Storm", getRagingStormDescription(), "", -1, 8 + iCharac.getProficiencyBonus() + iCharac.getModifier(Enumerations.Attributes.CON), true, _chosenFeature.equals("Tundra") ? Enumerations.ActionType.PASSIVE : Enumerations.ActionType.REACTION));
+            powers.add(new Power("Raging Storm", getRagingStormDescription(), "", -1, 8 + iCharac.getProficiencyBonus() + iCharac.getModifier(Enumerations.Attributes.CON), true, _chosenStringFeature.equals("Tundra") ? Enumerations.ActionType.PASSIVE : Enumerations.ActionType.REACTION));
         }
 
         return powers;
     }
 
     private String getRagingStormDescription() {
-        if (_chosenFeature.equals("Desert")) {
+        if (_chosenStringFeature.equals("Desert")) {
             return "Immediately after a creature in your aura hits you with an attack, you can use your reaction to force that creature to make a Dexterity saving throw. On a failed save, the creature takes fire damage equal to half your barbarian level.";
         }
-        else if (_chosenFeature.equals("Sea")) {
+        else if (_chosenStringFeature.equals("Sea")) {
             return "When you hit a creature in your aura with an attack, you can use your reaction to force that creature to make a Strength saving throw. On a failed save, the creature is knocked prone, as if struck by a wave.";
         }
         else { //Tundra
@@ -110,10 +155,10 @@ public class Barbarian_storm extends BaseArchetype {
     }
 
     private String getStormSoulDescription(int iLevel) {
-        if (_chosenFeature.equals("Desert")) {
+        if (_chosenStringFeature.equals("Desert")) {
             return "You gain resistance to fire damage, and you don’t suffer the effects of extreme heat, as described in the Dungeon Master’s Guide. Moreover, as an action, you can touch a flammable object that isn’t being worn or carried by anyone else and set it on fire.";
         }
-        else if (_chosenFeature.equals("Sea")) {
+        else if (_chosenStringFeature.equals("Sea")) {
             return "You gain resistance to lightning damage, and you can breathe underwater. You also gain a swimming speed of 30 feet.";
         }
         else { //Tundra
@@ -122,10 +167,10 @@ public class Barbarian_storm extends BaseArchetype {
     }
 
     private String getAuraDescription(int iLevel) {
-        if (_chosenFeature.equals("Desert")) {
+        if (_chosenStringFeature.equals("Desert")) {
             return "All other creatures in your aura take " + (iLevel >= 20 ? 6 : iLevel >= 15 ? 5 : iLevel >= 10 ? 4 : iLevel >= 5 ? 3 : 2) + " fire damage.";
         }
-        else if (_chosenFeature.equals("Sea")) {
+        else if (_chosenStringFeature.equals("Sea")) {
             return "When this effect is activated, you can choose one other creature you can see in your aura. The target must make a Dexterity saving throw. The target takes "
                     + (iLevel >= 20 ? "4D6" : iLevel >= 15 ? "3D6" : iLevel >= 10 ? "2D6" : "1D6") + " lightning damage on a failed save, or half on a succesful save.";
         }

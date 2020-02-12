@@ -16,6 +16,9 @@ import com.guigeek.devilopers.dd5charactersheet.character.Power;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,19 +26,29 @@ import java.util.List;
 public class Warlock extends BaseClass {
     static final long serialVersionUID = 214L;
 
-    protected LinkedList<Power> _invocations = new LinkedList<>();
 
     @Override
-    public void writeExternal(ObjectOutput objectOutput) throws IOException {
-        super.writeExternal(objectOutput);
-        objectOutput.writeObject(_invocations);
+    public int gainedClassFeatures(int classLevel) {
+        if (classLevel == 2) {
+            return 2;
+        }
+        else if (classLevel == 5 || classLevel == 7 || classLevel == 9 || classLevel == 13 || classLevel == 15 || classLevel == 18) {
+            return 1;
+        }
+
+        return 0;
     }
 
     @Override
-    public void readExternal(ObjectInput objectInput) throws IOException, ClassNotFoundException {
-        super.readExternal(objectInput);
-        _invocations = (LinkedList<Power>) objectInput.readObject();
+    public List<Power> getAllClassFeatures(int iClassLevel) {
+        return Arrays.asList(invocationsOptions);
     }
+
+    @Override
+    public boolean canReplaceFeature(int iClasseLevel) {
+        return iClasseLevel > 2;
+    }
+
 
     Power[] invocationsOptions = new Power[]{
             new Power("[Invocation] Agonizing Blast", "Prerequisite: eldritch blast cantrip\n" +
@@ -172,29 +185,8 @@ public class Warlock extends BaseClass {
                     "You can see the true form of any shapechanger or creature concealed by illusion or transmutation magic while the creature is within 30 feet of you and within line of sight.", "", -1, -1, true, Enumerations.ActionType.PASSIVE)
     };
 
-    private LinkedList<Power> getAvailableInvocations() {
-        LinkedList<Power> features = new LinkedList<>();
-        manLoop: for (Power invocation : invocationsOptions) {
-            for (Power p : _invocations) {
-                if (p._name.equals(invocation._name)) {
-                    continue manLoop;
-                }
-            }
-
-            features.add(invocation);
-        }
-
-        return features;
-    }
-
     public int nbOfFeatures(int iLevel) {
         return iLevel >= 18 ? 8 : iLevel >= 15 ? 7 : iLevel >= 12 ? 6 : iLevel >= 9 ? 5 : iLevel >= 7 ? 4 : iLevel >= 5 ? 3 : iLevel >= 2 ? 2 : 0;
-    }
-
-    public void doLevelDown(int inewLevel) {
-        while(_invocations.size() > nbOfFeatures(inewLevel)) {
-            _invocations.removeLast();
-        }
     }
 
     @Override
@@ -246,6 +238,10 @@ public class Warlock extends BaseClass {
                 _archetypes.remove(pact);
             }
         }
+
+        while(_chosenFeatures.size() > nbOfFeatures(newLevel)) {
+            _chosenFeatures.remove(_chosenFeatures.size() -1);
+        }
     }
 
 
@@ -259,14 +255,12 @@ public class Warlock extends BaseClass {
 
     @Override
     public int getAttacksPerRound(Character iCharacter, int classLevel) {
-        boolean hasThirstingBlade = false;
-        for (Power feat : iCharacter.getFeats()) {
-            if (feat._name.contains("Thirsting Blade")) {
-                hasThirstingBlade = true;
-                break;
+        for (Power feat : _chosenFeatures) {
+            if (feat._name.equals("[Invocation] Thirsting Blade")) {
+                return 2;
             }
         }
-        return hasThirstingBlade ? 2:1;
+        return 1;
     }
 
 
@@ -372,46 +366,6 @@ public class Warlock extends BaseClass {
             levelUp.add("You now know " + (10+(int)(Math.ceil(count/2))) + " spells.");
         }
 
-        // Invocations
-        if (iNewCharacterLevel == 2 || iNewCharacterLevel == 5 || iNewCharacterLevel == 7 || iNewCharacterLevel == 9 ||
-                iNewCharacterLevel == 13 || iNewCharacterLevel == 15 || iNewCharacterLevel == 18) {
-            LinkedList<Power> availableMeta = getAvailableInvocations();
-            AlertDialog.Builder b = new AlertDialog.Builder(context);
-            b.setTitle("Select an Invocation" + (iNewCharacterLevel == 2 ? " (1/2)" : ""));
-            final Object[] featsFiltered = availableMeta.toArray();
-
-            b.setAdapter(new FeatAdapter(context, R.layout.list_feat, availableMeta), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    Power feat = (Power)featsFiltered[which];
-                    _invocations.add(feat);
-
-                    // Second one
-                    if (iNewCharacterLevel == 2) {
-                        LinkedList<Power> maneuvers2 = getAvailableInvocations();
-                        AlertDialog.Builder b2 = new AlertDialog.Builder(context);
-                        b2.setTitle("Select an Invocation (2/2)");
-                        final Object[] featsFiltered2 = maneuvers2.toArray();
-
-                        b2.setAdapter(new FeatAdapter(context, R.layout.list_feat, maneuvers2), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                Power feat = (Power) featsFiltered2[which];
-                                _invocations.add(feat);
-                            }
-                        });
-
-                        b2.show();
-                    }
-                }
-            });
-
-            b.show();
-        }
-
-
         // Base-warlock powers
         if (iNewCharacterLevel == 11) {
             levelUp.add("You gained one 6th level Arcanum!");
@@ -471,7 +425,7 @@ public class Warlock extends BaseClass {
             powers.add(new Power("Spell slot", "Consume a slot to cast a spell which level is no more than " + spellLevel + ".\nThe spell is cast as a " + spellLevel + (spellLevel == 1 ? "st" : (spellLevel == 2 ? "nd" : (spellLevel == 3 ? "rd": "th"))) + " level spell.", "Spell", spellSlots, dd, false, Enumerations.ActionType.ACTION));
         }
 
-        powers.addAll(_invocations);
+        powers.addAll(_chosenFeatures);
 
 
         if (iLevel >= 20) {

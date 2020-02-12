@@ -40,7 +40,9 @@ public class Fighter_champion extends BaseArchetype {
         return App.getResString(R.string.fighter_champion);
     }
 
-    public void doLevelDown(int inewLevel) {
+    @Override
+    public void doLevelDown(int old, int inewLevel) {
+        super.doLevelDown(old, inewLevel);
         if (inewLevel < 10) {
             _fightingStyle = null;
         }

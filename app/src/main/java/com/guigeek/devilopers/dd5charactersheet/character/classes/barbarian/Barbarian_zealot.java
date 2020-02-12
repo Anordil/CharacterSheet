@@ -63,7 +63,7 @@ public class Barbarian_zealot extends BaseArchetype {
 
     private String getSpecialDamage(int iLevel) {
         int dmg = (int)Math.floor(iLevel/2);
-        return "1D6" + (dmg > 0 ? " +" + dmg : dmg < 0 ? " " + dmg : "") + " (" + (_chosenFeature.equals("Radiant") ? "Radiant" : "Necrotic") + ")";
+        return "1D6" + (dmg > 0 ? " +" + dmg : dmg < 0 ? " " + dmg : "") + " (" + (_chosenStringFeature.equals("Radiant") ? "Radiant" : "Necrotic") + ")";
     }
 
     @Override

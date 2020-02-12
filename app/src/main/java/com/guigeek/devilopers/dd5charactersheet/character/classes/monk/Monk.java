@@ -178,22 +178,6 @@ public class Monk extends BaseClass {
                 && (character._equippedShield == null || character._equippedShield._type == Enumerations.ArmorTypes.NONE);
     }
 
-    @Override
-    public LinkedList<Power> getAllPowers(int iLevel, Character iCharac) {
-        LinkedList<Power> allItems = getPowers(iLevel, iCharac);
-        if (_archetypes != null) {
-            for (Archetype arc: _archetypes) {
-                allItems.addAll(arc.getPowers(iLevel, iCharac));
-
-                // Override for Monk because of the Disciplines for the Way of the Four elements
-                if (arc instanceof Monk_elements) {
-                    allItems.addAll(((Monk_elements)arc)._chosenDisciplines);
-                }
-            }
-        }
-
-        return allItems;
-    }
 
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();

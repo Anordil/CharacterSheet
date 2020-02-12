@@ -16,41 +16,51 @@ import java.util.List;
  */
 public interface Class  {
 
-    public String getClassName();
-    public String getQualifiedClassName();
-    public int getHitDie();
+    String getClassName();
+    String getQualifiedClassName();
+    int getHitDie();
 
-    public boolean isCaster();
-    public int[] getSpellSlots(int iCharacterLevel);
-    public int[] getSpellsKnown(int iCharacterLevel);
-    public int getAttacksPerRound(Character iCharacter, int classLevel);
+    boolean isCaster();
+    int[] getSpellSlots(int iCharacterLevel);
+    int[] getSpellsKnown(int iCharacterLevel);
+    int getAttacksPerRound(Character iCharacter, int classLevel);
 
-    public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context);
-    public LinkedList<Power> getPowers(int iLevel, Character iCharac);
+    List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context);
+    LinkedList<Power> getPowers(int iLevel, Character iCharac);
 
-    public Enumerations.Attributes getMainSpellAttribute();
+    Enumerations.Attributes getMainSpellAttribute();
 
-    public int getIconResource();
+    int getIconResource();
 
-    public LinkedList<Fettle> getFettles(Character character, int classLevel);
+    LinkedList<Fettle> getFettles(Character character, int classLevel);
 
-    public int getAC(Character character);
+    int getAC(Character character);
 
-    public void addArchetype(Archetype iArchetype, int iNewCharacterLevel, Context context);
-    public Archetype getArchetypeByName(String iName);
+    void addArchetype(Archetype iArchetype, int iNewCharacterLevel, Context context);
+    Archetype getArchetypeByName(String iName);
 
-    public Enumerations.SavingThrows[] getSavingThrowsProficiencies();
+    Enumerations.SavingThrows[] getSavingThrowsProficiencies();
 
-    public int getChoosableArchetypes(int iNewLevel);
-    public Archetype getArchetype(int index);
+    int getChoosableArchetypes(int iNewLevel);
+    Archetype getArchetype(int index);
 
-    public List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context);
-    public LinkedList<Power> getAllPowers(int iLevel, Character iCharac);
-    public LinkedList<Fettle> getAllFettles(Character character, int classLevel);
+    List<String> getAllLevelUpBenefits(int iNewCharacterLevel, Context context);
+    LinkedList<Power> getAllPowers(int iLevel, Character iCharac);
+    LinkedList<Fettle> getAllFettles(Character character, int classLevel);
 
-    public List<Attack> getSpecialClassAttacks(Character iCharacter, int classLevel);
-    public List<Attack> getAllSpecialClassAttacks(Character iCharacter, int classLevel);
+    List<Attack> getSpecialClassAttacks(Character iCharacter, int classLevel);
+    List<Attack> getAllSpecialClassAttacks(Character iCharacter, int classLevel);
 
-    public void doLevelUp(int oldLevel, int newLevel, Context context, Runnable showBenefits);
-    public void doLevelDown(int oldLevel, int newLevel);
+    void doLevelUp(int oldLevel, int newLevel, Context context, Runnable showBenefits);
+    void doLevelDown(int oldLevel, int newLevel);
+
+    // Features to choose from at level up
+    List<Power> getAllClassFeatures(int iClassLevel);
+    // Do you get to change a feature at this level
+    boolean canReplaceFeature(int iClasseLevel);
+    void replaceFeature(Context context, int classLevel);
+    void selectClassFeature(Context context, int classLevel, int current, int max);
+    int gainedClassFeatures(int classLevel);
+    int nbOfFeatures(int level);
+
 }

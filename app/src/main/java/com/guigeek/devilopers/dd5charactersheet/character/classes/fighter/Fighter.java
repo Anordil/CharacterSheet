@@ -111,24 +111,6 @@ public class Fighter extends BaseClass {
     }
 
     @Override
-    public void doLevelDown(int oldLevel, int newLevel) {
-        super.doLevelDown(oldLevel, newLevel);
-
-        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_archer) {
-            ((Fighter_archer)_archetypes.get(0)).doLevelDown(newLevel);
-        }
-        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_battlemaster) {
-            ((Fighter_battlemaster)_archetypes.get(0)).doLevelDown(newLevel);
-        }
-        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_rune) {
-            ((Fighter_rune)_archetypes.get(0)).doLevelDown(newLevel);
-        }
-        if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_gunslinger) {
-            ((Fighter_gunslinger)_archetypes.get(0)).doLevelDown(newLevel);
-        }
-    }
-
-    @Override
     public boolean isCaster() {
         if (!_archetypes.isEmpty() && _archetypes.get(0) instanceof Fighter_eldritch) {
             return true;

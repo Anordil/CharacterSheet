@@ -5,24 +5,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
-import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by ggallani on 25/03/2016.
  */
 public class FeatAdapter extends ArrayAdapter<Power> {
 
-    private LinkedList<Power> _items;
+    private List<Power> _items;
 
-    public FeatAdapter(Context context, int textViewResourceId, LinkedList<Power> items) {
+    public FeatAdapter(Context context, int textViewResourceId, List<Power> items) {
         super(context, textViewResourceId, items);
         _items = items;
     }
