@@ -380,4 +380,14 @@
         <item>When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.</item>
         <item>When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.</item>
     </string-array>
+
+
+    <string-array name="profaneSoulPatrons">
+        <item>Archfey</item>
+        <item>Celestial</item>
+        <item>Fiend</item>
+        <item>Great Old One</item>
+        <item>Hexblade</item>
+        <item>Undying</item>
+    </string-array>
 </resources>

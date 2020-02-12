@@ -51,11 +51,6 @@ public class Barbarian_storm extends BaseArchetype {
         return perks;
     }
 
-    @Override
-    public int getChoosableFeature(int iLevel) {
-        return -1;
-    }
-
     protected void selectAuraType(Context context) {
         AlertDialog.Builder b = new AlertDialog.Builder(context);
         b.setTitle("Select a Storm Aura type");

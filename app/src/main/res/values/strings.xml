@@ -33,10 +33,10 @@
 
     <string name="addFeat">ADD FEAT</string>
 
-    <string name="bloodhunter_ghostslayer">Ghostslayer</string>
-    <string name="bloodhunter_lycan">Lycan</string>
-    <string name="bloodhunter_mutant">Mutant</string>
-    <string name="bloodhunter_profane_soul">Profane Soul</string>
+    <string name="bloodhunter_ghostslayer">Order of the Ghostslayer</string>
+    <string name="bloodhunter_lycan">Order of the Lycan</string>
+    <string name="bloodhunter_mutant">Order of the Mutant</string>
+    <string name="bloodhunter_profane_soul">Order of the Profane Soul</string>
 
     <string name="rogue_assassin">Assassin</string>
     <string name="rogue_swashbuckler">Swashbuckler</string>

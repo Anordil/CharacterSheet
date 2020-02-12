@@ -20,6 +20,8 @@ import com.guigeek.devilopers.dd5charactersheet.character.classes.warlock.Warloc
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +29,45 @@ import java.util.List;
 public class BloodHunter extends BaseClass {
     static final long serialVersionUID = 203L;
     protected Power _fightingStyle;
+
+    protected Power[] bloodCurses = new Power[] {
+        new Power("Blood Curse of Binding", "As a bonus action, you can attempt to bind an enemy no more than one size larger than you within 30 feet. The target must succeed on a Strength saving throw (DC equal to 8 + your proficiency bonus + your Wisdom modifier) or have their speed be reduced to 0 until the end of your next turn.\n" +
+                "\n" +
+                "Amplify. This curse becomes ongoing, and can affect a creature regardless of their size category. At the end of each of its turns, the cursed can make another Strength saving throw. On a success, this curse ends. You can end the curse whenever you like (no action required).", "", -1, -1, false, Enumerations.ActionType.BONUS_ACTION),
+        new Power("Blood Curse of Mutual Suffering", "As a bonus action, you can link to a creature within 30 feet for up to a minute, forcing them to share in the pain they inflict upon you. The next time the cursed creature damages you with a weapon attack, this curse deals necrotic damage to the cursed creature equal to half of the damage you suffered. This curse then ends.\n" +
+                "\n" +
+                "Amplify. This curse instead deals damage equal to the damage you suffered, and it ignores necrotic resistance.", "", -1, -1, false, Enumerations.ActionType.BONUS_ACTION),
+        new Power("Blood Curse of Purgation", "As a bonus action, you can manipulate the vitality of a creature within 60 feet to expunge a corruption in their blood. The target creature can immediately make a saving throw against a poisoned condition afflicting it.\n" +
+                "\n" +
+                "Amplify. Your target can instead immediately make a saving throw against one other condition afflicting it. This condition can be blinded, deafened, or paralyzed.", "", -1, -1, false, Enumerations.ActionType.BONUS_ACTION),
+        new Power("Blood Curse of Spell Sunder", "When an enemy casts a spell within 60 feet that requires a spell attack roll and targets you, you can use your reaction to rend the spell from the air, imposing disadvantage on the spell attack roll.\n" +
+                "\n" +
+                "Amplify. You make a Wisdom ability check. The DC equals 10 + the spell’s level. On a success, the creature’s spell misses you automatically.", "60ft", -1, -1, false, Enumerations.ActionType.REACTION),
+        new Power("Blood Curse of the Eyeless", "When an enemy who is not immune to blindness within 60 feet makes a weapon attack, you can use your reaction to impose disadvantage on the attack roll.\n" +
+                "\n" +
+                "Amplify. Following the triggering attack, the affected enemy has disadvantage on the next attack roll they make.", "60ft", -1, -1, false, Enumerations.ActionType.REACTION),
+        new Power("Blood Curse of the Fallen Puppet", "The moment a creature falls unconscious or dies within 30 feet of you, you can use your reaction to give that creature a final act of aggression. That creature immediately makes a single weapon attack against a target of your choice within its attack range. After the attack, the creature returns to being unconscious or dead.\n" +
+                "\n" +
+                "Amplify. You grant a bonus to the attack roll and damage roll of the cursed creature’s attack equal to your Wisdom modifier (minimum of 1).", "30ft", -1, -1, false, Enumerations.ActionType.REACTION),
+        new Power("Blood Curse of the Fending Rite", "When an enemy casts a spell that requires a Dexterity saving throw, you can use your reaction to deflect the spell with your crimson rite. You gain a bonus to the initial saving throw against that spell equal to your Wisdom modifier (minimum of 1). This curse is invoked before the saving throw is rolled.\n" +
+                "\n" +
+                "Amplify. You grant all allies within 5 feet of you this bonus to their saving throw against the triggering spell as well.", "", -1, -1, false, Enumerations.ActionType.REACTION),
+        new Power("Blood Curse of the Marked", "As a bonus action, you can mark an enemy within 60 feet. Until the end of your turn, all crimson rite damage you deal to the target is doubled.\n" +
+                "\n" +
+                "Amplify. You cause the marked target to also lose resistance to your rite damage type until the beginning of your next turn.", "", -1, -1, false, Enumerations.ActionType.BONUS_ACTION)
+    };
+
+    protected Power[] primalRites = new Power[] {
+            new Power("Rite of the Flame", "Your rite damage type is fire", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("Rite of the Frozen", "Your rite damage type is cold", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("Rite of the Storm", "Your rite damage type is lightning", "", -1, -1, false, Enumerations.ActionType.PASSIVE)
+    };
+
+    protected Power[] esotericRites = new Power[] {
+            new Power("Rite of the Roar", "Your rite damage type is thunder", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("Rite of the Oracle", "Your rite damage type is psychic", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
+            new Power("Rite of the dead", "Your rite damage type is necrotic", "", -1, -1, false, Enumerations.ActionType.PASSIVE)
+    };
 
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException {
@@ -49,6 +90,12 @@ public class BloodHunter extends BaseClass {
     public Archetype getArchetypeByName(String iName) {
         if (iName.equals(App.getResString(R.string.bloodhunter_lycan))) {
             return new BloodHunter_lycan();
+        } else if (iName.equals(App.getResString(R.string.bloodhunter_mutant))) {
+            return new BloodHunter_mutant();
+        } else if (iName.equals(App.getResString(R.string.bloodhunter_ghostslayer))) {
+            return new BloodHunter_ghostslayer();
+        } else if (iName.equals(App.getResString(R.string.bloodhunter_profane_soul))) {
+            return new BloodHunter_profane();
         }
         return null;
     }
@@ -100,10 +147,6 @@ public class BloodHunter extends BaseClass {
     };
 
 
-    public BloodHunter(){
-
-    }
-
 
     @Override
     public int getHitDie() {
@@ -130,35 +173,47 @@ public class BloodHunter extends BaseClass {
     }
 
     @Override
+    public int gainedClassFeatures(int classLevel) {
+        // Blood Curses
+        if (classLevel == 2 || classLevel == 5 || classLevel == 9 || classLevel == 13|| classLevel == 16 || classLevel == 20) {
+            return 1;
+        } else if (classLevel == 1 || classLevel == 6 || classLevel == 11 || classLevel == 14) {
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public List<Power> getAllClassFeatures(int classLevel) {
+        if (classLevel == 2 || classLevel == 5 || classLevel == 9 || classLevel == 13|| classLevel == 16 || classLevel == 20) {
+            return Arrays.asList(bloodCurses);
+        } else if (classLevel == 1 || classLevel == 6 || classLevel == 11) {
+            return Arrays.asList(primalRites);
+        } else if (classLevel == 14) {
+            return Arrays.asList(esotericRites);
+        }
+
+        return null;
+    }
+
+    @Override
+    public int nbOfFeatures(int iLevel) {
+        // Blood curses at 2 5 9 13 16 20
+        int total = iLevel >= 20 ? 6 : iLevel >= 16 ? 5 : iLevel >= 13 ? 4 : iLevel >= 9 ? 3 : iLevel >= 5 ? 2 : iLevel >= 2 ? 1 : 0;
+        // Rites at 1 6 11 14
+        total += iLevel >= 14 ? 4 : iLevel >= 11 ? 3 : iLevel >= 6 ? 2 : 1;
+
+        return total;
+    }
+
+    @Override
     public List<String> getLevelUpBenefits(int iNewCharacterLevel, Context context) {
         List<String> levelUp = new LinkedList<>();
         levelUp.add("Blood Hunter level " + iNewCharacterLevel + " benefits:");
 
-        // Blood Curses
-        if (iNewCharacterLevel == 2) {
-            levelUp.add("You know 1 Blood Curse.");
-        }
-        else if (iNewCharacterLevel == 5) {
-            levelUp.add("You know 2 Blood Curses.");
-        }
-        else if (iNewCharacterLevel == 9) {
-            levelUp.add("You know 3 Blood Curses.");
-        }
-        else if (iNewCharacterLevel == 13) {
-            levelUp.add("You know 4 Blood Curses.");
-        }
-        else if (iNewCharacterLevel == 17) {
-            levelUp.add("You know 5 Blood Curses.");
-        }
-        else if (iNewCharacterLevel == 20) {
-            levelUp.add("You know 6 Blood Curses.");
-        }
-
-
         // Base-Blood Hunter powers
         if (iNewCharacterLevel == 1) {
             levelUp.add("You gained Hunter's Bane.");
-            levelUp.add("You gained one Primal Crimson Rite (Fire, Cold or Lightning).");
         }
         if (iNewCharacterLevel == 2) {
             levelUp.add("You gained Blood Maledict.");
@@ -188,7 +243,6 @@ public class BloodHunter extends BaseClass {
             b.show();
         }
         if (iNewCharacterLevel == 6) {
-            levelUp.add("You gained one Primal Crimson Rite (Fire, Cold or Lightning).");
             levelUp.add("Blood Maledict is now 2x/rest.");
         }
         if (iNewCharacterLevel == 9) {
@@ -199,11 +253,9 @@ public class BloodHunter extends BaseClass {
         }
         if (iNewCharacterLevel == 11) {
             levelUp.add("Your Hunter's Bane improved.");
-            levelUp.add("You gained one Primal Crimson Rite (Fire, Cold or Lightning).");
             levelUp.add("Blood Maledict is now 3x/rest.");
         }
         if (iNewCharacterLevel == 14) {
-            levelUp.add("You gained one Esoteric Crimson Rite (Thunder, Necrotic or Psychic).");
             levelUp.add("You gained Hardened Soul.");
         }
         if (iNewCharacterLevel == 17) {
@@ -237,15 +289,19 @@ public class BloodHunter extends BaseClass {
             powers.add(new Power("Hunter's Bane 2", "You may suffer " + getCrimsonRiteDie(iLevel) + " damages to gain advantage on an Insight or Intimidation check.", "", -1, -1, false, Enumerations.ActionType.PASSIVE));
         }
         powers.add(new Power("Hunter's Bane", "You have advantage on Survival checks to track Fey, Fiends or Undead, as well as Intelligence checks to recall information about them. You cannot be surprised while actively tracking one of these creature types, and can only be tracking one type at a time.", "", -1, -1, false, Enumerations.ActionType.PASSIVE));
-        powers.add(new Power("Crimson Rite", "Suffer " + iLevel + " damages and lower your max HP by " + iLevel
-                + " to imbue a weapon so it deals an extra 1D" + getCrimsonRiteDie(iLevel) + " damage of the type of a Rite you know. The Rite fades if you let go of the weapon. You may imbue several weapons, suffering the HP loss for each. When the rite fades, your max HP is restored to its previous level but you do not regain HP.", "Self", -1, -1, false, Enumerations.ActionType.BONUS_ACTION));
 
+
+        // Crimson Rites
+        powers.add(new Power("Crimson Rite", "Suffer " + iLevel + " damages and lower your max HP by " + iLevel
+                + " to imbue a weapon so it deals an extra 1D" + getCrimsonRiteDie(iLevel) + " damage of the type of a Rite you know. The Rite fades if you let go of the weapon. You may imbue several weapons, suffering the HP loss for each. When the rite fades, your max HP is restored to its previous level but you do not regain HP. Crimson rite can be used on multiple weapons, costing additional hit point loss. Most weapons can only be subject to a single rite at any given time. Each end of a polearm or quarterstaff is treated as a separate weapon for the purposes of this feature. A rite can be allowed to fade at any time (no action required).", "Self", -1, -1, false, Enumerations.ActionType.BONUS_ACTION));
+        powers.addAll(getCrimsonRites());
 
         if (iLevel >= 2) {
             powers.add(new Power("Blood Maledict", "You know " + _spellsKnown[iLevel][1] + " blood curses.\n" +
                     "When you use your Blood Maledict, you choose which curse to invoke.\n" +
                     "While invoking a blood curse, but before it affects the target, you may choose to amplify the curse by suffering 1D" + getCrimsonRiteDie(iLevel)
                     + ". An amplified curse gains an additional effect, noted in the curse’s description. Creatures that do not have blood in their bodies are immune to blood curses (DM’s discretion).", "", getBloodMaledictUses(iLevel), -1, false, Enumerations.ActionType.PASSIVE));
+            powers.addAll(getBloodCurses());
         }
 
         if (iLevel >= 9) {
@@ -268,6 +324,30 @@ public class BloodHunter extends BaseClass {
         }
 
         return powers;
+    }
+
+    private List<Power> getCrimsonRites() {
+        LinkedList<Power> rites = new LinkedList<>();
+
+        for (Power p : _chosenFeatures) {
+            if (p._name.startsWith("Rite")) {
+                rites.add(p);
+            }
+        }
+
+        return rites;
+    }
+
+    private List<Power> getBloodCurses() {
+        LinkedList<Power> curses = new LinkedList<>();
+
+        for (Power p : _chosenFeatures) {
+            if (p._name.startsWith("Blood Curse")) {
+                curses.add(p);
+            }
+        }
+
+        return curses;
     }
 
     @Override
