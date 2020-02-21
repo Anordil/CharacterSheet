@@ -7,259 +7,63 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/createCharacterLayout"
     tools:context="com.guigeek.devilopers.dd5charactersheet.android.CreateCharacter">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/createCharacterLayout">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:id="@+id/layoutRace"
-            android:layout_below="@+id/inName"
-            android:weightSum="2"
-            android:layout_marginTop="30dp"
-            android:layout_height="wrap_content" android:orientation="horizontal">
-
-            <Spinner
-                android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerRace"
-
-                android:spinnerMode="dialog" />
-            <Spinner
-                android:layout_width="0dp" android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinnerSubRace"
-                android:spinnerMode="dialog" />
-        </LinearLayout>
-
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerClass"
-        android:layout_below="@+id/layoutRace"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        android:spinnerMode="dialog" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:layout_above="@+id/layoutRace"
         android:hint="Hero name"
         android:ems="10"
         android:id="@+id/inName"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create"
-        android:id="@+id/btnCreate"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/layoutRace"
+        android:weightSum="2"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content" android:orientation="horizontal">
 
-    <TableLayout
+        <Spinner
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerRace"
+
+            android:spinnerMode="dialog" />
+        <Spinner
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerSubRace"
+            android:spinnerMode="dialog" />
+    </LinearLayout>
+
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/attributesTable"
-        android:layout_below="@+id/spinnerClass">
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Strength"
-                android:id="@+id/textView3"
-                android:layout_column="0" />
-
-            <EditText
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:id="@+id/inSTR"
-                android:layout_marginLeft="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="0"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/bonusSTR" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Dexterity"
-                android:id="@+id/textView4"
-                android:layout_column="0" />
-
-            <EditText
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/inDEX"
-                android:layout_column="1"
-                android:maxLength="2"
-                android:layout_marginLeft="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="0"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/bonusDEX" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Constitution"
-                android:id="@+id/textView5"
-                android:layout_column="0" />
-
-            <EditText
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/inCON"
-                android:maxLength="2"
-                android:layout_column="1"
-                android:layout_marginLeft="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="0"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/bonusCON" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Intelligence"
-                android:id="@+id/textView10"
-                android:layout_column="0" />
-
-            <EditText
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:maxLength="2"
-                android:id="@+id/inINT"
-                android:layout_column="1"
-                android:layout_marginLeft="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="0"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/bonusINT" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Wisdom"
-                android:id="@+id/textView11"
-                android:layout_column="0" />
-
-            <EditText
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:maxLength="2"
-                android:id="@+id/inWIS"
-                android:layout_column="1"
-                android:layout_marginLeft="10dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="0"
-                android:layout_marginLeft="10dp"
-                android:id="@+id/bonusWIS" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Charisma"
-                android:id="@+id/textView12"
-                android:layout_column="0" />
-
-            <EditText
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:maxLength="2"
-                android:id="@+id/inCHA"
-                android:layout_column="1"
-                android:layout_marginLeft="10dp" />
-
-            <TextView
-                android:id="@+id/bonusCHA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="0"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </TableRow>
-    </TableLayout>
+        android:id="@+id/spinnerClass"
+        android:layout_below="@+id/attributesHelp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="50dp"
+        android:spinnerMode="dialog" />
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/attributesHelp"
-        android:layout_below="@+id/attributesTable"/>
-</RelativeLayout>
+        android:layout_below="@+id/layoutRace"
+        android:id="@+id/attributesHelp"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Done!"
-        android:id="@+id/btnDone"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
+        android:text="Next"
+        android:id="@+id/btnCreate"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -272,4 +272,15 @@ public class Cleric extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_priest;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.HISTORY.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.MEDICINE.toString(),
+                Enumerations.Skills.PERSUASION.toString(),
+                Enumerations.Skills.RELIGION.toString(),
+        };
+    }
 }

@@ -218,4 +218,18 @@ public class Druid extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_druid;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ANIMAL_HANDLING.toString(),
+                Enumerations.Skills.ARCANA.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.MEDICINE.toString(),
+                Enumerations.Skills.NATURE.toString(),
+                Enumerations.Skills.PERCEPTION.toString(),
+                Enumerations.Skills.RELIGION.toString(),
+                Enumerations.Skills.SURVIVAL.toString(),
+        };
+    }
 }

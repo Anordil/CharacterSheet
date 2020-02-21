@@ -226,4 +226,26 @@ public class Rogue extends BaseClass {
     public Enumerations.Attributes getMainSpellAttribute() {
         return Enumerations.Attributes.INT;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ACROBATICS.toString(),
+                Enumerations.Skills.ATHLETICS.toString(),
+                Enumerations.Skills.DECEPTION.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.INTIMIDATION.toString(),
+                Enumerations.Skills.INVESTIHATION.toString(),
+                Enumerations.Skills.PERCEPTION.toString(),
+                Enumerations.Skills.PERFORMANCE.toString(),
+                Enumerations.Skills.PERSUASION.toString(),
+                Enumerations.Skills.SLEIGHT_OF_HAND.toString(),
+                Enumerations.Skills.STEALTH.toString()
+        };
+    }
+
+    @Override
+    public int getClassSkillCount() {
+        return 4;
+    }
 }

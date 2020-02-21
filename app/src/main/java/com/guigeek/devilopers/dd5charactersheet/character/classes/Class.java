@@ -7,6 +7,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
+import com.guigeek.devilopers.dd5charactersheet.character.Skill;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -62,5 +63,9 @@ public interface Class  {
     void selectClassFeature(Context context, int classLevel, int current, int max);
     int gainedClassFeatures(int classLevel);
     int nbOfFeatures(int level);
+
+    void selectSkills(final Context context, final Character iCharacter);
+    String[] getClassSkills();
+    int getClassSkillCount();
 
 }

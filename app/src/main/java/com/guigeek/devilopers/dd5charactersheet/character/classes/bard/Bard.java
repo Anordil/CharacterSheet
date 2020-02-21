@@ -245,4 +245,33 @@ public class Bard extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_bard;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ANIMAL_HANDLING.toString(),
+                Enumerations.Skills.ACROBATICS.toString(),
+                Enumerations.Skills.ARCANA.toString(),
+                Enumerations.Skills.ATHLETICS.toString(),
+                Enumerations.Skills.DECEPTION.toString(),
+                Enumerations.Skills.HISTORY.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.INTIMIDATION.toString(),
+                Enumerations.Skills.INVESTIHATION.toString(),
+                Enumerations.Skills.NATURE.toString(),
+                Enumerations.Skills.MEDICINE.toString(),
+                Enumerations.Skills.PERCEPTION.toString(),
+                Enumerations.Skills.PERFORMANCE.toString(),
+                Enumerations.Skills.PERSUASION.toString(),
+                Enumerations.Skills.RELIGION.toString(),
+                Enumerations.Skills.SLEIGHT_OF_HAND.toString(),
+                Enumerations.Skills.STEALTH.toString(),
+                Enumerations.Skills.SURVIVAL.toString(),
+        };
+    }
+
+    @Override
+    public int getClassSkillCount() {
+        return 3;
+    }
 }

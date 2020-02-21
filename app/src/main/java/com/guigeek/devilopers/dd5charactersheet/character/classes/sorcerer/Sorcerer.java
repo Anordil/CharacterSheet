@@ -230,4 +230,16 @@ public class Sorcerer extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_warlock;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ARCANA.toString(),
+                Enumerations.Skills.DECEPTION.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.INTIMIDATION.toString(),
+                Enumerations.Skills.PERSUASION.toString(),
+                Enumerations.Skills.RELIGION.toString(),
+        };
+    }
 }

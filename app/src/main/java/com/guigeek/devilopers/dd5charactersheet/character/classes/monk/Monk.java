@@ -261,4 +261,16 @@ public class Monk extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_monk;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ACROBATICS.toString(),
+                Enumerations.Skills.ATHLETICS.toString(),
+                Enumerations.Skills.HISTORY.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.RELIGION.toString(),
+                Enumerations.Skills.STEALTH.toString(),
+        };
+    }
 }

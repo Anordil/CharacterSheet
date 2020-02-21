@@ -354,4 +354,24 @@ public class BloodHunter extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_werewolf;
     }
+
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ACROBATICS.toString(),
+                Enumerations.Skills.ATHLETICS.toString(),
+                Enumerations.Skills.ARCANA.toString(),
+                Enumerations.Skills.HISTORY.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.INVESTIHATION.toString(),
+                Enumerations.Skills.RELIGION.toString(),
+                Enumerations.Skills.SURVIVAL.toString(),
+        };
+    }
+
+    @Override
+    public int getClassSkillCount() {
+        return 3;
+    }
 }

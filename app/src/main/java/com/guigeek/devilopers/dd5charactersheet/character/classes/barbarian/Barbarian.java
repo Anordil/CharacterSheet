@@ -188,4 +188,16 @@ public class Barbarian extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_barbarian;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ANIMAL_HANDLING.toString(),
+                Enumerations.Skills.ATHLETICS.toString(),
+                Enumerations.Skills.INTIMIDATION.toString(),
+                Enumerations.Skills.NATURE.toString(),
+                Enumerations.Skills.PERCEPTION.toString(),
+                Enumerations.Skills.SURVIVAL.toString(),
+        };
+    }
 }

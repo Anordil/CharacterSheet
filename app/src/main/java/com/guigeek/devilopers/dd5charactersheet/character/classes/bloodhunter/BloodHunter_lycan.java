@@ -123,6 +123,9 @@ public class BloodHunter_lycan extends BaseArchetype {
         }
         if (iLevel >= 15) {
             powers.add(new Power("Iron Volition","Whenever you make a Wisdom saving throw to maintain control of your hybrid form, you do so with advantage..", "", -1, -1, false, Enumerations.ActionType.PASSIVE));
+            powers.add(new Power("Blood Curse of the Howl","As an action, you howl at any number of creatures within 30 feet, chilling their blood and stunning them with fear. Any of the target creatures that can hear you must succeed on a Wisdom saving throw (DC equal to 8 + your proficiency bonus + your Wisdom modifier) or become frightened of you until the end of your next turn. If they fail their saving throw by 5 or more, they are stunned until the end of your next turn instead. A creature that succeeds on this saving throw is immune to this blood curse for the next 24 hours.\n" +
+                    "\n" +
+                    "Amplify. This curse can target any number of creatures within 60 feet of you.", "30/60ft", -1, 8+iCharac.getProficiencyBonus()+iCharac.getModifier(Enumerations.Attributes.WIS), false, Enumerations.ActionType.ACTION));
         }
         return powers;
     }

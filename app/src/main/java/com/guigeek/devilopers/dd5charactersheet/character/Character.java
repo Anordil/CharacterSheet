@@ -564,6 +564,15 @@ public class Character implements Externalizable {
         }
     }
 
+    public void addSkillProficiency(String skillName) {
+        for (Skill skill : _skills) {
+            if (skill._name.equals(skillName)) {
+                skill._isProficient = true;
+                break;
+            }
+        }
+    }
+
     public int getAttacksPerRound() {
         return Math.max(_class.getAttacksPerRound(this, _level), _secondaryClass != null ? _secondaryClass.getAttacksPerRound(this, _levelSecondaryClass) : 0);
     }

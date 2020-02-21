@@ -1,7 +1,5 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
-import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian;
@@ -43,17 +40,11 @@ import com.guigeek.devilopers.dd5charactersheet.character.races.Dwarf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Race;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Tiefling;
 
-import java.util.HashMap;
-import java.util.List;
-
 public class CreateCharacter extends AppCompatActivity {
 
-    Button btnCreate, btnDone;
+    Button btnCreate;
     Spinner spRace, spClass, spSubRace;
     EditText inName;
-
-    EditText inSTR, inDEX, inCON, inINT, inWIS, inCHA;
-    TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA;
     TextView attributesHelp;
 
     Race aRace = new Dragonborn();
@@ -63,26 +54,12 @@ public class CreateCharacter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_character);
 
-        btnCreate = (Button) findViewById(R.id.btnCreate);
-        btnDone = (Button) findViewById(R.id.btnDone);
-        spRace = (Spinner) findViewById(R.id.spinnerRace);
-        spSubRace = (Spinner) findViewById(R.id.spinnerSubRace);
-        spClass = (Spinner) findViewById(R.id.spinnerClass);
-        inName = (EditText)findViewById(R.id.inName);
+        btnCreate = findViewById(R.id.btnCreate);
+        spRace = findViewById(R.id.spinnerRace);
+        spSubRace = findViewById(R.id.spinnerSubRace);
+        spClass = findViewById(R.id.spinnerClass);
+        inName = findViewById(R.id.inName);
 
-        inSTR = findViewById(R.id.inSTR);
-        inDEX = findViewById(R.id.inDEX);
-        inCON = findViewById(R.id.inCON);
-        inINT = findViewById(R.id.inINT);
-        inWIS = findViewById(R.id.inWIS);
-        inCHA = findViewById(R.id.inCHA);
-
-        bonusSTR = findViewById(R.id.bonusSTR);
-        bonusDEX = findViewById(R.id.bonusDEX);
-        bonusCON = findViewById(R.id.bonusCON);
-        bonusINT = findViewById(R.id.bonusINT);
-        bonusWIS = findViewById(R.id.bonusWIS);
-        bonusCHA = findViewById(R.id.bonusCHA);
         attributesHelp = findViewById(R.id.attributesHelp);
         updateStatsBonuses();
 
@@ -153,34 +130,9 @@ public class CreateCharacter extends AppCompatActivity {
         spClass.setAdapter(adapterClass);
 
         btnCreate.setOnClickListener(new CreateListener());
-        btnDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
 
     private void updateStatsBonuses() {
-        HashMap<Integer, String> boosts = new HashMap<>();
-        boosts.put(Enumerations.Attributes.STR.ordinal(), "");
-        boosts.put(Enumerations.Attributes.DEX.ordinal(), "");
-        boosts.put(Enumerations.Attributes.CON.ordinal(), "");
-        boosts.put(Enumerations.Attributes.INT.ordinal(), "");
-        boosts.put(Enumerations.Attributes.WIS.ordinal(), "");
-        boosts.put(Enumerations.Attributes.CHA.ordinal(), "");
-
-        for (Fettle boost: aRace.getAttributeBoost()) {
-            boosts.put(boost._describer, "+" + boost._value);
-        }
-
-        bonusSTR.setText(boosts.get(Enumerations.Attributes.STR.ordinal()));
-        bonusDEX.setText(boosts.get(Enumerations.Attributes.DEX.ordinal()));
-        bonusCON.setText(boosts.get(Enumerations.Attributes.CON.ordinal()));
-        bonusINT.setText(boosts.get(Enumerations.Attributes.INT.ordinal()));
-        bonusWIS.setText(boosts.get(Enumerations.Attributes.WIS.ordinal()));
-        bonusCHA.setText(boosts.get(Enumerations.Attributes.CHA.ordinal()));
-
         attributesHelp.setText(aRace.getAttributeBoostDescription());
     }
 
@@ -226,51 +178,32 @@ public class CreateCharacter extends AppCompatActivity {
     }
 
     private void createCharacter(Race aRace, Class aClass) {
-        int[] attributes = {
-            (bonusSTR.getText().length() > 0 ? Integer.parseInt(bonusSTR.getText().toString()):0) + Integer.parseInt(inSTR.getText().toString()),
-            (bonusDEX.getText().length() > 0 ? Integer.parseInt(bonusDEX.getText().toString()):0) + Integer.parseInt(inDEX.getText().toString()),
-            (bonusCON.getText().length() > 0 ? Integer.parseInt(bonusCON.getText().toString()):0) + Integer.parseInt(inCON.getText().toString()),
-            (bonusINT.getText().length() > 0 ? Integer.parseInt(bonusINT.getText().toString()):0) + Integer.parseInt(inINT.getText().toString()),
-            (bonusWIS.getText().length() > 0 ? Integer.parseInt(bonusWIS.getText().toString()):0) + Integer.parseInt(inWIS.getText().toString()),
-            (bonusCHA.getText().length() > 0 ? Integer.parseInt(bonusCHA.getText().toString()):0) + Integer.parseInt(inCHA.getText().toString())};
+        int[] attributes = {10, 10, 10, 10, 10, 10};
         final Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes, null, 0);
 
         Log.d("Create", aHero.toString());
 
-        Intent intent = new Intent(CreateCharacter.this, MainActivity.class);
+        Intent intent = new Intent(CreateCharacter.this, SetupStatsActivity.class);
+        intent.putExtra(Constants.CHARACTER, aHero);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Next step finished, just go back to previous activity
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent intent = new Intent(CreateCharacter.this, SetupStatsActivity.class);
+        Character aHero = null;
+        if (data != null && data.getSerializableExtra(Constants.CHARACTER) != null) {
+            try {
+                aHero = (Character) data.getSerializableExtra(Constants.CHARACTER);
+            } catch (Exception e) {
+                Log.d("TOTO", "Creation failed at some point.");
+                e.printStackTrace();
+            }
+        }
         intent.putExtra(Constants.CHARACTER, aHero);
         setResult(RESULT_OK, intent);
-
-        Runnable displayBenefits = new Runnable() {
-            @Override
-            public void run() {
-                String boons = "";
-
-                for (int level = 1; level <= aHero._level; ++level) {
-                    List<String> levelUpBoons = aHero._class.getAllLevelUpBenefits(level, CreateCharacter.this);
-                    for (String s : levelUpBoons) {
-                        if (s != null && s.length() > 0) {
-                            boons += s + "\n";
-                        }
-                    }
-                }
-
-                // Show level up window
-                AlertDialog alertDialog = new AlertDialog.Builder(CreateCharacter.this).create();
-                alertDialog.setTitle("Leveled up to " + aHero._class.getClassName() + " " + aHero._level);
-                alertDialog.setMessage(boons);
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                findViewById(R.id.createCharacterLayout).setVisibility(View.GONE);
-                                btnDone.setVisibility(View.VISIBLE);
-                            }
-                        });
-                alertDialog.show();
-            }
-        };
-
-        aHero._class.doLevelUp(0, aHero._level, CreateCharacter.this, displayBenefits);
+        finish();
     }
 }

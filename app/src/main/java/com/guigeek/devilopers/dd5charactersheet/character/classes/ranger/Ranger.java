@@ -270,4 +270,23 @@ public class Ranger extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_ranger;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ANIMAL_HANDLING.toString(),
+                Enumerations.Skills.ATHLETICS.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.INVESTIHATION.toString(),
+                Enumerations.Skills.NATURE.toString(),
+                Enumerations.Skills.PERCEPTION.toString(),
+                Enumerations.Skills.STEALTH.toString(),
+                Enumerations.Skills.SURVIVAL.toString(),
+        };
+    }
+
+    @Override
+    public int getClassSkillCount() {
+        return 3;
+    }
 }

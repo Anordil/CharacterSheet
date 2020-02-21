@@ -6,6 +6,8 @@ package com.guigeek.devilopers.dd5charactersheet.character;
 public class AttributeAlteration extends Fettle {
     public Enumerations.Attributes _subType;
 
+    public AttributeAlteration(){}
+
     public AttributeAlteration(int iValue, Enumerations.Attributes iAttribute) {
         super (Enumerations.FettleType.ATTRIBUTE_MODIFIER, iValue, iAttribute.ordinal());
         _subType = iAttribute;

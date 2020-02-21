@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.races;
 
+import android.content.Context;
+
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
@@ -26,4 +28,6 @@ public interface Race {
     public int getSubraceArrayId();
 
     public String getAttributeBoostDescription();
+
+    public void chooseAttributeBoost(final Context context, final Character iCharac);
 }

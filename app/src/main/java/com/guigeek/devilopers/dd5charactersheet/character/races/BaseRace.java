@@ -1,6 +1,9 @@
 package com.guigeek.devilopers.dd5charactersheet.character.races;
 
+import android.content.Context;
 import android.util.Log;
+
+import com.guigeek.devilopers.dd5charactersheet.character.Character;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -10,7 +13,7 @@ import java.io.ObjectOutput;
 public abstract class BaseRace implements Race, Externalizable {
     static final long serialVersionUID = 100L;
 
-    int _version = 1;
+    int _version = 2;
     String _subRace = null;
 
     public BaseRace(){}
@@ -65,5 +68,10 @@ public abstract class BaseRace implements Race, Externalizable {
     @Override
     public int getSubraceArrayId() {
         return -1;
+    }
+
+    @Override
+    public void chooseAttributeBoost(final Context context, final Character iCharac) {
+        // By default nothing to do
     }
 }

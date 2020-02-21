@@ -32,6 +32,7 @@
         </activity>
         <activity android:name=".android.CreateCharacter"></activity>
         <activity android:name=".android.CreateItemActivity"></activity>
+        <activity android:name=".android.SetupStatsActivity"></activity>
     </application>
 
 </manifest>

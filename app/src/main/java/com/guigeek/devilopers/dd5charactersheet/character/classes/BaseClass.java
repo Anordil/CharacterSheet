@@ -12,6 +12,8 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
+import com.guigeek.devilopers.dd5charactersheet.character.Skill;
+import com.guigeek.devilopers.dd5charactersheet.character.races.Human;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -450,5 +452,87 @@ public abstract class BaseClass implements Class, Externalizable {
             allAttacks.addAll(arc.getSpecialClassAttacks(iCharacter, classLevel));
         }
         return allAttacks;
+    }
+
+    @Override
+    public int getClassSkillCount() {
+        return 2;
+    }
+
+    @Override
+    public void selectSkills(final Context context, Character iCharac) {
+        selectClassSkill(context, iCharac, 1, iCharac._class.getClassSkillCount());
+    }
+
+    private void selectClassSkill(final Context context, final Character iCharac, final int current, final int max) {
+        final List<String> availableSkills = filterSkills(iCharac, iCharac._class.getClassSkills());
+        AlertDialog.Builder skillSelectionDialog = new AlertDialog.Builder(context);
+        skillSelectionDialog.setTitle("Select a " + getClassName() + " skill proficiency" + (max > 1 ? " (" + current + "/" + max + ")" : ""));
+
+        skillSelectionDialog.setAdapter(new StringListAdapter(context, R.layout.list_string, availableSkills), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                String skillName = availableSkills.get(which);
+                iCharac.addSkillProficiency(skillName);
+
+                if (current < max) {
+                    selectClassSkill(context, iCharac, current +1, max);
+                } else if (current == max && iCharac._race.getSubRace() != null && iCharac._race.getSubRace().equals("Variant")) {
+                    // Human variant: extra Skill
+                    String[] allSkills = new String[] {
+                            Enumerations.Skills.ANIMAL_HANDLING.toString(),
+                            Enumerations.Skills.ACROBATICS.toString(),
+                            Enumerations.Skills.ARCANA.toString(),
+                            Enumerations.Skills.ATHLETICS.toString(),
+                            Enumerations.Skills.DECEPTION.toString(),
+                            Enumerations.Skills.HISTORY.toString(),
+                            Enumerations.Skills.INSIGHT.toString(),
+                            Enumerations.Skills.INTIMIDATION.toString(),
+                            Enumerations.Skills.INVESTIHATION.toString(),
+                            Enumerations.Skills.NATURE.toString(),
+                            Enumerations.Skills.MEDICINE.toString(),
+                            Enumerations.Skills.PERCEPTION.toString(),
+                            Enumerations.Skills.PERFORMANCE.toString(),
+                            Enumerations.Skills.PERSUASION.toString(),
+                            Enumerations.Skills.RELIGION.toString(),
+                            Enumerations.Skills.SLEIGHT_OF_HAND.toString(),
+                            Enumerations.Skills.STEALTH.toString(),
+                            Enumerations.Skills.SURVIVAL.toString(),
+                    };
+                    final List<String> availableHumanSkills = filterSkills(iCharac, allSkills);
+                    AlertDialog.Builder skillSelectionDialogHuman = new AlertDialog.Builder(context);
+                    skillSelectionDialogHuman.setTitle("Select a bonus skill (Human Variant)");
+
+                    skillSelectionDialogHuman.setAdapter(new StringListAdapter(context, R.layout.list_string, availableHumanSkills), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            String skillName = availableSkills.get(which);
+                            iCharac.addSkillProficiency(skillName);
+                        }
+                    });
+                    skillSelectionDialogHuman.show();
+                }
+            }
+        });
+
+        skillSelectionDialog.show();
+    }
+
+    private List<String> filterSkills(Character iCharac, String[] skillsToFilter) {
+        LinkedList<String> availableSkills = new LinkedList<>();
+
+        for (String skillName : skillsToFilter) {
+            for (Skill skill: iCharac._skills) {
+                if (skill._name.equals(skillName)) {
+                    if (!skill._isProficient) {
+                        availableSkills.add(skillName);
+                    }
+                }
+            }
+        }
+
+        return availableSkills;
     }
 }

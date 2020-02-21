@@ -8,6 +8,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
+import com.guigeek.devilopers.dd5charactersheet.character.Skill;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Archetype;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.BaseClass;
 
@@ -186,5 +187,17 @@ public class Wizard extends BaseClass {
     @Override
     public int getIconResource() {
         return R.drawable.ic_mage;
+    }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+          Enumerations.Skills.ARCANA.toString(),
+          Enumerations.Skills.HISTORY.toString(),
+          Enumerations.Skills.INSIGHT.toString(),
+          Enumerations.Skills.INVESTIHATION.toString(),
+          Enumerations.Skills.MEDICINE.toString(),
+          Enumerations.Skills.RELIGION.toString(),
+        };
     }
 }

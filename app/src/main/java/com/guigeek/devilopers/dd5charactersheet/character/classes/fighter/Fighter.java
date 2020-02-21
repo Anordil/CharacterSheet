@@ -228,4 +228,18 @@ public class Fighter extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_warrior;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ANIMAL_HANDLING.toString(),
+                Enumerations.Skills.ACROBATICS.toString(),
+                Enumerations.Skills.ATHLETICS.toString(),
+                Enumerations.Skills.HISTORY.toString(),
+                Enumerations.Skills.INSIGHT.toString(),
+                Enumerations.Skills.INTIMIDATION.toString(),
+                Enumerations.Skills.PERCEPTION.toString(),
+                Enumerations.Skills.SURVIVAL.toString(),
+        };
+    }
 }

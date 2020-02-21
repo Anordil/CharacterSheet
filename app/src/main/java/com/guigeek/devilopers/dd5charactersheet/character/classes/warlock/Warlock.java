@@ -444,4 +444,17 @@ public class Warlock extends BaseClass {
     public int getIconResource() {
         return R.drawable.ic_warlock;
     }
+
+    @Override
+    public String[] getClassSkills() {
+        return new String[] {
+                Enumerations.Skills.ARCANA.toString(),
+                Enumerations.Skills.DECEPTION.toString(),
+                Enumerations.Skills.HISTORY.toString(),
+                Enumerations.Skills.INTIMIDATION.toString(),
+                Enumerations.Skills.INVESTIHATION.toString(),
+                Enumerations.Skills.NATURE.toString(),
+                Enumerations.Skills.RELIGION.toString(),
+        };
+    }
 }
