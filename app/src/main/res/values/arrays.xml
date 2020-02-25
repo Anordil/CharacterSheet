@@ -390,4 +390,9 @@
         <item>Hexblade</item>
         <item>Undying</item>
     </string-array>
+
+    <string-array name="point_options">
+        <item>Manual</item>
+        <item>Point Buy</item>
+    </string-array>
 </resources>

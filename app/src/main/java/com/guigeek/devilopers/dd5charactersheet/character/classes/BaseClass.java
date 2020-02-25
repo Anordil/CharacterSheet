@@ -508,7 +508,7 @@ public abstract class BaseClass implements Class, Externalizable {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            String skillName = availableSkills.get(which);
+                            String skillName = availableHumanSkills.get(which);
                             iCharac.addSkillProficiency(skillName);
                         }
                     });

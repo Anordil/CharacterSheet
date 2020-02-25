@@ -21,13 +21,20 @@
         android:layout_marginBottom="50dp"
         android:spinnerMode="dialog" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerStatsMethod"
+        android:text="Points left: 27"
+        android:id="@+id/pointsRemaining"></TextView>
+
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/attributesTable"
         android:padding="10dp"
-        android:layout_below="@+id/spinnerStatsMethod">
+        android:layout_below="@+id/pointsRemaining">
 
         <TableRow
             android:layout_width="match_parent"
@@ -45,7 +52,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginRight="10dp"
-            android:text="Race bonus"/>
+            android:text="Race"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,6 +95,9 @@
                 android:text="0"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/totalSTR" />
+
+            <Button android:id="@+id/btnSubSTR" android:text="-" android:layout_width="40dp"></Button>
+            <Button android:id="@+id/btnAddSTR" android:text="+" android:layout_width="40dp"></Button>
         </TableRow>
 
         <TableRow
@@ -127,6 +137,8 @@
                 android:text="0"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/totalDEX" />
+            <Button android:id="@+id/btnSubDEX" android:text="-" android:layout_width="40dp"></Button>
+            <Button android:id="@+id/btnAddDEX" android:text="+" android:layout_width="40dp"></Button>
         </TableRow>
 
         <TableRow
@@ -166,6 +178,8 @@
                 android:text="0"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/totalCON" />
+            <Button android:id="@+id/btnSubCON" android:text="-" android:layout_width="40dp"></Button>
+            <Button android:id="@+id/btnAddCON" android:text="+" android:layout_width="40dp"></Button>
         </TableRow>
 
         <TableRow
@@ -204,6 +218,8 @@
                 android:text="0"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/totalINT" />
+            <Button android:id="@+id/btnSubINT" android:text="-" android:layout_width="40dp"></Button>
+            <Button android:id="@+id/btnAddINT" android:text="+" android:layout_width="40dp"></Button>
         </TableRow>
 
         <TableRow
@@ -242,6 +258,8 @@
                 android:text="0"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/totalWIS" />
+            <Button android:id="@+id/btnSubWIS" android:text="-" android:layout_width="40dp"></Button>
+            <Button android:id="@+id/btnAddWIS" android:text="+" android:layout_width="40dp"></Button>
         </TableRow>
 
         <TableRow
@@ -281,6 +299,8 @@
                 android:text="0"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/totalCHA" />
+            <Button android:id="@+id/btnSubCHA" android:text="-" android:layout_width="40dp"></Button>
+            <Button android:id="@+id/btnAddCHA" android:text="+" android:layout_width="40dp"></Button>
         </TableRow>
     </TableLayout>
 
