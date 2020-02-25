@@ -47,7 +47,7 @@ public class StatsScreen extends Fragment {
     protected Character _character;
 
     Button updateButton, multiclassButton;
-    EditText name, level, str, dex, con, intel, wis, cha, levelSecondary;
+    EditText name, level, str, dex, con, intel, wis, cha, levelSecondary, inNotes;
     TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA, knownCantrips, knownSpells;
     TextView proficiencyBonus, modSTR, modDEX, modCON, modINT, modWIS, modCHA;
     TextView tvClassName, tvSecondaryClassName;
@@ -98,6 +98,8 @@ public class StatsScreen extends Fragment {
         intel = (EditText)root.findViewById(R.id.inINT);
         wis = (EditText)root.findViewById(R.id.intWIS);
         cha = (EditText)root.findViewById(R.id.inCHA);
+
+        inNotes = root.findViewById(R.id.inNotes);
 
         bonusSTR = root.findViewById(R.id.bonusSTR);
         bonusDEX = root.findViewById(R.id.bonusDEX);
@@ -242,6 +244,8 @@ public class StatsScreen extends Fragment {
             _character._attributes[4] = Integer.parseInt(wis.getText().toString());
             _character._attributes[5] = Integer.parseInt(cha.getText().toString());
 
+            _character._notes = inNotes.getText().toString();
+
             if (oldLevel != _character._level) {
 
                 if (oldLevel < _character._level) {
@@ -371,6 +375,8 @@ public class StatsScreen extends Fragment {
         intel.setText(_character._attributes[3] + "");
         wis.setText(_character._attributes[4] + "");
         cha.setText(_character._attributes[5] + "");
+
+        inNotes.setText(_character._notes);
 
 
         for (Fettle property : _character.getCharacterFettles()) {

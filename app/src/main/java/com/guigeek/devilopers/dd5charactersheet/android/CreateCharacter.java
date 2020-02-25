@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bard.Bard;
@@ -43,11 +44,12 @@ import com.guigeek.devilopers.dd5charactersheet.character.races.Tiefling;
 public class CreateCharacter extends AppCompatActivity {
 
     Button btnCreate;
-    Spinner spRace, spClass, spSubRace;
+    Spinner spRace, spClass, spSubRace, spBackground;
     EditText inName;
-    TextView attributesHelp;
+    TextView attributesHelp, backgroundHelp;
 
     Race aRace = new Dragonborn();
+    Enumerations.Backgrounds aBg = Enumerations.Backgrounds.ACOLYTE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +61,30 @@ public class CreateCharacter extends AppCompatActivity {
         spSubRace = findViewById(R.id.spinnerSubRace);
         spClass = findViewById(R.id.spinnerClass);
         inName = findViewById(R.id.inName);
+        spBackground = findViewById(R.id.spinnerBackground);
+        backgroundHelp = findViewById(R.id.backgroundHelp);
 
         attributesHelp = findViewById(R.id.attributesHelp);
         updateStatsBonuses();
+
+        final String[] backgrounds = new String[Enumerations.Backgrounds.values().length];
+        int index = 0;
+        for (Enumerations.Backgrounds bg : Enumerations.Backgrounds.values()) {
+            backgrounds[index++] = bg._name;
+        }
+        spBackground.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, backgrounds));
+        spBackground.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                aBg = Enumerations.Backgrounds.values()[i];
+                updateBgHelp();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         ArrayAdapter<CharSequence> adapterRace = ArrayAdapter.createFromResource(this, R.array.races, android.R.layout.simple_spinner_item);
@@ -130,6 +153,11 @@ public class CreateCharacter extends AppCompatActivity {
         spClass.setAdapter(adapterClass);
 
         btnCreate.setOnClickListener(new CreateListener());
+        updateBgHelp();
+    }
+
+    private void updateBgHelp() {
+        backgroundHelp.setText("Skill proficiencies: " + aBg._firstSkill.toString() + ", " + aBg._secondSkill.toString());
     }
 
     private void updateStatsBonuses() {
@@ -179,7 +207,11 @@ public class CreateCharacter extends AppCompatActivity {
 
     private void createCharacter(Race aRace, Class aClass) {
         int[] attributes = {10, 10, 10, 10, 10, 10};
-        final Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes, null, 0);
+        String selectedBackground = (String)spBackground.getSelectedItem();
+
+        final Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes, null, 0, aBg);
+        aHero.addSkillProficiency(aBg._firstSkill.toString());
+        aHero.addSkillProficiency(aBg._secondSkill.toString());
 
         Log.d("Create", aHero.toString());
 

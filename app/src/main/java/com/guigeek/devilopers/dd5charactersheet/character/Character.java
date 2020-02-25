@@ -43,7 +43,7 @@ import java.util.LinkedList;
 public class Character implements Externalizable {
 
     public static final long serialVersionUID = 30L;
-    public int _version = 10;
+    public int _version = 11;
 
     public Class _class;
     public Class _secondaryClass;
@@ -74,6 +74,9 @@ public class Character implements Externalizable {
     public Weapon _equippedWeapon, _offHandWeapon;
 
     public LinkedList<Externalizable> _inventory;
+
+    public Enumerations.Backgrounds _background;
+    public String _notes;
 
 
     @Override
@@ -119,6 +122,9 @@ public class Character implements Externalizable {
         oo.writeObject(_secondaryClass);
         oo.writeInt(_levelSecondaryClass);
         oo.writeInt(_hitDiceSecondary);
+
+        oo.writeObject(_background);
+        oo.writeObject(_notes);
         Log.d("WRAP", "Finished writing");
     }
 
@@ -127,7 +133,6 @@ public class Character implements Externalizable {
     {
         int version = oi.readInt();
         Log.d("TOTO", "Decoding a version " + version + " character");
-        _version = version;
 
         Object aClass = oi.readObject();
         Log.d("UNWRAP", "class " + aClass.getClass());
@@ -340,13 +345,21 @@ public class Character implements Externalizable {
         if (_inventory == null) {
             _inventory = new LinkedList<>();
         }
+
+        if (version >= 11) {
+            _background = (Enumerations.Backgrounds) oi.readObject();
+            _notes = (String) oi.readObject();
+        } else {
+            _background = Enumerations.Backgrounds.ACOLYTE;
+            _notes = "";
+        }
     }
 
     public Character(){
-        this("New hero", new Paladin(), new HalfElf(), 1, new int[6], null, 0);
+        this("New hero", new Paladin(), new HalfElf(), 1, new int[6], null, 0, Enumerations.Backgrounds.ACOLYTE);
     };
 
-    public Character(String name, Class iClass, Race iRace, int level, int[] attr, Class iSecClass, int secondLevel) {
+    public Character(String name, Class iClass, Race iRace, int level, int[] attr, Class iSecClass, int secondLevel, Enumerations.Backgrounds aBg) {
         _name = name;
         _class = iClass;
         _race = iRace;
@@ -365,6 +378,8 @@ public class Character implements Externalizable {
         _gold = 0;
         _allItems = "";
 
+        _background = aBg;
+
         initLevel();
 
         doLongRest();
@@ -373,14 +388,13 @@ public class Character implements Externalizable {
 
     public LinkedList<Power> getClassPowers() {
         if (_powers == null) { _powers = new LinkedList<>(); }
+
         _powers = _class.getAllPowers(_level, this);
+        _powers.add(_background.getPower(_background));
 
         if (_secondaryClass != null) {
-           for (Power p : _secondaryClass.getAllPowers(_levelSecondaryClass, this)) {
-               _powers.add(p);
-           }
+            _powers.addAll(_secondaryClass.getAllPowers(_levelSecondaryClass, this));
         }
-
 
         return _powers;
     }

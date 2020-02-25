@@ -81,6 +81,10 @@ public class Barbarian extends BaseClass {
             fettles.add(new Fettle(Enumerations.FettleType.ABILITY_CHECK_ADVANTAGE, 0, Enumerations.Skills.INITIATIVE.ordinal()));
         }
 
+        if (classLevel >= 5 && (character._equippedArmor._type == null || character._equippedArmor._type == Enumerations.ArmorTypes.NONE)) {
+            fettles.add(new Fettle(Enumerations.FettleType.MOVEMENT_SPEED_MODIFIER, 10, 0));
+        }
+
         return fettles;
     }
 
