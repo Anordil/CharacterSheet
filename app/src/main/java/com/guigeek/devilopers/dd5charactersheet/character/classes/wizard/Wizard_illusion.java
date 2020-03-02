@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Wizard_illusion extends BaseArchetype {
-    static final long serialVersionUID = 2807L;
+    static final long serialVersionUID = 2907L;
 
     @Override
     public String getName() {

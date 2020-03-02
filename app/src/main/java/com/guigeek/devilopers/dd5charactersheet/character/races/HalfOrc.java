@@ -38,6 +38,11 @@ public class HalfOrc extends BaseRace {
     public HalfOrc(){}
 
     @Override
+    public String getAttributeBoostDescription() {
+        return "+2 STR, +1 CON, Darkvision, Menacing, Relentless Endurance, Savage Attacks";
+    }
+
+    @Override
     public LinkedList<Power> getRacialFeatures(Character iCharacter) {
         LinkedList<Power> racialTraits = new LinkedList<>();
 

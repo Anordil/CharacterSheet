@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Wizard_conjuration extends BaseArchetype {
-    static final long serialVersionUID = 2803L;
+    static final long serialVersionUID = 2903L;
 
     @Override
     public String getName() {

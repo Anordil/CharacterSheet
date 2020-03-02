@@ -56,6 +56,17 @@ public class Gnome extends BaseRace {
     }
 
     @Override
+    public String getAttributeBoostDescription() {
+        if (_subRace.equals("Deep")) {
+            return "+2 INT, +1 DEX, Superior Darkvision, Gnome Cunning, Stone Camouflage";
+        } else if (_subRace.equals("Forest")) {
+            return "+2 INT, +1 DEX, Darkvision, Gnome Cunning, Natural Illusionist, Speak with small beasts";
+        } else {
+            return "+2 INT, +1 CON, Darkvision, Gnome Cunning, Artificer's Lore, Tinker";
+        }
+    }
+
+    @Override
     public LinkedList<Power> getRacialFeatures(Character iCharacter) {
         LinkedList<Power> racialTraits = new LinkedList<>();
 

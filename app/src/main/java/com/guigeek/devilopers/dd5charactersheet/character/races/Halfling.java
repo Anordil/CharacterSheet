@@ -60,6 +60,15 @@ public class Halfling extends BaseRace {
     }
 
     @Override
+    public String getAttributeBoostDescription() {
+        if (_subRace.equals("Lightfoot")) {
+            return "+2 DEX, +1 CHA, Lucky, Brave, Halfling Nimbleness, Stealthy";
+        } else {
+            return "+2 DEX, +1 CON, Lucky, Brave, Halfling Nimbleness, Stout Resilience";
+        }
+    }
+
+    @Override
     public LinkedList<Power> getRacialFeatures(Character iCharacter) {
         LinkedList<Power> racialTraits = new LinkedList<>();
 

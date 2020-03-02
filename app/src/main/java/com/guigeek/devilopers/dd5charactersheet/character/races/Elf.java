@@ -56,6 +56,16 @@ public class Elf extends BaseRace {
     }
 
     @Override
+    public String getAttributeBoostDescription() {
+        if (_subRace.equals("High")) {
+            return "+2 DEX, +1 INT, Darkvision, Fey ancestry, Keen senses, extra Cantrip";
+        } else {
+            return "+2 DEX, +1 WIS, Darkvision, Fey ancestry, Keen senses, Fleet of Foot, Mask of the Wild";
+        }
+    }
+
+
+    @Override
     public LinkedList<Power> getRacialFeatures(Character iCharacter) {
         LinkedList<Power> racialTraits = new LinkedList<>();
 

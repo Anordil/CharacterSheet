@@ -61,7 +61,7 @@ public class HalfElf extends BaseRace {
 
     @Override
     public String getAttributeBoostDescription() {
-        return "Add +1 to two ability scores other than CHA";
+        return "Add +1 to two ability scores other than CHA, Darkvision, Fey ancestry";
     }
 
     public HalfElf(){

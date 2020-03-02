@@ -3,6 +3,7 @@ package com.guigeek.devilopers.dd5charactersheet.character;
 import android.util.Log;
 
 import com.guigeek.devilopers.dd5charactersheet.character.classes.Class;
+import com.guigeek.devilopers.dd5charactersheet.character.classes.artificer.Artificer;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.barbarian.Barbarian;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bard.Bard;
 import com.guigeek.devilopers.dd5charactersheet.character.classes.bloodhunter.BloodHunter;
@@ -176,6 +177,9 @@ public class Character implements Externalizable {
         else if (aClass instanceof Ranger) {
             _class = (Ranger) aClass;
         }
+        else if (aClass instanceof Artificer) {
+            _class = (Artificer) aClass;
+        }
 
             Log.d("UNWRAP", "After class");
 
@@ -324,6 +328,9 @@ public class Character implements Externalizable {
                 }
                 else if (aSecondaryClass instanceof Ranger) {
                     _secondaryClass = (Ranger) aSecondaryClass;
+                }
+                else if (aSecondaryClass instanceof Artificer) {
+                    _secondaryClass = (Artificer) aSecondaryClass;
                 }
             }
             _levelSecondaryClass = oi.readInt();

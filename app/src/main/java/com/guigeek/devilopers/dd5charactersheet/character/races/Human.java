@@ -60,7 +60,7 @@ public class Human extends BaseRace {
         if (_subRace.equals("Variant")) {
             return "Add +1 to two ability scores, gain a feat & an extra skill proficiency";
         }
-        return "";
+        return "+1 to all attributes";
     }
 
     @Override

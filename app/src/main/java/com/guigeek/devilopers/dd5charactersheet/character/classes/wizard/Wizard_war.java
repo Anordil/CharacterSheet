@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Wizard_war extends BaseArchetype {
-    static final long serialVersionUID = 2810L;
+    static final long serialVersionUID = 2910L;
 
     @Override
     public String getName() {

@@ -195,7 +195,7 @@ public class Warlock extends BaseClass {
         if (iNewLevel == 1) {
             return _archetypes.size() == 0 ? R.array.warlockPatrons : -1;
         }
-        return iNewLevel == 3 && _archetypes.size() == 1 ? R.array.warlockPacts : -1;
+        return iNewLevel == 3 && _archetypes.size() <= 1 ? R.array.warlockPacts : -1;
     }
 
     @Override
