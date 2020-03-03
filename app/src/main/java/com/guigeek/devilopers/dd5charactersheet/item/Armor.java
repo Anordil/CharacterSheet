@@ -1,5 +1,6 @@
 package com.guigeek.devilopers.dd5charactersheet.item;
 
+import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
@@ -41,6 +42,41 @@ public class Armor implements Externalizable {
 
     public Armor(){}
 
+    public Armor(Enumerations.ArmorTypes iType) {
+        this(iType, 0, null);
+    }
+
+    public String getDescription() {
+        switch (_type) {
+            case PADDED:
+            case LEATHER:
+                return "Light Armor (AC: 11 + DEX)";
+            case STUDDED_LEATHER:
+                return "Light armor (AC: 12 + DEX)";
+
+            case HIDE:
+                return "Medium armor (AC: 12 + DEX [max 2])";
+            case CHAIN_SHIRT:
+                return "Medium armor (AC: 13 + DEX [max 2])";
+            case BREASTPLATE:
+            case SCALE_MAIL:
+                return "Medium armor (AC: 14 + DEX [max 2])";
+            case HALF_PLATE:
+                return "Medium armor (AC: 15 + DEX [max 2])";
+
+            case RING_MAIL:
+                return "Heavy armor (AC: 14)";
+            case CHAIN_MAIL:
+                return "Heavy armor (AC: 16), min STR: 13";
+            case SPLINT:
+                return "Heavy armor (AC: 17), min STR: 15";
+            case PLATE:
+                return "Heavy armor (AC: 18), min STR: 15";
+
+            default: return "";
+        }
+    }
+
     public Armor(Enumerations.ArmorTypes type, int magicModifier, LinkedList<Fettle> magicProperties) {
         _type = type;
         _name = type.toString();
@@ -57,7 +93,7 @@ public class Armor implements Externalizable {
         if (_hasStealthDisadvantage) {
             boolean alreadyThere = false;
             for (Fettle property : _magicProperties) {
-                if (property._type == Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE && property._describer == Enumerations.Skills.STEALTH.ordinal()) {
+                if (property._type.equals(Enumerations.FettleType.ABILITY_CHECK_DISADVANTAGE) && property._describer == Enumerations.Skills.STEALTH.ordinal()) {
                     alreadyThere = true;
                     break;
                 }
@@ -154,5 +190,40 @@ public class Armor implements Externalizable {
         }
 
         return false;
+    }
+
+    public static int getArmorIcon(Armor armor) {
+        switch (armor._type) {
+            case NONE:
+                return R.drawable.ic_swap_bag;
+            case PADDED:
+                return R.drawable.ic_leather_vest;
+            case LEATHER:
+                return R.drawable.ic_leather_vest;
+            case STUDDED_LEATHER:
+                return R.drawable.ic_leather_vest;
+            case HIDE:
+                return R.drawable.ic_leather_vest;
+            case CHAIN_SHIRT:
+                return R.drawable.ic_chain_mail;
+            case SCALE_MAIL:
+                return R.drawable.ic_scale_mail;
+            case BREASTPLATE:
+                return R.drawable.ic_armor_vest;
+            case HALF_PLATE:
+                return R.drawable.ic_armor_vest;
+            case RING_MAIL:
+                return R.drawable.ic_breastplate;
+            case CHAIN_MAIL:
+                return R.drawable.ic_breastplate;
+            case SPLINT:
+                return R.drawable.ic_breastplate;
+            case PLATE:
+                return R.drawable.ic_breastplate;
+            case SHIELD:
+                return R.drawable.ic_round_shield;
+            default:
+                return R.drawable.ic_armor_vest;
+        }
     }
 }

@@ -39,6 +39,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
 public class CreateItemActivity extends ListActivity {
 
@@ -101,14 +102,29 @@ public class CreateItemActivity extends ListActivity {
                         modifier.setVisibility(View.VISIBLE);
                         layoutConsumabl.setVisibility(View.GONE);
                         layoutMagicProps.setVisibility(View.VISIBLE);
-                        spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.WeaponTypes.values()));
+
+                        List<Externalizable> weapons = new LinkedList<>();
+                        for (Enumerations.WeaponTypes type: Enumerations.WeaponTypes.values()) {
+                            weapons.add(new Weapon(type));
+                        }
+
+                        ItemTypeAdapter adapterWeapon = new ItemTypeAdapter(CreateItemActivity.this, R.layout.list_item, weapons);
+                        adapterWeapon.setDropDownViewResource(R.layout.list_item);
+                        spinnerItemType.setAdapter(adapterWeapon);
                         break;
                     case 1:
                         spinnerItemType.setVisibility(View.VISIBLE);
                         modifier.setVisibility(View.VISIBLE);
                         layoutConsumabl.setVisibility(View.GONE);
                         layoutMagicProps.setVisibility(View.VISIBLE);
-                        spinnerItemType.setAdapter(new ArrayAdapter<>(CreateItemActivity.this, android.R.layout.simple_spinner_dropdown_item, Enumerations.ArmorTypes.values()));
+
+                        List<Externalizable> armors = new LinkedList<>();
+                        for (Enumerations.ArmorTypes type: Enumerations.ArmorTypes.values()) {
+                            armors.add(new Armor(type));
+                        }
+                        ItemTypeAdapter adapterArmor = new ItemTypeAdapter(CreateItemActivity.this, R.layout.list_item, armors);
+                        adapterArmor.setDropDownViewResource(R.layout.list_item);
+                        spinnerItemType.setAdapter(adapterArmor);
                         break;
                     case 3:
                         spinnerItemType.setVisibility(View.GONE);
@@ -392,11 +408,11 @@ public class CreateItemActivity extends ListActivity {
             int modifierValue = modifier.getText().toString().length() > 0 ? Integer.parseInt(modifier.getText().toString()) : 0;
             switch(spinnerItemCategory.getSelectedItemPosition()) {
                 case 0:
-                    newItem = new Weapon((Enumerations.WeaponTypes) spinnerItemType.getSelectedItem(), modifierValue, magicProperties);
+                    newItem = new Weapon(((Weapon)spinnerItemType.getSelectedItem())._type, modifierValue, magicProperties);
                     ((Weapon)newItem)._name = name.getText().toString();
                     break;
                 case 1:
-                    newItem = new Armor((Enumerations.ArmorTypes) spinnerItemType.getSelectedItem(), modifierValue, magicProperties);
+                    newItem = new Armor(((Armor)spinnerItemType.getSelectedItem())._type, modifierValue, magicProperties);
                     ((Armor)newItem)._name = name.getText().toString();
                     break;
                 case 2:

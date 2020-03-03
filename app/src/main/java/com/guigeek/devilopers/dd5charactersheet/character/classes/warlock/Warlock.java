@@ -457,4 +457,22 @@ public class Warlock extends BaseClass {
                 Enumerations.Skills.RELIGION.toString(),
         };
     }
+
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.ARMOR_LIGHT);
+
+        return proficiencies;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.WEAPON_SIMPLE);
+
+        return proficiencies;
+    }
 }

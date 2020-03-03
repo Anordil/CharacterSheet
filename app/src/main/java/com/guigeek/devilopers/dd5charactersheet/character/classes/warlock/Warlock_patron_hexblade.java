@@ -47,6 +47,25 @@ public class Warlock_patron_hexblade extends BaseArchetype {
         return levelUp;
     }
 
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.ARMOR_MEDIUM);
+        proficiencies.add(Enumerations.Proficiencies.SHIELD);
+
+        return proficiencies;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.WEAPON_MARTIAL);
+
+        return proficiencies;
+    }
+
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 

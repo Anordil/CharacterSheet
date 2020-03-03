@@ -48,6 +48,16 @@ public class Cleric_order extends BaseArchetype implements ClericDomain {
         return levelUp;
     }
 
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.ARMOR_HEAVY);
+
+        return proficiencies;
+    }
+
+
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 

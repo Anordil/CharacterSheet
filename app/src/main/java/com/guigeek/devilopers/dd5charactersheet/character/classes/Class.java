@@ -68,4 +68,10 @@ public interface Class  {
     String[] getClassSkills();
     int getClassSkillCount();
 
+    List<Enumerations.Proficiencies> getArmorProficiencies();
+    List<Enumerations.Proficiencies> getWeaponProficiencies();
+
+    List<Enumerations.Proficiencies> getAllArmorProficiencies();
+    List<Enumerations.Proficiencies> getAllWeaponProficiencies();
+
 }

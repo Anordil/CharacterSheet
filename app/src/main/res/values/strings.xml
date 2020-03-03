@@ -17,6 +17,7 @@
     <string name="class_fighter">Fighter</string>
     <string name="class_ranger">Ranger</string>
     <string name="class_druid">Druid</string>
+    <string name="class_artificer">Artificer</string>
 
 
     <string name="race_dwarf">Dwarf</string>
@@ -143,4 +144,8 @@
     <string name="wizard_necromancy">School of Necromancy</string>
     <string name="wizard_transmutation">School of Transmutation</string>
     <string name="wizard_war">War Magic</string>
+
+    <string name="artificer_alchemist">Alchemist</string>
+    <string name="artificer_artillerist">Artillerist</string>
+    <string name="artificer_battle_smith">Battle Smith</string>
 </resources>

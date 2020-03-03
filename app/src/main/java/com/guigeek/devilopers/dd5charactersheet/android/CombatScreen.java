@@ -525,7 +525,7 @@ public class CombatScreen extends Fragment {
         boolean distanceWeapon = weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE;
         boolean finesseWeapon = weapon._isFinesse;
 
-        imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(ItemAdapter.getWeaponIcon(weapon)));
+        imageWeaponHit.setImageDrawable(this.getContext().getResources().getDrawable(Weapon.getWeaponIcon(weapon)));
 
         int propertyAttackBonus = 0;
         String propertyDamageBonus = "";
@@ -664,7 +664,7 @@ public class CombatScreen extends Fragment {
 
             int abilityModifier = (distanceWeapon ? modDex : (weapon._isFinesse ? (Math.max(modDex, modStr)) : modStr));
 
-            imageWeaponHitOffhand.setImageDrawable(this.getContext().getResources().getDrawable(ItemAdapter.getWeaponIcon(weapon)));
+            imageWeaponHitOffhand.setImageDrawable(this.getContext().getResources().getDrawable(Weapon.getWeaponIcon(weapon)));
 
 
             if (weapon._isFirearm) {

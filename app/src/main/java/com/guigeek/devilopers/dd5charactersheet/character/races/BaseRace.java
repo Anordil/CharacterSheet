@@ -4,11 +4,14 @@ import android.content.Context;
 import android.util.Log;
 
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.LinkedList;
+import java.util.List;
 
 public abstract class BaseRace implements Race, Externalizable {
     static final long serialVersionUID = 100L;
@@ -73,5 +76,15 @@ public abstract class BaseRace implements Race, Externalizable {
     @Override
     public void chooseAttributeBoost(final Context context, final Character iCharac) {
         // By default nothing to do
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        return new LinkedList<>();
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        return new LinkedList<>();
     }
 }

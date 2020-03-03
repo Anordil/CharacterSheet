@@ -6,6 +6,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.*;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by ggallani on 19/02/2016.
@@ -74,5 +75,28 @@ public class Dwarf extends BaseRace {
         }
 
         return racialTraits;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.BATTLEAXE);
+        proficiencies.add(Enumerations.Proficiencies.HANDAXE);
+        proficiencies.add(Enumerations.Proficiencies.LIGHT_HAMMER);
+        proficiencies.add(Enumerations.Proficiencies.WARHAMMER);
+
+        return proficiencies;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        if (_subRace.equals("Mountain")) {
+            proficiencies.add(Enumerations.Proficiencies.ARMOR_LIGHT);
+            proficiencies.add(Enumerations.Proficiencies.ARMOR_MEDIUM);
+        }
+        return proficiencies;
     }
 }

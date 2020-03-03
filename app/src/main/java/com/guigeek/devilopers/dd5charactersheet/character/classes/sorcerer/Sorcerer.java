@@ -242,4 +242,18 @@ public class Sorcerer extends BaseClass {
                 Enumerations.Skills.RELIGION.toString(),
         };
     }
+
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.DAGGER);
+        proficiencies.add(Enumerations.Proficiencies.DART);
+        proficiencies.add(Enumerations.Proficiencies.SLING);
+        proficiencies.add(Enumerations.Proficiencies.QUARTERSTAFF);
+        proficiencies.add(Enumerations.Proficiencies.LIGHT_CROSSBOW);
+
+        return proficiencies;
+    }
 }

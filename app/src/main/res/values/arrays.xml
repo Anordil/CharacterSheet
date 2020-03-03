@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="classes">
+        <item>@string/class_artificer</item>
         <item>@string/class_bard</item>
         <item>@string/class_barbarian</item>
         <item>@string/class_blood_hunter</item>
@@ -394,5 +395,11 @@
     <string-array name="point_options">
         <item>Manual</item>
         <item>Point Buy</item>
+    </string-array>
+
+    <string-array name="artificer_archetypes">
+        <item>@string/artificer_alchemist</item>
+        <item>@string/artificer_artillerist</item>
+        <item>@string/artificer_battle_smith</item>
     </string-array>
 </resources>

@@ -44,6 +44,15 @@ public class Wizard_bladesinging extends BaseArchetype {
         return levelUp;
     }
 
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.ARMOR_LIGHT);
+
+        return proficiencies;
+    }
+
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         LinkedList<Power> powers = new LinkedList<>();
 

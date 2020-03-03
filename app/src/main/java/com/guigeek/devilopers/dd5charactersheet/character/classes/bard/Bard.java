@@ -274,4 +274,26 @@ public class Bard extends BaseClass {
     public int getClassSkillCount() {
         return 3;
     }
+
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.ARMOR_LIGHT);
+
+        return proficiencies;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.WEAPON_SIMPLE);
+        proficiencies.add(Enumerations.Proficiencies.LONGSWORD);
+        proficiencies.add(Enumerations.Proficiencies.SHORTSWORD);
+        proficiencies.add(Enumerations.Proficiencies.RAPIER);
+        proficiencies.add(Enumerations.Proficiencies.HAND_CROSSBOW);
+
+        return proficiencies;
+    }
 }

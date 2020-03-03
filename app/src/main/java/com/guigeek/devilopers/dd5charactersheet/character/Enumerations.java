@@ -318,4 +318,69 @@ public class Enumerations {
             }
         }
     }
+
+    public enum WeaponCategories {
+        SIMPLE("Simple"),
+        UNKNOWN("Unknown"),
+        UNARMED("Unarmed"),
+        FIREARM("Firearm"),
+        MARTIAL("Martial");
+
+        private String _name;
+
+        WeaponCategories(String n) {
+            _name = n;
+        }
+
+        public String toString() {
+            return _name;
+        }
+    }
+
+    public enum Proficiencies {
+        WEAPON_SIMPLE("Simple weapons"),
+        WEAPON_FIREARM("Firearms"),
+        WEAPON_MARTIAL("Martial weapons"),
+
+        LONGSWORD("Longsword"),
+        SHORTSWORD("Shortsword"),
+        LONGBOW("Longbow"),
+        SHORTBOW("Shortbow"),
+
+        BATTLEAXE("Battleaxe"),
+        HANDAXE("Handaxe"),
+        LIGHT_HAMMER("Light hammer"),
+        WARHAMMER("Warhammer"),
+
+        HAND_CROSSBOW("Hand crosbbow"),
+        RAPIER("Rapier"),
+
+        ARMOR_LIGHT("Light armor"),
+        ARMOR_MEDIUM("Medium armor"),
+        ARMOR_HEAVY("Heavy armor"),
+        SHIELD("Shield"),
+
+        CLUB("Club"),
+        DAGGER("Dagger"),
+        DART("Dart"),
+        JAVELIN("Javelin"),
+        MACE("Mace"),
+        QUARTERSTAFF("Quarterstaff"),
+        SCIMITAR("Scimitar"),
+        SICKLE("Sickle"),
+        SLING("Sling"),
+        SPEAR("Spear"),
+        LIGHT_CROSSBOW("Light crossbow"),
+        ;
+
+        private String _name;
+
+        Proficiencies(String n) {
+            _name = n;
+        }
+
+        public String toString() {
+            return _name;
+        }
+    }
 }

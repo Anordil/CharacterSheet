@@ -9,6 +9,7 @@ import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by ggallani on 19/02/2016.
@@ -83,5 +84,18 @@ public class Elf extends BaseRace {
         }
 
         return racialTraits;
+    }
+
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.LONGBOW);
+        proficiencies.add(Enumerations.Proficiencies.LONGSWORD);
+        proficiencies.add(Enumerations.Proficiencies.SHORTBOW);
+        proficiencies.add(Enumerations.Proficiencies.SHORTSWORD);
+
+        return proficiencies;
     }
 }

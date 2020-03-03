@@ -273,4 +273,15 @@ public class Monk extends BaseClass {
                 Enumerations.Skills.STEALTH.toString(),
         };
     }
+
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.WEAPON_SIMPLE);
+        proficiencies.add(Enumerations.Proficiencies.SHORTSWORD);
+
+        return proficiencies;
+    }
 }

@@ -8,6 +8,7 @@ import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.android.FeatAdapter;
 import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
@@ -162,5 +163,15 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     @Override
     public void setArchetypeStringFeature(String iFeature) {
         _chosenStringFeature = iFeature;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        return new LinkedList<>();
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        return new LinkedList<>();
     }
 }

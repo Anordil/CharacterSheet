@@ -232,4 +232,33 @@ public class Druid extends BaseClass {
                 Enumerations.Skills.SURVIVAL.toString(),
         };
     }
+
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.ARMOR_LIGHT);
+        proficiencies.add(Enumerations.Proficiencies.ARMOR_MEDIUM);
+        proficiencies.add(Enumerations.Proficiencies.SHIELD);
+
+        return proficiencies;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+
+        proficiencies.add(Enumerations.Proficiencies.CLUB);
+        proficiencies.add(Enumerations.Proficiencies.DAGGER);
+        proficiencies.add(Enumerations.Proficiencies.DART);
+        proficiencies.add(Enumerations.Proficiencies.JAVELIN);
+        proficiencies.add(Enumerations.Proficiencies.MACE);
+        proficiencies.add(Enumerations.Proficiencies.QUARTERSTAFF);
+        proficiencies.add(Enumerations.Proficiencies.SCIMITAR);
+        proficiencies.add(Enumerations.Proficiencies.SICKLE);
+        proficiencies.add(Enumerations.Proficiencies.SLING);
+        proficiencies.add(Enumerations.Proficiencies.SPEAR);
+
+        return proficiencies;
+    }
 }

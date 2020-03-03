@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
+import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
 import com.guigeek.devilopers.dd5charactersheet.character.Fettle;
 import com.guigeek.devilopers.dd5charactersheet.character.Power;
 
@@ -41,4 +42,7 @@ public interface Archetype {
     int nbOfFeatures(int level);
 
     void doLevelDown(int oldLevel, int newLevel);
+
+    List<Enumerations.Proficiencies> getArmorProficiencies();
+    List<Enumerations.Proficiencies> getWeaponProficiencies();
 }

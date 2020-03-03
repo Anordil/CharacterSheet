@@ -535,4 +535,36 @@ public abstract class BaseClass implements Class, Externalizable {
 
         return availableSkills;
     }
+
+    @Override
+    public List<Enumerations.Proficiencies> getAllArmorProficiencies() {
+        List<Enumerations.Proficiencies> proficiencies = getArmorProficiencies();
+
+        for (Archetype arc: _archetypes) {
+            proficiencies.addAll(arc.getArmorProficiencies());
+        }
+
+        return proficiencies;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getAllWeaponProficiencies() {
+        List<Enumerations.Proficiencies> proficiencies = getWeaponProficiencies();
+
+        for (Archetype arc: _archetypes) {
+            proficiencies.addAll(arc.getWeaponProficiencies());
+        }
+
+        return proficiencies;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getArmorProficiencies() {
+        return new LinkedList<>();
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        return new LinkedList<>();
+    }
 }

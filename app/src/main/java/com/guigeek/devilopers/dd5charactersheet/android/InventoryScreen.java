@@ -34,6 +34,7 @@ import com.guigeek.devilopers.dd5charactersheet.item.Weapon;
 
 import java.io.Externalizable;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class InventoryScreen extends android.support.v4.app.ListFragment {
@@ -41,7 +42,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     protected Character _character;
     EditText etDamageBonus, etItemsText;
     Spinner spinnerArmor, spinnerWeapon, spinnerWeaponOffHand;
-    TextView etGold;
+    TextView etGold, tvProficiencies;
 
     ArrayAdapter<Armor> adapterArmor;
     ArrayAdapter<Weapon> adapterWeapon;
@@ -278,6 +279,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
 
 
         etGold = (TextView)root.findViewById(R.id.inGold);
+        tvProficiencies =root.findViewById(R.id.tvProficiencies);
         etItemsText = (EditText)root.findViewById(R.id.inInventory);
         etItemsText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -316,6 +318,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     public void updateContent() {
         etDamageBonus.setText(Integer.toString(_character._dmgBonus));
         etGold.setText(Integer.toString(_character._gold));
+        tvProficiencies.setText(getProficiencies());
 
         Weapon weaponCopy = _character._equippedWeapon;
         Weapon offHandCopy = _character._offHandWeapon;
@@ -418,6 +421,33 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
             });
             builder.create().show();
         }
+    }
+
+    private String getProficiencies() {
+        String result = "Armor Proficiencies: ";
+
+        HashSet<Enumerations.Proficiencies> armorProficiencies = new HashSet<>();
+        HashSet<Enumerations.Proficiencies> weaponproficiencies = new HashSet<>();
+
+        armorProficiencies.addAll(_character._race.getArmorProficiencies());
+        armorProficiencies.addAll(_character._class.getAllArmorProficiencies());
+
+        weaponproficiencies.addAll(_character._race.getWeaponProficiencies());
+        weaponproficiencies.addAll(_character._class.getAllWeaponProficiencies());
+
+        String armorString = "";
+        for (Enumerations.Proficiencies prof : armorProficiencies) {
+            armorString += (armorString.length() == 0 ? "" : ", ") + prof.toString();
+        }
+        result += armorProficiencies.isEmpty() ? "None" : armorString;
+
+        String weaponString = "";
+        for (Enumerations.Proficiencies prof : weaponproficiencies) {
+            weaponString += (weaponString.length() == 0 ? "" : ", ") + prof.toString();
+        }
+        result += "\nWeapon proficiencies: " + (weaponproficiencies.isEmpty() ? "None" : weaponString);
+
+        return result;
     }
 
 
