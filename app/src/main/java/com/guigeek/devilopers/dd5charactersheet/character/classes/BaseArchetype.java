@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.guigeek.devilopers.dd5charactersheet.NameAndDescription;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.android.FeatAdapter;
 import com.guigeek.devilopers.dd5charactersheet.character.Attack;
@@ -46,7 +47,7 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     public void replaceFeature(final Context context, final int classLevel) {
         // Select a Feature to remove
         AlertDialog.Builder removeDialog = new AlertDialog.Builder(context);
-        removeDialog.setTitle("Select a " + getName() + " feature to remove");
+        removeDialog.setTitle("Select a " + getFeatureName() + " to remove");
 
         removeDialog.setAdapter(new FeatAdapter(context, R.layout.list_feat, _chosenFeatures), new DialogInterface.OnClickListener() {
             @Override
@@ -66,7 +67,7 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     public void selectArchetypeFeature(final Context context, final int classLevel, final int current, final int max) {
         final List<Power> availableFeatures = filterAlreadyChosen(getAllArchetypeFeatures(classLevel));
         AlertDialog.Builder featureSelectionDialog = new AlertDialog.Builder(context);
-        featureSelectionDialog.setTitle("Select a " + getName() + " feature" + (max > 1 ? " (" + current + "/" + max + ")" : ""));
+        featureSelectionDialog.setTitle("Select a " + getFeatureName() + (max > 1 ? " (" + current + "/" + max + ")" : ""));
 
         featureSelectionDialog.setAdapter(new FeatAdapter(context, R.layout.list_feat, availableFeatures), new DialogInterface.OnClickListener() {
             @Override
@@ -141,6 +142,11 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     }
 
     @Override
+    public String getFeatureName() {
+        return getName() + " feature";
+    }
+
+    @Override
     public LinkedList<Power> getPowers(int iLevel, Character iCharac) {
         return new LinkedList<>();
     }
@@ -173,5 +179,10 @@ public abstract class BaseArchetype implements Archetype, Externalizable {
     @Override
     public List<Enumerations.Proficiencies> getWeaponProficiencies() {
         return new LinkedList<>();
+    }
+
+    @Override
+    public String getDescription() {
+        return "";
     }
 }

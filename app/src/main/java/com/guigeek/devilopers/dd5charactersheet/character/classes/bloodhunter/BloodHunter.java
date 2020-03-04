@@ -57,6 +57,11 @@ public class BloodHunter extends BaseClass {
                 "Amplify. You cause the marked target to also lose resistance to your rite damage type until the beginning of your next turn.", "", -1, -1, false, Enumerations.ActionType.BONUS_ACTION)
     };
 
+    @Override
+    public String getFeatureName() {
+        return "Blood Curse";
+    }
+
     protected Power[] primalRites = new Power[] {
             new Power("Rite of the Flame", "Your rite damage type is fire", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
             new Power("Rite of the Frozen", "Your rite damage type is cold", "", -1, -1, false, Enumerations.ActionType.PASSIVE),

@@ -21,6 +21,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/inName"
+        android:layout_alignParentRight="true"
+        android:id="@+id/classIcon"
+        android:src="@drawable/ic_warrior" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:id="@+id/layoutRace"
@@ -52,12 +60,18 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="50dp"
         android:spinnerMode="dialog" />
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/spinnerClass"
+        android:id="@+id/classDescriptionv"/>
+
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerBackground"
-        android:layout_below="@+id/spinnerClass"
+        android:layout_below="@+id/classDescriptionv"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="50dp"

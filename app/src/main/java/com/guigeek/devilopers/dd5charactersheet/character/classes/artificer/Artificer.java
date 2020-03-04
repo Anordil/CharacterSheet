@@ -206,16 +206,16 @@ public class Artificer extends BaseClass {
         if (iLevel >= 1) {
             powers.add(new Power("Magical Tinkering", "You learn how to invest a spark of magic into mundane objects. To use this ability, you must have tinker’s tools or other artisan’s tools in hand. You then touch a Tiny nonmagical object as an action and give it one of the following magical properties of your choice:\n" +
                     "\n" +
-                    "The object sheds bright light in a 5-foot radius and dim light for an additional 5 feet.\n" +
-                    "Whenever tapped by a creature, the object emits a recorded message that can be heard up to 10 feet away. You utter the message when you bestow this property on the object, and the recording can be no more than 6 seconds long.\n" +
-                    "The object continuously emits your choice of an odor or a nonverbal sound (wind, waves, chirping, or the like). The chosen phenomenon is perceivable up to 10 feet away.\n" +
-                    "A static visual effect appears on one of the object’s surfaces. This effect can be a picture, up to 25 words of text, lines and shapes, or a mixture of these elements, as you like.\n" +
+                    "- The object sheds bright light in a 5-foot radius and dim light for an additional 5 feet.\n" +
+                    "- Whenever tapped by a creature, the object emits a recorded message that can be heard up to 10 feet away. You utter the message when you bestow this property on the object, and the recording can be no more than 6 seconds long.\n" +
+                    "- The object continuously emits your choice of an odor or a nonverbal sound (wind, waves, chirping, or the like). The chosen phenomenon is perceivable up to 10 feet away.\n" +
+                    "- A static visual effect appears on one of the object’s surfaces. This effect can be a picture, up to 25 words of text, lines and shapes, or a mixture of these elements, as you like.\n\n" +
                     "The chosen property lasts indefinitely. As an action, you can touch the object and end the property early.\n" +
                     "\n" +
                     "You can bestow magic on multiple objects, touching one object each time you use this feature, though a single object can only bear one property at a time. The maximum number of objects you can affect with this feature at one time is equal to your Intelligence modifier (minimum of one object). If you try to exceed your maximum, the oldest property immediately ends, and then the new property applies.", "", -1, -1, true, Enumerations.ActionType.ACTION));
             powers.add(new Power("Spellcasting", "You have studied the workings of magic and how to channel it through objects. As a result, you have gained the ability to cast spells. To observers, you don’t appear to be casting spells in a conventional way; you look as if you’re producing wonders using mundane items or outlandish inventions.\n" +
                     "\n" +
-                    "Tools Required\n" +
+                    "<b>Tools Required</b>\n" +
                     "You produce your artificer spell effects through your tools. You must have a spellcasting focus—specifically thieves’ tools or some kind of artisan’s tool—in hand when you cast any spell with this Spellcasting feature. You must be proficient with the tool to use it in this way. See chapter 5, “Equipment,” in the Player’s Handbook for descriptions of these tools.\n" +
                     "\n" +
                     "After you gain the Infuse Item feature at 2nd level, you can also use any item bearing one of your infusions as a spellcasting focus.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
@@ -223,8 +223,8 @@ public class Artificer extends BaseClass {
 
         if (iLevel >= 2) {
             powers.add(new Power("Infuse Item", "You gain the ability to imbue mundane items with certain magical infusions. The magic items you create with this feature are effectively prototypes of permanent items." +
-                    "\n [Infusions known] " + getInfusionsKnown(iLevel)
-                    + "\n [Max nb of active infusions] " + getInfusedItemCount(iLevel)
+                    "\n <b>Infusions known</b> " + getInfusionsKnown(iLevel)
+                    + "\n <b>Max nb of active infusions</b> " + getInfusedItemCount(iLevel)
                     + "\n\n" +
                     "Whenever you finish a long rest, you can touch a non-magical object and imbue it with one of your artificer infusions, turning it into a magic item. An infusion works on only certain kinds of objects, as specified in the infusion’s description. If the item requires attunement, you can attune yourself to it the instant you infuse the item. If you decide to attune to the item later, you must do so using the normal process for attunement (see “Attunement” in chapter 7 of the Dungeon Master’s Guide).\n" +
                     "\n" +
@@ -278,6 +278,11 @@ public class Artificer extends BaseClass {
 
 
         return powers;
+    }
+
+    @Override
+    public String getFeatureName() {
+        return "Infusion";
     }
 
     @Override

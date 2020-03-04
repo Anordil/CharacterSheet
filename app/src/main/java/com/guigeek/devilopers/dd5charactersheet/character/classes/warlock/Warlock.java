@@ -475,4 +475,9 @@ public class Warlock extends BaseClass {
 
         return proficiencies;
     }
+
+    @Override
+    public String getFeatureName() {
+        return "Invocation";
+    }
 }

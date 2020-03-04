@@ -86,4 +86,9 @@ public class Artificer_artillerist extends BaseArchetype {
 
         return powers;
     }
+
+    @Override
+    public String getDescription() {
+        return "An Artillerist specializes in using magic to hurl energy, projectiles, and explosions on a battlefield.";
+    }
 }

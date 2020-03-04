@@ -2,6 +2,7 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import android.content.Context;
 
+import com.guigeek.devilopers.dd5charactersheet.NameAndDescription;
 import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public interface Archetype {
+public interface Archetype extends NameAndDescription {
 
     String getName();
 
@@ -45,4 +46,6 @@ public interface Archetype {
 
     List<Enumerations.Proficiencies> getArmorProficiencies();
     List<Enumerations.Proficiencies> getWeaponProficiencies();
+
+    String getFeatureName();
 }

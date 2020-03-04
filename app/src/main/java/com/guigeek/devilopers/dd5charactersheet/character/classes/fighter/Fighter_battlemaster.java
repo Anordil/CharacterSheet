@@ -138,4 +138,9 @@ public class Fighter_battlemaster extends BaseArchetype {
 
         return powers;
     }
+
+    @Override
+    public String getFeatureName() {
+        return "Maneuver";
+    }
 }

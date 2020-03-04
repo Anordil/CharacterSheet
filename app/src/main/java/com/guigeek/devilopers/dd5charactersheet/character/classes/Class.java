@@ -2,6 +2,7 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 
 import android.content.Context;
 
+import com.guigeek.devilopers.dd5charactersheet.NameAndDescription;
 import com.guigeek.devilopers.dd5charactersheet.character.Attack;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by ggallani on 19/02/2016.
  */
-public interface Class  {
+public interface Class extends NameAndDescription {
 
     String getClassName();
     String getQualifiedClassName();
@@ -73,5 +74,7 @@ public interface Class  {
 
     List<Enumerations.Proficiencies> getAllArmorProficiencies();
     List<Enumerations.Proficiencies> getAllWeaponProficiencies();
+
+    String getFeatureName();
 
 }

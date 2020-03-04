@@ -152,6 +152,10 @@ public class Armor implements Externalizable {
         return _name + " (" + (_magicModifier > 0 ? "+" + _magicModifier + " " : "") + _type.toString() + ")";
     }
 
+    public String toHtmlString() {
+        return "<b>" + _name + "</b> (" + (_magicModifier > 0 ? "+" + _magicModifier + " " : "") + _type.toString() + ")";
+    }
+
     @Override
     public void writeExternal(ObjectOutput oo) throws IOException
     {

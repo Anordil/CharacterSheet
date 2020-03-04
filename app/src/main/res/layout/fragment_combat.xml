@@ -40,6 +40,7 @@
                     android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="match_parent" >
 
                     <ImageView
@@ -51,6 +52,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="25ft"
                         android:id="@+id/tvSpeed" />
@@ -60,16 +62,19 @@
                     android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="match_parent" >
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView5"
+                        android:tint="@android:color/holo_green_dark"
                         android:src="@drawable/ic_empty_hourglass" />
 
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="+2"
@@ -80,6 +85,7 @@
                     android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="match_parent">
 
                     <ImageView
@@ -90,6 +96,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="18"
@@ -101,37 +108,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:weightSum="3"
+                android:gravity="center_vertical">
+                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="center"
+                    android:text="Speed" android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="center"
+                    android:text="Initiative" android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="center"
+                    android:text="AC" android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="2"
                 android:id="@+id/rowSpell">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                        android:text="Spells"
-                        android:id="@+id/textView19" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="match_parent" >
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView6"
+                        android:tint="@android:color/holo_blue_dark"
                         android:src="@drawable/ic_lightning_tear" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
                         android:text="+2"
                         android:id="@+id/tvSpellAtk"
@@ -142,22 +152,34 @@
                     android:orientation="horizontal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:layout_height="match_parent">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/imageView7"
+                        android:tint="@android:color/holo_red_light"
                         android:src="@drawable/ic_magic_shield" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
                         android:text="13"
                         android:id="@+id/tvSpellDD" />
                 </LinearLayout>
 
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="2">
+                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="center"
+                    android:text="Spell Attack mod." android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="center"
+                    android:text="Spell Save DC" android:textAppearance="@style/TextAppearance.AppCompat.Small" />
             </TableRow>
 
             <TableRow
@@ -170,6 +192,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:text="Ice (+3 Longsword)"
+                    android:textColor="@color/weaponName"
                     android:layout_span="6"
                     android:id="@+id/tvWeaponName" />
             </TableRow>
@@ -207,6 +230,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_broken_heart"
+                        android:tint="@color/red_hp"
                         android:id="@+id/imageView" />
 
                     <TextView
@@ -257,6 +281,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="20dp"
                         android:src="@drawable/ic_broken_heart"
+                        android:tint="@color/red_hp"
                      />
 
                     <TextView
@@ -350,6 +375,8 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:text="Off-hand:"
+
+                    android:textColor="@color/weaponName"
                     />
 
                 <TextView
@@ -357,7 +384,8 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                    android:text="String (+2 Dagger)"
+                    android:text="Sting (+2 Dagger)"
+                    android:textColor="@color/weaponName"
                     android:id="@+id/tvWeaponNameOffHand" />
                 </LinearLayout>
             </TableRow>
@@ -401,6 +429,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_broken_heart"
+                        android:tint="@color/red_hp"
                          />
 
                     <TextView
@@ -450,6 +479,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="20dp"
                         android:src="@drawable/ic_broken_heart"
+                        android:tint="@color/red_hp"
                         />
 
                     <TextView

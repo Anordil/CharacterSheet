@@ -56,7 +56,7 @@ public class Dwarf extends BaseRace {
 
     @Override
     public String getAttributeBoostDescription() {
-        return "+2 CON, +1 " + (_subRace.equals("Hill") ? "WIS" : "STR") + ", Darkvision, Dwarven resilience, " + (_subRace.equals("Hill") ? "+1 HP/level" : "Light/Medium armor proficiency");
+        return "+2 CON, +1 " + (_subRace.equals("Hill") ? "WIS" : "STR") + ", Darkvision, Dwarven resilience, " + (_subRace.equals("Hill") ? "+1 HP/level" : "");
     }
 
     @Override

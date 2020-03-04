@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class StatsScreen extends Fragment {
     EditText name, level, str, dex, con, intel, wis, cha, levelSecondary, inNotes;
     TextView bonusSTR, bonusDEX, bonusCON, bonusINT, bonusWIS, bonusCHA, knownCantrips, knownSpells;
     TextView proficiencyBonus, modSTR, modDEX, modCON, modINT, modWIS, modCHA;
-    TextView tvClassName, tvSecondaryClassName;
+    TextView tvClassName, tvSecondaryClassName, tvRaceName;
 
     TableRow rowCantrips, rowSpells;
 
@@ -126,6 +127,9 @@ public class StatsScreen extends Fragment {
         tvClassName = root.findViewById(R.id.tvClassName);
         tvClassName.setText(_character._class.getClassName() + " level");
         tvSecondaryClassName = root.findViewById(R.id.tvSecondaryClassName);
+
+        tvRaceName = root.findViewById(R.id.tvRaceName);
+        tvRaceName.setText(_character._race.getName());
 
         if (_character._levelSecondaryClass == 0) {
             multiclassButton.setVisibility(View.VISIBLE);
@@ -393,13 +397,22 @@ public class StatsScreen extends Fragment {
             }
         }
 
-        modSTR.setText("" + _character.getModifier(_character._attributes[0] + Integer.parseInt(bonusSTR.getText().toString())));
-        modDEX.setText("" + _character.getModifier(_character._attributes[1] + Integer.parseInt(bonusDEX.getText().toString())));
-        modCON.setText("" + _character.getModifier(_character._attributes[2] + Integer.parseInt(bonusCON.getText().toString())));
-        modINT.setText("" + _character.getModifier(_character._attributes[3] + Integer.parseInt(bonusINT.getText().toString())));
-        modWIS.setText("" + _character.getModifier(_character._attributes[4] + Integer.parseInt(bonusWIS.getText().toString())));
-        modCHA.setText("" + _character.getModifier(_character._attributes[5] + Integer.parseInt(bonusCHA.getText().toString())));
+        modSTR.setText(getModifierStringWithColour(_character.getModifier(_character._attributes[0] + Integer.parseInt(bonusSTR.getText().toString()))));
+        modDEX.setText(getModifierStringWithColour(_character.getModifier(_character._attributes[1] + Integer.parseInt(bonusDEX.getText().toString()))));
+        modCON.setText(getModifierStringWithColour(_character.getModifier(_character._attributes[2] + Integer.parseInt(bonusCON.getText().toString()))));
+        modINT.setText(getModifierStringWithColour(_character.getModifier(_character._attributes[3] + Integer.parseInt(bonusINT.getText().toString()))));
+        modWIS.setText(getModifierStringWithColour(_character.getModifier(_character._attributes[4] + Integer.parseInt(bonusWIS.getText().toString()))));
+        modCHA.setText(getModifierStringWithColour(_character.getModifier(_character._attributes[5] + Integer.parseInt(bonusCHA.getText().toString()))));
 
         proficiencyBonus.setText("+" + _character.getProficiencyBonus());
+    }
+
+    private android.text.Spanned getModifierStringWithColour(int value) {
+        if (value < 0) {
+            return Html.fromHtml("<font color=\"red\">" + value + "</font>");
+        } else if (value > 0) {
+            return Html.fromHtml("<font color=\"green\">" + value + "</font>");
+        }
+        return Html.fromHtml(Integer.toString(value));
     }
 }

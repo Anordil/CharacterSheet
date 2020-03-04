@@ -1,5 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
+import com.guigeek.devilopers.dd5charactersheet.NameAndDescription;
+
 /**
  * Created by ggallani on 19/02/2016.
  */
@@ -223,7 +225,7 @@ public class Enumerations {
         }
     }
 
-    public enum Backgrounds {
+    public enum Backgrounds implements NameAndDescription {
         ACOLYTE("Acolyte", Skills.INSIGHT, Skills.RELIGION),
         CHARLATAN("Charlatan", Skills.DECEPTION, Skills.SLEIGHT_OF_HAND),
         CRIMINAL("Criminal", Skills.DECEPTION, Skills.STEALTH),
@@ -269,6 +271,16 @@ public class Enumerations {
             if (name.equals("Urchin")) { return Backgrounds.URCHIN; }
 
             return null;
+        }
+
+        @Override
+        public String getName() {
+            return _name;
+        }
+
+        @Override
+        public String getDescription() {
+            return "Skill proficiencies: " + _firstSkill + ", " + _secondSkill;
         }
 
         public Power getPower(Enumerations.Backgrounds bg) {

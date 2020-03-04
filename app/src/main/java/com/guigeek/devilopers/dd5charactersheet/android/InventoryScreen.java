@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -318,7 +319,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     public void updateContent() {
         etDamageBonus.setText(Integer.toString(_character._dmgBonus));
         etGold.setText(Integer.toString(_character._gold));
-        tvProficiencies.setText(getProficiencies());
+        tvProficiencies.setText(Html.fromHtml(getProficiencies()));
 
         Weapon weaponCopy = _character._equippedWeapon;
         Weapon offHandCopy = _character._offHandWeapon;
@@ -424,7 +425,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
     }
 
     private String getProficiencies() {
-        String result = "Armor Proficiencies: ";
+        String result = "<b>Armor Proficiencies:</b> ";
 
         HashSet<Enumerations.Proficiencies> armorProficiencies = new HashSet<>();
         HashSet<Enumerations.Proficiencies> weaponproficiencies = new HashSet<>();
@@ -445,7 +446,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         for (Enumerations.Proficiencies prof : weaponproficiencies) {
             weaponString += (weaponString.length() == 0 ? "" : ", ") + prof.toString();
         }
-        result += "\nWeapon proficiencies: " + (weaponproficiencies.isEmpty() ? "None" : weaponString);
+        result += "\n<b>Weapon proficiencies:</b> " + (weaponproficiencies.isEmpty() ? "None" : weaponString);
 
         return result;
     }

@@ -216,7 +216,7 @@ public class SwipeActivity extends AppCompatActivity {
                 case 2:
                     return "FEATS";
                 case 3:
-                    return "INVENTORY";
+                    return "ITEMS";
                 case 4:
                     return "STATS";
             }

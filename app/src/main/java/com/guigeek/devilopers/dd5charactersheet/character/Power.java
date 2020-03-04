@@ -1,5 +1,8 @@
 package com.guigeek.devilopers.dd5charactersheet.character;
 
+import android.text.Html;
+import android.text.Spanned;
+
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -42,18 +45,18 @@ public class Power implements Externalizable {
         _useType = useType;
     }
 
-    public String getUsageString() {
+    public Spanned getUsageStringAsHtml() {
         String result = "";
 
         switch (_useType) {
             case ACTION:
-                result = "Action";
+                result = "<font color='#c20a00'>Action</font>";
                 break;
             case BONUS_ACTION:
-                result = "Bonus Action";
+                result = "<font color='#c27400'>Bonus Action</font>";
                 break;
             case REACTION:
-                result = "Reaction";
+                result = "<font color='#000dc2'>Reaction</font>";
                 break;
             case PASSIVE:
                 result = "Passive";
@@ -68,7 +71,7 @@ public class Power implements Externalizable {
             result += " (" + _range + ")";
         }
 
-        return result;
+        return Html.fromHtml(result);
     }
 
 

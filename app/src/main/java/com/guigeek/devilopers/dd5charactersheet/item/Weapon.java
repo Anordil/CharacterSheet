@@ -1,5 +1,6 @@
 package com.guigeek.devilopers.dd5charactersheet.item;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.guigeek.devilopers.dd5charactersheet.R;
@@ -74,7 +75,7 @@ public class Weapon implements Externalizable {
         if (_distance == Enumerations.WeaponDistanceTypes.DISTANCE) keywordList.add("Ranged (" + _distMin + "-" + _distMax + ")");
         if (_distance == Enumerations.WeaponDistanceTypes.THROWN) keywordList.add("Thrown (" + _distMin + "-" + _distMax + ")");
 
-        String keywords = keywordList.toString();
+        String keywords = TextUtils.join(", ", keywordList);
         String damage = _diceCount + "D" + _diceValue + " " + _damageType + (_hands == Enumerations.WeaponHandCount.VERSATILE ? " (" + _diceCountVersatile + "D" + _diceValueVersatile + ")" : "");
 
         if (_type != Enumerations.WeaponTypes.NET) {
@@ -643,6 +644,10 @@ public class Weapon implements Externalizable {
     @Override
     public String toString() {
         return _name + " (" + (_magicModifier > 0 ? "+" + _magicModifier + " " : "") + _type.toString() + ")";
+    }
+
+    public String toHtmlString() {
+        return "<b>" + _name + "</b> (" + (_magicModifier > 0 ? "+" + _magicModifier + " " : "") + _type.toString() + ")";
     }
 
     @Override

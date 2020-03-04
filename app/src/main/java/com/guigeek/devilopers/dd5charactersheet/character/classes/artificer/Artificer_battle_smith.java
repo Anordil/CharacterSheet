@@ -85,4 +85,9 @@ public class Artificer_battle_smith extends BaseArchetype {
 
         return fettles;
     }
+
+    @Override
+    public String getDescription() {
+        return "Armies require protection, and someone has to put things back together if defenses fail. A combination  of protector and medic, a Battle Smith is an expert at defending others and repairing both material and personnel. To aid in their work, Battle Smiths are usually accompanied by a steel defender, a protective companion of their own creation. Many soldiers tell stories of nearly dying before being saved by a Battle Smith and a steel defender.";
+    }
 }

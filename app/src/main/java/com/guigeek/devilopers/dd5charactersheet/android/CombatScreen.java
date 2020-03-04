@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -148,7 +149,7 @@ public class CombatScreen extends Fragment {
 
         weaponName = (TextView)rootView.findViewById(R.id.tvWeaponName);
         weaponNameOffHand = (TextView)rootView.findViewById(R.id.tvWeaponNameOffHand);
-        weaponName.setText(_character._equippedWeapon.toString());
+        weaponName.setText(Html.fromHtml(_character._equippedWeapon.toHtmlString()));
 
         imageWeaponHit = (ImageView)rootView.findViewById(R.id.imgCombatHitBonus);
         imageWeaponHitOffhand = (ImageView)rootView.findViewById(R.id.imgCombatHitBonusOffHand);
@@ -345,6 +346,7 @@ public class CombatScreen extends Fragment {
             ll.addView(rowPowerHeader);
 
             spellSlotTextViews = new ArrayList<TextView>();
+            boolean hasAtleastOne = false;
             for (int i = 1; i <= 9; i++) {
 
                 int maxSpellForSlot = _character._spellSlotsMax[i];
@@ -398,7 +400,13 @@ public class CombatScreen extends Fragment {
 
                 if (maxSpellForSlot == 0) {
                     row.setVisibility(View.GONE);
+                } else {
+                    hasAtleastOne = true;
                 }
+            }
+
+            if (!hasAtleastOne) {
+                rowPowerHeader.setVisibility(View.GONE);
             }
         }
     }
@@ -436,8 +444,8 @@ public class CombatScreen extends Fragment {
             current.setText(power._left + "");
             current.setTextColor(getResources().getColor(android.R.color.black));
             max.setText(power._max + "");
-            description.setText(power.getUsageString());
-            desc.setText(power._description);
+            description.setText(power.getUsageStringAsHtml());
+            desc.setText(Html.fromHtml(power._description.replaceAll("\n", "<br>")));
             dd.setText((power._dd > 0 ? "DD" + power._dd : "") + "");
 
             TableRow.LayoutParams rowParamName = new TableRow.LayoutParams();
@@ -581,7 +589,9 @@ public class CombatScreen extends Fragment {
                 + (weapon._damageType != null ? " (" + weapon._damageType.toString().substring(0,2) + ")" : "")
                 + propertyDamageBonus;
         tvDmg.setText(damage);
-        tvAtk.setText((attackBonus > 0 ? "+":"") + attackBonus + (distanceWeapon ? " " + weapon._distMin+"-"+weapon._distMax:"") + " x" + _character.getAttacksPerRound() );
+        tvAtk.setText(Html.fromHtml(
+                (attackBonus > 0 ? "+":"") + attackBonus + (distanceWeapon ? " " + weapon._distMin+"-"+weapon._distMax:"") +
+                        (_character.getAttacksPerRound() > 1 ? " <i><font color='#1b871d'>x" + _character.getAttacksPerRound() +"</font></i>": "") ));
 
         // Thrown?
         if (weapon._distance != Enumerations.WeaponDistanceTypes.THROWN) {
@@ -657,7 +667,7 @@ public class CombatScreen extends Fragment {
                 rowMeleeOffHand.setVisibility(View.VISIBLE);
                 rowNameOffHand.setVisibility(View.VISIBLE);
                 rowThrownOffHand.setVisibility(View.VISIBLE);
-                weaponNameOffHand.setText(weapon.toString());
+                weaponNameOffHand.setText(Html.fromHtml(weapon.toHtmlString()));
             }
 
             boolean distanceWeapon = weapon._distance == Enumerations.WeaponDistanceTypes.DISTANCE;

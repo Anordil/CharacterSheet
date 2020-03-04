@@ -1,6 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.android;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ public class ItemAdapter extends ArrayAdapter<Externalizable> {
         nameTv.setText(item.toString());
         if (item instanceof Weapon) {
             Weapon weapon = (Weapon)item;
+            nameTv.setText(Html.fromHtml(weapon.toHtmlString()));
             listItemDescription.setVisibility(View.VISIBLE);
             listItemDescription.setText(weapon.getDescription());
             icon.setImageDrawable(this.getContext().getResources().getDrawable(Weapon.getWeaponIcon(weapon)));
@@ -69,6 +71,7 @@ public class ItemAdapter extends ArrayAdapter<Externalizable> {
         }
         else if (item instanceof Armor) {
             Armor armor = (Armor)item;
+            nameTv.setText(Html.fromHtml(armor.toHtmlString()));
             listItemDescription.setVisibility(View.VISIBLE);
             listItemDescription.setText(armor.getDescription());
             icon.setImageDrawable(this.getContext().getResources().getDrawable(Armor.getArmorIcon(armor)));

@@ -3,16 +3,19 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
+import com.guigeek.devilopers.dd5charactersheet.NameAndDescription;
 import com.guigeek.devilopers.dd5charactersheet.R;
 import com.guigeek.devilopers.dd5charactersheet.character.Character;
 import com.guigeek.devilopers.dd5charactersheet.character.Enumerations;
@@ -42,12 +45,16 @@ import com.guigeek.devilopers.dd5charactersheet.character.races.Dwarf;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Race;
 import com.guigeek.devilopers.dd5charactersheet.character.races.Tiefling;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class CreateCharacter extends AppCompatActivity {
 
     Button btnCreate;
     Spinner spRace, spClass, spSubRace, spBackground;
     EditText inName;
-    TextView attributesHelp, backgroundHelp;
+    TextView attributesHelp, backgroundHelp, classDescriptionv;
+    ImageView classIcon;
 
     Race aRace = new Dragonborn();
     Enumerations.Backgrounds aBg = Enumerations.Backgrounds.ACOLYTE;
@@ -64,16 +71,20 @@ public class CreateCharacter extends AppCompatActivity {
         inName = findViewById(R.id.inName);
         spBackground = findViewById(R.id.spinnerBackground);
         backgroundHelp = findViewById(R.id.backgroundHelp);
+        classDescriptionv = findViewById(R.id.classDescriptionv);
+        classIcon = findViewById(R.id.classIcon);
 
         attributesHelp = findViewById(R.id.attributesHelp);
-        updateStatsBonuses();
+        updateRaceDescription();
 
-        final String[] backgrounds = new String[Enumerations.Backgrounds.values().length];
-        int index = 0;
-        for (Enumerations.Backgrounds bg : Enumerations.Backgrounds.values()) {
-            backgrounds[index++] = bg._name;
+        List<NameAndDescription> backgrounds = new LinkedList<>();
+        for (Enumerations.Backgrounds type: Enumerations.Backgrounds.values()) {
+            backgrounds.add(type);
         }
-        spBackground.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, backgrounds));
+
+        ArrayWithDescriptionAdapter adapterBackground = new ArrayWithDescriptionAdapter(this, R.layout.list_name_and_description, backgrounds);
+        adapterBackground.setDropDownViewResource(R.layout.list_name_and_description);
+        spBackground.setAdapter(adapterBackground);
         spBackground.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -82,9 +93,7 @@ public class CreateCharacter extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
 
@@ -130,7 +139,7 @@ public class CreateCharacter extends AppCompatActivity {
                     aRace.setSubRace(getResources().getStringArray(subRacesArrayId)[0]);
                 }
 
-                updateStatsBonuses();
+                updateRaceDescription();
             }
 
             @Override
@@ -142,16 +151,47 @@ public class CreateCharacter extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String aSubRaceName = (String)spSubRace.getSelectedItem();
                 aRace.setSubRace(aSubRaceName);
-                updateStatsBonuses();
+                updateRaceDescription();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        ArrayAdapter<CharSequence> adapterClass = ArrayAdapter.createFromResource(this, R.array.classes, android.R.layout.simple_spinner_item);
-        adapterClass.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        List<NameAndDescription> allClasses = new LinkedList<>();
+        allClasses.add(new Artificer());
+        allClasses.add(new Barbarian());
+        allClasses.add(new Bard());
+        allClasses.add(new BloodHunter());
+        allClasses.add(new Cleric());
+        allClasses.add(new Druid());
+        allClasses.add(new Fighter());
+        allClasses.add(new Monk());
+        allClasses.add(new Paladin());
+        allClasses.add(new Ranger());
+        allClasses.add(new Rogue());
+        allClasses.add(new Sorcerer());
+        allClasses.add(new Warlock());
+        allClasses.add(new Wizard());
+
+        ArrayWithDescriptionAdapter adapterClass = new ArrayWithDescriptionAdapter(this, R.layout.list_name_and_description, allClasses);
+        adapterClass.setDropDownViewResource(R.layout.list_name_and_description);
         spClass.setAdapter(adapterClass);
+
+        spClass.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Class aClass = (Class) spClass.getSelectedItem();
+                classDescriptionv.setText(aClass.getDescription());
+
+                classIcon.setImageDrawable(getResources().getDrawable(aClass.getIconResource()));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btnCreate.setOnClickListener(new CreateListener());
         updateBgHelp();
@@ -161,45 +201,18 @@ public class CreateCharacter extends AppCompatActivity {
         backgroundHelp.setText("Skill proficiencies: " + aBg._firstSkill.toString() + ", " + aBg._secondSkill.toString());
     }
 
-    private void updateStatsBonuses() {
-        attributesHelp.setText(aRace.getAttributeBoostDescription());
+    private void updateRaceDescription() {
+        attributesHelp.setText(aRace.getAttributeBoostDescription() +
+                (aRace.getArmorProficiencies().isEmpty() ? "" : "\nArmor proficiencies: " + TextUtils.join(", ", aRace.getArmorProficiencies())) +
+                (aRace.getWeaponProficiencies().isEmpty() ? "" : "\nWeapon proficiencies: " + TextUtils.join(", ", aRace.getWeaponProficiencies()))
+        );
     }
 
     private class CreateListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
 
-            Class aClass = null;
-            String aClassName = (String)spClass.getSelectedItem();
-            if (aClassName.equals(App.getResString(R.string.class_barbarian))) {
-                aClass = new Barbarian();
-            } else if (aClassName.equals(App.getResString(R.string.class_paladin))) {
-                aClass = new Paladin();
-            } else if (aClassName.equals(App.getResString(R.string.class_warlock))) {
-                aClass = new Warlock();
-            } else if (aClassName.equals(App.getResString(R.string.class_rogue))) {
-                aClass = new Rogue();
-            } else if (aClassName.equals(App.getResString(R.string.class_sorcerer))) {
-                aClass = new Sorcerer();
-            } else if (aClassName.equals(App.getResString(R.string.class_blood_hunter))) {
-                aClass = new BloodHunter();
-            } else if (aClassName.equals(App.getResString(R.string.class_monk))) {
-                aClass = new Monk();
-            } else if (aClassName.equals(App.getResString(R.string.class_bard))) {
-                aClass = new Bard();
-            } else if (aClassName.equals(App.getResString(R.string.class_cleric))) {
-                aClass = new Cleric();
-            } else if (aClassName.equals(App.getResString(R.string.class_druid))) {
-                aClass = new Druid();
-            } else if (aClassName.equals(App.getResString(R.string.class_wizard))) {
-                aClass = new Wizard();
-            } else if (aClassName.equals(App.getResString(R.string.class_fighter))) {
-                aClass = new Fighter();
-            } else if (aClassName.equals(App.getResString(R.string.class_ranger))) {
-                aClass = new Ranger();
-            } else if (aClassName.equals(App.getResString(R.string.class_artificer))) {
-                aClass = new Artificer();
-            }
+            Class aClass = (Class) spClass.getSelectedItem();
 
             Log.d("Create", "Selected race: " + aRace.getBaseRaceName());
             Log.d("Create", "Selected class: " + aClass.getQualifiedClassName());
@@ -210,7 +223,6 @@ public class CreateCharacter extends AppCompatActivity {
 
     private void createCharacter(Race aRace, Class aClass) {
         int[] attributes = {10, 10, 10, 10, 10, 10};
-        String selectedBackground = (String)spBackground.getSelectedItem();
 
         final Character aHero = new Character(inName.getText().toString(), aClass, aRace, 1, attributes, null, 0, aBg);
         aHero.addSkillProficiency(aBg._firstSkill.toString());

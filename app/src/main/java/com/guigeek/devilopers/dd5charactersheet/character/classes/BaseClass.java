@@ -3,8 +3,11 @@ package com.guigeek.devilopers.dd5charactersheet.character.classes;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.TextUtils;
 
+import com.guigeek.devilopers.dd5charactersheet.NameAndDescription;
 import com.guigeek.devilopers.dd5charactersheet.R;
+import com.guigeek.devilopers.dd5charactersheet.android.ArrayWithDescriptionAdapter;
 import com.guigeek.devilopers.dd5charactersheet.android.FeatAdapter;
 import com.guigeek.devilopers.dd5charactersheet.android.StringListAdapter;
 import com.guigeek.devilopers.dd5charactersheet.character.Attack;
@@ -19,9 +22,11 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.jar.Attributes;
 
 /**
  * Created by totou on 15/06/2016.
@@ -80,10 +85,15 @@ public abstract class BaseClass implements Class, Externalizable {
     }
 
     @Override
+    public String getFeatureName() {
+        return getClassName() + " feature";
+    }
+
+    @Override
     public void selectClassFeature(final Context context, final int classLevel, final int current, final int max) {
         final List<Power> availableFeatures = filterAlreadyChosen(getAllClassFeatures(classLevel));
         AlertDialog.Builder featureSelectionDialog = new AlertDialog.Builder(context);
-        featureSelectionDialog.setTitle("Select a " + getClassName() + " feature" + (max > 1 ? " (" + current + "/" + max + ")" : ""));
+        featureSelectionDialog.setTitle("Select a " + getFeatureName() + (max > 1 ? " (" + current + "/" + max + ")" : ""));
 
         featureSelectionDialog.setAdapter(new FeatAdapter(context, R.layout.list_feat, availableFeatures), new DialogInterface.OnClickListener() {
             @Override
@@ -275,7 +285,7 @@ public abstract class BaseClass implements Class, Externalizable {
             };
 
             AlertDialog.Builder yesNoDialog = new AlertDialog.Builder(context);
-            yesNoDialog.setMessage("Do you want to replace a " + getClassName() + " feature?")
+            yesNoDialog.setMessage("Do you want to replace a " + getFeatureName() + "?")
                     .setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener)
                     .show();
@@ -308,7 +318,7 @@ public abstract class BaseClass implements Class, Externalizable {
                 };
 
                 AlertDialog.Builder yesNoDialog = new AlertDialog.Builder(context);
-                yesNoDialog.setMessage("Do you want to replace a " + arc.getName() + " feature?")
+                yesNoDialog.setMessage("Do you want to replace a " + arc.getFeatureName() + "?")
                         .setPositiveButton("Yes", dialogClickListener)
                         .setNegativeButton("No", dialogClickListener)
                         .show();
@@ -347,14 +357,18 @@ public abstract class BaseClass implements Class, Externalizable {
             int choosableArchetypesArray = getChoosableArchetypes(i);
             if (choosableArchetypesArray != -1) {
                 AlertDialog.Builder b = new AlertDialog.Builder(context);
-                b.setTitle("Select a class feature");
+                b.setTitle("Select a sub class");
                 openedDialogs[0]++;
 
                 final String[] allOptions = context.getResources().getStringArray(choosableArchetypesArray);
-                final List<String> allOptionsList = Arrays.asList(allOptions);
+                final List<NameAndDescription> allOptionsList = new LinkedList<>();
+                for (String archetypeName: allOptions) {
+                    allOptionsList.add(getArchetypeByName(archetypeName));
+                }
+
                 final int level = i;
 
-                b.setAdapter(new StringListAdapter(context, R.layout.list_string, allOptionsList), new DialogInterface.OnClickListener() {
+                b.setAdapter(new ArrayWithDescriptionAdapter(context, R.layout.list_name_and_description, allOptionsList, true), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -566,5 +580,25 @@ public abstract class BaseClass implements Class, Externalizable {
     @Override
     public List<Enumerations.Proficiencies> getWeaponProficiencies() {
         return new LinkedList<>();
+    }
+
+    @Override
+    public String getName() {
+        return getClassName();
+    }
+
+    @Override
+    public String getDescription() {
+        String description = "Hit die: D" + getHitDie() + "\n";
+        if (isCaster()) {
+            description += "Spell caster (" + getMainSpellAttribute().getShortName().toUpperCase() + ")\n";
+        }
+        description += "Proficiencies\n";
+        description += "  Armor: " + (getArmorProficiencies().isEmpty() ? "None" : TextUtils.join(", ",getArmorProficiencies())) + "\n";
+        description += "  Weapons: " + (getWeaponProficiencies().isEmpty() ? "None" : TextUtils.join(", ",getWeaponProficiencies())) + "\n";
+        description += "  Skills: choose " + getClassSkillCount() + " from " + TextUtils.join(", ", getClassSkills()) + "\n";
+        description += "  Saving throws: " + TextUtils.join(", ", getSavingThrowsProficiencies()) ;
+
+        return description;
     }
 }

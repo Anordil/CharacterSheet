@@ -62,6 +62,11 @@ public class Sorcerer extends BaseClass {
                     "To be eligible, a spell must be incapable of targeting more than one creature at the spell’s current level. For example, magic missile and scorching ray aren’t eligible, but ray of frost and chromatic orb are.", "", -1, -1, false, Enumerations.ActionType.PASSIVE),
     };
 
+    @Override
+    public String getFeatureName() {
+        return "Metamagic option";
+    }
+
 
     @Override
     public int nbOfFeatures(int iLevel) {
