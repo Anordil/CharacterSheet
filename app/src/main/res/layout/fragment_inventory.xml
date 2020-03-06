@@ -31,7 +31,7 @@
 
                     <ImageView
                         android:src="@drawable/ic_broadsword"
-                        />
+                        android:tint="@color/steel" />
 
                     <Spinner
                         android:layout_height="fill_parent"
@@ -51,6 +51,7 @@
 
                     <ImageView
                         android:src="@drawable/ic_shield"
+                        android:tint="@color/steel"
                         />
 
                     <Spinner
@@ -69,6 +70,7 @@
 
                     <ImageView
                         android:src="@drawable/ic_armor_vest"
+                        android:tint="@color/steel"
                         />
                     <Spinner
                         android:layout_height="match_parent"
@@ -110,6 +112,7 @@
                     <ImageView
                         android:src="@drawable/ic_coins"
                         android:layout_gravity="center_vertical"
+                        android:tint="@color/gold"
                         />
 
                     <TextView

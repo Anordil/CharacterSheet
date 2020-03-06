@@ -1,6 +1,7 @@
 package com.guigeek.devilopers.dd5charactersheet.character.classes.wizard;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.guigeek.devilopers.dd5charactersheet.App;
 import com.guigeek.devilopers.dd5charactersheet.R;
@@ -45,11 +46,47 @@ public class Wizard_bladesinging extends BaseArchetype {
     }
 
     @Override
+    public int getChoosableFeature(int iLevel) {
+        if (iLevel == 2) {
+            return R.array.bladesingingWeapons;
+        }
+        return -1;
+    }
+
+    @Override
     public List<Enumerations.Proficiencies> getArmorProficiencies() {
         LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
 
         proficiencies.add(Enumerations.Proficiencies.ARMOR_LIGHT);
 
+        return proficiencies;
+    }
+
+    @Override
+    public List<Enumerations.Proficiencies> getWeaponProficiencies() {
+        LinkedList<Enumerations.Proficiencies> proficiencies = new LinkedList<>();
+        Log.d("Prof", _chosenStringFeature);
+        switch (_chosenStringFeature) {
+            case "Club": proficiencies.add(Enumerations.Proficiencies.CLUB); break;
+            case "Dagger": proficiencies.add(Enumerations.Proficiencies.DAGGER); break;
+            case "Handaxe": proficiencies.add(Enumerations.Proficiencies.HANDAXE); break;
+            case "Javelin": proficiencies.add(Enumerations.Proficiencies.JAVELIN); break;
+            case "Light hammer": proficiencies.add(Enumerations.Proficiencies.LIGHT_HAMMER); break;
+            case "Mace": proficiencies.add(Enumerations.Proficiencies.MACE); break;
+            case "Quarterstaff": proficiencies.add(Enumerations.Proficiencies.QUARTERSTAFF); break;
+            case "Sickle": proficiencies.add(Enumerations.Proficiencies.SICKLE); break;
+            case "Spear": proficiencies.add(Enumerations.Proficiencies.SPEAR); break;
+            case "Battleaxe": proficiencies.add(Enumerations.Proficiencies.BATTLEAXE); break;
+            case "Flail": proficiencies.add(Enumerations.Proficiencies.FLAIL); break;
+            case "Longsword": proficiencies.add(Enumerations.Proficiencies.LONGSWORD); break;
+            case "Morningstar": proficiencies.add(Enumerations.Proficiencies.MORNINGSTAR); break;
+            case "Rapier": proficiencies.add(Enumerations.Proficiencies.RAPIER); break;
+            case "Scimitar": proficiencies.add(Enumerations.Proficiencies.SCIMITAR); break;
+            case "Shortsword": proficiencies.add(Enumerations.Proficiencies.SHORTSWORD); break;
+            case "Trident": proficiencies.add(Enumerations.Proficiencies.TRIDENT); break;
+            case "War pick": proficiencies.add(Enumerations.Proficiencies.WAR_PICK); break;
+            case "Warhammer": proficiencies.add(Enumerations.Proficiencies.WARHAMMER); break;
+        }
         return proficiencies;
     }
 
@@ -63,11 +100,11 @@ public class Wizard_bladesinging extends BaseArchetype {
                     "\n" +
                     "While your Bladesong is active, you gain the following benefits:\n" +
                     "\n" +
-                    "You gain a bonus to your AC equal to your Intelligence modifier (minimum of +1).\n" +
+                    "You gain a bonus to your AC equal to " + iCharac.getModifier(Enumerations.Attributes.INT) + ".\n" +
                     "Your walking speed increases by 10 feet.\n" +
                     "You have advantage on Dexterity (Acrobatics) checks.\n" +
-                    "You gain a bonus to any Constitution saving throw you make to maintain your concentration on a spell. The bonus equals your Intelligence modifier (minimum of +1).\n" +
-                    "You can use this feature twice. You regain all expended uses of it when you finish a short or long rest.", "", 2, -1, false, Enumerations.ActionType.BONUS_ACTION));
+                    "You gain a " + iCharac.getModifier(Enumerations.Attributes.INT) + " bonus to any Constitution saving throw you make to maintain your concentration on a spell.\n" +
+                    "<i>You can use this feature twice. You regain all expended uses of it when you finish a short or long rest.</i>", "", 2, -1, false, Enumerations.ActionType.BONUS_ACTION));
         }
 
         if (iLevel >= 10) {
@@ -79,5 +116,10 @@ public class Wizard_bladesinging extends BaseArchetype {
 
 
         return powers;
+    }
+
+    @Override
+    public String getDescription() {
+        return "<b>Restricted to Elves and Half-Elves</b><br>Bladesingers are elves who bravely defend their people and lands. They are elf wizards who master a school of sword fighting grounded in a tradition of arcane magic. In combat, a bladesinger uses a series of intricate, elegant maneuvers that fend off harm and allow the bladesinger to channel magic into devastating attacks and a cunning defense.";
     }
 }

@@ -25,6 +25,7 @@ public class Enumerations {
         SAVING_THROW_MODIFIER("Saving throw mod"),
         IMMUNITY("Immunity"),
         ATTACK_DAMAGE_DICE("Atk damage (dice)"),
+        ARMOR_PROFICIENCY_MISSING("You're wearing armor you're not proficient with."),
         TEXT_FETTLE("Free text");
 
         private String _name;
@@ -89,6 +90,7 @@ public class Enumerations {
         CHARM_MAGIC("Charm magic"), SPELLS("Spells"),
         FEAR("Fear"), DISEASE("Disease"),
         ALL("All"),
+        PARALYZED("being Paralyzed"), STUNNED("being Stunned"),
         STR("Strength"), DEX("Dexterity"), CON("Constitution"), INT("Intelligence"), CHA("Charisma"), WIS("Wisdom"),
         DEX_BARBARIAN("Dexterity (from effects you can see)"), POISON("Poison");
 
@@ -354,38 +356,42 @@ public class Enumerations {
         WEAPON_FIREARM("Firearms"),
         WEAPON_MARTIAL("Martial weapons"),
 
-        LONGSWORD("Longsword"),
-        SHORTSWORD("Shortsword"),
-        LONGBOW("Longbow"),
-        SHORTBOW("Shortbow"),
+        LONGSWORD(WeaponTypes.LONGSWORD._name),
+        SHORTSWORD(WeaponTypes.SHORTSWORD._name),
+        LONGBOW(WeaponTypes.LONGBOW._name),
+        SHORTBOW(WeaponTypes.SHORTBOW._name),
 
-        BATTLEAXE("Battleaxe"),
-        HANDAXE("Handaxe"),
-        LIGHT_HAMMER("Light hammer"),
-        WARHAMMER("Warhammer"),
+        BATTLEAXE(WeaponTypes.BATTLEAXE._name),
+        HANDAXE(WeaponTypes.HANDAXE._name),
+        LIGHT_HAMMER(WeaponTypes.LIGHT_HAMMER._name),
+        WARHAMMER(WeaponTypes.WARHAMMER._name),
 
-        HAND_CROSSBOW("Hand crosbbow"),
-        RAPIER("Rapier"),
+        HAND_CROSSBOW(WeaponTypes.HAND_CROSSBOW._name),
+        RAPIER(WeaponTypes.RAPIER._name),
 
         ARMOR_LIGHT("Light armor"),
         ARMOR_MEDIUM("Medium armor"),
         ARMOR_HEAVY("Heavy armor"),
         SHIELD("Shield"),
 
-        CLUB("Club"),
-        DAGGER("Dagger"),
-        DART("Dart"),
-        JAVELIN("Javelin"),
-        MACE("Mace"),
-        QUARTERSTAFF("Quarterstaff"),
-        SCIMITAR("Scimitar"),
-        SICKLE("Sickle"),
-        SLING("Sling"),
-        SPEAR("Spear"),
-        LIGHT_CROSSBOW("Light crossbow"),
+        CLUB(WeaponTypes.CLUB._name),
+        DAGGER(WeaponTypes.DAGGER._name),
+        DART(WeaponTypes.DART._name),
+        JAVELIN(WeaponTypes.JAVELIN._name),
+        MACE(WeaponTypes.MACE._name),
+        QUARTERSTAFF(WeaponTypes.QUARTERSTAFF._name),
+        SCIMITAR(WeaponTypes.SCIMITAR._name),
+        SICKLE(WeaponTypes.SICKLE._name),
+        SLING(WeaponTypes.SLING._name),
+        SPEAR(WeaponTypes.SPEAR._name),
+        LIGHT_CROSSBOW(WeaponTypes.LIGHT_CROSSBOW._name),
+        FLAIL(WeaponTypes.FLAIL._name),
+        MORNINGSTAR(WeaponTypes.MORNINGSTAR._name),
+        TRIDENT(WeaponTypes.TRIDENT._name),
+        WAR_PICK(WeaponTypes.WAR_PICK._name),
         ;
 
-        private String _name;
+        public String _name;
 
         Proficiencies(String n) {
             _name = n;

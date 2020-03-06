@@ -77,6 +77,42 @@ public class Armor implements Externalizable {
         }
     }
 
+    public int getMinStrength() {
+        switch (_type) {
+            case CHAIN_MAIL:
+                return 13;
+            case SPLINT:
+            case PLATE:
+                return 15;
+
+            default: return 0;
+        }
+    }
+
+    public Enumerations.Proficiencies getRequiredProficiency() {
+        switch (_type) {
+            case PADDED:
+            case LEATHER:
+            case STUDDED_LEATHER:
+                return Enumerations.Proficiencies.ARMOR_LIGHT;
+            case HIDE:
+            case CHAIN_SHIRT:
+            case BREASTPLATE:
+            case SCALE_MAIL:
+            case HALF_PLATE:
+                return Enumerations.Proficiencies.ARMOR_MEDIUM;
+            case RING_MAIL:
+            case CHAIN_MAIL:
+            case SPLINT:
+            case PLATE:
+                return Enumerations.Proficiencies.ARMOR_HEAVY;
+            case SHIELD:
+                return Enumerations.Proficiencies.SHIELD;
+
+            default: return null;
+        }
+    }
+
     public Armor(Enumerations.ArmorTypes type, int magicModifier, LinkedList<Fettle> magicProperties) {
         _type = type;
         _name = type.toString();

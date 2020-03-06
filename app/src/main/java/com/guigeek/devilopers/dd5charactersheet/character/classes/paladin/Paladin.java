@@ -48,6 +48,12 @@ public class Paladin extends BaseClass {
             return new Paladin_devotion();
         } else if (iName.equals(App.getResString(R.string.paladin_oathbreaker))) {
             return new Paladin_oathbreaker();
+        } else if (iName.equals(App.getResString(R.string.paladin_conquest))) {
+            return new Paladin_conquest();
+        } else if (iName.equals(App.getResString(R.string.paladin_redemption))) {
+            return new Paladin_redemption();
+        } else if (iName.equals(App.getResString(R.string.paladin_crown))) {
+            return new Paladin_crown();
         }
         return null;
     }

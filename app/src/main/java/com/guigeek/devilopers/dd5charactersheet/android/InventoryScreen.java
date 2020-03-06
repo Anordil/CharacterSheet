@@ -446,7 +446,7 @@ public class InventoryScreen extends android.support.v4.app.ListFragment {
         for (Enumerations.Proficiencies prof : weaponproficiencies) {
             weaponString += (weaponString.length() == 0 ? "" : ", ") + prof.toString();
         }
-        result += "\n<b>Weapon proficiencies:</b> " + (weaponproficiencies.isEmpty() ? "None" : weaponString);
+        result += "<br><b>Weapon proficiencies:</b> " + (weaponproficiencies.isEmpty() ? "None" : weaponString);
 
         return result;
     }

@@ -128,6 +128,8 @@ public class Fettle  implements Externalizable {
                 return (_value >= 0 ? "+" : "") + _value + " to attack rolls";
             case ATTACK_DAMAGE_MODIFIER:
                 return (_value >= 0 ? "+" : "") + _value + "(" + Enumerations.DamageTypes.values()[_describer].toString() + ")" + " to attack damage";
+            case ARMOR_PROFICIENCY_MISSING:
+                return "You're not proficient with the armor you're wearing. You have disadvantage on any ability check, saving throw, or attack roll that involves Strength or Dexterity, and you can't cast spells";
             default:
                 return super.toString();
         }

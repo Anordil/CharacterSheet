@@ -77,6 +77,9 @@
     <string name="paladin_ancients">Oath of the Ancients</string>
     <string name="paladin_vengeance">Oath of Vengeance</string>
     <string name="paladin_oathbreaker">Oathbreaker</string>
+    <string name="paladin_conquest">Oath of Conquest</string>
+    <string name="paladin_redemption">Oath of Redemption</string>
+    <string name="paladin_crown">Oath of the Crown</string>
 
     <string name="monk_mercy">Way of Mercy</string>
     <string name="monk_shadow">Way of Shadow</string>

@@ -3,6 +3,7 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -182,7 +183,7 @@ public class CreateCharacter extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Class aClass = (Class) spClass.getSelectedItem();
-                classDescriptionv.setText(aClass.getDescription());
+                classDescriptionv.setText(Html.fromHtml((aClass.getDescription())));
 
                 classIcon.setImageDrawable(getResources().getDrawable(aClass.getIconResource()));
             }
@@ -198,13 +199,13 @@ public class CreateCharacter extends AppCompatActivity {
     }
 
     private void updateBgHelp() {
-        backgroundHelp.setText("Skill proficiencies: " + aBg._firstSkill.toString() + ", " + aBg._secondSkill.toString());
+        backgroundHelp.setText(Html.fromHtml("<b>Skill proficiencies:</b> " + aBg._firstSkill.toString() + ", " + aBg._secondSkill.toString()));
     }
 
     private void updateRaceDescription() {
-        attributesHelp.setText(aRace.getAttributeBoostDescription() +
-                (aRace.getArmorProficiencies().isEmpty() ? "" : "\nArmor proficiencies: " + TextUtils.join(", ", aRace.getArmorProficiencies())) +
-                (aRace.getWeaponProficiencies().isEmpty() ? "" : "\nWeapon proficiencies: " + TextUtils.join(", ", aRace.getWeaponProficiencies()))
+        attributesHelp.setText(Html.fromHtml(aRace.getAttributeBoostDescription() +
+                (aRace.getArmorProficiencies().isEmpty() ? "" : "<br><b>Armor proficiencies:</b> " + TextUtils.join(", ", aRace.getArmorProficiencies())) +
+                (aRace.getWeaponProficiencies().isEmpty() ? "" : "<br><b>Weapon proficiencies:</b> " + TextUtils.join(", ", aRace.getWeaponProficiencies())))
         );
     }
 

@@ -8,4 +8,6 @@
     <color name="red_hp">#a83236</color>
     <color name="weaponName">#303F9F</color>
     <color name="green">#1b871d</color>
+    <color name="steel">#456982</color>
+    <color name="gold">#ebd023</color>
 </resources>

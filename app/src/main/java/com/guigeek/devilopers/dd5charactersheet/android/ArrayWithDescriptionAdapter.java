@@ -3,6 +3,7 @@ package com.guigeek.devilopers.dd5charactersheet.android;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class ArrayWithDescriptionAdapter extends ArrayAdapter<NameAndDescription
 
         NameAndDescription item = _items.get(position);
         nameTv.setText(item.getName());
-        descriptionTv.setText(item.getDescription());
+        descriptionTv.setText(Html.fromHtml(item.getDescription()));
 
         descriptionTv.setVisibility(isDropdown || _alwaysShowDescription ? View.VISIBLE : View.GONE);
 

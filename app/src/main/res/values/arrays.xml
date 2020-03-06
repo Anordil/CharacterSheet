@@ -253,8 +253,11 @@
     </string-array>
 
     <string-array name="paladinArchetypes">
+        <item>@string/paladin_conquest</item>
         <item>@string/paladin_devotion</item>
+        <item>@string/paladin_redemption</item>
         <item>@string/paladin_ancients</item>
+        <item>@string/paladin_crown</item>
         <item>@string/paladin_vengeance</item>
         <item>@string/paladin_oathbreaker</item>
     </string-array>
@@ -401,5 +404,27 @@
         <item>@string/artificer_alchemist</item>
         <item>@string/artificer_artillerist</item>
         <item>@string/artificer_battle_smith</item>
+    </string-array>
+
+    <string-array name="bladesingingWeapons">
+        <item>Club</item>
+        <item>Dagger</item>
+        <item>Handaxe</item>
+        <item>Javelin</item>
+        <item>Light hammer</item>
+        <item>Mace</item>
+        <item>Quarterstaff</item>
+        <item>Sickle</item>
+        <item>Spear</item>
+        <item>Battleaxe</item>
+        <item>Flail</item>
+        <item>Longsword</item>
+        <item>Morningstar</item>
+        <item>Rapier</item>
+        <item>Scimitar</item>
+        <item>Shortsword</item>
+        <item>Trident</item>
+        <item>War pick</item>
+        <item>Warhammer</item>
     </string-array>
 </resources>

@@ -262,6 +262,10 @@ public abstract class BaseClass implements Class, Externalizable {
         // Get level up perks from the class
         List<String> allItems = getLevelUpBenefits(iNewCharacterLevel, context);
 
+        if (iNewCharacterLevel % 4 == 0) {
+            allItems.add("Choose a new Feat, or add +2 to one attribute, or +1 to two attributes.");
+        }
+
         // New Class feature gained?
         if (gainedClassFeatures(iNewCharacterLevel) > 0) {
             selectClassFeature(context, iNewCharacterLevel, 1, gainedClassFeatures(iNewCharacterLevel));
@@ -589,15 +593,14 @@ public abstract class BaseClass implements Class, Externalizable {
 
     @Override
     public String getDescription() {
-        String description = "Hit die: D" + getHitDie() + "\n";
+        String description = "<b>Hit die</b>: D" + getHitDie() + "<br>";
         if (isCaster()) {
-            description += "Spell caster (" + getMainSpellAttribute().getShortName().toUpperCase() + ")\n";
+            description += "Spell caster (" + getMainSpellAttribute().getShortName().toUpperCase() + ")<br>";
         }
-        description += "Proficiencies\n";
-        description += "  Armor: " + (getArmorProficiencies().isEmpty() ? "None" : TextUtils.join(", ",getArmorProficiencies())) + "\n";
-        description += "  Weapons: " + (getWeaponProficiencies().isEmpty() ? "None" : TextUtils.join(", ",getWeaponProficiencies())) + "\n";
-        description += "  Skills: choose " + getClassSkillCount() + " from " + TextUtils.join(", ", getClassSkills()) + "\n";
-        description += "  Saving throws: " + TextUtils.join(", ", getSavingThrowsProficiencies()) ;
+        description += "<b>Armor:</b> " + (getArmorProficiencies().isEmpty() ? "None" : TextUtils.join(", ",getArmorProficiencies())) + "<br>";
+        description += "<b>Weapons:</b> " + (getWeaponProficiencies().isEmpty() ? "None" : TextUtils.join(", ",getWeaponProficiencies())) + "<br>";
+        description += "<b>Skills:</b> choose " + getClassSkillCount() + " from " + TextUtils.join(", ", getClassSkills()) + "<br>";
+        description += "<b>Saving throws:</b> " + TextUtils.join(", ", getSavingThrowsProficiencies()) ;
 
         return description;
     }

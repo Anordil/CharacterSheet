@@ -427,6 +427,10 @@ public class Character implements Externalizable {
             }
         }
 
+        if (_equippedArmor != null && _equippedArmor._type != Enumerations.ArmorTypes.NONE && !isProficientWith(_equippedArmor)) {
+            res.add(new Fettle(Enumerations.FettleType.ARMOR_PROFICIENCY_MISSING, 0, 0));
+        }
+
         return res;
     }
 
@@ -552,6 +556,10 @@ public class Character implements Externalizable {
     }
 
     public int getModifier(Enumerations.Attributes iAttr) {
+        return getModifier(getAttribute(iAttr));
+    }
+
+    public int getAttribute(Enumerations.Attributes iAttr) {
         int value = _attributes[iAttr.ordinal()];
 
         // Bonus from equipment ?
@@ -562,11 +570,11 @@ public class Character implements Externalizable {
             }
         }
 
-        return getModifier(value);
+        return value;
     }
 
     public int getModifier(int value) {
-        return (int) Math.floor((value - 10) / 2);
+        return (int) Math.floor(((double)value - 10) / 2);
     }
 
     public int getProficiencyBonus() {
@@ -778,5 +786,38 @@ public class Character implements Externalizable {
 
     public int getLevel() {
         return _level + _levelSecondaryClass;
+    }
+
+    public boolean isProficientWith(Weapon weapon) {
+        HashSet<Enumerations.Proficiencies> weaponproficiencies = new HashSet<>();
+
+        weaponproficiencies.addAll(_race.getWeaponProficiencies());
+        weaponproficiencies.addAll(_class.getAllWeaponProficiencies());
+        if (weapon._isFirearm && weaponproficiencies.contains(Enumerations.Proficiencies.WEAPON_FIREARM)) {
+            return true;
+        }
+        if (weapon._weaponCategory == Enumerations.WeaponCategories.MARTIAL && weaponproficiencies.contains(Enumerations.Proficiencies.WEAPON_MARTIAL)) {
+            return true;
+        }
+        if (weapon._weaponCategory == Enumerations.WeaponCategories.SIMPLE && weaponproficiencies.contains(Enumerations.Proficiencies.WEAPON_SIMPLE)) {
+            return true;
+        }
+
+        for(Enumerations.Proficiencies prof: weaponproficiencies) {
+            if (prof._name.equals(weapon._type._name)) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+    public boolean isProficientWith(Armor armor) {
+        HashSet<Enumerations.Proficiencies> armorProficiencies = new HashSet<>();
+
+        armorProficiencies.addAll(_race.getArmorProficiencies());
+        armorProficiencies.addAll(_class.getAllArmorProficiencies());
+
+        return (armor.getRequiredProficiency() != null && armorProficiencies.contains(armor.getRequiredProficiency()));
     }
 }

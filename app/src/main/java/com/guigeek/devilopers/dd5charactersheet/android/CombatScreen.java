@@ -570,7 +570,7 @@ public class CombatScreen extends Fragment {
         int abilityModifier = (distanceWeapon ? modDex : (finesseWeapon ? (Math.max(modDex, modStr)) : modStr));
 
         int dmgBonus = abilityModifier +  _character._dmgBonus + weapon._magicModifier;
-        int attackBonus = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
+        int attackBonus = (_character.isProficientWith(weapon) ? _character.getProficiencyBonus() : 0) + abilityModifier + weapon._magicModifier + propertyAttackBonus;
 
         if (hasArchery && distanceWeapon) {
             attackBonus += 2;
@@ -598,7 +598,7 @@ public class CombatScreen extends Fragment {
             rowThrown.setVisibility(View.GONE);
         }
         else {
-            int attackBonusThrown = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
+            int attackBonusThrown = (_character.isProficientWith(weapon) ? _character.getProficiencyBonus() : 0) + abilityModifier + weapon._magicModifier + propertyAttackBonus;
             int dmgBonusThrown = abilityModifier + _character._dmgBonus + weapon._magicModifier;
             String damageThrown = weapon._diceCount + "D" + diceDamage + (dmgBonusThrown > 0 ? "+":"") + (dmgBonusThrown != 0 ? dmgBonusThrown : "")
                     + (weapon._damageType != null ? " (" + weapon._damageType.toString().substring(0,2) + ")" : "")
@@ -621,7 +621,15 @@ public class CombatScreen extends Fragment {
             rowFirearm.setVisibility(View.GONE);
         }
 
-        viewSpeed.setText(_character.getSpeedInFeet() + " ft.");
+        int speed = _character.getSpeedInFeet();
+        boolean isArmorTooHeavy = _character._equippedArmor != null && _character._equippedArmor.getMinStrength() > _character.getAttribute(Enumerations.Attributes.STR);
+        if (isArmorTooHeavy) {
+            speed -= 10;
+        }
+
+        viewSpeed.setText(speed + " ft.");
+        viewSpeed.setTextColor(getResources().getColor(isArmorTooHeavy ? R.color.red_hp : android.R.color.black));
+
         int dexBonus = _character.getModifier(Enumerations.Attributes.DEX);
 
         int initiativeBonus = dexBonus;
@@ -719,7 +727,7 @@ public class CombatScreen extends Fragment {
             if(_character.hasPower("[Fighting Style] Two-Weapon Fighting")) {
                 dmgBonus += abilityModifier;
             }
-            int attackBonus = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
+            int attackBonus = (_character.isProficientWith(weapon) ? _character.getProficiencyBonus() : 0) + abilityModifier + weapon._magicModifier + propertyAttackBonus;
 
             int diceDamage = weapon._diceValue;
             if (weapon._hands == Enumerations.WeaponHandCount.VERSATILE && _character._equippedShield._type == Enumerations.ArmorTypes.NONE) {
@@ -737,7 +745,7 @@ public class CombatScreen extends Fragment {
                 rowThrownOffHand.setVisibility(View.GONE);
             }
             else {
-                int attackBonusThrown = _character.getProficiencyBonus() + abilityModifier + weapon._magicModifier + propertyAttackBonus;
+                int attackBonusThrown = (_character.isProficientWith(weapon) ? _character.getProficiencyBonus() : 0) + abilityModifier + weapon._magicModifier + propertyAttackBonus;
                 int dmgBonusThrown = _character._dmgBonus + weapon._magicModifier;
                 String damageThrown = weapon._diceCount + "D" + diceDamage + (dmgBonusThrown > 0 ? "+":"") + (dmgBonusThrown != 0 ? dmgBonusThrown : "")
                         + (weapon._damageType != null ? " (" + weapon._damageType.toString().substring(0,2) + ")" : "")

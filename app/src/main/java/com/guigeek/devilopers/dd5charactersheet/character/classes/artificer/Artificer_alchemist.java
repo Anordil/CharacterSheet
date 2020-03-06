@@ -56,12 +56,12 @@ public class Artificer_alchemist extends BaseArchetype {
                     "When you reach certain levels in this class, you can make more elixirs at the end of a long rest: two at 6th level and three at 15th level. Roll for each elixir’s effect separately. Each elixir requires its own flask.\n" +
                     "\n" +
                     "You can create additional experimental elixirs by expending a spell slot of 1st level or higher for each one. When you do so, you use your action to create the elixir in an empty flask you touch, and you choose the elixir’s effect from the Experimental Elixir table.\n\n" +
-                    "[1] Healing. The drinker regains a number of hit points equal to 2d4 + your Intelligence modifier.\n" +
-                    "[2] Swiftness. The drinker’s walking speed increases by 10 feet for 1 hour.\n" +
-                    "[3] Resilience. The drinker gains a +1 bonus to AC for 10 minutes.\n" +
-                    "[4] Boldness. The drinker can roll a d4 and add the number rolled to every attack roll and saving throw they make for the next minute.\n" +
-                    "[5] Flight. The drinker gains a flying speed of 10 feet for 10 minutes.\n" +
-                    "[6] Transformation. The drinker’s body is transformed as if by the alter self spell. The drinker determines the transformation caused by the spell, the effects of which last for 10 minutes.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
+                    "[1] <b>Healing</b> The drinker regains a number of hit points equal to 2d4 + your Intelligence modifier.\n" +
+                    "[2] <b>Swiftness</b> The drinker’s walking speed increases by 10 feet for 1 hour.\n" +
+                    "[3] <b>Resilience</b> The drinker gains a +1 bonus to AC for 10 minutes.\n" +
+                    "[4] <b>Boldness</b> The drinker can roll a d4 and add the number rolled to every attack roll and saving throw they make for the next minute.\n" +
+                    "[5] <b>Flight</b> The drinker gains a flying speed of 10 feet for 10 minutes.\n" +
+                    "[6] <b>Transformation</b> The drinker’s body is transformed as if by the alter self spell. The drinker determines the transformation caused by the spell, the effects of which last for 10 minutes.", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
         }
         if (iLevel >= 5) {
             powers.add(new Power("Alchemical Savant", "Whenever you cast a spell using your alchemist’s supplies as the spellcasting focus, you gain a bonus to one roll of the spell. That roll must restore hit points or be a damage roll that deals acid, fire, necrotic, or poison damage, and the bonus equals your Intelligence modifier (minimum of +1).", "", -1, -1, true, Enumerations.ActionType.PASSIVE));
